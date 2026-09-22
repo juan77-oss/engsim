@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
@@ -306,19 +306,6 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
 
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Static Beam Calculator",
-        "description": "Calculate support reactions, shear force, bending moment, and deflection for simply supported beams with multiple point and distributed loads.",
-        "url": "https://engsim.app/simulators/static-beam/",
-        "applicationCategory": "EducationalApplication",
-        "isAccessibleForFree": true,
-        "operatingSystem": "Any",
-        "offers": { "@type": "Offer", "price": "0" }
-    }
-    </script>
 </head>
 
 <body>
@@ -407,7 +394,8 @@
                                                 max="500" step="1" aria-label="Elastic modulus in GPa" />
                                             <span class="sim-unit">GPa</span>
                                         </div>
-                                        <p class="sim-hint">Steel &asymp; 200 GPa &middot; Aluminum &asymp; 70 GPa &middot; Concrete &asymp; 30 GPa</p>
+                                        <p class="sim-hint">Steel &asymp; 200 GPa &middot; Aluminum &asymp; 70 GPa
+                                            &middot; Concrete &asymp; 30 GPa</p>
                                     </div>
 
                                     <div class="sim-field">
@@ -419,7 +407,8 @@
                                                 max="1000000" step="100" aria-label="Second moment of area in cm4" />
                                             <span class="sim-unit">cm4</span>
                                         </div>
-                                        <p class="sim-hint">IPE 300 &asymp; 8 360 cm4 &middot; HEB 300 &asymp; 25 170 cm4</p>
+                                        <p class="sim-hint">IPE 300 &asymp; 8 360 cm4 &middot; HEB 300 &asymp; 25 170
+                                            cm4</p>
                                     </div>
 
                                 </div>
@@ -449,7 +438,9 @@
                                             aria-label="Add a point load">
                                             <div class="btn-load-type__icon">
                                                 <svg width="22" height="26" viewBox="0 0 22 26" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
                                                     <line x1="11" y1="0" x2="11" y2="16" stroke="currentColor"
                                                         stroke-width="2.5" />
                                                     <polygon points="11,26 3,12 19,12" fill="currentColor" />
@@ -465,7 +456,9 @@
                                             aria-label="Add a distributed load">
                                             <div class="btn-load-type__icon">
                                                 <svg width="32" height="26" viewBox="0 0 32 26" fill="none"
-                                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
+                                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                                    stroke-linejoin="round">
                                                     <line x1="1" y1="1" x2="31" y2="1" stroke="currentColor"
                                                         stroke-width="2" />
                                                     <line x1="6" y1="1" x2="6" y2="14" stroke="currentColor"
@@ -579,19 +572,22 @@
                                             <div class="sim-result-label">Max |Q|</div>
                                             <div class="sim-result-value" id="out-Vmax">&mdash;</div>
                                             <div class="sim-result-unit">kN</div>
-                                            <div class="sim-result-sub">at x = <span id="out-Vmax-x">&mdash;</span> m</div>
+                                            <div class="sim-result-sub">at x = <span id="out-Vmax-x">&mdash;</span> m
+                                            </div>
                                         </div>
                                         <div class="sim-result-card sim-result-card--accent">
                                             <div class="sim-result-label">Max |M|</div>
                                             <div class="sim-result-value" id="out-Mmax">&mdash;</div>
                                             <div class="sim-result-unit">kNm</div>
-                                            <div class="sim-result-sub">at x = <span id="out-Mmax-x">&mdash;</span> m</div>
+                                            <div class="sim-result-sub">at x = <span id="out-Mmax-x">&mdash;</span> m
+                                            </div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Max |y|</div>
                                             <div class="sim-result-value" id="out-Ymax">&mdash;</div>
                                             <div class="sim-result-unit">mm</div>
-                                            <div class="sim-result-sub">at x = <span id="out-Ymax-x">&mdash;</span> m</div>
+                                            <div class="sim-result-sub">at x = <span id="out-Ymax-x">&mdash;</span> m
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -641,7 +637,7 @@
             </section>
 
             <!-- AD SLOT 1 -->
-<!-- AD-SLOT HIDDEN
+            <!-- AD-SLOT HIDDEN
             <div class="container">
                 <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">Advertisement</div>
             </div>
@@ -667,7 +663,8 @@
                             M(x)
                             calculated analytically, and the results summed across the full beam length. This produces
                             exact
-                            diagrams &mdash; not approximations &mdash; for any combination of loads within the isostatic model.
+                            diagrams &mdash; not approximations &mdash; for any combination of loads within the
+                            isostatic model.
                         </p>
                         <p>
                             Deflections are computed by double-integrating the curvature ? = M(x)/EI using the
@@ -707,7 +704,8 @@
                             loads, linear under distributed loads. Maximum shear typically occurs at supports.</p>
                         <h3>Bending Moment Diagram M(x)</h3>
                         <p>Sum of moments of all forces to the left of a section. Linear between point loads, parabolic
-                            under UDLs. Maximum moment occurs where Q = 0 &mdash; the critical section for flexural design.
+                            under UDLs. Maximum moment occurs where Q = 0 &mdash; the critical section for flexural
+                            design.
                         </p>
                         <h3>Deflection Curve y(x)</h3>
                         <p>Obtained by double-integrating M(x)/EI with y(0) = y(L) = 0. Results in mm. Compare against
@@ -729,7 +727,8 @@
                             <details class="edu-faq-item">
                                 <summary>Can I add multiple loads at the same position?</summary>
                                 <div class="edu-faq-answer">Yes. Superposition handles any combination correctly.
-                                    Multiple point loads at the same x, overlapping distributed loads &mdash; all are summed
+                                    Multiple point loads at the same x, overlapping distributed loads &mdash; all are
+                                    summed
                                     algebraically.</div>
                             </details>
                             <details class="edu-faq-item">
@@ -756,7 +755,7 @@
                         </div>
                     </section>
 
-<!-- AD-SLOT HIDDEN
+                    <!-- AD-SLOT HIDDEN
                     <div class="ad-slot ad-slot--leaderboard" style="margin-top:40px;" aria-label="Advertisement">
                         Advertisement
                     </div>
@@ -769,6 +768,56 @@
 
         <div id="footer-placeholder"></div>
     </div>
+
+    <!-- ============ FILLED EXAMPLE 1: Static Beam ============ -->
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Static Beam Simulator",
+  "description": "Free interactive tool that analyzes simply supported beams under point loads and distributed loads, generating shear force diagrams, bending moment diagrams, and support reaction calculations.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/static-beam/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
+  }
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What sign convention does the beam calculator use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Downward loads are positive. Shear Q is positive when the left portion tends to slide upward. Moment M is positive (sagging) when the beam bends concave upward — tension on the bottom fiber."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the second moment of area I entered directly instead of cross-section dimensions?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The second moment of area I is the only cross-section property that affects deflection under Bernoulli-Euler theory. Entering I directly makes the calculator applicable to any section shape: I-beams, rectangular, circular pipe, or composite sections."
+      }
+    }
+  ]
+}
+</script>
 
     <script src="../../assets/js/platform.js"></script>
     <script type="module" src="./js/simulator.js"></script>

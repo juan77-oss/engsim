@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Area Converter",
-    "url": "https://engsim.app/simulators/area-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert area values between square millimeters, square centimeters, square meters, square kilometers, square inches, square feet, square yards, square miles, acres and hectares.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Area Converter",
+  "description": "Free interactive tool that converts area values instantly across metric, imperial, and land-survey systems, including square meters, square feet, acres, and hectares.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/area-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many square feet are in a square meter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "1 m² ≈ 10.7639 ft². Conversely, 1 ft² = 0.09290304 m² exactly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How many square meters are in an acre?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "1 acre = 4,046.8564224 m², or about 4,047 m². It's easiest to remember as roughly 0.4 hectares, or about 40% of a soccer pitch."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--

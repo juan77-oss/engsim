@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Mass & Weight Converter",
-    "url": "https://engsim.app/simulators/mass-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert mass values between milligrams, grams, kilograms, metric tons, grains, ounces, pounds, stones, US and UK tons, and atomic mass units.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Mass & Weight Converter",
+  "description": "Free interactive tool that converts mass values instantly across metric, imperial and other systems, including kilograms, pounds, ounces, tonnes, and stones.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/mass-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many pounds are in a kilogram?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "1 kg ≈ 2.20462 lb. Conversely, 1 lb = 0.45359237 kg exactly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between a US ton and a UK ton?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A US (short) ton is 2,000 lb = 907.18474 kg. A UK (long) ton is 2,240 lb = 1,016.0469088 kg. A metric ton (tonne) is simply 1,000 kg and matches neither exactly."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--

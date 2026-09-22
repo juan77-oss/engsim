@@ -234,20 +234,7 @@
 
     <!-- EDIT 4 &mdash; No external libraries needed -->
 
-    <!-- Structured data -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Kapp Diagram Calculator",
-        "description": "Interactive transformer simulator using the infinite bus model. Computes secondary voltage, voltage drop, and regulation for inductive and capacitive loads.",
-        "url": "https://engsim.app/simulators/kapp-diagram/",
-        "applicationCategory": "EducationalApplication",
-        "isAccessibleForFree": true,
-        "operatingSystem": "Any",
-        "offers": { "@type": "Offer", "price": "0" }
-    }
-    </script>
+
 </head>
 
 <body>
@@ -502,7 +489,8 @@
                                         <input type="range" id="slider-zoom" min="1" max="20" step="1" value="1"
                                             style="width:100%;accent-color:var(--brand-accent);cursor:pointer;"
                                             aria-label="Triangle zoom factor" />
-                                        <p class="sim-hint">Scales the ?V triangle independently &mdash; useful when Vcc is
+                                        <p class="sim-hint">Scales the ?V triangle independently &mdash; useful when Vcc
+                                            is
                                             small.</p>
                                     </div>
 
@@ -557,223 +545,273 @@
             </section>
 
             <!-- -- AD SLOT 1 ------------------------------------------ -->
-<!-- AD-SLOT HIDDEN
+            <!-- AD-SLOT HIDDEN
             <div class="container">
                 <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">
                     <!-- Google AdSense unit goes here -->
-                    <!-- <ins class="adsbygoogle" ...></ins> -->
-                    Advertisement
-                </div>
-            </div>
-            -->
+            <!-- <ins class="adsbygoogle" ...></ins> -->
+            Advertisement
+    </div>
+    </div>
+    -->
 
-            <!-- -- EDIT 8 &mdash; EDUCATIONAL CONTENT ------------------------ -->
-            <div class="container container--narrow">
-                <div class="edu-content">
+    <!-- -- EDIT 8 &mdash; EDUCATIONAL CONTENT ------------------------ -->
+    <div class="container container--narrow">
+        <div class="edu-content">
 
-                    <!-- About -->
-                    <section class="edu-section" id="about" aria-labelledby="h-about">
-                        <h2 id="h-about">About This Simulator</h2>
-                        <p>
-                            This simulator models the voltage regulation of a single-phase transformer
-                            using the <strong>infinite bus assumption</strong>: the primary voltage U1
-                            is held constant at the grid voltage regardless of load, which is the standard
-                            approach for distribution transformers connected to a stiff network.
-                        </p>
-                        <p>
-                            The equivalent circuit is derived from the <strong>short-circuit test</strong>,
-                            which yields the total series impedance Z<sub>eq</sub> referred to one side.
-                            From the short-circuit voltage V<sub>cc</sub> and angle f<sub>cc</sub>,
-                            the impedance is split into:
-                        </p>
-                        <p>
-                            <em>Z<sub>eq</sub> = V<sub>cc</sub> / I<sub>n</sub></em> &nbsp;&middot;&nbsp;
-                            <em>R<sub>eq</sub> = Z<sub>eq</sub> &middot; cos f<sub>cc</sub></em> &nbsp;&middot;&nbsp;
-                            <em>X<sub>eq</sub> = Z<sub>eq</sub> &middot; sin f<sub>cc</sub></em>
-                        </p>
-                        <p>
-                            The secondary voltage is computed as the complex difference
-                            <em>U2 = U1 - Z<sub>eq</sub> &middot; I</em>,
-                            where the load current phasor I is constructed from its magnitude and power
-                            factor angle. Voltage regulation is defined as:
-                            <em>e = (|U1| - |U2|) / |U2| &times; 100 %</em>.
-                            A positive e indicates a voltage drop (inductive loads); a negative e
-                            indicates a voltage rise (capacitive loads).
-                        </p>
-                    </section>
+            <!-- About -->
+            <section class="edu-section" id="about" aria-labelledby="h-about">
+                <h2 id="h-about">About This Simulator</h2>
+                <p>
+                    This simulator models the voltage regulation of a single-phase transformer
+                    using the <strong>infinite bus assumption</strong>: the primary voltage U1
+                    is held constant at the grid voltage regardless of load, which is the standard
+                    approach for distribution transformers connected to a stiff network.
+                </p>
+                <p>
+                    The equivalent circuit is derived from the <strong>short-circuit test</strong>,
+                    which yields the total series impedance Z<sub>eq</sub> referred to one side.
+                    From the short-circuit voltage V<sub>cc</sub> and angle f<sub>cc</sub>,
+                    the impedance is split into:
+                </p>
+                <p>
+                    <em>Z<sub>eq</sub> = V<sub>cc</sub> / I<sub>n</sub></em> &nbsp;&middot;&nbsp;
+                    <em>R<sub>eq</sub> = Z<sub>eq</sub> &middot; cos f<sub>cc</sub></em> &nbsp;&middot;&nbsp;
+                    <em>X<sub>eq</sub> = Z<sub>eq</sub> &middot; sin f<sub>cc</sub></em>
+                </p>
+                <p>
+                    The secondary voltage is computed as the complex difference
+                    <em>U2 = U1 - Z<sub>eq</sub> &middot; I</em>,
+                    where the load current phasor I is constructed from its magnitude and power
+                    factor angle. Voltage regulation is defined as:
+                    <em>e = (|U1| - |U2|) / |U2| &times; 100 %</em>.
+                    A positive e indicates a voltage drop (inductive loads); a negative e
+                    indicates a voltage rise (capacitive loads).
+                </p>
+            </section>
 
-                    <hr />
+            <hr />
 
-                    <!-- How to use -->
-                    <section class="edu-section" id="how-to-use" aria-labelledby="h-howto">
-                        <h2 id="h-howto">How to Use</h2>
-                        <ol>
-                            <li>
-                                <strong>Enter the grid voltage U1.</strong> This is the RMS voltage
-                                applied to the primary winding, typically 220 V or 380 V for
-                                low-voltage systems.
-                            </li>
-                            <li>
-                                <strong>Set nominal and load currents.</strong> I<sub>n</sub> is the
-                                rated current from the nameplate; I is the actual operating current.
-                                Set both equal for full-load regulation.
-                            </li>
-                            <li>
-                                <strong>Configure the load.</strong> Enter cos f and select whether
-                                the load is inductive (lagging) or capacitive (leading).
-                            </li>
-                            <li>
-                                <strong>Enter the short-circuit test data.</strong> V<sub>cc</sub>
-                                can be entered as a percentage of U1 (most common in datasheets) or
-                                as an absolute voltage. f<sub>cc</sub> is the impedance angle from
-                                the test: cos f<sub>cc</sub> = P<sub>cc</sub> / (V<sub>cc</sub> &middot; I<sub>n</sub>).
-                            </li>
-                            <li>
-                                <strong>Read the results.</strong> The phasor diagram updates in
-                                real time. U1 is the fixed horizontal reference; U2 is the secondary
-                                voltage; ?V (dashed) connects their tips; I is the load current
-                                (shown at an independent scale).
-                            </li>
-                        </ol>
-                    </section>
+            <!-- How to use -->
+            <section class="edu-section" id="how-to-use" aria-labelledby="h-howto">
+                <h2 id="h-howto">How to Use</h2>
+                <ol>
+                    <li>
+                        <strong>Enter the grid voltage U1.</strong> This is the RMS voltage
+                        applied to the primary winding, typically 220 V or 380 V for
+                        low-voltage systems.
+                    </li>
+                    <li>
+                        <strong>Set nominal and load currents.</strong> I<sub>n</sub> is the
+                        rated current from the nameplate; I is the actual operating current.
+                        Set both equal for full-load regulation.
+                    </li>
+                    <li>
+                        <strong>Configure the load.</strong> Enter cos f and select whether
+                        the load is inductive (lagging) or capacitive (leading).
+                    </li>
+                    <li>
+                        <strong>Enter the short-circuit test data.</strong> V<sub>cc</sub>
+                        can be entered as a percentage of U1 (most common in datasheets) or
+                        as an absolute voltage. f<sub>cc</sub> is the impedance angle from
+                        the test: cos f<sub>cc</sub> = P<sub>cc</sub> / (V<sub>cc</sub> &middot; I<sub>n</sub>).
+                    </li>
+                    <li>
+                        <strong>Read the results.</strong> The phasor diagram updates in
+                        real time. U1 is the fixed horizontal reference; U2 is the secondary
+                        voltage; ?V (dashed) connects their tips; I is the load current
+                        (shown at an independent scale).
+                    </li>
+                </ol>
+            </section>
 
-                    <hr />
+            <hr />
 
-                    <!-- Results explained -->
-                    <section class="edu-section" id="results" aria-labelledby="h-results">
-                        <h2 id="h-results">Understanding the Results</h2>
+            <!-- Results explained -->
+            <section class="edu-section" id="results" aria-labelledby="h-results">
+                <h2 id="h-results">Understanding the Results</h2>
 
-                        <h3>Secondary Voltage U2</h3>
-                        <p>
-                            The RMS magnitude of the secondary terminal voltage under the specified
-                            load. For an ideal transformer U2 = U1; real transformers show a drop
-                            under inductive loads or a slight rise under capacitive loads.
-                        </p>
+                <h3>Secondary Voltage U2</h3>
+                <p>
+                    The RMS magnitude of the secondary terminal voltage under the specified
+                    load. For an ideal transformer U2 = U1; real transformers show a drop
+                    under inductive loads or a slight rise under capacitive loads.
+                </p>
 
-                        <h3>Voltage Drop |?V|</h3>
-                        <p>
-                            The magnitude of the complex drop across Z<sub>eq</sub>:
-                            |?V| = |Z<sub>eq</sub> &middot; I|. This is not simply |U1| - |U2|,
-                            because the phasors are not collinear &mdash; the diagram makes the vector
-                            triangle clear. For inductive loads the drop has a significant quadrature
-                            component that increases regulation.
-                        </p>
+                <h3>Voltage Drop |?V|</h3>
+                <p>
+                    The magnitude of the complex drop across Z<sub>eq</sub>:
+                    |?V| = |Z<sub>eq</sub> &middot; I|. This is not simply |U1| - |U2|,
+                    because the phasors are not collinear &mdash; the diagram makes the vector
+                    triangle clear. For inductive loads the drop has a significant quadrature
+                    component that increases regulation.
+                </p>
 
-                        <h3>Voltage Regulation e</h3>
-                        <p>
-                            Regulation measures how much U2 changes from no-load to full-load, relative
-                            to U2: e = (|U1| - |U2|) / |U2| &times; 100 %. Distribution transformers are
-                            designed for e = 5 %. A negative value means capacitive compensation is
-                            actually boosting the secondary voltage above U1.
-                        </p>
+                <h3>Voltage Regulation e</h3>
+                <p>
+                    Regulation measures how much U2 changes from no-load to full-load, relative
+                    to U2: e = (|U1| - |U2|) / |U2| &times; 100 %. Distribution transformers are
+                    designed for e = 5 %. A negative value means capacitive compensation is
+                    actually boosting the secondary voltage above U1.
+                </p>
 
-                        <h3>Equivalent Impedance R<sub>eq</sub> and X<sub>eq</sub></h3>
-                        <p>
-                            The total series resistance and leakage reactance referred to one winding,
-                            extracted from the short-circuit test. X<sub>eq</sub> dominates in most
-                            power transformers (f<sub>cc</sub> &asymp; 70&ndash;85&deg;), which is why inductive loads
-                            produce significantly more regulation than resistive ones at the same current.
-                        </p>
+                <h3>Equivalent Impedance R<sub>eq</sub> and X<sub>eq</sub></h3>
+                <p>
+                    The total series resistance and leakage reactance referred to one winding,
+                    extracted from the short-circuit test. X<sub>eq</sub> dominates in most
+                    power transformers (f<sub>cc</sub> &asymp; 70&ndash;85&deg;), which is why inductive loads
+                    produce significantly more regulation than resistive ones at the same current.
+                </p>
 
-                        <h3>Phasor Diagram</h3>
-                        <p>
-                            U1 (primary, blue) is fixed as the horizontal reference. U2 (green) is the
-                            secondary voltage. ?V (amber) is the drop across Z<sub>eq</sub>, drawn from
-                            the tip of U2 to close the triangle at the tip of U1. The current phasor I
-                            (grey, dashed) is shown at an independent scale. Angles are geometrically
-                            correct but the phasor magnitudes are scaled for visibility.
-                        </p>
-                    </section>
+                <h3>Phasor Diagram</h3>
+                <p>
+                    U1 (primary, blue) is fixed as the horizontal reference. U2 (green) is the
+                    secondary voltage. ?V (amber) is the drop across Z<sub>eq</sub>, drawn from
+                    the tip of U2 to close the triangle at the tip of U1. The current phasor I
+                    (grey, dashed) is shown at an independent scale. Angles are geometrically
+                    correct but the phasor magnitudes are scaled for visibility.
+                </p>
+            </section>
 
-                    <hr />
+            <hr />
 
-                    <!-- FAQ -->
-                    <section class="edu-section" id="faq" aria-labelledby="h-faq">
-                        <h2 id="h-faq">Frequently Asked Questions</h2>
-                        <div class="edu-faq">
+            <!-- FAQ -->
+            <section class="edu-section" id="faq" aria-labelledby="h-faq">
+                <h2 id="h-faq">Frequently Asked Questions</h2>
+                <div class="edu-faq">
 
-                            <details class="edu-faq-item">
-                                <summary>Why does the secondary voltage rise under capacitive load?</summary>
-                                <div class="edu-faq-answer">
-                                    With a leading (capacitive) load, the current phasor is ahead of the
-                                    voltage. The reactive component of the voltage drop across X<sub>eq</sub>
-                                    partially opposes the resistive drop and can produce a net secondary
-                                    voltage greater than U1. This is the same effect as the Ferranti rise
-                                    on lightly loaded long transmission lines. Capacitor banks are sometimes
-                                    deliberately used to exploit this and boost voltage at the end of a
-                                    distribution feeder.
-                                </div>
-                            </details>
-
-                            <details class="edu-faq-item">
-                                <summary>What is f<sub>cc</sub> and how is it measured?</summary>
-                                <div class="edu-faq-answer">
-                                    f<sub>cc</sub> is the phase angle between V<sub>cc</sub> and I<sub>n</sub>
-                                    during the short-circuit test. It is derived from the active power consumed:
-                                    cos f<sub>cc</sub> = P<sub>cc</sub> / (V<sub>cc</sub> &middot; I<sub>n</sub>).
-                                    For most power transformers f<sub>cc</sub> is between 70&deg; and 85&deg;,
-                                    indicating a highly inductive Z<sub>eq</sub> dominated by leakage flux
-                                    rather than winding resistance.
-                                </div>
-                            </details>
-
-                            <details class="edu-faq-item">
-                                <summary>Why is V<sub>cc</sub> usually expressed as a percentage?</summary>
-                                <div class="edu-faq-answer">
-                                    Expressing V<sub>cc</sub> as a fraction of U1 makes the parameter
-                                    independent of the voltage ratio and allows direct comparison across
-                                    different voltage levels. A 4 % V<sub>cc</sub> means the impedance
-                                    drops 4 % of U1 when rated current flows. IEC 60076 and IEEE C57 both
-                                    standardize on this per-unit convention; nameplate values are almost
-                                    always given this way.
-                                </div>
-                            </details>
-
-                            <details class="edu-faq-item">
-                                <summary>What is the difference between voltage drop and voltage regulation?</summary>
-                                <div class="edu-faq-answer">
-                                    Voltage drop |?V| = |Z<sub>eq</sub> &middot; I| is the magnitude of the
-                                    phasor across the series impedance. Voltage regulation e compares the
-                                    primary and secondary magnitudes: e = (|U1| - |U2|) / |U2| &times; 100 %.
-                                    Because U1, U2, and ?V form a triangle (not a straight line), |?V| ?
-                                    |U1| - |U2|. The phasor diagram makes this geometry explicit.
-                                </div>
-                            </details>
-
-                            <details class="edu-faq-item">
-                                <summary>What are the limitations of this simulator?</summary>
-                                <div class="edu-faq-answer">
-                                    This model uses the simplified series equivalent circuit and assumes:
-                                    (1) the core magnetizing branch is negligible &mdash; no-load losses and
-                                    magnetizing current are ignored; (2) single-phase operation;
-                                    (3) the load is linear and balanced; (4) skin effect and frequency
-                                    dependence of R<sub>eq</sub> are not modeled; (5) the turns ratio is
-                                    referred to one winding (1:1 per-unit). For full analysis including
-                                    core losses, three-phase systems, harmonic loads, or transient behavior,
-                                    a multi-winding finite-element or per-unit model is required.
-                                </div>
-                            </details>
-
+                    <details class="edu-faq-item">
+                        <summary>Why does the secondary voltage rise under capacitive load?</summary>
+                        <div class="edu-faq-answer">
+                            With a leading (capacitive) load, the current phasor is ahead of the
+                            voltage. The reactive component of the voltage drop across X<sub>eq</sub>
+                            partially opposes the resistive drop and can produce a net secondary
+                            voltage greater than U1. This is the same effect as the Ferranti rise
+                            on lightly loaded long transmission lines. Capacitor banks are sometimes
+                            deliberately used to exploit this and boost voltage at the end of a
+                            distribution feeder.
                         </div>
-                    </section>
+                    </details>
 
-                    <!-- AD SLOT 2 -->
-<!-- AD-SLOT HIDDEN
+                    <details class="edu-faq-item">
+                        <summary>What is f<sub>cc</sub> and how is it measured?</summary>
+                        <div class="edu-faq-answer">
+                            f<sub>cc</sub> is the phase angle between V<sub>cc</sub> and I<sub>n</sub>
+                            during the short-circuit test. It is derived from the active power consumed:
+                            cos f<sub>cc</sub> = P<sub>cc</sub> / (V<sub>cc</sub> &middot; I<sub>n</sub>).
+                            For most power transformers f<sub>cc</sub> is between 70&deg; and 85&deg;,
+                            indicating a highly inductive Z<sub>eq</sub> dominated by leakage flux
+                            rather than winding resistance.
+                        </div>
+                    </details>
+
+                    <details class="edu-faq-item">
+                        <summary>Why is V<sub>cc</sub> usually expressed as a percentage?</summary>
+                        <div class="edu-faq-answer">
+                            Expressing V<sub>cc</sub> as a fraction of U1 makes the parameter
+                            independent of the voltage ratio and allows direct comparison across
+                            different voltage levels. A 4 % V<sub>cc</sub> means the impedance
+                            drops 4 % of U1 when rated current flows. IEC 60076 and IEEE C57 both
+                            standardize on this per-unit convention; nameplate values are almost
+                            always given this way.
+                        </div>
+                    </details>
+
+                    <details class="edu-faq-item">
+                        <summary>What is the difference between voltage drop and voltage regulation?</summary>
+                        <div class="edu-faq-answer">
+                            Voltage drop |?V| = |Z<sub>eq</sub> &middot; I| is the magnitude of the
+                            phasor across the series impedance. Voltage regulation e compares the
+                            primary and secondary magnitudes: e = (|U1| - |U2|) / |U2| &times; 100 %.
+                            Because U1, U2, and ?V form a triangle (not a straight line), |?V| ?
+                            |U1| - |U2|. The phasor diagram makes this geometry explicit.
+                        </div>
+                    </details>
+
+                    <details class="edu-faq-item">
+                        <summary>What are the limitations of this simulator?</summary>
+                        <div class="edu-faq-answer">
+                            This model uses the simplified series equivalent circuit and assumes:
+                            (1) the core magnetizing branch is negligible &mdash; no-load losses and
+                            magnetizing current are ignored; (2) single-phase operation;
+                            (3) the load is linear and balanced; (4) skin effect and frequency
+                            dependence of R<sub>eq</sub> are not modeled; (5) the turns ratio is
+                            referred to one winding (1:1 per-unit). For full analysis including
+                            core losses, three-phase systems, harmonic loads, or transient behavior,
+                            a multi-winding finite-element or per-unit model is required.
+                        </div>
+                    </details>
+
+                </div>
+            </section>
+
+            <!-- AD SLOT 2 -->
+            <!-- AD-SLOT HIDDEN
                     <div class="ad-slot ad-slot--leaderboard" style="margin-top:40px;" aria-label="Advertisement">
                         <!-- Google AdSense unit goes here -->
-                        Advertisement
-                    </div>
-                    -->
+            Advertisement
+        </div>
+        -->
 
-                </div><!-- /edu-content -->
-            </div><!-- /container -->
+    </div><!-- /edu-content -->
+    </div><!-- /container -->
 
-        </main>
+    </main>
 
-        <!-- Footer injected by platform.js &mdash; DO NOT EDIT -->
-        <div id="footer-placeholder"></div>
+    <!-- Footer injected by platform.js &mdash; DO NOT EDIT -->
+    <div id="footer-placeholder"></div>
 
     </div><!-- /page-wrapper -->
+
+    <!-- ============ FILLED EXAMPLE 2: Kapp Diagram ============ -->
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Kapp Diagram Calculator",
+  "description": "Free tool that computes voltage regulation, secondary voltage drop, and the Kapp phasor diagram for single-phase transformers using the infinite bus (constant primary voltage) model.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/kapp-diagram/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
+  }
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the Kapp diagram used for in transformer analysis?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Kapp diagram is a phasor diagram used to compute a transformer's secondary voltage, voltage drop, and voltage regulation from short-circuit test data (Vcc and the short-circuit angle φcc), using the infinite bus assumption that the primary voltage U1 is held constant regardless of load."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is voltage regulation in a transformer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Voltage regulation e is defined as (|U1| − |U2|) / |U2| × 100 %. A positive value means the secondary voltage drops under inductive load; a negative value means capacitive load is boosting U2 above U1. Distribution transformers are typically designed for e around 5 %."
+      }
+    }
+  ]
+}
+</script>
 
     <!-- Scripts -->
     <script src="../../assets/js/platform.js"></script>

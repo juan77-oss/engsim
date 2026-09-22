@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Data Storage Converter",
-    "url": "https://engsim.app/simulators/data-storage-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert data storage values between bits, bytes, kilobytes, megabytes, gigabytes, terabytes, petabytes, and their binary (IEC) equivalents: kibibytes, mebibytes, gibibytes, tebibytes and pebibytes.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Data Storage Converter",
+  "description": "Free interactive tool that converts data storage sizes across decimal (KB, MB, GB) and binary (KiB, MiB, GiB) units instantly.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/data-storage-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What's the difference between GB and GiB?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A gigabyte (GB) is 1,000,000,000 bytes (decimal, base 1000). A gibibyte (GiB) is 1,073,741,824 bytes (binary, base 1024) — about 7.4% larger. Storage manufacturers use GB; most operating systems display GiB but often mislabel it \"GB\" in the interface, which is the source of most storage-size confusion."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does my 1 TB hard drive show up as less than 1 TB?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The drive is sized correctly at exactly 1,000,000,000,000 bytes. Your operating system just reports that number in GiB instead of GB, and since a GiB holds more bytes than a GB, the same total comes out to a smaller-looking number: about 931 GiB."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--

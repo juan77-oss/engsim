@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Energy Converter",
-    "url": "https://engsim.app/simulators/energy-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert energy values between joules, kilojoules, megajoules, watt-hours, kilowatt-hours, calories, BTU, therms, foot-pounds, electronvolts, ergs and litre-atmospheres.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Energy Converter",
+  "description": "Free interactive tool that converts energy values instantly across multiple unit systems, including joules, kilowatt-hours, calories, BTU, and electronvolts.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/energy-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many joules are in 1 kWh?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "1 kWh equals exactly 3,600,000 joules (3.6 MJ), since a kilowatt-hour is 1,000 watts sustained for 3,600 seconds."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between a calorie and a Calorie?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A lowercase \"calorie\" (cal) is the small thermochemical calorie, equal to 4.184 J. A capitalized \"Calorie\" on nutrition labels is actually a kilocalorie (1,000 cal, or 4,184 J)."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--

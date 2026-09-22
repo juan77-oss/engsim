@@ -37,18 +37,52 @@
 
     <!-- Structured data for Google (SEO) -->
     <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Voltage Divider Calculator",
-    "description": "Interactive calculator for two-resistor and series-chain voltage dividers, with a live circuit diagram and a design mode.",
-    "url": "https://engsim.app/simulators/voltage-divider/",
-    "applicationCategory": "EducationalApplication",
-    "isAccessibleForFree": true,
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0" }
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Voltage Divider Calculator",
+  "description": "Interactive calculator for two-resistor and series-chain voltage dividers, with a live circuit diagram and a design mode.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/voltage-divider/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why is my actual output voltage lower than calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "This calculator assumes an unloaded (ideal) output. If you connect anything to the tap point — a microcontroller pin, a meter with finite input impedance, another circuit — it draws current and effectively adds a resistor in parallel with the lower leg, which pulls Vout down. This is called the \"loading effect.\" To minimize it, use resistor values much smaller than the load's input impedance, at the cost of higher power dissipation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does Design mode actually solve for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Design mode rearranges the divider equation to solve for the resistor you are not fixing, given Vin and a target Vout. If R1 is fixed, R2 = R1 × Vout / (Vin − Vout); if R2 is fixed, R1 = R2 × (Vin − Vout) / Vout. It still assumes an ideal, unloaded output — see the note on loading effects above."
+      }
+    }
+  ]
+}
+</script>
 </head>
 
 <body>

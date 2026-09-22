@@ -38,18 +38,52 @@
     <link rel="stylesheet" href="./css/custom.css" />
 
     <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Gas Combustion Calculator",
-    "description": "Interactive gas combustion calculator for theoretical air, excess air ratio and combustion products.",
-    "url": "https://engsim.app/simulators/gas-combustion/",
-    "applicationCategory": "EducationalApplication",
-    "isAccessibleForFree": true,
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0" }
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Gas Combustion Calculator",
+  "description": "Interactive gas combustion calculator for theoretical air, excess air ratio and combustion products from a CxHyOz fuel formula and dry flue gas analysis.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/gas-combustion/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What's the difference between theoretical and actual air?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Theoretical air (L0) is the minimum air needed for complete combustion, calculated purely from the fuel's formula. Actual air (L) is what a real system actually supplies, determined here from the measured dry flue gas composition. Real systems always need L = L0 to avoid incomplete combustion."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is N2 calculated automatically instead of entered?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A dry gas analysis of CO2, CO, O2 and N2 must sum to 100 kmol %. Since N2 is the remainder once CO2, CO and O2 are known, the simulator computes it by difference to keep the analysis internally consistent."
+      }
+    }
+  ]
+}
+</script>
 </head>
 
 <body>

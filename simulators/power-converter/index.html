@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -32,21 +32,53 @@
 
   <!-- EDIT 4: external libraries (none — this converter needs no charting library) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Power Converter",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Free online tool to convert power between watts, kilowatts, megawatts, horsepower (mechanical, metric, electric), BTU/h, kcal/h, cal/s, ft·lb/s, tons of refrigeration and dBm.",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "USD"
-    }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Power Converter",
+  "description": "Free interactive tool that converts a single power value into every common unit at once, including watts, horsepower, BTU/h, tons of refrigeration, and dBm.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/power-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What's the difference between mechanical, metric and electric horsepower?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Mechanical horsepower (hp) is defined as 550 ft·lbf/s ≈ 745.70 W and is the imperial-system standard used for engines and motors in the US and UK. Metric horsepower (PS, from German \"Pferdestärke\") is defined as 75 kgf·m/s ≈ 735.50 W and is common in European and Asian vehicle specs. Electric horsepower is a rounded convention of exactly 746 W used historically for electric motor ratings in the US."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is a ton of refrigeration a unit of power?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A ton of refrigeration describes the rate of heat absorption needed to melt one short ton (2000 lb) of ice in 24 hours — a rate, which makes it a power unit (≈ 3516.85 W or ≈ 3.517 kW). It's still the standard way HVAC and chiller capacity is specified in the US."
+      }
+    }
+  ]
+}
+</script>
 </head>
 
 <body>

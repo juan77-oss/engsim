@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Flow Rate Converter",
-    "url": "https://engsim.app/simulators/flow-rate-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert flow rate values between cubic meters per second, cubic meters per hour, liters per second, liters per minute, liters per hour, US gallons per minute and cubic feet per minute.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Flow Rate Converter",
+  "description": "Free interactive tool that converts a single flow rate value into m³/s, L/min, GPM, CFM, and other volumetric flow rate units at the same time.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/flow-rate-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I convert GPM to L/min?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Multiply by 3.785411784 (the number of liters in a US gallon). So 1 GPM ≈ 3.785 L/min."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is CFM used for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cubic feet per minute (CFM) is the standard unit for airflow in HVAC systems, fans, and air compressors in countries using imperial units."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--

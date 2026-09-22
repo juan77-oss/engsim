@@ -19,18 +19,27 @@
 
     <!-- Structured data for Google (SEO) -->
     <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "T–s Diagram of Water",
-    "description": "Interactive Temperature–Entropy (T–s) diagram visualizer for water and steam. Input temperature and specific entropy to locate a state point on the saturation dome, determine vapor quality (x), and explore Rankine cycle and steam table concepts.",
-    "url": "https://engsim.app/simulators/ts-diagram-water/",
-    "applicationCategory": "EducationalApplication",
-    "isAccessibleForFree": true,
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0" }
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "T–s Diagram of Water",
+  "description": "Interactive Temperature–Entropy (T–s) diagram visualizer for water and steam. Input temperature and specific entropy to locate a state point on the saturation dome, determine vapor quality (x), and explore Rankine cycle and steam table concepts.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/ts-diagram-water/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-    </script>
+}
+</script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -741,6 +750,44 @@
                     </div>
                 </section>
 
+                <!-- ── 11. FAQ ── -->
+                <!-- EDIT SECTION: FAQ -->
+                <section class="edu-section" id="faq" aria-labelledby="faq-heading">
+                    <h2 class="edu-section__heading" id="faq-heading">Frequently Asked Questions</h2>
+                    <div class="edu-faq">
+
+                        <details class="edu-faq-item">
+                            <summary>How is vapor quality x calculated from temperature and entropy?</summary>
+                            <div class="edu-faq-answer">
+                                When the state point falls inside the saturation dome, quality is found by
+                                the lever rule: x = (s &minus; s<sub>f</sub>) / (s<sub>g</sub> &minus; s<sub>f</sub>),
+                                where s<sub>f</sub> and s<sub>g</sub> are the saturated-liquid and
+                                saturated-vapor specific entropies at the current temperature, obtained
+                                by interpolation of the built-in saturation data. A result of x = 0 means
+                                pure saturated liquid; x = 1 means pure saturated vapor; any value in
+                                between represents a two-phase mixture. The simulator displays this
+                                equation with live numerical values substituted in the Didactic Analysis
+                                panel.
+                            </div>
+                        </details>
+
+                        <details class="edu-faq-item">
+                            <summary>Why does an isentropic process appear as a vertical line on the T&ndash;s diagram?</summary>
+                            <div class="edu-faq-answer">
+                                An isentropic process is both adiabatic and reversible, so no entropy is
+                                generated and the specific entropy s remains constant throughout the
+                                process. Because s is the horizontal axis of the T&ndash;s diagram, a
+                                constant-entropy path plots as a straight vertical line. This is the ideal
+                                model for turbine expansion and pump compression in a Rankine cycle; real
+                                devices deviate to the right of the vertical (entropy increases due to
+                                irreversibilities), which the simulator makes visually clear when process
+                                mode is active.
+                            </div>
+                        </details>
+
+                    </div>
+                </section>
+
             </div><!-- /.edu-content -->
 
         </main>
@@ -752,6 +799,31 @@
 
     <!-- JAVASCRIPT -->
     <script src="../../assets/js/platform.js"></script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How is vapor quality x calculated from temperature and entropy on the T\u2013s diagram?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When the state point falls inside the saturation dome, vapor quality is found by the lever rule: x = (s \u2212 sf) / (sg \u2212 sf), where sf and sg are the saturated-liquid and saturated-vapor specific entropies at the current temperature. A result of x = 0 is saturated liquid, x = 1 is saturated vapor, and any value between 0 and 1 is a two-phase mixture. The simulator displays this equation with live numerical values in the Didactic Analysis panel."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does an isentropic process appear as a vertical line on the T\u2013s diagram?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An isentropic process is adiabatic and reversible, so specific entropy s remains constant. Because s is the horizontal axis of the T\u2013s diagram, a constant-entropy path plots as a vertical line. This is the ideal model for turbine expansion and pump compression in the Rankine cycle. Real devices deviate to the right of the vertical due to irreversibilities, which the simulator makes visually clear in process analysis mode."
+      }
+    }
+  ]
+}
+</script>
 
     <script type="module" src="./js/simulator.js"></script>
 

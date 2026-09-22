@@ -50,6 +50,30 @@
 
     <!-- <link rel="canonical" href="https://engsim.app/simulators/combustion-chimenea/" /> -->
 
+    <!-- Structured data for Google (SEO) -->
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Combustion Analysis Simulator",
+  "description": "Calculates dilution, excess air, sensible heat losses and combustion efficiency from flue gas measurements.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/combustion-chimenea/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
+  }
+}
+</script>
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -62,20 +86,7 @@
     <link rel="stylesheet" href="../../assets/css/platform.css" />
     <link rel="stylesheet" href="../../assets/css/simulator.css" />
 
-    <!-- Structured data for Google (SEO) -->
-    <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Combustion Analysis Simulator",
-    "description": "Calculates dilution, excess air, sensible heat losses and combustion efficiency from flue gas measurements.",
-    "url": "https://engsim.app/simulators/combustion-chimenea/",
-    "applicationCategory": "EducationalApplication",
-    "isAccessibleForFree": true,
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0" }
-  }
-  </script>
+
 </head>
 
 <body>
@@ -666,6 +677,49 @@
                         </div>
                     </section>
 
+                    <hr />
+
+                    <!-- EDIT SECTION: FAQ -->
+                    <section class="edu-section" id="faq" aria-labelledby="faq-heading">
+                        <h2 id="faq-heading">Frequently Asked Questions</h2>
+                        <div class="edu-faq">
+
+                            <details class="edu-faq-item">
+                                <summary>What does the dilution factor tell me, and how is it related to excess air?</summary>
+                                <div class="edu-faq-answer">
+                                    The dilution factor D = CO&#x2082;max / Measured CO&#x2082; expresses how
+                                    many times the combustion gases have been diluted by excess air relative
+                                    to stoichiometric combustion. When burning natural gas with a theoretical
+                                    maximum CO&#x2082; of 11.7 % and a measured concentration of 9.5 %,
+                                    D &asymp; 1.23, meaning the actual exhaust is about 23 % more voluminous
+                                    than stoichiometric exhaust would be. Excess air follows directly:
+                                    EA = (D &minus; 1) &times; 100 %, so D = 1.23 gives 23 % excess air.
+                                    A lower measured CO&#x2082; always indicates higher dilution and more
+                                    excess air; a measured value approaching CO&#x2082;max indicates near-stoichiometric
+                                    combustion.
+                                </div>
+                            </details>
+
+                            <details class="edu-faq-item">
+                                <summary>Why is the Siegert efficiency an approximation rather than a complete boiler efficiency?</summary>
+                                <div class="edu-faq-answer">
+                                    The Siegert formula q = K &times; (T<sub>gas</sub> &minus; T<sub>amb</sub>) / CO&#x2082;
+                                    estimates only the <em>sensible heat loss carried away by the dry flue
+                                    gases</em>. Combustion efficiency derived from it (&eta; = 100 &minus; q)
+                                    therefore excludes other loss mechanisms that contribute to real boiler
+                                    inefficiency: radiation through the casing, heat lost in moisture
+                                    produced by hydrogen combustion, incomplete combustion losses (CO
+                                    formation), and ash-related losses where applicable. For routine
+                                    commissioning and maintenance the Siegert estimate is a reliable and
+                                    widely standardised engineering approximation; for a complete thermal
+                                    balance, each additional loss term must be measured or calculated
+                                    separately.
+                                </div>
+                            </details>
+
+                        </div>
+                    </section>
+
                 </div><!-- /edu-content -->
             </div><!-- /container -->
 
@@ -713,6 +767,31 @@
 
     <!-- Simulator logic (ES module entry point) -->
     <script type="module" src="./js/simulator.js"></script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does the dilution factor tell me, and how is it related to excess air?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The dilution factor D = CO\u2082max / Measured CO\u2082 expresses how many times the combustion gases have been diluted by excess air relative to stoichiometric combustion. Excess air follows directly: EA = (D \u2212 1) \u00d7 100 %. A lower measured CO\u2082 always indicates higher dilution and more excess air; a value approaching CO\u2082max indicates near-stoichiometric combustion."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the Siegert efficiency an approximation rather than a complete boiler efficiency?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Siegert formula q = K \u00d7 (Tgas \u2212 Tamb) / CO\u2082 estimates only the sensible heat loss carried away by the dry flue gases, so combustion efficiency \u03b7 = 100 \u2212 q excludes radiation losses, moisture from hydrogen combustion, CO formation from incomplete combustion, and ash-related losses. For routine commissioning and maintenance it is a reliable standardised engineering estimate; a complete thermal balance requires each additional loss term to be measured separately."
+      }
+    }
+  ]
+}
+</script>
 
 </body>
 

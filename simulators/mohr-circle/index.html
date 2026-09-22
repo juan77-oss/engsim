@@ -30,18 +30,52 @@
 
     <!-- Structured data for Google (SEO) -->
     <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Mohr's Circle Calculator",
-    "description": "Interactive Mohr's Circle calculator for plane stress analysis.",
-    "url": "https://engsim.app/simulators/mohr-circle/",
-    "applicationCategory": "EducationalApplication",
-    "isAccessibleForFree": true,
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0" }
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Mohr's Circle Calculator",
+  "description": "Interactive Mohr's Circle calculator for plane stress analysis.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/mohr-circle/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why do the circle's orientation change with the sign convention, but not s1, s2, or tmax?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The convention only flips which direction on the page counts as \"positive t.\" It's a drawing choice, not a physics choice — the stress state itself, and therefore every principal quantity, stays the same."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does it mean when the circle degenerates to a point?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "That's a hydrostatic stress state: sx = sy and txy = 0. Every plane is a principal plane, there is no shear on any plane, and s1 = s2 = s_avg."
+      }
+    }
+  ]
+}
+</script>
 </head>
 
 <body>

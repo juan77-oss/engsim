@@ -26,12 +26,48 @@
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebApplication",
+  "@type": "SoftwareApplication",
   "name": "Entropy T-s Diagram Simulator",
-  "applicationCategory": "EngineeringApplication",
-  "operatingSystem": "Any",
   "description": "Interactive T-s diagram simulator for ideal gas thermodynamic processes: isothermal, adiabatic, polytropic, isobaric and isochoric, reversible and irreversible.",
-  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  "url": "https://juan77-oss.github.io/engsim/simulators/entropy-diagram/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
+  }
+}
+</script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does the isothermal path appear as a horizontal line?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because temperature stays constant by definition, so every point on the process path shares the same T while entropy changes."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is ΔS = 0 for an ideal adiabatic process?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "An ideal (reversible) adiabatic process is isentropic — no heat transfer and no internal irreversibility means entropy stays constant."
+      }
+    }
+  ]
 }
 </script>
 

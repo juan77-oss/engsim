@@ -1,11 +1,11 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Natural Draft Calculator — Chimney Draft & Duct Losses | EngSim</title>
+    <title>Natural Draft Calculator � Chimney Draft & Duct Losses | EngSim</title>
     <meta name="description"
         content="Interactive natural draft calculator for industrial chimneys. Compute available thermal draft, kinetic head, and duct friction losses in real time. Free, no account required." />
 
@@ -30,18 +30,19 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Natural Draft Calculator",
-    "description": "Interactive calculator for chimney natural draft, kinetic head, and duct friction losses in industrial furnaces and boilers.",
-    "url": "https://engsim.app/simulators/natural-draft/",
-    "applicationCategory": "EducationalApplication",
-    "isAccessibleForFree": true,
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0" }
-  }
-  </script>
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Natural Draft Calculator",
+        "description": "Interactive calculator for chimney natural draft, kinetic head, and duct friction losses in industrial furnaces and boilers.",
+        "url": "https://juan77-oss.github.io/engsim/simulators/natural-draft/index.html",
+        "applicationCategory": "EducationalApplication",
+        "isAccessibleForFree": true,
+        "operatingSystem": "Any (Web Browser)",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "publisher": { "@type": "Organization", "name": "EngSim", "url": "https://juan77-oss.github.io/engsim/" }
+    }
+    </script>
 </head>
 
 <body>
@@ -51,7 +52,7 @@
 
         <main class="page-main" id="main-content">
 
-            <!-- ── HERO ─────────────────────────────────────────── -->
+            <!-- -- HERO ------------------------------------------- -->
             <section class="sim-hero" aria-labelledby="sim-title">
                 <div class="container">
                     <nav aria-label="Breadcrumb">
@@ -83,7 +84,7 @@
                 </div>
             </section>
 
-            <!-- ── SIMULATOR BODY ──────────────────────────────────── -->
+            <!-- -- SIMULATOR BODY ------------------------------------ -->
             <section class="sim-body">
                 <div class="container">
 
@@ -91,7 +92,7 @@
 
                     <div class="sim-layout" style="--sim-sidebar-width: 350px;">
 
-                        <!-- ════ LEFT PANEL — INPUTS ════ -->
+                        <!-- ---- LEFT PANEL � INPUTS ---- -->
                         <aside aria-label="Input parameters">
 
                             <div class="sim-panel">
@@ -128,7 +129,7 @@
                                             <div class="sim-input-wrap">
                                                 <input type="number" id="input-gas-temp" class="sim-input" value="220"
                                                     step="1" aria-label="Flue gas temperature in Celsius" />
-                                                <span class="sim-unit">°C</span>
+                                                <span class="sim-unit">�C</span>
                                             </div>
                                         </div>
                                         <div class="sim-field">
@@ -136,7 +137,7 @@
                                             <div class="sim-input-wrap">
                                                 <input type="number" id="input-ambient-temp" class="sim-input"
                                                     value="20" step="1" aria-label="Ambient temperature in Celsius" />
-                                                <span class="sim-unit">°C</span>
+                                                <span class="sim-unit">�C</span>
                                             </div>
                                         </div>
                                     </div>
@@ -160,15 +161,15 @@
                                     <div class="sim-field">
                                         <label for="input-base-density" class="sim-label">
                                             Base gas density
-                                            <span class="sim-label-hint">(ρ₀ at 0°C)</span>
+                                            <span class="sim-label-hint">(?0 at 0�C)</span>
                                         </label>
                                         <div class="sim-input-wrap">
                                             <input type="number" id="input-base-density" class="sim-input" value="1.293"
                                                 min="0" step="0.001"
                                                 aria-label="Base gas density at 0 Celsius in kilograms per cubic meter" />
-                                            <span class="sim-unit">kg/m³</span>
+                                            <span class="sim-unit">kg/m�</span>
                                         </div>
-                                        <p class="sim-hint">Use 1.293 kg/m³ for air-like flue gas unless you have a
+                                        <p class="sim-hint">Use 1.293 kg/m� for air-like flue gas unless you have a
                                             measured value.</p>
                                     </div>
 
@@ -260,7 +261,7 @@
                                             <input type="number" id="input-loss-coefficient" class="sim-input"
                                                 value="2.5" min="0" step="0.1"
                                                 aria-label="Dimensionless resistive loss coefficient" />
-                                            <span class="sim-unit">—</span>
+                                            <span class="sim-unit">�</span>
                                         </div>
                                         <p class="sim-hint">Sum of friction and local resistance coefficients along the
                                             duct run.</p>
@@ -272,7 +273,7 @@
                                             <div class="sim-field">
                                                 <label for="input-alpha" class="sim-label">
                                                     Gas expansion coefficient
-                                                    <span class="sim-label-hint">(α)</span>
+                                                    <span class="sim-label-hint">(a)</span>
                                                 </label>
                                                 <div class="sim-input-wrap">
                                                     <input type="number" id="input-alpha" class="sim-input"
@@ -302,7 +303,7 @@
                         </aside>
                         <!-- /Left panel -->
 
-                        <!-- ════ RIGHT PANEL — RESULTS ════ -->
+                        <!-- ---- RIGHT PANEL � RESULTS ---- -->
                         <div>
 
                             <div class="sim-panel">
@@ -322,23 +323,23 @@
                                     <div class="sim-results-grid">
                                         <div class="sim-result-card sim-result-card--accent">
                                             <div class="sim-result-label">Available Draft</div>
-                                            <div class="sim-result-value" id="out-available-draft">—</div>
+                                            <div class="sim-result-value" id="out-available-draft">�</div>
                                             <div class="sim-result-unit">mmH2O</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Total Requirement</div>
-                                            <div class="sim-result-value" id="out-total-requirement">—</div>
+                                            <div class="sim-result-value" id="out-total-requirement">�</div>
                                             <div class="sim-result-unit">mmH2O</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Margin</div>
-                                            <div class="sim-result-value" id="out-margin">—</div>
+                                            <div class="sim-result-value" id="out-margin">�</div>
                                             <div class="sim-result-unit">mmH2O</div>
                                         </div>
                                     </div>
 
                                     <div class="status-banner status-banner--info" id="status-banner">
-                                        <span class="status-banner__title" id="status-title">—</span>
+                                        <span class="status-banner__title" id="status-title">�</span>
                                         <span class="status-banner__message" id="status-message">Enter valid parameters
                                             to see the draft balance status.</span>
                                     </div>
@@ -368,32 +369,32 @@
                                     <div class="sim-results-grid">
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Gas Velocity</div>
-                                            <div class="sim-result-value" id="out-velocity">—</div>
+                                            <div class="sim-result-value" id="out-velocity">�</div>
                                             <div class="sim-result-unit">m/s</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Flow Rate</div>
-                                            <div class="sim-result-value" id="out-flow-rate">—</div>
-                                            <div class="sim-result-unit">m³/h</div>
+                                            <div class="sim-result-value" id="out-flow-rate">�</div>
+                                            <div class="sim-result-unit">m�/h</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Gas Density</div>
-                                            <div class="sim-result-value" id="out-density">—</div>
-                                            <div class="sim-result-unit">kg/m³</div>
+                                            <div class="sim-result-value" id="out-density">�</div>
+                                            <div class="sim-result-unit">kg/m�</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Kinetic Head</div>
-                                            <div class="sim-result-value" id="out-kinetic-head">—</div>
+                                            <div class="sim-result-value" id="out-kinetic-head">�</div>
                                             <div class="sim-result-unit">mmH2O</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Resistive Losses</div>
-                                            <div class="sim-result-value" id="out-losses">—</div>
+                                            <div class="sim-result-value" id="out-losses">�</div>
                                             <div class="sim-result-unit">mmH2O</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Hydraulic Diameter</div>
-                                            <div class="sim-result-value" id="out-hydraulic-diameter">—</div>
+                                            <div class="sim-result-value" id="out-hydraulic-diameter">�</div>
                                             <div class="sim-result-unit">m</div>
                                         </div>
                                     </div>
@@ -414,7 +415,7 @@
                                 </div>
                                 <div class="sim-panel__body">
                                     <div class="status-banner status-banner--info" id="interpretation-banner">
-                                        <span class="status-banner__title" id="interpretation-title">—</span>
+                                        <span class="status-banner__title" id="interpretation-title">�</span>
                                         <span class="status-banner__message" id="interpretation-message">Enter valid
                                             parameters to see the engineering diagnosis.</span>
                                     </div>
@@ -428,189 +429,189 @@
                 </div><!-- /container -->
             </section>
 
-            <!-- ── AD SLOT 1 ── -->
-<!-- AD-SLOT HIDDEN
+            <!-- -- AD SLOT 1 -- -->
+            <!-- AD-SLOT HIDDEN
             <div class="container">
                 <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">
                     <!-- <ins class="adsbygoogle" ... ></ins> -->
-                    Advertisement
-                </div>
-            </div>
-            -->
+            Advertisement
+    </div>
+    </div>
+    -->
 
-            <!-- ── EDUCATIONAL CONTENT ─────────────────────────────── -->
-            <div class="container container--narrow">
-                <div class="edu-content">
+    <!-- -- EDUCATIONAL CONTENT ------------------------------- -->
+    <div class="container container--narrow">
+        <div class="edu-content">
 
-                    <section class="edu-section" id="about" aria-labelledby="h-about">
-                        <h2 id="h-about">About This Simulator</h2>
-                        <p>
-                            Industrial furnaces, boilers, and process heaters rely on a chimney or
-                            stack to remove flue gases without the help of a fan. This natural,
-                            or thermal, draft is created by the density difference between the hot
-                            gases inside the stack and the cooler ambient air outside it — the same
-                            principle that drives air up a fireplace flue. The available draft is
-                            given by
-                        </p>
-                        <p>
-                            Δ = H · γ₀ · α · (t<sub>g</sub> − t<sub>a</sub>) / [(1 + α·t<sub>a</sub>)·(1 +
-                            α·t<sub>g</sub>)]
-                        </p>
-                        <p>
-                            where H is the stack height, γ₀ is the gas density at 0°C, α is the
-                            gas expansion coefficient, and t<sub>g</sub> and t<sub>a</sub> are the
-                            flue gas and ambient temperatures. This calculator compares that
-                            available draft against the total energy the flowing gas actually
-                            needs: the kinetic head to accelerate it to duct velocity, plus the
-                            resistive losses from friction and fittings along the duct run.
-                        </p>
-                        <p>
-                            The result is a draft balance — a quick way to check whether a stack
-                            design is adequate before committing to a physical build, or to
-                            diagnose why an existing chimney is underperforming.
-                        </p>
-                    </section>
+            <section class="edu-section" id="about" aria-labelledby="h-about">
+                <h2 id="h-about">About This Simulator</h2>
+                <p>
+                    Industrial furnaces, boilers, and process heaters rely on a chimney or
+                    stack to remove flue gases without the help of a fan. This natural,
+                    or thermal, draft is created by the density difference between the hot
+                    gases inside the stack and the cooler ambient air outside it � the same
+                    principle that drives air up a fireplace flue. The available draft is
+                    given by
+                </p>
+                <p>
+                    ? = H � ?0 � a � (t<sub>g</sub> - t<sub>a</sub>) / [(1 + a�t<sub>a</sub>)�(1 +
+                    a�t<sub>g</sub>)]
+                </p>
+                <p>
+                    where H is the stack height, ?0 is the gas density at 0�C, a is the
+                    gas expansion coefficient, and t<sub>g</sub> and t<sub>a</sub> are the
+                    flue gas and ambient temperatures. This calculator compares that
+                    available draft against the total energy the flowing gas actually
+                    needs: the kinetic head to accelerate it to duct velocity, plus the
+                    resistive losses from friction and fittings along the duct run.
+                </p>
+                <p>
+                    The result is a draft balance � a quick way to check whether a stack
+                    design is adequate before committing to a physical build, or to
+                    diagnose why an existing chimney is underperforming.
+                </p>
+            </section>
 
-                    <hr />
+            <hr />
 
-                    <section class="edu-section" id="how-to-use" aria-labelledby="h-howto">
-                        <h2 id="h-howto">How to Use</h2>
-                        <ol>
-                            <li><strong>Chimney and thermal conditions.</strong> Enter the stack
-                                height and the flue gas and ambient temperatures. The gas
-                                temperature must exceed the ambient temperature for any draft to
-                                exist.</li>
-                            <li><strong>Furnace and gas properties.</strong> Enter the furnace
-                                gauge pressure (negative for suction) and the base gas density at
-                                0°C — 1.293 kg/m³ is a reasonable default for typical flue gas.</li>
-                            <li><strong>Duct geometry.</strong> Choose a circular or rectangular
-                                section and enter its dimensions. This sets the cross-sectional
-                                area used to compute velocity and flow rate.</li>
-                            <li><strong>Flow conditions.</strong> Either enter the gas velocity
-                                directly, or switch to dynamic pressure mode if that's what you
-                                measured — the calculator derives velocity from it using the real
-                                gas density. Enter the loss coefficient J for the duct run.</li>
-                            <li><strong>Read the results.</strong> Compare Available Draft against
-                                Total Requirement. A positive margin means the stack can sustain
-                                the flow; a negative one means induced (fan-assisted) draft is
-                                needed.</li>
-                        </ol>
-                    </section>
+            <section class="edu-section" id="how-to-use" aria-labelledby="h-howto">
+                <h2 id="h-howto">How to Use</h2>
+                <ol>
+                    <li><strong>Chimney and thermal conditions.</strong> Enter the stack
+                        height and the flue gas and ambient temperatures. The gas
+                        temperature must exceed the ambient temperature for any draft to
+                        exist.</li>
+                    <li><strong>Furnace and gas properties.</strong> Enter the furnace
+                        gauge pressure (negative for suction) and the base gas density at
+                        0�C � 1.293 kg/m� is a reasonable default for typical flue gas.</li>
+                    <li><strong>Duct geometry.</strong> Choose a circular or rectangular
+                        section and enter its dimensions. This sets the cross-sectional
+                        area used to compute velocity and flow rate.</li>
+                    <li><strong>Flow conditions.</strong> Either enter the gas velocity
+                        directly, or switch to dynamic pressure mode if that's what you
+                        measured � the calculator derives velocity from it using the real
+                        gas density. Enter the loss coefficient J for the duct run.</li>
+                    <li><strong>Read the results.</strong> Compare Available Draft against
+                        Total Requirement. A positive margin means the stack can sustain
+                        the flow; a negative one means induced (fan-assisted) draft is
+                        needed.</li>
+                </ol>
+            </section>
 
-                    <hr />
+            <hr />
 
-                    <section class="edu-section" id="results" aria-labelledby="h-results">
-                        <h2 id="h-results">Understanding the Results</h2>
+            <section class="edu-section" id="results" aria-labelledby="h-results">
+                <h2 id="h-results">Understanding the Results</h2>
 
-                        <h3>Available Draft</h3>
-                        <p>
-                            The natural draft the chimney can generate from thermal buoyancy
-                            alone, expressed in mmH2O. It grows with stack height and with the
-                            temperature difference between flue gas and ambient air.
-                        </p>
+                <h3>Available Draft</h3>
+                <p>
+                    The natural draft the chimney can generate from thermal buoyancy
+                    alone, expressed in mmH2O. It grows with stack height and with the
+                    temperature difference between flue gas and ambient air.
+                </p>
 
-                        <h3>Total Requirement</h3>
-                        <p>
-                            The sum of the kinetic head (energy to accelerate the gas to duct
-                            velocity) and the resistive losses (friction and local losses along
-                            the path). This is the energy the system must supply for the gas to
-                            flow at the specified velocity.
-                        </p>
+                <h3>Total Requirement</h3>
+                <p>
+                    The sum of the kinetic head (energy to accelerate the gas to duct
+                    velocity) and the resistive losses (friction and local losses along
+                    the path). This is the energy the system must supply for the gas to
+                    flow at the specified velocity.
+                </p>
 
-                        <h3>Margin</h3>
-                        <p>
-                            Available Draft minus Total Requirement. A margin below roughly 10% of
-                            the requirement indicates the system is highly sensitive to small
-                            changes in temperature or roughness; below 25% is considered tight but
-                            workable; a healthy design typically keeps a comfortable reserve above
-                            that.
-                        </p>
+                <h3>Margin</h3>
+                <p>
+                    Available Draft minus Total Requirement. A margin below roughly 10% of
+                    the requirement indicates the system is highly sensitive to small
+                    changes in temperature or roughness; below 25% is considered tight but
+                    workable; a healthy design typically keeps a comfortable reserve above
+                    that.
+                </p>
 
-                        <h3>Physical Interpretation</h3>
-                        <p>
-                            A short engineering diagnosis that flags the most relevant issue in
-                            the current configuration — for example, insufficient thermal driving
-                            force, excessive velocity, an inefficient flattened duct shape, or a
-                            healthy stable operating point.
-                        </p>
-                    </section>
+                <h3>Physical Interpretation</h3>
+                <p>
+                    A short engineering diagnosis that flags the most relevant issue in
+                    the current configuration � for example, insufficient thermal driving
+                    force, excessive velocity, an inefficient flattened duct shape, or a
+                    healthy stable operating point.
+                </p>
+            </section>
 
-                    <hr />
+            <hr />
 
-                    <section class="edu-section" id="faq" aria-labelledby="h-faq">
-                        <h2 id="h-faq">Frequently Asked Questions</h2>
-                        <div class="edu-faq">
+            <section class="edu-section" id="faq" aria-labelledby="h-faq">
+                <h2 id="h-faq">Frequently Asked Questions</h2>
+                <div class="edu-faq">
 
-                            <details class="edu-faq-item">
-                                <summary>What is natural draft?</summary>
-                                <div class="edu-faq-answer">
-                                    Natural draft is the flow of flue gases through a chimney or
-                                    stack driven purely by the density difference between the hot
-                                    gases inside and the cooler air outside — no fan required. It
-                                    depends on stack height and the gas-to-ambient temperature
-                                    difference.
-                                </div>
-                            </details>
-
-                            <details class="edu-faq-item">
-                                <summary>What happens if the margin is negative?</summary>
-                                <div class="edu-faq-answer">
-                                    A negative margin means the available natural draft cannot
-                                    overcome the kinetic and frictional losses at the specified
-                                    flow rate. In practice this means the flow will not sustain
-                                    itself, and induced or forced draft (a fan) is required.
-                                </div>
-                            </details>
-
-                            <details class="edu-faq-item">
-                                <summary>Why does furnace pressure matter?</summary>
-                                <div class="edu-faq-answer">
-                                    A slightly negative (suction) pressure at the furnace outlet
-                                    helps keep combustion stable and prevents hot gases from
-                                    leaking out through openings in the furnace casing. Strongly
-                                    positive pressure can push flue gases into the boiler room.
-                                </div>
-                            </details>
-
-                            <details class="edu-faq-item">
-                                <summary>How do I choose the loss coefficient J?</summary>
-                                <div class="edu-faq-answer">
-                                    J is the sum of the friction coefficient (based on duct
-                                    roughness and length-to-diameter ratio) and the local loss
-                                    coefficients of every fitting, damper, and bend in the duct
-                                    run. Values typically range from about 1 to 5 for a moderately
-                                    complex duct system; consult applicable duct design references
-                                    for your specific layout.
-                                </div>
-                            </details>
-
-                            <details class="edu-faq-item">
-                                <summary>What are the limitations of this simulator?</summary>
-                                <div class="edu-faq-answer">
-                                    This model assumes steady-state, single-phase gas flow with
-                                    uniform temperature along the duct, and a simplified ideal-gas
-                                    density correction. It does not account for wind effects on the
-                                    stack, transient thermal behavior, or moisture condensation.
-                                    For critical designs, validate results against your facility's
-                                    engineering standards.
-                                </div>
-                            </details>
-
+                    <details class="edu-faq-item">
+                        <summary>What is natural draft?</summary>
+                        <div class="edu-faq-answer">
+                            Natural draft is the flow of flue gases through a chimney or
+                            stack driven purely by the density difference between the hot
+                            gases inside and the cooler air outside � no fan required. It
+                            depends on stack height and the gas-to-ambient temperature
+                            difference.
                         </div>
-                    </section>
+                    </details>
 
-<!-- AD-SLOT HIDDEN
+                    <details class="edu-faq-item">
+                        <summary>What happens if the margin is negative?</summary>
+                        <div class="edu-faq-answer">
+                            A negative margin means the available natural draft cannot
+                            overcome the kinetic and frictional losses at the specified
+                            flow rate. In practice this means the flow will not sustain
+                            itself, and induced or forced draft (a fan) is required.
+                        </div>
+                    </details>
+
+                    <details class="edu-faq-item">
+                        <summary>Why does furnace pressure matter?</summary>
+                        <div class="edu-faq-answer">
+                            A slightly negative (suction) pressure at the furnace outlet
+                            helps keep combustion stable and prevents hot gases from
+                            leaking out through openings in the furnace casing. Strongly
+                            positive pressure can push flue gases into the boiler room.
+                        </div>
+                    </details>
+
+                    <details class="edu-faq-item">
+                        <summary>How do I choose the loss coefficient J?</summary>
+                        <div class="edu-faq-answer">
+                            J is the sum of the friction coefficient (based on duct
+                            roughness and length-to-diameter ratio) and the local loss
+                            coefficients of every fitting, damper, and bend in the duct
+                            run. Values typically range from about 1 to 5 for a moderately
+                            complex duct system; consult applicable duct design references
+                            for your specific layout.
+                        </div>
+                    </details>
+
+                    <details class="edu-faq-item">
+                        <summary>What are the limitations of this simulator?</summary>
+                        <div class="edu-faq-answer">
+                            This model assumes steady-state, single-phase gas flow with
+                            uniform temperature along the duct, and a simplified ideal-gas
+                            density correction. It does not account for wind effects on the
+                            stack, transient thermal behavior, or moisture condensation.
+                            For critical designs, validate results against your facility's
+                            engineering standards.
+                        </div>
+                    </details>
+
+                </div>
+            </section>
+
+            <!-- AD-SLOT HIDDEN
                     <div class="ad-slot ad-slot--leaderboard" style="margin-top: 40px;" aria-label="Advertisement">
                         Advertisement
                     </div>
                     -->
 
-                </div><!-- /edu-content -->
-            </div><!-- /container -->
+        </div><!-- /edu-content -->
+    </div><!-- /container -->
 
-        </main>
+    </main>
 
-        <div id="footer-placeholder"></div>
+    <div id="footer-placeholder"></div>
 
     </div><!-- /page-wrapper -->
 

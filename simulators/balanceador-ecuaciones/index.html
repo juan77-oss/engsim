@@ -36,18 +36,52 @@
     <link rel="stylesheet" href="./css/balanceador-ecuaciones.css" />
 
     <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Chemical Equation Balancer",
+  "description": "Interactive stoichiometry tutor for balancing chemical equations step by step.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/balanceador-ecuaciones/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
+  }
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
     {
-        "@context": "https://schema.org",
-        "@type": "WebApplication",
-        "name": "Chemical Equation Balancer",
-        "description": "Interactive stoichiometry tutor for balancing chemical equations step by step.",
-        "url": "https://engsim.app/simulators/balanceador-ecuaciones/",
-        "applicationCategory": "EducationalApplication",
-        "isAccessibleForFree": true,
-        "operatingSystem": "Any",
-        "offers": { "@type": "Offer", "price": "0" }
+      "@type": "Question",
+      "name": "Why are my coefficients reduced to smaller numbers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A balanced equation should always use the simplest (lowest) integer ratio. If the solver finds 4H2 + 2O2 → 4H2O, it divides by 2 to give 2H2 + O2 → 2H2O. This is the chemical convention — using multiples is mathematically correct but not standard."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What reaction types does this simulator support?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The simulator detects and explains: organic combustion, simple synthesis, decomposition, single and double displacement, acid-base neutralization, and inorganic reactions with polyatomic ions. The didactic order of element balancing adapts automatically to each type."
+      }
     }
-    </script>
+  ]
+}
+</script>
 </head>
 
 <body>

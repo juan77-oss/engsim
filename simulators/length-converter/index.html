@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Length Converter",
-    "url": "https://engsim.app/simulators/length-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert length values between nanometers, micrometers, millimeters, centimeters, meters, kilometers, mils, inches, feet, yards, miles, nautical miles and light-years.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Length Converter",
+  "description": "Free interactive tool that converts length values instantly across multiple unit systems, including metric, imperial, nautical, and astronomical units like meters, miles, and light-years.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/length-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many centimeters are in an inch?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Exactly 2.54 cm. This is the internationally agreed definition of the inch, so the conversion is exact, not an approximation."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I convert miles to kilometers?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Multiply the mile value by 1.609344 to get kilometers. Equivalently, 1 km ≈ 0.621371 miles."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--

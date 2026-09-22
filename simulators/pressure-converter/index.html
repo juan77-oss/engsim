@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Pressure Converter",
-    "url": "https://engsim.app/simulators/pressure-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert absolute pressure values between pascals, hectopascals, kilopascals, megapascals, bar, standard atmospheres, psi, mmHg, inHg and kgf/cm².",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Pressure Converter",
+  "description": "Free interactive tool that converts a single pressure value into pascals, bar, psi, atmospheres, mmHg, and other common pressure units at the same time.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/pressure-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What's the difference between absolute and gauge pressure?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolute pressure is measured from a perfect vacuum (0 Pa) — this is what this tool converts. Gauge pressure is measured relative to atmospheric pressure, so it reads 0 at normal atmospheric conditions and can go negative in a partial vacuum. A tire pressure gauge reads gauge pressure; add 1 atm (≈101.3 kPa) to get the absolute value."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I convert bar to psi?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Multiply by 14.5038. So 1 bar ≈ 14.5 psi, and 1 psi ≈ 0.0689 bar."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--

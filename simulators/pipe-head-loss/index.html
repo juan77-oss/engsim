@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
@@ -39,18 +39,52 @@
 
     <!-- Structured data for Google (SEO) -->
     <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Pipe Head Loss Calculator",
-    "description": "Darcy-Weisbach pipe head loss calculator with Swamee-Jain and Colebrook-White friction factor methods, plus a Decision Engine that recommends the optimal commercial pipe diameter.",
-    "url": "https://engsim.app/simulators/pipe-head-loss/",
-    "applicationCategory": "EducationalApplication",
-    "isAccessibleForFree": true,
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0" }
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Pipe Head Loss Calculator",
+  "description": "Darcy-Weisbach pipe head loss calculator with Swamee-Jain and Colebrook-White friction factor methods, plus a Decision Engine that recommends the optimal commercial pipe diameter.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/pipe-head-loss/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Swamee-Jain or Colebrook-White — which should I use?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Swamee-Jain is explicit and accurate within about 2% of Colebrook-White for most engineering flows (5,000 < Re < 10⁸). Use Colebrook-White when you need iterative precision or are near the transition zone."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the Decision Engine recommend?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It scans standard commercial pipe diameters and scores each one on energy savings (65% weight) versus relative cost increase (35% weight), then recommends the best-balanced option — only within the safe velocity range of 0.5–3.0 m/s."
+      }
+    }
+  ]
+}
+</script>
 </head>
 
 <body>

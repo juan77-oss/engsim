@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Speed Converter",
-    "url": "https://engsim.app/simulators/speed-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert speed values between meters per second, kilometers per hour, miles per hour, feet per second, knots, Mach and the speed of light, with built-in physical limit validation.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Speed Converter",
+  "description": "Free interactive tool that converts a single speed value into meters per second, kilometers per hour, miles per hour, knots, Mach and the speed of light at the same time.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/speed-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I convert km/h to mph?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Divide by 1.609344, or multiply by about 0.621371. A quick rule of thumb: mph ≈ km/h × 0.62."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is a knot, and why is it used at sea?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A knot is one nautical mile per hour (0.514444 m/s). It's used in aviation and maritime navigation because a nautical mile is tied directly to a minute of latitude, making it convenient for plotting position on nautical charts."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--

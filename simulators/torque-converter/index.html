@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Torque Converter",
-    "url": "https://engsim.app/simulators/torque-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert torque values between newton-meters, kilonewton-meters, pound-force-feet, pound-force-inches, kilogram-force-meters and dyne-centimeters.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Torque Converter",
+  "description": "Free interactive tool that converts a single torque value into newton-meters, pound-force-feet, pound-force-inches, kilogram-force-meters and dyn·cm at the same time.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/torque-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I convert N·m to lbf·ft?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Divide by 1.3558179483. Equivalently, 1 lbf·ft ≈ 1.356 N·m, so 1 N·m ≈ 0.7376 lbf·ft."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between lbf·ft and lbf·in?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "They're the same physical quantity at different scales — lbf·ft is used for larger torques (like lug nuts or engine bolts), lbf·in for small precision hardware (like electronics or eyeglass screws). 1 lbf·ft = 12 lbf·in exactly."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--

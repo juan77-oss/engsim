@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Fuel Consumption Converter",
-    "url": "https://engsim.app/simulators/fuel-consumption-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert fuel economy values between miles per US gallon, miles per UK gallon, kilometers per liter and liters per 100 kilometers.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Fuel Consumption Converter",
+  "description": "Free interactive tool that converts a single fuel economy value into miles per US gallon, miles per UK gallon, km/L, and L/100km at the same time.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/fuel-consumption-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why is a higher L/100km worse, but a higher mpg better?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because they measure opposite things. mpg measures how far you go per unit of fuel — more is better. L/100km measures how much fuel you use per unit of distance — less is better. They're reciprocals of each other, which is why the direction of \"better\" flips."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I convert L/100km to mpg?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "First convert to km/L (divide 100 by the L/100km value), then convert km/L to mpg by dividing by 0.425143707 (US) or 0.354006190 (UK). There's no single fixed multiplier from L/100km directly to mpg, because the relationship is a reciprocal, not a scale factor."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--

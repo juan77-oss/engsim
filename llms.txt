@@ -1,0 +1,64 @@
+# EngSim
+
+> Free, browser-based engineering simulators for students and professionals. No account required. Covers thermodynamics, fluid mechanics, structural mechanics, electrical engineering, and chemistry, plus a full set of unit converters.
+
+EngSim is a collection of interactive calculators and diagram tools built for engineering coursework and quick professional reference. Every simulator runs entirely client-side, is free to use, and includes an explanation of the method, how to use the tool, and answers to common questions about the underlying formulas.
+
+## Unit Converters
+
+- [Power Converter](https://juan77-oss.github.io/engsim/simulators/power-converter/index.html): Convert watts, kilowatts, horsepower, BTU/h, kcal/h, tons of refrigeration, dBm and more — all units at once.
+- [Energy Converter](https://juan77-oss.github.io/engsim/simulators/energy-converter/index.html): Convert energy between joules, kJ, kWh, calories, BTU, foot-pounds, electronvolts, ergs and more.
+- [Length Converter](https://juan77-oss.github.io/engsim/simulators/length-converter/index.html): Convert length between millimeters, centimeters, meters, kilometers, inches, feet, yards, miles, nautical miles and light-years.
+- [Mass & Weight Converter](https://juan77-oss.github.io/engsim/simulators/mass-converter/index.html): Convert mass between milligrams, grams, kilograms, tonnes, ounces, pounds, stones, US/UK tons and atomic mass units.
+- [Temperature Converter](https://juan77-oss.github.io/engsim/simulators/temperature-converter/index.html): Convert temperature between Celsius, Fahrenheit, Kelvin, Rankine and Réaumur, with absolute zero validation.
+- [Volume Converter](https://juan77-oss.github.io/engsim/simulators/volume-converter/index.html): Convert volume between liters, milliliters, cubic meters, cubic feet, US/UK gallons, cups, tablespoons and more.
+- [Data Storage Converter](https://juan77-oss.github.io/engsim/simulators/data-storage-converter/index.html): Convert data storage between bits, bytes, KB, MB, GB, TB, PB and their binary equivalents (KiB, MiB, GiB, TiB, PiB).
+- [Area Converter](https://juan77-oss.github.io/engsim/simulators/area-converter/index.html): Convert area between square meters, square feet, square miles, acres and hectares.
+- [Speed Converter](https://juan77-oss.github.io/engsim/simulators/speed-converter/index.html): Convert speed between m/s, km/h, mph, knots, Mach and the speed of light.
+- [Pressure Converter](https://juan77-oss.github.io/engsim/simulators/pressure-converter/index.html): Convert pressure between pascals, bar, psi, atmospheres, mmHg, inHg and kgf/cm².
+- [Force Converter](https://juan77-oss.github.io/engsim/simulators/force-converter/index.html): Convert force between newtons, dynes, kilogram-force, pound-force and poundals.
+- [Torque Converter](https://juan77-oss.github.io/engsim/simulators/torque-converter/index.html): Convert torque between N·m, lbf·ft, lbf·in, kgf·m and dyn·cm.
+- [Flow Rate Converter](https://juan77-oss.github.io/engsim/simulators/flow-rate-converter/index.html): Convert flow rate between m³/s, L/min, US GPM and CFM.
+- [Fuel Consumption Converter](https://juan77-oss.github.io/engsim/simulators/fuel-consumption-converter/index.html): Convert fuel economy between mpg (US), mpg (UK), km/L and L/100km.
+
+## Thermodynamics
+
+- [T-s Diagram (Water)](https://juan77-oss.github.io/engsim/simulators/ts-diagram-water/index.html): Interactive Temperature-Entropy diagram for analyzing thermodynamic states and cycles.
+- [Entropy T-s Diagram](https://juan77-oss.github.io/engsim/simulators/entropy-diagram/index.html): Model isothermal, adiabatic, polytropic, isobaric and isochoric ideal-gas processes and visualize entropy generation.
+
+## Combustion & Heat
+
+- [Gaseous Combustion](https://juan77-oss.github.io/engsim/simulators/gas-combustion/index.html): Stoichiometric simulator for pure gaseous fuels and hydrocarbon mixtures.
+- [Combustion Analysis](https://juan77-oss.github.io/engsim/simulators/combustion-chimenea/index.html): Calculate dilution and thermal efficiency using Siegert's formula and Orsat analysis.
+- [Natural Draft & Chimneys](https://juan77-oss.github.io/engsim/simulators/natural-draft/index.html): Calculate natural draft, friction head loss, and pressure balances in industrial chimneys.
+- [Fuel Construction](https://juan77-oss.github.io/engsim/simulators/fuel-construction/index.html): Define the elemental composition of a solid fuel on a dry basis (C·H·O·N·S·Z) and see how moisture transforms the calculation basis.
+
+## Fluid Mechanics
+
+- [Pipe Head Loss](https://juan77-oss.github.io/engsim/simulators/pipe-head-loss/index.html): Compute head loss using Darcy-Weisbach and Swamee-Jain, with Reynolds number, friction factor, pressure drop, and recommended commercial pipe diameter.
+
+## Mechanics & Structures
+
+- [Mohr's Circle Calculator](https://juan77-oss.github.io/engsim/simulators/mohr-circle/index.html): Compute principal stresses, maximum shear stress, and stress at any rotated plane from a plane stress state, with an interactive diagram.
+- [Static Beam](https://juan77-oss.github.io/engsim/simulators/static-beam/index.html): Analyze simply supported beams: shear force diagrams, bending moment diagrams, and support reactions.
+
+## Electrical Engineering
+
+- [Kapp Diagram Calculator](https://juan77-oss.github.io/engsim/simulators/kapp-diagram/index.html): Compute voltage regulation, secondary voltage drop, and phasor diagram for single-phase transformers using the infinite bus model.
+- [Voltage Divider](https://juan77-oss.github.io/engsim/simulators/voltage-divider/index.html): Interactive resistive voltage divider: adjust values and visualize output voltage and current distribution.
+- [DC Circuit Analyzer](https://juan77-oss.github.io/engsim/simulators/dc-circuit-analyzer/index.html): Analyze series and parallel resistive DC networks — currents, voltages, power, and maximum power transfer — with guided Thevenin, Norton, node, and mesh analysis.
+
+## Chemistry
+
+- [Chemical Reactions](https://juan77-oss.github.io/engsim/simulators/chemical-reactions/index.html): Balance chemical equations, identify limiting reactants, and analyze redox reactions step by step.
+- [Chemical Equation Balancer](https://juan77-oss.github.io/engsim/simulators/balanceador-ecuaciones/index.html): Step-by-step stoichiometry tutor to learn the balancing method or practice with real-time coefficient feedback.
+
+## Coming Soon
+
+- Rankine Cycle: Analyze steam power cycles, thermodynamic states, and efficiency with interpolations.
+- Brayton Cycle: Interactive simulation of ideal and real gas turbine cycles with state diagrams.
+
+## Notes
+
+- All simulators are free, require no account, and run entirely in the browser.
+- This file follows the llms.txt convention (https://llmstxt.org) so AI assistants can quickly index EngSim's available tools without crawling the full site.

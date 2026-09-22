@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Temperature Converter",
-    "url": "https://engsim.app/simulators/temperature-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert temperature values between Celsius, Fahrenheit, Kelvin, Rankine and Réaumur, with built-in absolute zero validation.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Temperature Converter",
+  "description": "Free interactive tool that converts temperature values instantly between Celsius, Fahrenheit, Kelvin, Rankine, and Réaumur scales.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/temperature-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is absolute zero, and why can't I enter a lower value?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Absolute zero (−273.15 °C, 0 K, −459.67 °F) is the coldest temperature theoretically possible — the point where particles have minimal thermal motion. No real or converted temperature can go below it, so this tool blocks values under that limit in whichever unit you enter."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I convert Celsius to Fahrenheit?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Multiply by 9/5 (or 1.8) and add 32: °F = °C × 9/5 + 32. To go back, subtract 32 first and multiply by 5/9."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--

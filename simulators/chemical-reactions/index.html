@@ -30,18 +30,52 @@
   <link rel="stylesheet" href="css/simulator.css" />
 
   <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Chemical Reactions Simulator",
-    "description": "Interactive chemical reactions simulator: limiting reagent with complete stoichiometry and redox reactions by the ion-electron half-reaction method.",
-    "url": "https://engsim.app/simulators/chemical-reactions/",
-    "applicationCategory": "EducationalApplication",
-    "isAccessibleForFree": true,
-    "operatingSystem": "Any",
-    "offers": { "@type": "Offer", "price": "0" }
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Chemical Reactions Simulator",
+  "description": "Interactive chemical reactions simulator: limiting reagent with complete stoichiometry and redox reactions by the ion-electron half-reaction method.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/chemical-reactions/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I enter quantities in moles instead of grams?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Use the unit selector next to each reactant field to switch between grams (g) and moles (mol). The conversion step is skipped for mole inputs and the stoichiometric ratio is used directly."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does the molar ratio bar chart show?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each bar shows the fraction of each reactant that is consumed (orange/red) versus the fraction remaining as excess (green). The limiting reagent bar is always 100 % consumed."
+      }
+    }
+  ]
+}
+</script>
 </head>
 
 <body>

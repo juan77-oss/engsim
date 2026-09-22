@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Force Converter",
-    "url": "https://engsim.app/simulators/force-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert force values between newtons, kilonewtons, meganewtons, dynes, kilogram-force, pound-force and poundals.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Force Converter",
+  "description": "Free interactive tool that converts a single force value into newtons, dynes, kilogram-force, pound-force and other force units at the same time.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/force-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many newtons are in a pound-force?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "1 lbf = 4.4482216152605 N exactly. This is the force exerted by standard gravity (9.80665 m/s²) on a mass of exactly 1 avoirdupois pound."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What's the difference between kgf and kg?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "kg (kilogram) is a unit of mass. kgf (kilogram-force) is a unit of force — specifically, the weight of a 1 kg mass under standard gravity, equal to 9.80665 N. Mixing the two up is a very common source of unit errors."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--

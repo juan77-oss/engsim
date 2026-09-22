@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -29,18 +29,53 @@
 
   <!-- EDIT 4: external libraries (none needed for this simulator) -->
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebApplication",
-    "name": "Volume Converter",
-    "url": "https://engsim.app/simulators/volume-converter/",
-    "applicationCategory": "EngineeringApplication",
-    "operatingSystem": "Any",
-    "description": "Convert volume values between milliliters, liters, cubic meters, cubic centimeters, cubic inches, cubic feet, US and UK gallons, quarts, pints, cups, fluid ounces, tablespoons and teaspoons.",
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Volume Converter",
+  "description": "Free interactive tool that converts volume values instantly across metric, US customary and imperial units, including liters, gallons, cubic meters, and cups.",
+  "url": "https://juan77-oss.github.io/engsim/simulators/volume-converter/index.html",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://juan77-oss.github.io/engsim/"
   }
-  </script>
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many milliliters are in a liter?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Exactly 1,000 mL. The prefix \"milli-\" always means one thousandth in the metric system."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I convert liters to US gallons?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Divide the liter value by 3.785411784. Equivalently, 1 US gallon ≈ 3.785 liters, so 1 liter ≈ 0.264 US gallons."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
   <!--
