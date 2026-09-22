@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Construction Simulator | EngSim</title>
+    <meta name="description"
+        content="Educational combustion simulator: learn to build a solid fuel, define its dry-basis composition, and understand the effect of moisture on heating values and theoretical air.">
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Fuel Construction Simulator | EngSim" />
+    <meta property="og:description"
+        content="Educational combustion simulator: learn to build a solid fuel, define its dry-basis composition, and understand the effect of moisture on heating values and theoretical air." />
+    <meta property="og:site_name" content="EngSim" />
+    <meta property="og:url" content="https://engsim.app/simulators/fuel-construction/" />
+
+    <!-- <link rel="canonical" href="https://engsim.app/simulators/fuel-construction/" /> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Fuel Construction Simulator",
+      "description": "Educational combustion simulator: learn to build a solid fuel, define its dry-basis composition, and understand the effect of moisture on heating values and theoretical air.",
+      "url": "https://engsim.app/simulators/fuel-construction/",
+      "applicationCategory": "EducationalApplication",
+      "isAccessibleForFree": true,
+      "operatingSystem": "Any",
+      "offers": { "@type": "Offer", "price": "0" }
+    }
+    </script>
+
+    <!-- ── Core Design System (shared, EngSim) ─────────────────── -->
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/platform.css" />
+    <link rel="stylesheet" href="../../assets/css/simulator.css" />
+</head>
+
+<body class="sim-fuel-construction">
+    <div class="page-wrapper">
+
+        <!-- ── NAV ─────────────────────────────────────────────── -->
+        <!-- Nav injected by platform.js -->
+        <div id="nav-placeholder"></div>
+
+        <!-- ── HERO ────────────────────────────────────────────── -->
+        <section class="sim-hero" aria-labelledby="sim-title">
+            <div class="container">
+                <nav aria-label="Breadcrumb">
+                    <ol class="sim-hero__breadcrumb">
+                        <li><a href="../../index.html">Home</a></li>
+                        <li><span aria-hidden="true">/</span></li>
+                        <li><a href="../index.html">Simulators</a></li>
+                        <li><span aria-hidden="true">/</span></li>
+                        <li>Fuel Construction</li>
+                    </ol>
+                </nav>
+
+                <span class="sim-hero__category">Thermodynamics &amp; Chemical Engineering</span>
+
+                <h1 class="sim-hero__title" id="sim-title">Fuel Construction</h1>
+
+                <p class="sim-hero__subtitle">
+                    Define the elemental composition of a solid fuel on a dry basis
+                    (C · H · O · N · S · Z) and observe how moisture transforms the calculation
+                    basis. The sum is always maintained at 100 %.
+                </p>
+            </div>
+        </section>
+
+        <!-- Contenido Principal -->
+        <section class="sim-body">
+            <div class="container">
+                
+                <div class="sim-error" data-output="main" role="alert" aria-live="assertive"></div>
+
+                <div class="sim-layout" style="--sim-sidebar-width: 380px;">
+
+                    <!-- Sidebar: Inputs -->
+                    <aside aria-label="Input Parameters">
+                        <!-- 2. Inputs -->
+                        <div class="sim-panel">
+                            <div class="sim-panel__header"
+                                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-4);">
+                                <h2 class="sim-panel__title" style="margin-bottom:0;">Parameter Adjustment</h2>
+                                <button id="btn-reset-fuel" class="comb-reset-btn" type="button"
+                                    title="Restore default composition">
+                                    ↺ Reset
+                                </button>
+                            </div>
+                            <div class="sim-panel__body">
+                                <!-- Nota del modelo -->
+                                <div class="simulator-note" style="margin-bottom: var(--space-6);">
+                                    <div class="simulator-note__header">
+                                        <span class="simulator-note__icon">📘</span>
+                                        <span>System Model</span>
+                                    </div>
+                                    <div class="simulator-note__body">
+                                        Stoichiometric combustion with dry air (21% O₂, 79% N₂).
+                                        Ideal gas behavior.
+                                    </div>
+                                </div>
+
+                                <!-- Sliders -->
+                                <div data-container="inputs"></div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- Main: Results and Analysis -->
+                    <main aria-label="Simulator and Results">
+                        
+                        <!-- 1. KPI Results -->
+                        <div id="kpi-results" style="margin-bottom: var(--space-6);">
+                            <div id="kpi-calorifico" class="resultado-principal" role="status" aria-live="polite">
+                                <div class="resultado-principal__message">
+                                    Adjust parameters to calculate heating value
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ── ANALYSIS PANEL ── -->
+                        <section id="analysis-panel"
+                            style="display: flex; flex-direction: column; gap: var(--space-6);">
+
+                            <!-- 3. Technical Table (Collapsible) -->
+                            <div id="technical-table">
+                                <div class="collapsible" id="collapsible-composition">
+                                    <div class="collapsible-header" id="toggle-composition">
+                                        <h2>
+                                            <span class="collapsible-icon">▶</span>
+                                            Technical composition details
+                                        </h2>
+                                    </div>
+                                    <div class="collapsible-content">
+                                        <div class="collapsible-inner">
+                                            <div class="sim-chart-card__header" style="margin-bottom: var(--space-4);">
+                                                <div>
+                                                    <h2 class="sim-chart-card__title">
+                                                        Elemental composition
+                                                        <span class="info-tooltip" tabindex="0" aria-label="Information"
+                                                            data-tooltip="The physical model assumes an ideal equivalent gas. Elemental fractions are normalized proportionally to maintain stoichiometry.">ⓘ</span>
+                                                    </h2>
+                                                    <span class="sim-chart-card__subtitle">
+                                                        Dry basis → Wet basis · X<sub>BH</sub> = X<sub>BS</sub> × (1 −
+                                                        Hu/100)
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="comb-basis-banner comb-basis-banner--dry" data-basis-banner
+                                                role="status" aria-live="polite" style="margin-bottom: var(--space-4);">
+                                                <span class="comb-basis-icon">◎</span>
+                                                <span><strong>Dry basis</strong> — Hu = 0 %</span>
+                                            </div>
+
+                                            <table class="comb-composition-table"
+                                                aria-label="Composición del combustible">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Component</th>
+                                                        <th class="comb-col-dry">Dry basis (%)</th>
+                                                        <th class="comb-col-wet" data-wet-col>Wet basis (%)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td><span class="comb-tbl-element"><span class="comb-tbl-dot"
+                                                                    style="background:#6366f1;"></span>C — Carbon</span>
+                                                        </td>
+                                                        <td class="comb-col-dry" data-dry="C">—</td>
+                                                        <td class="comb-col-wet comb-col--inactive" data-wet="C"
+                                                            data-wet-col>—</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span class="comb-tbl-element"><span class="comb-tbl-dot"
+                                                                    style="background:#3b82f6;"></span>H —
+                                                                Hydrogen</span></td>
+                                                        <td class="comb-col-dry" data-dry="H">—</td>
+                                                        <td class="comb-col-wet comb-col--inactive" data-wet="H"
+                                                            data-wet-col>—</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span class="comb-tbl-element"><span class="comb-tbl-dot"
+                                                                    style="background:#10b981;"></span>O — Oxygen</span>
+                                                        </td>
+                                                        <td class="comb-col-dry" data-dry="O">—</td>
+                                                        <td class="comb-col-wet comb-col--inactive" data-wet="O"
+                                                            data-wet-col>—</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span class="comb-tbl-element"><span class="comb-tbl-dot"
+                                                                    style="background:#f59e0b;"></span>N —
+                                                                Nitrogen</span></td>
+                                                        <td class="comb-col-dry" data-dry="N">—</td>
+                                                        <td class="comb-col-wet comb-col--inactive" data-wet="N"
+                                                            data-wet-col>—</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span class="comb-tbl-element"><span class="comb-tbl-dot"
+                                                                    style="background:#f97316;"></span>S — Sulfur</span>
+                                                        </td>
+                                                        <td class="comb-col-dry" data-dry="S">—</td>
+                                                        <td class="comb-col-wet comb-col--inactive" data-wet="S"
+                                                            data-wet-col>—</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><span class="comb-tbl-element"><span class="comb-tbl-dot"
+                                                                    style="background:#9ca3af;"></span>Z — Ash</span>
+                                                        </td>
+                                                        <td class="comb-col-dry" data-dry="Z">—</td>
+                                                        <td class="comb-col-wet comb-col--inactive" data-wet="Z"
+                                                            data-wet-col>—</td>
+                                                    </tr>
+                                                    <tr class="comb-row-water">
+                                                        <td><span class="comb-tbl-element"><span class="comb-tbl-dot"
+                                                                    style="background:#0ea5e9;"></span>H₂O —
+                                                                Water</span></td>
+                                                        <td class="comb-col-dry" style="color:var(--color-border);">0.0
+                                                            %</td>
+                                                        <td class="comb-col-wet comb-col--inactive" data-wet="water"
+                                                            data-wet-col>0.0 %</td>
+                                                    </tr>
+                                                    <tr class="comb-row-total">
+                                                        <td><strong>Total</strong></td>
+                                                        <td class="comb-col-dry" data-dry="sum">—</td>
+                                                        <td class="comb-col-wet comb-col--inactive" data-wet="sum"
+                                                            data-wet-col>—</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 4. Chart -->
+                            <div id="chart-container" class="sim-chart-card">
+                                <div class="sim-chart-card__header">
+                                    <div>
+                                        <h2 class="sim-chart-card__title">Composition Visualization</h2>
+                                        <span class="sim-chart-card__subtitle">
+                                            Stacked bars — Dry basis vs. Wet basis
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="sim-chart-wrapper">
+                                    <canvas id="mainChart" role="img"
+                                        aria-label="Bar chart with fuel composition on dry and wet basis">
+                                    </canvas>
+                                </div>
+                            </div>
+
+                            <!-- 5. Insights -->
+                            <div id="insights">
+                                <div data-container="tutor"></div>
+                                <div data-container="insights" aria-live="polite"></div>
+                            </div>
+                        </section>
+
+                        <!-- ── EDUCATIONAL CONTENT ── -->
+                        <div class="edu-content" id="educational-content" aria-label="Educational Reference">
+
+                            <!-- Section 1: About This Combustion Simulator -->
+                            <section class="edu-section">
+                                <h2 class="edu-section__heading">About This Combustion Simulator</h2>
+                                <p>This simulator is designed to analyze the fundamental thermodynamic properties of
+                                    solid fuels based on their elemental composition. It allows engineers and students
+                                    to explore how varying the chemical constituents of a fuel directly impacts its
+                                    energy density and combustion requirements.</p>
+                                <p>Elemental fuel composition matters because the proportions of carbon, hydrogen,
+                                    oxygen, and sulfur dictate the total available chemical energy, while moisture and
+                                    ash act as diluents. By defining these parameters, essential engineering quantities
+                                    such as the heating value and the theoretical air required for combustion can be
+                                    obtained.</p>
+                                <p>Moisture content is a critical variable in real-world applications, which is why
+                                    understanding the difference between dry and wet basis is essential. This simulator
+                                    serves as both an engineering calculation tool and an educational reference to
+                                    bridge theoretical stoichiometry with practical fuel characterization.</p>
+                            </section>
+
+                            <!-- Section 2: How to Use the Simulator -->
+                            <section class="edu-section">
+                                <h2 class="edu-section__heading">How to Use the Simulator</h2>
+                                <ol class="edu-steps">
+                                    <li><strong>Enter the fuel elemental composition:</strong> Adjust the sliders for
+                                        Carbon, Hydrogen, Oxygen, Nitrogen, and Sulfur on a dry basis (Hu = 0%).</li>
+                                    <li><strong>Specify moisture:</strong> Adjust the humidity slider when applicable to
+                                        represent the fuel in its actual state.</li>
+                                    <li><strong>Select or verify the appropriate basis:</strong> Observe the basis
+                                        banner to understand if calculations reflect a dry or wet state.</li>
+                                    <li><strong>Review HHV and LHV:</strong> Check the Heating Value KPI card for the
+                                        estimated Higher (PCS) and Lower (PCI) Heating Values.</li>
+                                    <li><strong>Examine the technical composition details:</strong> Expand the
+                                        collapsible table to see the exact numerical shift from dry to wet basis.</li>
+                                </ol>
+                            </section>
+
+                            <!-- Section 3: Fuel Composition -->
+                            <section class="edu-section">
+                                <h2 class="edu-section__heading">Fuel Composition</h2>
+                                <p>Elemental composition is the starting point for combustion calculations because it
+                                    defines the exact chemical makeup available for oxidation. The key engineering
+                                    parameters are:</p>
+                                <ul>
+                                    <li><strong>Carbon (C):</strong> The primary energy carrier in most solid fuels.
+                                    </li>
+                                    <li><strong>Hydrogen (H):</strong> Provides a high heating value per unit mass but
+                                        produces water vapor during combustion.</li>
+                                    <li><strong>Oxygen (O):</strong> Oxygen bound within the fuel reduces the external
+                                        air demand but effectively lowers the net heating value.</li>
+                                    <li><strong>Nitrogen (N):</strong> An inert component that does not contribute
+                                        energy.</li>
+                                    <li><strong>Sulfur (S):</strong> Contributes a small amount of energy but generates
+                                        sulfur dioxide (SO₂), an undesirable pollutant.</li>
+                                    <li><strong>Moisture / Water (H₂O):</strong> Free water contained within the fuel
+                                        structure that acts as a pure diluent and absorbs energy during evaporation.
+                                    </li>
+                                    <li><strong>Ash (Z):</strong> Inert inorganic matter that remains after complete
+                                        combustion. It contributes no energy and acts as a diluent.</li>
+                                </ul>
+                            </section>
+
+                            <!-- Section 4: Dry Basis vs. Wet Basis -->
+                            <section class="edu-section">
+                                <h2 class="edu-section__heading">Dry Basis vs. Wet Basis</h2>
+                                <p>Understanding the reporting basis is fundamental in fuel engineering.</p>
+                                <p><strong>Dry basis</strong> represents the elemental composition of the fuel strictly
+                                    without any free moisture. It is the standardized reference used for laboratory
+                                    analysis and calculations.</p>
+                                <p><strong>Wet basis</strong> represents the fuel as it is actually received or fired,
+                                    including its moisture content. Because water adds mass to the total mixture without
+                                    adding combustible material, moisture changes the numerical percentages of all other
+                                    components through dilution.</p>
+                                <p>The same physical fuel will have different reported component percentages depending
+                                    on the basis used. The simulator presents both values side-by-side in the Technical
+                                    Composition Details section, utilizing the standard conversion relationship:
+                                    <em>X<sub>BH</sub> = X<sub>BS</sub> &times; (1 &minus; Hu/100)</em>.</p>
+                            </section>
+
+                            <!-- Section 5: Higher and Lower Heating Value -->
+                            <section class="edu-section">
+                                <h2 class="edu-section__heading">Higher and Lower Heating Value</h2>
+                                <p>The energy density of a fuel is characterized by its heating value. The physical
+                                    difference between the two common definitions lies in the state of the water
+                                    produced during combustion:</p>
+                                <ul>
+                                    <li><strong>Higher Heating Value (HHV / PCS):</strong> Assumes that the water vapor
+                                        generated by the combustion of hydrogen (and any original moisture) condenses
+                                        back into a liquid state, recovering its latent heat of vaporization.</li>
+                                    <li><strong>Lower Heating Value (LHV / PCI):</strong> Assumes that the water remains
+                                        as a vapor and escapes with the flue gases. This latent heat is therefore not
+                                        recovered.</li>
+                                </ul>
+                                <p>LHV is commonly relevant to practical combustion systems (like traditional boilers
+                                    and engines) where the exhaust gases are discharged at temperatures well above the
+                                    dew point, meaning water remains in the vapor phase.</p>
+                            </section>
+
+                            <!-- Section 6: Dulong Method -->
+                            <section class="edu-section">
+                                <h2 class="edu-section__heading">Dulong Method</h2>
+                                <p>To estimate the heating value, this simulator uses the elemental composition as an
+                                    input for empirical engineering correlations, specifically based on the Dulong
+                                    approach.</p>
+                                <p>Conceptually, the method recognizes that carbon, hydrogen, and sulfur are the
+                                    combustible elements that positively influence the estimated heating value. However,
+                                    any oxygen inherently present in the fuel is assumed to be already bound to hydrogen
+                                    as structural water, thereby reducing the contribution of available hydrogen.</p>
+                                <p>This correlation provides a reliable theoretical estimation for solid fuels without
+                                    requiring a direct calorimetric laboratory test.</p>
+                            </section>
+
+                            <!-- Section 7: Stoichiometric Oxygen and Theoretical Air -->
+                            <section class="edu-section">
+                                <h2 class="edu-section__heading">Stoichiometric Oxygen and Theoretical Air</h2>
+                                <p><strong>Stoichiometric combustion</strong> is the ideal theoretical process where
+                                    exactly the right amount of oxygen is supplied to completely oxidize all combustible
+                                    elements in the fuel, with no oxygen left over.</p>
+                                <p><strong>Stoichiometric oxygen</strong> represents the exact mass of oxygen required
+                                    for this complete theoretical reaction. The elemental composition directly
+                                    determines this oxygen requirement based on the chemical reactions of C, H, and S.
+                                </p>
+                                <p>Because industrial combustion uses ambient air rather than pure oxygen, the
+                                    <strong>theoretical air</strong> is calculated by scaling the required oxygen
+                                    according to the composition of air. The simulator assumes a standard engineering
+                                    air model composed of 21% O₂ and 79% N₂ by volume.</p>
+                            </section>
+
+                            <!-- Section 8: Effect of Moisture -->
+                            <section class="edu-section">
+                                <h2 class="edu-section__heading">Effect of Moisture</h2>
+                                <p>Moisture has a profound effect on combustion calculations and the interpretation of
+                                    results.</p>
+                                <p>When moisture is present, it alters the fuel composition on a wet basis by diluting
+                                    all active components. Consequently, the heating value reported on a wet basis drops
+                                    significantly because the fuel mass now includes non-combustible water.</p>
+                                <p>Furthermore, moisture affects the mass involved in combustion calculations. It does
+                                    not demand oxygen, but it absorbs sensible and latent heat as it evaporates,
+                                    widening the gap between HHV and LHV and effectively lowering the thermal efficiency
+                                    of the real process.</p>
+                            </section>
+
+                            <!-- Section 9: Real-Condition Air Volume -->
+                            <section class="edu-section">
+                                <h2 class="edu-section__heading">Real-Condition Air Volume</h2>
+                                <p>The theoretical air mass calculated from the fuel's chemistry can also be expressed
+                                    as a physical volume — the actual space that air occupies under real temperature and
+                                    pressure conditions.</p>
+                                <p>While the theoretical air mass depends purely on the fuel's chemistry, the physical
+                                    volume that this air occupies depends heavily on its temperature and pressure. As
+                                    temperature increases, the air expands and its density drops, requiring a larger
+                                    volume to deliver the same mass of oxygen. Conversely, higher pressure compresses
+                                    the air.</p>
+                                <p>The simulator uses the ideal-gas assumption to convert the theoretical required air
+                                    mass into a real-condition air volume.</p>
+                            </section>
+
+                            <!-- Section 10: Assumptions and Limitations -->
+                            <section class="edu-section">
+                                <h2 class="edu-section__heading">Assumptions and Limitations</h2>
+                                <p>It is important to distinguish between what the simulator models and what it does not
+                                    attempt to calculate.</p>
+                                <h3 class="edu-section__subheading">What the Simulator Does:</h3>
+                                <ul>
+                                    <li>Performs elemental fuel characterization and basis conversions.</li>
+                                    <li>Estimates heating values using established engineering correlations (Dulong
+                                        method).</li>
+                                    <li>Calculates theoretical air mass requirements based on basic stoichiometry.</li>
+                                    <li>Applies the ideal-gas treatment to determine air volumes at specific
+                                        temperatures and pressures.</li>
+                                    <li>Assumes a standard air composition of 21% O₂ and 79% N₂.</li>
+                                </ul>
+                                <h3 class="edu-section__subheading">What it Does Not Attempt to Model:</h3>
+                                <ul>
+                                    <li>It does not calculate the actual composition of the resulting combustion
+                                        products or flue gas.</li>
+                                    <li>It does not model excess air dynamics or real-world non-stoichiometric
+                                        combustion.</li>
+                                    <li>It does not predict the formation of specific pollutants, such as CO or NOx
+                                        kinetics.</li>
+                                    <li>It does not compute advanced chemical equilibrium states.</li>
+                                </ul>
+                            </section>
+
+                            <!-- Section 11: Frequently Asked Questions -->
+                            <section class="edu-section">
+                                <h2 class="edu-section__heading">Frequently Asked Questions</h2>
+
+                                <div class="edu-faq-item">
+                                    <p class="edu-faq-item__question">What is the difference between HHV and LHV?</p>
+                                    <p class="edu-faq-item__answer">The Higher Heating Value (HHV) includes the latent
+                                        heat of vaporization of water, assuming all water vapor condenses. The Lower
+                                        Heating Value (LHV) assumes water remains a vapor and its latent heat is lost
+                                        with the exhaust.</p>
+                                </div>
+
+                                <div class="edu-faq-item">
+                                    <p class="edu-faq-item__question">Why does moisture change the fuel composition?</p>
+                                    <p class="edu-faq-item__answer">Moisture adds mass to the total fuel mixture. Since
+                                        the percentages must always sum to 100%, adding water proportionally dilutes the
+                                        concentration of carbon, hydrogen, and all other components.</p>
+                                </div>
+
+                                <div class="edu-faq-item">
+                                    <p class="edu-faq-item__question">What is dry basis?</p>
+                                    <p class="edu-faq-item__answer">Dry basis refers to the composition of a fuel
+                                        excluding any free moisture, providing a consistent baseline for theoretical
+                                        calculations and comparisons.</p>
+                                </div>
+
+                                <div class="edu-faq-item">
+                                    <p class="edu-faq-item__question">What is wet basis?</p>
+                                    <p class="edu-faq-item__answer">Wet basis refers to the composition of the fuel in
+                                        its actual state, including all free moisture, which reflects the practical
+                                        material being burned.</p>
+                                </div>
+
+                                <div class="edu-faq-item">
+                                    <p class="edu-faq-item__question">What is stoichiometric air?</p>
+                                    <p class="edu-faq-item__answer">It is the exact theoretical minimum amount of air
+                                        required to completely burn all combustible elements in the fuel, with no excess
+                                        oxygen remaining.</p>
+                                </div>
+
+                                <div class="edu-faq-item">
+                                    <p class="edu-faq-item__question">Why does oxygen in the fuel affect the theoretical
+                                        air requirement?</p>
+                                    <p class="edu-faq-item__answer">Oxygen inherently present within the fuel acts as a
+                                        built-in oxidizer. It reduces the amount of external oxygen (and thus air) that
+                                        must be supplied from the atmosphere to achieve complete combustion.</p>
+                                </div>
+
+                                <div class="edu-faq-item">
+                                    <p class="edu-faq-item__question">Why does air volume change with temperature and
+                                        pressure?</p>
+                                    <p class="edu-faq-item__answer">Following the ideal gas law, a gas expands (volume
+                                        increases) as it heats up, and compresses (volume decreases) as pressure
+                                        increases. The mass required remains the same, but the physical volume required
+                                        to deliver that mass shifts.</p>
+                                </div>
+
+                                <div class="edu-faq-item">
+                                    <p class="edu-faq-item__question">What does the Dulong method estimate?</p>
+                                    <p class="edu-faq-item__answer">The Dulong method estimates the fuel's theoretical
+                                        heating value based strictly on its elemental mass fractions of carbon,
+                                        hydrogen, oxygen, and sulfur.</p>
+                                </div>
+
+                            </section>
+
+                        </div>
+
+                    </main>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer injected by platform.js -->
+        <div id="footer-placeholder"></div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../../assets/js/platform.js"></script>
+    <script type="module" src="./js/simulator.js"></script>
+
+</body>
+
+</html>

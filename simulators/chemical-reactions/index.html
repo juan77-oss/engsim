@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+        content="Interactive chemical reactions simulator: limiting reagent with complete stoichiometry and redox reactions by the ion-electron half-reaction method. Step-by-step solutions for engineering chemistry." />
+  <title>Chemical Reactions Simulator — Limiting Reagent &amp; Redox | EngSim</title>
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Chemical Reactions Simulator | EngSim" />
+  <meta property="og:description" content="Limiting reagent stoichiometry and redox balancing by the ion-electron method, step by step." />
+  <meta property="og:site_name" content="EngSim" />
+
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/chemical-reactions/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+  <!-- Platform design system (shared, site-wide) -->
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+
+  <!-- Shared simulator design system (all simulators) -->
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- This simulator's own styles (chemistry-specific) -->
+  <link rel="stylesheet" href="css/simulator.css" />
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Chemical Reactions Simulator",
+    "description": "Interactive chemical reactions simulator: limiting reagent with complete stoichiometry and redox reactions by the ion-electron half-reaction method.",
+    "url": "https://engsim.app/simulators/chemical-reactions/",
+    "applicationCategory": "EducationalApplication",
+    "isAccessibleForFree": true,
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0" }
+  }
+  </script>
+</head>
+
+<body>
+<div class="page-wrapper">
+
+  <!-- Navbar is injected here by platform.js -->
+  <div id="nav-placeholder"></div>
+
+  <main class="page-main" id="main-content">
+
+    <!-- ══════════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════════ -->
+    <section class="sim-hero">
+      <div class="container">
+        <div class="sim-hero__breadcrumb">
+          <a href="../../index.html">Home</a>
+          <span>/</span>
+          <a href="../index.html">Simulators</a>
+          <span>/</span>
+          <span>Chemical Reactions</span>
+        </div>
+        <span class="sim-hero__category">Chemistry</span>
+        <h1 class="sim-hero__title">Chemical Reactions Simulator</h1>
+        <p class="sim-hero__subtitle">
+          Interactive step-by-step tutor: limiting reagent with complete stoichiometry
+          and redox reactions by the ion-electron half-reaction method.
+        </p>
+        <div class="sim-hero__tags">
+          <span class="sim-hero__tag">Limiting Reagent</span>
+          <span class="sim-hero__tag">Stoichiometry</span>
+          <span class="sim-hero__tag">Redox</span>
+          <span class="sim-hero__tag">Ion-Electron Method</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════
+         SIM BODY
+    ══════════════════════════════════════════════ -->
+    <section class="sim-body">
+      <div class="container">
+
+        <!-- Local module tabs -->
+        <nav class="chem-tabs" role="tablist" aria-label="Simulator modules">
+          <button id="tab-limiting" class="chem-tab-btn" role="tab"
+                  aria-selected="true" aria-controls="panel-limiting">
+            ⚗ Limiting Reagent
+          </button>
+          <button id="tab-redox" class="chem-tab-btn" role="tab"
+                  aria-selected="false" aria-controls="panel-redox">
+            ⚡ Redox
+          </button>
+        </nav>
+
+        <!-- ══════════════════════════════════════════
+             PANEL 1 — LIMITING REAGENT
+        ══════════════════════════════════════════ -->
+        <div id="panel-limiting" class="sim-layout" role="tabpanel" aria-labelledby="tab-limiting">
+
+          <!-- SIDEBAR — Input -->
+          <div class="sim-panel">
+            <div class="sim-panel__header">
+              <span class="sim-panel__title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0
+                           0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
+                </svg>
+                Input
+              </span>
+            </div>
+            <div class="sim-panel__body">
+
+              <div class="sim-field">
+                <label class="sim-label" for="lr-equation">Balanced chemical equation</label>
+                <div class="sim-input-wrap">
+                  <input type="text"
+                         id="lr-equation"
+                         class="sim-input"
+                         placeholder="e.g. 2H2 + O2 -> 2H2O"
+                         autocomplete="off"
+                         spellcheck="false"
+                         aria-describedby="lr-equation-hint" />
+                </div>
+                <p id="lr-equation-hint" class="sim-hint">
+                  Format: <code>2H2 + O2 -&gt; 2H2O</code> · Coefficients are optional (1 assumed).
+                </p>
+              </div>
+
+              <div class="sim-field">
+                <p class="reactant-rows-title">Reactant quantities</p>
+                <div id="lr-reactants-container">
+                  <p class="reactants-placeholder">
+                    Enter an equation above to display the reactant input fields.
+                  </p>
+                </div>
+              </div>
+
+              <div class="mode-toggle-container">
+                <span class="mode-label">Training Mode</span>
+                <label class="switch" title="Enable quiz mode to guess the limiting reagent before revealing the answer">
+                  <input type="checkbox" id="lr-quiz-toggle" aria-label="Toggle quiz mode">
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <button id="btn-calculate" class="btn-primary">Calculate</button>
+
+              <div id="lr-error" class="sim-error" role="alert" aria-live="assertive"></div>
+
+              <div class="sim-section-label">Preset examples</div>
+              <div class="example-btns">
+                <button class="btn-secondary"
+                        data-example-lr="2H2 + O2 -> 2H2O"
+                        data-values='[{"value":4,"unit":"g"},{"value":32,"unit":"g"}]'>
+                  2H₂ + O₂ → 2H₂O
+                </button>
+                <button class="btn-secondary"
+                        data-example-lr="N2 + 3H2 -> 2NH3"
+                        data-values='[{"value":28,"unit":"g"},{"value":3,"unit":"g"}]'>
+                  N₂ + 3H₂ → 2NH₃
+                </button>
+                <button class="btn-secondary"
+                        data-example-lr="Fe + S -> FeS"
+                        data-values='[{"value":56,"unit":"g"},{"value":16,"unit":"g"}]'>
+                  Fe + S → FeS
+                </button>
+              </div>
+            </div>
+          </div><!-- /sim-panel (input) -->
+
+          <!-- MAIN — Results -->
+          <div class="sim-panel">
+            <div class="sim-panel__header">
+              <span class="sim-panel__title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+                Results — Step by Step
+              </span>
+            </div>
+            <div class="sim-panel__body">
+              <div id="lr-results" class="is-hidden" aria-live="polite" aria-atomic="true"></div>
+
+              <div id="lr-empty-state" style="text-align:center; padding: 2.5rem 1rem; color: var(--text-muted);">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.5"
+                     style="width:48px; height:48px; margin:0 auto 1rem; opacity:.3;"
+                     aria-hidden="true">
+                  <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9
+                           3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18"/>
+                </svg>
+                <p style="font-size:.9rem;">
+                  Enter the equation and reactant quantities, then press <strong>Calculate</strong>.
+                </p>
+              </div>
+            </div>
+          </div><!-- /sim-panel (results) -->
+
+        </div><!-- /panel-limiting -->
+
+        <!-- ══════════════════════════════════════════
+             PANEL 2 — REDOX
+        ══════════════════════════════════════════ -->
+        <div id="panel-redox" class="sim-layout is-hidden" role="tabpanel" aria-labelledby="tab-redox">
+
+          <!-- SIDEBAR — Input -->
+          <div class="sim-panel">
+            <div class="sim-panel__header">
+              <span class="sim-panel__title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="16"/>
+                  <line x1="8" y1="12" x2="16" y2="12"/>
+                </svg>
+                Input — Redox
+              </span>
+            </div>
+            <div class="sim-panel__body">
+
+              <div class="sim-field">
+                <label class="sim-label" for="redox-equation">Redox equation</label>
+                <div class="sim-input-wrap">
+                  <input type="text"
+                         id="redox-equation"
+                         class="sim-input"
+                         placeholder="e.g. MnO4- + Fe2+ -> Mn2+ + Fe3+"
+                         autocomplete="off"
+                         spellcheck="false"
+                         aria-describedby="redox-eq-hint" />
+                </div>
+                <p id="redox-eq-hint" class="sim-hint">
+                  Enter an ionic equation or use the example buttons below.
+                </p>
+              </div>
+
+              <div class="sim-field">
+                <label class="sim-label" for="redox-medium">Reaction medium</label>
+                <select id="redox-medium" class="sim-select" aria-label="Reaction medium (auto-detected)" disabled>
+                  <option value="acidic">Acidic</option>
+                  <option value="basic">Basic</option>
+                </select>
+                <p class="sim-hint">Detected automatically from the matched reaction — not user-selectable.</p>
+              </div>
+
+              <button id="redox-calculate-btn" class="btn-primary">Analyse reaction</button>
+
+              <div id="redox-error" class="sim-error" role="alert" aria-live="assertive"></div>
+
+              <div class="sim-section-label">Supported reactions</div>
+              <div class="example-btns">
+                <button class="btn-secondary" data-example-rx="permanganate_fe">
+                  MnO₄⁻ + Fe²⁺ (acidic)
+                </button>
+                <button class="btn-secondary" data-example-rx="dichromate_iodide">
+                  Cr₂O₇²⁻ + I⁻ (acidic)
+                </button>
+                <button class="btn-secondary" data-example-rx="cl2_naoh">
+                  Cl₂ + NaOH (basic)
+                </button>
+              </div>
+            </div>
+          </div><!-- /sim-panel (redox input) -->
+
+          <!-- MAIN — Redox results -->
+          <div class="sim-panel">
+            <div class="sim-panel__header">
+              <span class="sim-panel__title">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                     stroke-linejoin="round" aria-hidden="true">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                </svg>
+                Redox Analysis — Ion-Electron Method
+              </span>
+            </div>
+            <div class="sim-panel__body">
+              <div id="redox-results" class="is-hidden" aria-live="polite" aria-atomic="true"></div>
+
+              <div id="redox-empty-state" style="text-align:center; padding: 2.5rem 1rem; color: var(--text-muted);">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="1.5"
+                     style="width:48px; height:48px; margin:0 auto 1rem; opacity:.3;"
+                     aria-hidden="true">
+                  <circle cx="12" cy="12" r="10"/>
+                  <line x1="12" y1="8" x2="12" y2="16"/>
+                  <line x1="8" y1="12" x2="16" y2="12"/>
+                </svg>
+                <p style="font-size:.9rem;">
+                  Select an example or enter an equation and press <strong>Analyse reaction</strong>.
+                </p>
+              </div>
+            </div>
+          </div><!-- /sim-panel (redox results) -->
+
+        </div><!-- /panel-redox -->
+
+        <!-- AD-SLOT HIDDEN
+        <div class="ad-slot" style="margin: 2rem auto 0;">Advertisement</div>
+        -->
+
+      </div><!-- /container -->
+    </section><!-- /sim-body -->
+
+    <!-- ══════════════════════════════════════════════
+         EDUCATIONAL CONTENT
+    ══════════════════════════════════════════════ -->
+    <section class="edu-content">
+      <div class="container">
+
+        <article class="edu-section">
+          <h2>What the simulator does</h2>
+          <p>This tool provides two independent modules for the study of chemical reactions:</p>
+          <ul>
+            <li><strong>Limiting Reagent</strong> — Given a balanced (or unbalanced) equation and
+              the mass or mole quantities of each reactant, the simulator identifies the limiting
+              reagent, calculates the theoretical yield of all products, and reports the excess
+              mass remaining after the reaction is complete.</li>
+            <li><strong>Redox (Ion-Electron Method)</strong> — Provides a fully worked,
+              step-by-step balance of selected oxidation-reduction reactions in acidic or basic
+              medium using the half-reaction (ion-electron) method.</li>
+          </ul>
+        </article>
+
+        <article class="edu-section">
+          <h2>Limiting reagent — method</h2>
+          <p>The simulator applies the standard five-step stoichiometric algorithm:</p>
+          <ol>
+            <li>Convert all reactant masses to moles using IUPAC 2021 atomic masses.</li>
+            <li>Divide the moles of each reactant by its stoichiometric coefficient to obtain
+                the molar ratio.</li>
+            <li>The reactant with the <strong>smallest ratio</strong> is the limiting reagent.</li>
+            <li>Compute the theoretical yield of each product from the limiting molar ratio.</li>
+            <li>Compute the excess mass remaining for each non-limiting reactant.</li>
+          </ol>
+          <p>If the equation entered is not balanced, the simulator applies Gaussian elimination
+             over the stoichiometric matrix and automatically balances it before proceeding.</p>
+        </article>
+
+        <article class="edu-section">
+          <h2>Redox — ion-electron method</h2>
+          <p>The half-reaction method balances redox equations in five stages:</p>
+          <ol>
+            <li>Assign oxidation numbers to all species.</li>
+            <li>Identify which species is oxidised and which is reduced.</li>
+            <li>Write and balance the oxidation half-reaction (atoms, then charge with e⁻).</li>
+            <li>Write and balance the reduction half-reaction (atoms, H₂O, H⁺ or OH⁻, then e⁻).</li>
+            <li>Multiply each half-reaction by the LCM of electrons transferred and add them.</li>
+          </ol>
+        </article>
+
+        <article class="edu-section">
+          <h2>How to use the simulator</h2>
+          <ul>
+            <li>Use <code>-&gt;</code> as the reaction arrow (e.g., <code>2H2 + O2 -&gt; 2H2O</code>).</li>
+            <li>Coefficients are optional; unbalanced equations are accepted and auto-balanced.</li>
+            <li>Enter quantities in grams (g) or moles (mol) using the unit selector.</li>
+            <li>Enable <strong>Training Mode</strong> to hide the limiting reagent and test yourself
+                before revealing the answer.</li>
+            <li>For Redox, use the example buttons to load a supported reaction, or type a
+                compatible ionic equation in the input field.</li>
+          </ul>
+        </article>
+
+        <article class="edu-section">
+          <h2>Engineering assumptions &amp; limitations</h2>
+          <ul>
+            <li>All reactions are assumed to proceed to completion (100 % conversion).</li>
+            <li>Molar masses are calculated from the IUPAC 2021 standard atomic weights.</li>
+            <li>Ionic charges in formulas are ignored during molecular formula parsing
+                (the parser skips non-alphabetic, non-digit characters).</li>
+            <li>The automatic balancer uses exact rational arithmetic (Gauss-Jordan on the
+                stoichiometric matrix) and requires every element present in the reactants to
+                also appear in the products.</li>
+            <li>The Redox module currently supports three pre-defined reactions. Free-input
+                redox equations are matched against these; unsupported reactions are reported.</li>
+            <li>No thermodynamic or kinetic data (enthalpy, rate constants) is modelled.</li>
+          </ul>
+        </article>
+
+        <article class="edu-section">
+          <h2>Frequently asked questions</h2>
+          <div class="edu-faq">
+            <details class="edu-faq-item">
+              <summary>Why does the simulator auto-balance my equation?</summary>
+              <div class="edu-faq-answer">
+                If the stoichiometric coefficients you entered do not conserve atom counts,
+                the simulator adjusts them using Gaussian elimination on the stoichiometric
+                matrix. Both the original and the balanced form are shown in the results.
+              </div>
+            </details>
+            <details class="edu-faq-item">
+              <summary>Can I enter quantities in moles instead of grams?</summary>
+              <div class="edu-faq-answer">
+                Yes. Use the unit selector next to each reactant field to switch between
+                grams (g) and moles (mol). The conversion step is skipped for mole inputs
+                and the stoichiometric ratio is used directly.
+              </div>
+            </details>
+            <details class="edu-faq-item">
+              <summary>What does the molar ratio bar chart show?</summary>
+              <div class="edu-faq-answer">
+                Each bar shows the fraction of each reactant that is consumed (orange/red)
+                versus the fraction remaining as excess (green). The limiting reagent bar
+                is always 100 % consumed.
+              </div>
+            </details>
+            <details class="edu-faq-item">
+              <summary>What is the ion-electron method?</summary>
+              <div class="edu-faq-answer">
+                Also called the half-reaction method, it splits the overall redox equation
+                into two half-equations — one for oxidation and one for reduction — balances
+                each independently in terms of atoms and charge, and then combines them so
+                that the number of electrons transferred is equal on both sides.
+              </div>
+            </details>
+          </div>
+        </article>
+
+      </div><!-- /container -->
+    </section><!-- /edu-content -->
+
+  </main>
+
+  <!-- Footer is injected here by platform.js -->
+  <div id="footer-placeholder"></div>
+
+</div><!-- /page-wrapper -->
+
+<!-- ══════════════════════════════════════════════
+     SCRIPTS
+══════════════════════════════════════════════ -->
+<script src="../../assets/js/platform.js"></script>
+<script type="module" src="js/simulator.js"></script>
+
+</body>
+</html>
+
+

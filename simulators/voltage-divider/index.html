@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- EDIT 1 — SEO -->
+    <title>Voltage Divider Calculator — Vout, Current & Power | EngSim</title>
+    <meta name="description"
+        content="Interactive voltage divider calculator with a live circuit diagram. Compute Vout, current, and power dissipation for a two-resistor divider or an N-resistor series chain, with a design mode to solve for a target output voltage." />
+
+    <!-- EDIT 2 — OG tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Voltage Divider Calculator | EngSim" />
+    <meta property="og:description"
+        content="Compute Vout, current, and power dissipation for resistive voltage dividers, with a live circuit diagram and a design mode." />
+    <meta property="og:site_name" content="EngSim" />
+
+    <!-- Canonical URL — fill in once you have the domain -->
+    <!-- <link rel="canonical" href="https://engsim.app/simulators/voltage-divider/" /> -->
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Shared platform styles -->
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/platform.css" />
+    <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+    <!-- EDIT 4 — External libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Structured data for Google (SEO) -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Voltage Divider Calculator",
+    "description": "Interactive calculator for two-resistor and series-chain voltage dividers, with a live circuit diagram and a design mode.",
+    "url": "https://engsim.app/simulators/voltage-divider/",
+    "applicationCategory": "EducationalApplication",
+    "isAccessibleForFree": true,
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0" }
+  }
+  </script>
+</head>
+
+<body>
+    <div class="page-wrapper">
+
+        <div id="nav-placeholder"></div>
+
+        <main class="page-main" id="main-content">
+
+            <!-- ── HERO — EDIT 5 ── -->
+            <section class="sim-hero" aria-labelledby="sim-title">
+                <div class="container">
+                    <nav aria-label="Breadcrumb">
+                        <ol class="sim-hero__breadcrumb">
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><span aria-hidden="true">/</span></li>
+                            <li><a href="../index.html">Simulators</a></li>
+                            <li><span aria-hidden="true">/</span></li>
+                            <li>Voltage Divider</li>
+                        </ol>
+                    </nav>
+
+                    <span class="sim-hero__category">Electronics / Circuits</span>
+
+                    <h1 class="sim-hero__title" id="sim-title">Voltage Divider Calculator</h1>
+
+                    <p class="sim-hero__subtitle">
+                        Calculate output voltage, current, and power dissipation for a resistive
+                        voltage divider — either a simple two-resistor pair or a longer series
+                        chain — and design a divider for a target output voltage.
+                    </p>
+
+                    <div class="sim-hero__tags">
+                        <span class="sim-hero__tag">Voltage divider</span>
+                        <span class="sim-hero__tag">Ohm's law</span>
+                        <span class="sim-hero__tag">Resistors in series</span>
+                        <span class="sim-hero__tag">Power dissipation</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── SIMULATOR BODY — EDIT 6 / 7 ── -->
+            <section class="sim-body">
+                <div class="container">
+
+                    <div class="sim-error" id="sim-error" role="alert" aria-live="polite"></div>
+
+                    <div class="sim-layout">
+
+                        <!-- ════ LEFT PANEL — INPUTS ════ -->
+                        <aside aria-label="Input parameters">
+
+                            <div class="sim-panel">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <path d="M12 20h9" />
+                                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                        </svg>
+                                        Parameters
+                                    </span>
+                                </div>
+                                <div class="sim-panel__body">
+
+                                    <!-- Mode tabs -->
+                                    <div class="mode-tabs" role="tablist" aria-label="Divider mode">
+                                        <button type="button" id="tab-direct" class="mode-tab is-active" role="tab"
+                                            aria-selected="true" aria-controls="panel-direct results-direct">Two-Resistor</button>
+                                        <button type="button" id="tab-chain" class="mode-tab" role="tab"
+                                            aria-selected="false" aria-controls="panel-chain results-chain">Series Chain</button>
+                                    </div>
+
+                                    <p class="sim-section-label">Source</p>
+
+                                    <div class="sim-field">
+                                        <label for="input-vin" class="sim-label">
+                                            Input Voltage (Vin)
+                                        </label>
+                                        <div class="sim-input-wrap">
+                                            <input type="number" id="input-vin" class="sim-input" value="12" min="0"
+                                                step="0.1" aria-label="Input voltage" />
+                                            <span class="sim-unit">V</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- ════ TWO-RESISTOR PANEL ════ -->
+                                    <div id="panel-direct" data-mode-panel="direct" role="tabpanel" aria-labelledby="tab-direct">
+
+                                        <div class="design-toggle-row">
+                                            <div>
+                                                <label for="chk-design-mode">Design mode</label>
+                                                <p>Solve for R1 or R2 from a target Vout instead.</p>
+                                            </div>
+                                            <label class="switch">
+                                                <input type="checkbox" id="chk-design-mode" />
+                                                <span class="switch-track"></span>
+                                            </label>
+                                        </div>
+
+                                        <div id="design-fields" class="is-hidden">
+                                            <div class="sim-field">
+                                                <label for="input-vout-target" class="sim-label">
+                                                    Target Output Voltage (Vout)
+                                                </label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="input-vout-target" class="sim-input"
+                                                        value="5" min="0" step="0.1"
+                                                        aria-label="Target output voltage" />
+                                                    <span class="sim-unit">V</span>
+                                                </div>
+                                            </div>
+
+                                            <p class="sim-section-label">Which resistor is fixed?</p>
+                                            <div class="radio-card-group">
+                                                <label class="radio-card">
+                                                    <input type="radio" name="fix-resistor" id="radio-fix-r1"
+                                                        checked />
+                                                    <span class="radio-card__title">R1 fixed</span>
+                                                    <span class="radio-card__desc">Solve for R2</span>
+                                                </label>
+                                                <label class="radio-card">
+                                                    <input type="radio" name="fix-resistor" id="radio-fix-r2" />
+                                                    <span class="radio-card__title">R2 fixed</span>
+                                                    <span class="radio-card__desc">Solve for R1</span>
+                                                </label>
+                                            </div>
+                                        </div>
+
+                                        <p class="sim-section-label">Resistors</p>
+
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field" id="field-r1">
+                                                <label for="input-r1" class="sim-label">R1 (upper)</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="input-r1" class="sim-input" value="1000"
+                                                        min="0" step="10" aria-label="Resistance R1" />
+                                                    <span class="sim-unit">Ω</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field" id="field-r2">
+                                                <label for="input-r2" class="sim-label">R2 (lower / tap)</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="input-r2" class="sim-input" value="1000"
+                                                        min="0" step="10" aria-label="Resistance R2" />
+                                                    <span class="sim-unit">Ω</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div><!-- /panel direct -->
+
+                                    <!-- ════ SERIES CHAIN PANEL ════ -->
+                                    <div id="panel-chain" data-mode-panel="chain" role="tabpanel" aria-labelledby="tab-chain" class="is-hidden">
+
+                                        <p class="sim-section-label">Resistors in series</p>
+                                        <p class="sim-hint">
+                                            Vout is measured across the last resistor in the chain (R<sub>n</sub>,
+                                            closest to ground).
+                                        </p>
+
+                                        <button type="button" id="btn-add-resistor" class="btn-secondary btn-add-resistor">
+                                            <span id="btn-add-resistor-label">+ Add resistor</span>
+                                        </button>
+
+                                        <div id="resistor-list"></div>
+
+                                        <p class="chain-list-hint">2–8 resistors supported.</p>
+
+                                    </div><!-- /panel chain -->
+
+                                    <button type="button" id="btn-calculate" class="btn-primary">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <polyline points="9 11 12 14 22 4" />
+                                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                                        </svg>
+                                        Calculate
+                                    </button>
+
+                                </div>
+                            </div><!-- /sim-panel -->
+
+                        </aside>
+
+                        <!-- ════ RIGHT PANEL — RESULTS ════ -->
+                        <div>
+
+                            <div class="sim-panel">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                                        </svg>
+                                        Results
+                                    </span>
+                                    <span class="sim-panel__badge">Real-time</span>
+                                </div>
+                                <div class="sim-panel__body">
+
+                                    <!-- Circuit diagram (shared container, mode-specific SVG injected by simulator.js) -->
+                                    <div class="sim-chart-wrap">
+                                        <p class="sim-chart-label">Circuit Diagram</p>
+                                        <div id="circuit-diagram"></div>
+                                    </div>
+
+                                    <!-- Two-resistor results -->
+                                    <div id="results-direct" data-mode-results="direct" role="tabpanel" aria-labelledby="tab-direct">
+                                        <div class="sim-results-grid">
+                                            <div class="sim-result-card sim-result-card--accent">
+                                                <div class="sim-result-label">Output Voltage</div>
+                                                <div class="sim-result-value" id="out-vout">—</div>
+                                                <div class="sim-result-unit">V</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label">Current</div>
+                                                <div class="sim-result-value" id="out-current">—</div>
+                                                <div class="sim-result-unit" id="unit-current">A</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label">P (R1)</div>
+                                                <div class="sim-result-value" id="out-p-r1">—</div>
+                                                <div class="sim-result-unit" id="unit-p-r1">W</div>
+                                                <span class="sim-result-warning" id="warn-p-r1"></span>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label">P (R2)</div>
+                                                <div class="sim-result-value" id="out-p-r2">—</div>
+                                                <div class="sim-result-unit" id="unit-p-r2">W</div>
+                                                <span class="sim-result-warning" id="warn-p-r2"></span>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label">Total Power</div>
+                                                <div class="sim-result-value" id="out-p-total">—</div>
+                                                <div class="sim-result-unit" id="unit-p-total">W</div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Series chain results -->
+                                    <div id="results-chain" data-mode-results="chain" role="tabpanel" aria-labelledby="tab-chain" class="is-hidden">
+                                        <div class="sim-results-grid">
+                                            <div class="sim-result-card sim-result-card--accent">
+                                                <div class="sim-result-label">Output Voltage (last R)</div>
+                                                <div class="sim-result-value" id="out-chain-vout">—</div>
+                                                <div class="sim-result-unit">V</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label">Current</div>
+                                                <div class="sim-result-value" id="out-chain-current">—</div>
+                                                <div class="sim-result-unit" id="unit-chain-current">A</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label">Total Power</div>
+                                                <div class="sim-result-value" id="out-chain-p-total">—</div>
+                                                <div class="sim-result-unit" id="unit-chain-p-total">W</div>
+                                            </div>
+                                        </div>
+
+                                        <div class="breakdown-table-wrap">
+                                            <table class="breakdown-table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Resistor</th>
+                                                        <th>Value</th>
+                                                        <th>Voltage drop</th>
+                                                        <th>Power</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="chain-breakdown-body"></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <!-- Chart (reused for both modes) -->
+                                    <div class="sim-chart-wrap">
+                                        <p class="sim-chart-label" id="chart-label">Vout vs. R2 (operating point highlighted)</p>
+                                        <canvas id="sim-chart" aria-label="Voltage divider chart" role="img"></canvas>
+                                    </div>
+
+                                </div>
+                            </div><!-- /sim-panel -->
+
+                        </div>
+
+                    </div><!-- /sim-layout -->
+                </div><!-- /container -->
+            </section>
+
+            <!-- AD SLOT 1 -->
+<!-- AD-SLOT HIDDEN
+            <div class="container">
+                <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">
+                    <!-- <ins class="adsbygoogle" ... ></ins> -->
+                    Advertisement
+                </div>
+            </div>
+            -->
+
+            <!-- ── EDUCATIONAL CONTENT — EDIT 8 ── -->
+            <div class="container container--narrow">
+                <div class="edu-content">
+
+                    <section class="edu-section" id="about" aria-labelledby="h-about">
+                        <h2 id="h-about">About This Simulator</h2>
+                        <p>
+                            A voltage divider is one of the most fundamental circuits in electronics:
+                            two or more resistors connected in series across a voltage source, with
+                            an output tap taken between them. Because the same current flows through
+                            every resistor in the chain, the voltage source splits proportionally
+                            across each resistor according to Ohm's law (V = IR). This simulator
+                            covers two cases — a simple two-resistor divider and a longer N-resistor
+                            series chain — and computes the output voltage, the circuit current, and
+                            the power each resistor must dissipate.
+                        </p>
+                        <p>
+                            Voltage dividers are used constantly in real designs: scaling a sensor
+                            signal down to fit a microcontroller's ADC range, setting a reference
+                            voltage, biasing a transistor, or building a simple potentiometer-style
+                            control. The trade-off is always the same — lower resistances draw more
+                            current and dissipate more power, while higher resistances are more
+                            sensitive to loading effects from whatever is connected to the output tap.
+                        </p>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="how-to-use" aria-labelledby="h-howto">
+                        <h2 id="h-howto">How to Use</h2>
+                        <ol>
+                            <li><strong>Choose a mode.</strong> "Two-Resistor" models the classic R1/R2
+                                divider; "Series Chain" lets you add up to 8 resistors and taps the
+                                output across the last one.</li>
+                            <li><strong>Enter the input voltage (Vin)</strong> and the resistor values.
+                                In series-chain mode, use "+ Add resistor" and the trash icon to build
+                                the chain.</li>
+                            <li><strong>Optional — Design mode.</strong> In two-resistor mode, flip the
+                                "Design mode" switch, enter a target Vout, and pick which resistor is
+                                fixed. The other resistor is solved for automatically.</li>
+                            <li><strong>Read the results</strong> on the right: a circuit diagram
+                                of your current configuration, output voltage, current, and power
+                                dissipation per resistor. Values that exceed a standard 0.25 W
+                                (1/4 W) resistor rating are flagged, both in the results and in the
+                                diagram's tap and chart colors.</li>
+                        </ol>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="results" aria-labelledby="h-results">
+                        <h2 id="h-results">Understanding the Results</h2>
+
+                        <h3>Output Voltage (Vout)</h3>
+                        <p>
+                            The voltage measured at the tap point. In the two-resistor case,
+                            Vout = Vin × R2 / (R1 + R2). In the series-chain case, Vout is the
+                            voltage across the last resistor in the chain relative to ground.
+                        </p>
+
+                        <h3>Current</h3>
+                        <p>
+                            The single current that flows through every resistor in the divider,
+                            I = Vin / R<sub>total</sub>. This assumes an ideal, unloaded output —
+                            connecting a load at the tap will draw additional current and pull Vout
+                            down (loading effect), which this simulator does not model.
+                        </p>
+
+                        <h3>Power Dissipation</h3>
+                        <p>
+                            Each resistor dissipates P = I²R as heat. The simulator flags any
+                            resistor whose dissipation exceeds 0.25 W, the typical rating of a small
+                            through-hole resistor — a useful reminder to size resistors (and their
+                            wattage rating) appropriately, especially with low resistances or high
+                            input voltages.
+                        </p>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="faq" aria-labelledby="h-faq">
+                        <h2 id="h-faq">Frequently Asked Questions</h2>
+                        <div class="edu-faq">
+
+                            <details class="edu-faq-item">
+                                <summary>Why is my actual output voltage lower than calculated?</summary>
+                                <div class="edu-faq-answer">
+                                    This calculator assumes an unloaded (ideal) output. If you connect
+                                    anything to the tap point — a microcontroller pin, a meter with
+                                    finite input impedance, another circuit — it draws current and
+                                    effectively adds a resistor in parallel with the lower leg, which
+                                    pulls Vout down. This is called the "loading effect." To minimize
+                                    it, use resistor values much smaller than the load's input
+                                    impedance, at the cost of higher power dissipation.
+                                </div>
+                            </details>
+
+                            <details class="edu-faq-item">
+                                <summary>What does Design mode actually solve for?</summary>
+                                <div class="edu-faq-answer">
+                                    Design mode rearranges the divider equation to solve for the
+                                    resistor you are not fixing, given Vin and a target Vout. If R1 is
+                                    fixed, R2 = R1 × Vout / (Vin − Vout); if R2 is fixed,
+                                    R1 = R2 × (Vin − Vout) / Vout. It still assumes an ideal, unloaded
+                                    output — see the note on loading effects above.
+                                </div>
+                            </details>
+
+                            <details class="edu-faq-item">
+                                <summary>How is Vout defined in Series Chain mode?</summary>
+                                <div class="edu-faq-answer">
+                                    Vout is always measured across the last resistor you add (closest
+                                    to ground). The per-resistor breakdown table shows the individual
+                                    voltage drop and power dissipation across every resistor in the
+                                    chain, which is useful if you need the voltage at an intermediate
+                                    node — just look at the cumulative drop up to that point.
+                                </div>
+                            </details>
+
+                            <details class="edu-faq-item">
+                                <summary>What are the limitations of this simulator?</summary>
+                                <div class="edu-faq-answer">
+                                    It models an ideal, unloaded, DC-only divider with perfect resistor
+                                    values — it does not account for load impedance, resistor
+                                    tolerance, temperature drift, or AC effects like parasitic
+                                    capacitance. The 0.25 W overload warning is a rule-of-thumb flag
+                                    for a small through-hole resistor, not a substitute for checking
+                                    the actual datasheet rating of the parts you plan to use.
+                                </div>
+                            </details>
+
+                        </div>
+                    </section>
+
+                    <!-- AD SLOT 2 -->
+<!-- AD-SLOT HIDDEN
+                    <div class="ad-slot ad-slot--leaderboard" style="margin-top: 40px;" aria-label="Advertisement">
+                        Advertisement
+                    </div>
+                    -->
+
+                </div><!-- /edu-content -->
+            </div><!-- /container -->
+
+        </main>
+
+        <div id="footer-placeholder"></div>
+
+    </div><!-- /page-wrapper -->
+
+    <script src="../../assets/js/platform.js"></script>
+    <script type="module" src="./js/simulator.js"></script>
+
+</body>
+
+</html>
+

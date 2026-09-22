@@ -1,0 +1,289 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Force Converter — Convert N, kN, lbf, kgf, dyn & More | EngSim</title>
+  <meta name="description" content="Free force unit converter. Enter one value and instantly see it converted to newtons, kilonewtons, dynes, kilogram-force, pound-force and poundals." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Force Converter — Convert Between All Force Units" />
+  <meta property="og:description" content="Convert force between newtons, kilonewtons, dynes, kgf, lbf and poundals — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/force-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/force-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — frc- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Force Converter",
+    "url": "https://engsim.app/simulators/force-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert force values between newtons, kilonewtons, meganewtons, dynes, kilogram-force, pound-force and poundals.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.frc-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Force Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Force Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any force unit and instantly see the equivalent in newtons, dynes, kilogram-force, pound-force and more.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">Newtons</span>
+            <span class="sim-hero__tag">Pound-force</span>
+            <span class="sim-hero__tag">Kilogram-force</span>
+            <span class="sim-hero__tag">Dynes</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v6M12 22v-6M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M16 12h6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24"/></svg>
+                <span class="sim-panel__title">Force Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="1" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="frc-table-wrap" id="results-table-wrap">
+                    <table class="frc-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Force Converter</h2>
+            <p>Force units split across SI (newtons), CGS (dynes), and technical/imperial systems (kilogram-force, pound-force, poundals) that predate the newton and still show up in older specifications and some regional engineering practice. This tool lets you enter a value once and see it converted to every common force unit at the same time.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the force value you want to convert.</li>
+              <li>Select the unit that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value in every other unit.</li>
+            </ol>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formula</h2>
+            <p>Every force unit converts through the newton (N), the SI unit of force, defined as the force needed to accelerate 1 kg at 1 m/s². To convert from unit A to unit B:</p>
+            <div class="edu-formula">value_B = value_A × factor_A→N ÷ factor_B→N</div>
+            <p>All force units here are linear multiples of the newton, so every conversion is straightforward multiplication or division.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Force Unit Conversion Factors (to Newtons)</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Value in Newtons</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Newton</td><td>N</td><td>1</td></tr>
+                  <tr><td>Kilonewton</td><td>kN</td><td>1,000</td></tr>
+                  <tr><td>Meganewton</td><td>MN</td><td>1,000,000</td></tr>
+                  <tr><td>Dyne</td><td>dyn</td><td>0.00001</td></tr>
+                  <tr><td>Kilogram-force</td><td>kgf</td><td>9.80665</td></tr>
+                  <tr><td>Pound-force</td><td>lbf</td><td>4.4482216152605</td></tr>
+                  <tr><td>Poundal</td><td>pdl</td><td>0.13825495438</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: kgf, lbf and pdl are all exact by definition — each uses the standard gravity constant (9.80665 m/s²) applied to the exact kilogram/pound mass definitions (poundal instead uses the pound mass accelerated at 1 ft/s², independent of gravity).</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — Newtons to Pound-force</p>
+                <p>A 500 N thrust: 500 ÷ 4.4482216152605 N/lbf ≈ <strong>112.4 lbf</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — Kilogram-force to Newtons</p>
+                <p>A 10 kgf load rating: 10 × 9.80665 ≈ <strong>98.07 N</strong> — this is why "kgf" is really a weight measurement under standard gravity, not a pure mass unit.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — Newtons to Dynes</p>
+                <p>A small 0.5 N force: 0.5 ÷ 0.00001 N/dyn = <strong>50,000 dyn</strong> — dynes are tiny compared to newtons, useful at lab/microscopic scale.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — Pound-force to Poundals</p>
+                <p>A 20 lbf force: 20 × 4.4482216152605 N ÷ 0.13825495438 N/pdl ≈ <strong>643.3 pdl</strong>.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>How many newtons are in a pound-force?</summary>
+              <div class="edu-faq-answer">1 lbf = 4.4482216152605 N exactly. This is the force exerted by standard gravity (9.80665 m/s²) on a mass of exactly 1 avoirdupois pound.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What's the difference between kgf and kg?</summary>
+              <div class="edu-faq-answer">kg (kilogram) is a unit of mass. kgf (kilogram-force) is a unit of force — specifically, the weight of a 1 kg mass under standard gravity, equal to 9.80665 N. Mixing the two up is a very common source of unit errors.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What is a dyne used for?</summary>
+              <div class="edu-faq-answer">The dyne is the CGS (centimetre-gram-second) unit of force, equal to 0.00001 N. It shows up mostly in older physics literature and in some surface-tension measurements (dynes per centimeter).</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What is a poundal?</summary>
+              <div class="edu-faq-answer">A poundal is the force needed to accelerate a 1-pound mass at 1 ft/s² — the imperial system's attempt at a "pure" force unit independent of gravity, analogous to how the newton relates to the kilogram. It's rarely used today outside of some older British engineering texts.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Can force values be negative?</summary>
+              <div class="edu-faq-answer">Yes — force is a vector quantity, so a negative value simply indicates the opposite direction (for example, tension vs. compression, or a force acting against a chosen positive axis). This converter allows negative values for that reason.</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

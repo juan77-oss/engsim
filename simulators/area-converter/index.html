@@ -1,0 +1,292 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Area Converter — Convert m², ft², Acres, Hectares & More | EngSim</title>
+  <meta name="description" content="Free area unit converter. Enter one value and instantly see it converted to square meters, square feet, square miles, acres, hectares and more." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Area Converter — Convert Between All Area Units" />
+  <meta property="og:description" content="Convert area between square millimeters, square meters, square kilometers, square feet, square miles, acres and hectares — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/area-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/area-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — are- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Area Converter",
+    "url": "https://engsim.app/simulators/area-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert area values between square millimeters, square centimeters, square meters, square kilometers, square inches, square feet, square yards, square miles, acres and hectares.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.are-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Area Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Area Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any area unit and instantly see the equivalent in square meters, square feet, acres, hectares and more.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">Square Meters</span>
+            <span class="sim-hero__tag">Square Feet</span>
+            <span class="sim-hero__tag">Acres</span>
+            <span class="sim-hero__tag">Hectares</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18M15 3v18M3 9h18M3 15h18"/></svg>
+                <span class="sim-panel__title">Area Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="1" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="are-table-wrap" id="results-table-wrap">
+                    <table class="are-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Area Converter</h2>
+            <p>Area units span an enormous range — from a square millimeter on a circuit board to a square mile of farmland — and the metric, imperial, and land-survey systems rarely line up cleanly. A property listing in acres, a floor plan in square meters, a country's size in square kilometers: this tool lets you enter a value once and see it converted to every common area unit at the same time.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the area value you want to convert.</li>
+              <li>Select the unit that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value in every other unit.</li>
+            </ol>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formula</h2>
+            <p>Every area unit converts through the square meter (m²). To convert from unit A to unit B:</p>
+            <div class="edu-formula">value_B = value_A × factor_A→m² ÷ factor_B→m²</div>
+            <p>Area factors are the square of the corresponding length factors — for example, since 1 ft = 0.3048 m exactly, 1 ft² = 0.3048² = 0.09290304 m² exactly. All conversions here are pure multiplication or division.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Area Unit Conversion Factors (to Square Meters)</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Value in Square Meters</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Square Millimeter</td><td>mm²</td><td>0.000001</td></tr>
+                  <tr><td>Square Centimeter</td><td>cm²</td><td>0.0001</td></tr>
+                  <tr><td>Square Meter</td><td>m²</td><td>1</td></tr>
+                  <tr><td>Square Kilometer</td><td>km²</td><td>1,000,000</td></tr>
+                  <tr><td>Square Inch</td><td>in²</td><td>0.00064516</td></tr>
+                  <tr><td>Square Foot</td><td>ft²</td><td>0.09290304</td></tr>
+                  <tr><td>Square Yard</td><td>yd²</td><td>0.83612736</td></tr>
+                  <tr><td>Square Mile</td><td>mi²</td><td>2,589,988.110336</td></tr>
+                  <tr><td>Acre</td><td>ac</td><td>4,046.8564224</td></tr>
+                  <tr><td>Hectare</td><td>ha</td><td>10,000</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: 1 hectare = 100 m × 100 m = 10,000 m² exactly. 1 acre = 43,560 ft² exactly, which comes out to 4,046.8564224 m² using the exact international foot.</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — Square Meters to Square Feet</p>
+                <p>A 150 m² apartment: 150 ÷ 0.09290304 m²/ft² ≈ <strong>1,614.6 ft²</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — Acres to Hectares</p>
+                <p>A 40-acre farm: 40 × 4,046.8564224 m²/ac ÷ 10,000 m²/ha ≈ <strong>16.19 hectares</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — Square Kilometers to Square Miles</p>
+                <p>A city covering 500 km²: 500 × 1,000,000 m² ÷ 2,589,988.110336 m²/mi² ≈ <strong>193.05 mi²</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — Square Inches to Square Centimeters</p>
+                <p>A 20 in² sticker: 20 × 6.4516 cm²/in² = <strong>129.032 cm²</strong>.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>How many square feet are in a square meter?</summary>
+              <div class="edu-faq-answer">1 m² ≈ 10.7639 ft². Conversely, 1 ft² = 0.09290304 m² exactly.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How many square meters are in an acre?</summary>
+              <div class="edu-faq-answer">1 acre = 4,046.8564224 m², or about 4,047 m². It's easiest to remember as roughly 0.4 hectares, or about 40% of a soccer pitch.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What's the difference between an acre and a hectare?</summary>
+              <div class="edu-faq-answer">A hectare is exactly 10,000 m² (a 100 m × 100 m square). An acre is 4,046.8564224 m² — about 2.47 acres make up one hectare.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How do I convert square kilometers to square miles?</summary>
+              <div class="edu-faq-answer">Divide by 2.589988110336. Equivalently, 1 mi² ≈ 2.59 km², so 1 km² ≈ 0.386 mi².</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Why isn't 1 ft² simply 12× smaller than 1 yd²?</summary>
+              <div class="edu-faq-answer">Because area scales with the square of length, not linearly. Since 1 yard = 3 feet, 1 yd² = 3² = 9 ft² — not 3 ft². This is the same reason area units in general don't convert with the same factor as their corresponding length units.</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

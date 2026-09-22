@@ -1,0 +1,361 @@
+/* ============================================================
+   catalog.css — Home page & simulators catalog
+   engsim.app
+   ============================================================ */
+
+/* ══════════════════════════════════════════════════════════════
+   HOME HERO
+   ══════════════════════════════════════════════════════════════ */
+.home-hero {
+    padding: var(--space-2xl) 0 var(--space-xl);
+    background: linear-gradient(160deg, #f0f4ff 0%, var(--bg-page) 60%);
+    border-bottom: 1px solid var(--border);
+}
+
+body.dark .home-hero {
+    background: linear-gradient(160deg, #1a2744 0%, var(--bg-page) 60%);
+}
+
+.home-hero__eyebrow {
+    font-size: .75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    color: var(--brand-accent);
+    margin-bottom: var(--space-md);
+}
+
+.home-hero__title {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--text-primary);
+    margin-bottom: var(--space-md);
+}
+
+.home-hero__title em {
+    color: var(--brand-accent);
+    font-style: normal;
+}
+
+.home-hero__subtitle {
+    font-size: 1.0625rem;
+    color: var(--text-secondary);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: var(--space-xl);
+}
+
+.home-hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+}
+
+.btn-cta-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 13px 28px;
+    background: var(--brand-accent);
+    color: #fff;
+    font-size: .95rem;
+    font-weight: 700;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    transition: background var(--transition), transform var(--transition);
+}
+
+.btn-cta-primary:hover {
+    background: var(--brand-accent-h);
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.btn-cta-primary svg {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-cta-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: 13px 28px;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    font-size: .95rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-strong);
+    text-decoration: none;
+    transition: background var(--transition), border-color var(--transition);
+}
+
+.btn-cta-secondary:hover {
+    background: var(--bg-hover);
+    text-decoration: none;
+}
+
+.home-hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-lg);
+}
+
+.home-hero__badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: .8rem;
+    color: var(--text-muted);
+}
+
+.home-hero__badge svg {
+    width: 15px;
+    height: 15px;
+    color: var(--color-success);
+    flex-shrink: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   FEATURED / CATALOG SECTIONS
+   ══════════════════════════════════════════════════════════════ */
+.catalog-section {
+    padding: var(--space-xl) 0;
+}
+
+.catalog-section+.catalog-section {
+    border-top: 1px solid var(--border);
+}
+
+.catalog-section__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+    flex-wrap: wrap;
+}
+
+.catalog-section__title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.catalog-section__count {
+    font-size: .8rem;
+    color: var(--text-muted);
+}
+
+/* Category anchor tags (hero) */
+.catalog-hero {
+    padding: var(--space-xl) 0 var(--space-lg);
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, #f0f4ff 0%, var(--bg-page) 80%);
+}
+
+body.dark .catalog-hero {
+    background: linear-gradient(135deg, #1a2744 0%, var(--bg-page) 80%);
+}
+
+.catalog-hero__title {
+    margin-bottom: var(--space-sm);
+}
+
+.catalog-hero__sub {
+    margin-bottom: var(--space-lg);
+    max-width: 560px;
+}
+
+.catalog-hero__filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+.catalog-filter-tag {
+    font-size: .8rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 5px 14px;
+    border-radius: 99px;
+    text-decoration: none;
+    transition: background var(--transition), border-color var(--transition), color var(--transition);
+}
+
+.catalog-filter-tag:hover {
+    background: var(--brand-accent);
+    color: #fff;
+    border-color: var(--brand-accent);
+    text-decoration: none;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TOOL CARDS
+   ══════════════════════════════════════════════════════════════ */
+.cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-md);
+}
+
+.tool-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    text-decoration: none;
+    transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+    color: inherit;
+}
+
+.tool-card:hover {
+    border-color: var(--brand-accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    text-decoration: none;
+}
+
+/* Coming soon card */
+.tool-card--soon {
+    opacity: .6;
+    pointer-events: none;
+    cursor: default;
+}
+
+.tool-card--soon:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: var(--border);
+}
+
+.tool-card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.tool-card__icon {
+    width: 38px;
+    height: 38px;
+    background: rgba(37, 99, 235, .1);
+    color: var(--brand-accent);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.tool-card__icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.tool-card__category {
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--text-muted);
+    background: var(--bg-hover);
+    padding: 3px 10px;
+    border-radius: 99px;
+    white-space: nowrap;
+}
+
+.tool-card__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+    line-height: 1.3;
+}
+
+.tool-card__desc {
+    font-size: .85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    flex: 1;
+    margin-bottom: var(--space-md);
+}
+
+.tool-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border);
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--brand-accent);
+}
+
+.tool-card__footer svg {
+    width: 14px;
+    height: 14px;
+}
+
+.tool-card--soon .tool-card__footer {
+    color: var(--text-muted);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ABOUT / FEATURES SECTION (home page)
+   ══════════════════════════════════════════════════════════════ */
+.features-section {
+    padding: var(--space-2xl) 0;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-lg);
+    margin-top: var(--space-xl);
+}
+
+.feature-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+}
+
+.feature-item__icon {
+    width: 42px;
+    height: 42px;
+    background: rgba(37, 99, 235, .1);
+    color: var(--brand-accent);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.feature-item__icon svg {
+    width: 20px;
+    height: 20px;
+}
+
+.feature-item__title {
+    font-size: .95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.feature-item__desc {
+    font-size: .85rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 0;
+}

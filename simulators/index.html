@@ -1,0 +1,852 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Engineering Simulators — EngSim</title>
+    <meta name="description"
+        content="Browse all free interactive engineering simulators: thermodynamics, fluid mechanics, mechanics and structures, electrical engineering, and chemistry." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/platform.css" />
+    <link rel="stylesheet" href="../assets/css/catalog.css" />
+</head>
+
+<body>
+    <div class="page-wrapper">
+
+        <div id="nav-placeholder"></div>
+
+        <main class="page-main" id="main-content">
+
+            <!-- Hero -->
+            <section class="catalog-hero" aria-labelledby="catalog-title">
+                <div class="container">
+                    <nav aria-label="Breadcrumb">
+                        <ol class="sim-hero__breadcrumb">
+                            <li><a href="../index.html">Home</a></li>
+                            <li><span>/</span></li>
+                            <li>Simulators</li>
+                        </ol>
+                    </nav>
+                    <h1 class="catalog-hero__title" id="catalog-title">Engineering Simulators</h1>
+                    <p class="catalog-hero__sub">
+                        Interactive tools for analysis, learning, and technical exploration.
+                        All simulators are free to use and require no account.
+                    </p>
+                    <div class="catalog-hero__filters">
+                        <a href="#unit-converters" class="catalog-filter-tag">Unit Converters</a>
+                        <a href="#thermodynamics" class="catalog-filter-tag">Thermodynamics</a>
+                        <a href="#combustion" class="catalog-filter-tag">Combustion &amp; Heat</a>
+                        <a href="#fluid-mechanics" class="catalog-filter-tag">Fluid Mechanics</a>
+                        <a href="#mechanics" class="catalog-filter-tag">Mechanics &amp; Structures</a>
+                        <a href="#electrical" class="catalog-filter-tag">Electrical Engineering</a>
+                        <a href="#chemistry" class="catalog-filter-tag">Chemistry</a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ============================================================
+                2) Agregar esta sección nueva como categoría del catálogo,
+                con el mismo patrón que Fluid Mechanics / Chemistry / etc.
+            ============================================================ -->
+            <section class="catalog-section" id="unit-converters" aria-labelledby="h-unit-converters">
+                <div class="container">
+                    <div class="catalog-section__header">
+                        <h2 class="catalog-section__title" id="h-unit-converters">Unit Converters</h2>
+                    </div>
+                    <div class="cards-grid">
+
+                        <a href="./power-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                                    </svg></div>
+                                <span class="tool-card__category">Unit Converters</span>
+                            </div>
+                            <h3 class="tool-card__title">Power Converter</h3>
+                            <p class="tool-card__desc">Convert watts, kilowatts, horsepower, BTU/h, kcal/h, tons of
+                                refrigeration, dBm and more — all units at once.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                        <!-- Coming soon: siguiente categoría de la tanda -->
+                        <a href="./energy-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Energy Converter</h3>
+                            <p class="tool-card__desc">Convert energy between joules, kJ, kWh, calories, BTU,
+                                foot-pounds, electronvolts, ergs and more — all units at once.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="./length-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path d="M21 6H3M21 12H3M21 18H3" />
+                                        <path d="M8 3v6M16 15v6" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Length Converter</h3>
+                            <p class="tool-card__desc">Convert length between millimeters, centimeters, meters,
+                                kilometers, inches, feet, yards, miles, nautical miles and light-years — all units at
+                                once.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="./mass-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path d="M6 3h12l4 6-10 12L2 9Z" />
+                                        <path d="M11 3 8 9l4 12 4-12-3-6" />
+                                        <path d="M2 9h20" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Mass &amp; Weight Converter</h3>
+                            <p class="tool-card__desc">Convert mass between milligrams, grams, kilograms, tonnes,
+                                ounces, pounds, stones, US/UK tons and atomic mass units — all units at once.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="./temperature-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Temperature Converter</h3>
+                            <p class="tool-card__desc">Convert temperature between Celsius, Fahrenheit, Kelvin, Rankine
+                                and Réaumur — all scales at once, with absolute zero validation.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="./volume-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path d="M8 2h8" />
+                                        <path
+                                            d="M12 2v6.34a2 2 0 0 1-.6 1.43l-5.8 5.68A3 3 0 0 0 4.5 20h15a3 3 0 0 0 .9-5.55l-5.8-5.68a2 2 0 0 1-.6-1.43V2" />
+                                        <path d="M7 15h10" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Volume Converter</h3>
+                            <p class="tool-card__desc">Convert volume between liters, milliliters, cubic meters, cubic
+                                feet, US/UK gallons, cups, tablespoons and more — all units at once.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="./data-storage-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <rect x="2" y="14" width="20" height="8" rx="2" />
+                                        <path d="M6 18h.01M10 18h.01" />
+                                        <path d="M17 14v-3a5 5 0 0 0-10 0v3" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Data Storage Converter</h3>
+                            <p class="tool-card__desc">Convert data storage between bits, bytes, KB, MB, GB, TB, PB and
+                                their binary equivalents (KiB, MiB, GiB, TiB, PiB) — all units at once.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="./area-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <rect x="3" y="3" width="18" height="18" rx="2" />
+                                        <path d="M9 3v18M15 3v18M3 9h18M3 15h18" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Area Converter</h3>
+                            <p class="tool-card__desc">Convert area between square meters, square feet, square miles,
+                                acres and hectares — all units at once.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="./speed-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path d="M5 12h14M13 6l6 6-6 6" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Speed Converter</h3>
+                            <p class="tool-card__desc">Convert speed between m/s, km/h, mph, knots, Mach and the speed
+                                of light — all units at once.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="./pressure-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <path d="M12 6v6l4 2" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Pressure Converter</h3>
+                            <p class="tool-card__desc">Convert pressure between pascals, bar, psi, atmospheres, mmHg,
+                                inHg and kgf/cm² — all units at once.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="./force-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path
+                                            d="M12 2v6M12 22v-6M4.93 4.93l4.24 4.24M14.83 14.83l4.24 4.24M2 12h6M16 12h6M4.93 19.07l4.24-4.24M14.83 9.17l4.24-4.24" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Force Converter</h3>
+                            <p class="tool-card__desc">Convert force between newtons, dynes, kilogram-force, pound-force
+                                and poundals — all units at once.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="./torque-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path d="M21.2 8A10 10 0 1 0 22 12" />
+                                        <path d="M22 4v6h-6" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Torque Converter</h3>
+                            <p class="tool-card__desc">Convert torque between N·m, lbf·ft, lbf·in, kgf·m and dyn·cm —
+                                all units at once.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="./flow-rate-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path d="M2 12h6" />
+                                        <path d="M14 12h8" />
+                                        <path
+                                            d="M8 12a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4h0a4 4 0 0 1-4 4h0a4 4 0 0 1-4-4Z" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Flow Rate Converter</h3>
+                            <p class="tool-card__desc">Convert flow rate between m³/s, L/min, US GPM and CFM — all units
+                                at once.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <a href="./fuel-consumption-converter/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                        aria-hidden="true">
+                                        <path d="M3 22h12" />
+                                        <path d="M8 22V10a3 3 0 0 1 3-3h0" />
+                                        <path d="M14 22V6a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h0" />
+                                        <path d="M14 13h4" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Unit Converter</span>
+                            </div>
+                            <h3 class="tool-card__title">Fuel Consumption Converter</h3>
+                            <p class="tool-card__desc">Convert fuel economy between mpg (US), mpg (UK), km/L and L/100km
+                                — all units at once.</p>
+                            <div class="tool-card__footer">
+                                Open Simulator
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── THERMODYNAMICS ───────────────────────────────────── -->
+            <section class="catalog-section" id="thermodynamics" aria-labelledby="h-thermo">
+                <div class="container">
+                    <div class="catalog-section__header">
+                        <h2 class="catalog-section__title" id="h-thermo">Thermodynamics</h2>
+                    </div>
+                    <div class="cards-grid">
+
+                        <a href="./ts-diagram-water/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Thermodynamics</span>
+                            </div>
+                            <h3 class="tool-card__title">T-s Diagram</h3>
+                            <p class="tool-card__desc">Interactive Temperature-Entropy diagram for analyzing
+                                thermodynamic states and cycles.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                        <a href="./entropy-diagram/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Thermodynamics</span>
+                            </div>
+                            <h3 class="tool-card__title">Entropy T-s Diagram</h3>
+                            <p class="tool-card__desc">Model isothermal, adiabatic, polytropic, isobaric and isochoric
+                                ideal-gas processes and visualize entropy generation on an interactive T-s diagram.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                        <!-- Coming soon cards -->
+                        <div class="tool-card tool-card--soon" aria-label="Rankine Cycle — coming soon">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M12 2v10M18 6l-6 6-6-6" />
+                                        <circle cx="12" cy="20" r="2" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Thermodynamics</span>
+                            </div>
+                            <h3 class="tool-card__title">Rankine Cycle</h3>
+                            <p class="tool-card__desc">Analyze steam power cycles, thermodynamic states, and efficiency
+                                with interpolations.</p>
+                            <div class="tool-card__footer"><span>Coming Soon</span></div>
+                        </div>
+
+                        <div class="tool-card tool-card--soon" aria-label="Brayton Cycle — coming soon">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M12 2v10M18 6l-6 6-6-6" />
+                                        <circle cx="12" cy="20" r="2" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Thermodynamics</span>
+                            </div>
+                            <h3 class="tool-card__title">Brayton Cycle</h3>
+                            <p class="tool-card__desc">Interactive simulation of ideal and real gas turbine cycles with
+                                state diagrams.</p>
+                            <div class="tool-card__footer"><span>Coming Soon</span></div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── COMBUSTION & HEAT ─────────────────────────────────── -->
+            <section class="catalog-section" id="combustion" aria-labelledby="h-combustion">
+                <div class="container">
+                    <div class="catalog-section__header">
+                        <h2 class="catalog-section__title" id="h-combustion">Combustion &amp; Heat</h2>
+                    </div>
+                    <div class="cards-grid">
+
+                        <a href="./gas-combustion/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2c0 6-6 8-6 14a6 6 0 0 0 12 0c0-6-6-8-6-14z" />
+                                    </svg></div>
+                                <span class="tool-card__category">Combustion &amp; Heat</span>
+                            </div>
+                            <h3 class="tool-card__title">Gaseous Combustion</h3>
+                            <p class="tool-card__desc">Stoichiometric simulator for pure gaseous fuels and hydrocarbon
+                                mixtures.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                        <a href="./combustion-chimenea/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2c0 6-6 8-6 14a6 6 0 0 0 12 0c0-6-6-8-6-14z" />
+                                    </svg></div>
+                                <span class="tool-card__category">Combustion &amp; Heat</span>
+                            </div>
+                            <h3 class="tool-card__title">Combustion Analysis</h3>
+                            <p class="tool-card__desc">Calculate dilution and thermal efficiency using Siegert's formula
+                                and Orsat analysis.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                        <a href="./natural-draft/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2c0 6-6 8-6 14a6 6 0 0 0 12 0c0-6-6-8-6-14z" />
+                                    </svg></div>
+                                <span class="tool-card__category">Combustion &amp; Heat</span>
+                            </div>
+                            <h3 class="tool-card__title">Natural Draft &amp; Chimneys</h3>
+                            <p class="tool-card__desc">Calculate natural draft, friction head loss, and pressure
+                                balances in industrial chimneys.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                        <a href="./fuel-construction/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2c0 6-6 8-6 14a6 6 0 0 0 12 0c0-6-6-8-6-14z" />
+                                        <path d="M12 12c0 3-2 5-2 7a2 2 0 0 0 4 0c0-2-2-4-2-7z" />
+                                    </svg></div>
+                                <span class="tool-card__category">Combustion &amp; Heat</span>
+                            </div>
+                            <h3 class="tool-card__title">Fuel Construction</h3>
+                            <p class="tool-card__desc">Define the elemental composition of a solid fuel on a dry basis
+                                (C·H·O·N·S·Z) and observe how moisture transforms the calculation basis.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- AD SLOT mid-catalog -->
+<!-- AD-SLOT HIDDEN
+            <div class="container">
+                <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">Advertisement</div>
+            </div>
+            -->
+
+            <!-- ── FLUID MECHANICS ───────────────────────────────────── -->
+            <section class="catalog-section" id="fluid-mechanics" aria-labelledby="h-fluids">
+                <div class="container">
+                    <div class="catalog-section__header">
+                        <h2 class="catalog-section__title" id="h-fluids">Fluid Mechanics</h2>
+                    </div>
+                    <div class="cards-grid">
+                        <a href="./pipe-head-loss/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M2 12h20M2 6h20M2 18h20" />
+                                    </svg></div>
+                                <span class="tool-card__category">Fluid Mechanics</span>
+                            </div>
+                            <h3 class="tool-card__title">Pipe Head Loss</h3>
+                            <p class="tool-card__desc">Compute head loss using Darcy-Weisbach and Swamee-Jain. Analyze
+                                Reynolds
+                                number, friction factor, pressure drop, and get a recommended commercial pipe diameter.
+                            </p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── MECHANICS & STRUCTURES ────────────────────────────── -->
+            <section class="catalog-section" id="mechanics" aria-labelledby="h-mechanics">
+                <div class="container">
+                    <div class="catalog-section__header">
+                        <h2 class="catalog-section__title" id="h-mechanics">Mechanics &amp; Structures</h2>
+                    </div>
+                    <div class="cards-grid">
+
+                        <a href="./mohr-circle/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="2" y1="12" x2="22" y2="12" />
+                                        <line x1="12" y1="2" x2="12" y2="22" />
+                                    </svg></div>
+                                <span class="tool-card__category">Mechanics &amp; Structures</span>
+                            </div>
+                            <h3 class="tool-card__title">Mohr's Circle Calculator</h3>
+                            <p class="tool-card__desc">Compute principal stresses, maximum shear stress, and stress at
+                                any rotated plane from a plane stress state — with an interactive Mohr's Circle
+                                diagram.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                        <a href="./static-beam/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="2" y1="12" x2="22" y2="12" />
+                                        <line x1="7" y1="4" x2="7" y2="20" />
+                                        <line x1="17" y1="4" x2="17" y2="20" />
+                                    </svg></div>
+                                <span class="tool-card__category">Mechanics &amp; Structures</span>
+                            </div>
+                            <h3 class="tool-card__title">Static Beam</h3>
+                            <p class="tool-card__desc">Analyze simply supported beams: shear force diagrams, bending
+                                moment diagrams, and support reactions.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── ELECTRICAL ENGINEERING ────────────────────────────── -->
+            <section class="catalog-section" id="electrical" aria-labelledby="h-electrical">
+                <div class="container">
+                    <div class="catalog-section__header">
+                        <h2 class="catalog-section__title" id="h-electrical">Electrical Engineering</h2>
+                    </div>
+                    <div class="cards-grid">
+
+                        <a href="./kapp-diagram/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                                    </svg></div>
+                                <span class="tool-card__category">Electrical Machines</span>
+                            </div>
+                            <h3 class="tool-card__title">Kapp Diagram Calculator</h3>
+                            <p class="tool-card__desc">Compute voltage regulation, secondary voltage drop, and phasor
+                                diagram for single-phase transformers using the infinite bus model.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                        <a href="./voltage-divider/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M2 12h3l1.5-4 3 8 3-8 3 8 3-8 1.5 4h3" />
+                                    </svg></div>
+                                <span class="tool-card__category">Electrical Engineering</span>
+                            </div>
+                            <h3 class="tool-card__title">Voltage Divider</h3>
+                            <p class="tool-card__desc">Interactive resistive voltage divider: adjust values and
+                                visualize output voltage and current distribution.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                        <a href="./dc-circuit-analyzer/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                                    </svg></div>
+                                <span class="tool-card__category">Electrical Engineering</span>
+                            </div>
+                            <h3 class="tool-card__title">DC Circuit Analyzer</h3>
+                            <p class="tool-card__desc">Analyze series and parallel resistive DC networks: currents,
+                                voltages,
+                                power, and maximum power transfer — with guided Thevenin, Norton, node, and mesh
+                                analysis.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── CHEMISTRY ─────────────────────────────────────────── -->
+            <section class="catalog-section" id="chemistry" aria-labelledby="h-chemistry">
+                <div class="container">
+                    <div class="catalog-section__header">
+                        <h2 class="catalog-section__title" id="h-chemistry">Chemistry</h2>
+                    </div>
+                    <div class="cards-grid">
+                        <a href="./chemical-reactions/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg"
+                                        width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18" />
+                                    </svg></div>
+                                <span class="tool-card__category">Chemistry</span>
+                            </div>
+                            <h3 class="tool-card__title">Chemical Reactions</h3>
+                            <p class="tool-card__desc">Balance chemical equations, identify limiting reactants, and
+                                analyze redox reactions step by step.</p>
+                            <div class="tool-card__footer"><span>Open Simulator</span><svg
+                                    xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg></div>
+                        </a>
+
+                        <a href="./balanceador-ecuaciones/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path
+                                            d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v18m0 0h10a2 2 0 0 0 2-2V9M9 21H5a2 2 0 0 1-2-2V9m0 0h18" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Chemistry</span>
+                            </div>
+                            <h3 class="tool-card__title">Chemical Equation Balancer</h3>
+                            <p class="tool-card__desc">Step-by-step stoichiometry tutor. Learn the balancing method or
+                                practice interactively with real-time coefficient feedback.</p>
+                            <div class="tool-card__footer">
+                                <span>Open Simulator</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AD SLOT bottom -->
+<!-- AD-SLOT HIDDEN
+            <div class="container">
+                <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">Advertisement</div>
+            </div>
+            -->
+
+        </main>
+
+        <div id="footer-placeholder"></div>
+
+    </div>
+    <script src="../assets/js/platform.js"></script>
+</body>
+
+</html>

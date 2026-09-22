@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Data Storage Converter — Convert Bytes, KB, MB, GB, TB & More | EngSim</title>
+  <meta name="description" content="Free data storage unit converter. Enter one value and instantly see it converted to bits, bytes, KB, MB, GB, TB, PB and their binary equivalents (KiB, MiB, GiB, TiB, PiB)." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Data Storage Converter — Convert Between All Storage Units" />
+  <meta property="og:description" content="Convert data storage between bits, bytes, KB, MB, GB, TB, PB and their binary equivalents (KiB, MiB, GiB, TiB, PiB) — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/data-storage-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/data-storage-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — dsc- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Data Storage Converter",
+    "url": "https://engsim.app/simulators/data-storage-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert data storage values between bits, bytes, kilobytes, megabytes, gigabytes, terabytes, petabytes, and their binary (IEC) equivalents: kibibytes, mebibytes, gibibytes, tebibytes and pebibytes.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.dsc-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Data Storage Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Data Storage Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any storage unit and instantly see the equivalent in bytes, KB, MB, GB, TB and their binary (KiB, MiB, GiB) counterparts.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">Bytes</span>
+            <span class="sim-hero__tag">Gigabytes</span>
+            <span class="sim-hero__tag">Terabytes</span>
+            <span class="sim-hero__tag">GiB vs GB</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="14" width="20" height="8" rx="2"/><path d="M6 18h.01M10 18h.01"/><path d="M17 14v-3a5 5 0 0 0-10 0v3"/></svg>
+                <span class="sim-panel__title">Data Size Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="1" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="dsc-table-wrap" id="results-table-wrap">
+                    <table class="dsc-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Data Storage Converter</h2>
+            <p>Storage sizes get confusing fast: a "1 TB" hard drive shows up as roughly 931 GiB in your operating system, a download manager reports MB while your file browser shows MiB, and marketing numbers rarely match what you actually see on screen. This tool lets you enter a value once and see it converted to every common storage unit at the same time — both the decimal (1000-based) units used in marketing and storage specs, and the binary (1024-based) units your OS actually uses internally.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the data size value you want to convert.</li>
+              <li>Select the unit that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value in every other unit.</li>
+            </ol>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formula</h2>
+            <p>Every storage unit converts through the byte (B), where 1 byte = 8 bits. To convert from unit A to unit B:</p>
+            <div class="edu-formula">value_B = value_A × factor_A→B ÷ factor_B→B</div>
+            <p>The key distinction in this domain isn't the formula — it's which base a unit uses. Decimal units (KB, MB, GB, TB, PB) scale by powers of 1000, following the SI convention. Binary units (KiB, MiB, GiB, TiB, PiB) scale by powers of 1024, matching how computers actually address memory.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Data Storage Unit Conversion Factors (to Bytes)</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Value in Bytes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Bit</td><td>bit</td><td>0.125</td></tr>
+                  <tr><td>Byte</td><td>B</td><td>1</td></tr>
+                  <tr><td>Kilobyte</td><td>KB</td><td>1,000</td></tr>
+                  <tr><td>Megabyte</td><td>MB</td><td>1,000,000</td></tr>
+                  <tr><td>Gigabyte</td><td>GB</td><td>1,000,000,000</td></tr>
+                  <tr><td>Terabyte</td><td>TB</td><td>1,000,000,000,000</td></tr>
+                  <tr><td>Petabyte</td><td>PB</td><td>1,000,000,000,000,000</td></tr>
+                  <tr><td>Kibibyte</td><td>KiB</td><td>1,024</td></tr>
+                  <tr><td>Mebibyte</td><td>MiB</td><td>1,048,576</td></tr>
+                  <tr><td>Gibibyte</td><td>GiB</td><td>1,073,741,824</td></tr>
+                  <tr><td>Tebibyte</td><td>TiB</td><td>1,099,511,627,776</td></tr>
+                  <tr><td>Pebibyte</td><td>PiB</td><td>1,125,899,906,842,624</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: the binary prefixes (kibi-, mebi-, gibi-...) were standardized by the IEC specifically to disambiguate from the decimal SI prefixes (kilo-, mega-, giga-...), since operating systems and storage manufacturers historically used "KB/MB/GB" to mean two different things.</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — Why a "1 TB" Drive Shows Less Space</p>
+                <p>A drive marketed as 1 TB = 1,000,000,000,000 bytes. Your OS reports it in GiB: 1,000,000,000,000 ÷ 1,073,741,824 ≈ <strong>931.32 GiB</strong> — the "missing" space is just a different counting base, not lost storage.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — MB to KB</p>
+                <p>A 5 MB file: 5 × 1,000,000 B ÷ 1,000 B/KB = <strong>5,000 KB</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — Bytes to Bits</p>
+                <p>A network speed test showing 100 Mbps is measuring bits, not bytes: 100 Mb ÷ 8 = <strong>12.5 MB/s</strong> of actual download speed.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — GiB to GB</p>
+                <p>A game reporting 25 GiB of install size: 25 × 1,073,741,824 B ÷ 1,000,000,000 B/GB ≈ <strong>26.84 GB</strong> — worth knowing before comparing it to your drive's marketed capacity.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>What's the difference between GB and GiB?</summary>
+              <div class="edu-faq-answer">A gigabyte (GB) is 1,000,000,000 bytes (decimal, base 1000). A gibibyte (GiB) is 1,073,741,824 bytes (binary, base 1024) — about 7.4% larger. Storage manufacturers use GB; most operating systems display GiB but often mislabel it "GB" in the interface, which is the source of most storage-size confusion.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Why does my 1 TB hard drive show up as less than 1 TB?</summary>
+              <div class="edu-faq-answer">The drive is sized correctly at exactly 1,000,000,000,000 bytes. Your operating system just reports that number in GiB instead of GB, and since a GiB holds more bytes than a GB, the same total comes out to a smaller-looking number: about 931 GiB.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How many bits are in a byte?</summary>
+              <div class="edu-faq-answer">Exactly 8 bits. This is why internet speeds (measured in bits per second, like Mbps) look 8 times larger than the download speed you actually see in your browser (measured in bytes per second, like MB/s).</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Is a kilobyte 1,000 bytes or 1,024 bytes?</summary>
+              <div class="edu-faq-answer">Strictly, a kilobyte (KB) is 1,000 bytes and a kibibyte (KiB) is 1,024 bytes — they're different units with different symbols. In casual usage "KB" is often used loosely to mean either, which is exactly the ambiguity the KiB/MiB/GiB naming was introduced to resolve.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How do I convert Mbps internet speed to MB/s download speed?</summary>
+              <div class="edu-faq-answer">Divide by 8. A 100 Mbps connection tops out around 12.5 MB/s, because internet speeds are measured in bits per second while file sizes and download managers report bytes per second.</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

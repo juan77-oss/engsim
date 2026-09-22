@@ -1,0 +1,301 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Length Converter — Convert mm, cm, m, km, in, ft, mi & More | EngSim</title>
+  <meta name="description" content="Free length unit converter. Enter one value and instantly see it converted to millimeters, centimeters, meters, kilometers, inches, feet, yards, miles and more." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Length Converter — Convert Between All Length Units" />
+  <meta property="og:description" content="Convert length between mm, cm, m, km, inches, feet, yards, miles, nautical miles and light-years — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/length-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/length-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — lnc- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Length Converter",
+    "url": "https://engsim.app/simulators/length-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert length values between nanometers, micrometers, millimeters, centimeters, meters, kilometers, mils, inches, feet, yards, miles, nautical miles and light-years.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.lnc-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Length Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Length Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any length unit and instantly see the equivalent in millimeters, meters, kilometers, inches, feet, miles and more.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">Meters</span>
+            <span class="sim-hero__tag">Inches</span>
+            <span class="sim-hero__tag">Feet</span>
+            <span class="sim-hero__tag">Miles</span>
+            <span class="sim-hero__tag">Kilometers</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 6H3M21 12H3M21 18H3"/><path d="M8 3v6M16 15v6"/></svg>
+                <span class="sim-panel__title">Length Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="1" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="lnc-table-wrap" id="results-table-wrap">
+                    <table class="lnc-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Length Converter</h2>
+            <p>Length is the measurement most people run into every day — road signs in kilometers or miles, a shelf that needs to fit in inches or centimeters, a shipping label with dimensions in an unfamiliar system. This tool lets you enter a value once and see it converted to every common length unit at the same time — metric, imperial, nautical, and even astronomical — no need to look up a from/to pair.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the length value you want to convert.</li>
+              <li>Select the unit that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value in every other unit.</li>
+            </ol>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formula</h2>
+            <p>Every length unit converts through the meter (m), the SI base unit of length. To convert from unit A to unit B:</p>
+            <div class="edu-formula">value_B = value_A × factor_A→m ÷ factor_B→m</div>
+            <p>All length units are linear multiples of the meter, so every conversion here is straightforward multiplication or division — there's no offset to account for, unlike temperature scales.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Length Unit Conversion Factors (to Meters)</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Value in Meters</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Nanometer</td><td>nm</td><td>1 × 10⁻⁹</td></tr>
+                  <tr><td>Micrometer</td><td>μm</td><td>1 × 10⁻⁶</td></tr>
+                  <tr><td>Millimeter</td><td>mm</td><td>0.001</td></tr>
+                  <tr><td>Centimeter</td><td>cm</td><td>0.01</td></tr>
+                  <tr><td>Meter</td><td>m</td><td>1</td></tr>
+                  <tr><td>Kilometer</td><td>km</td><td>1,000</td></tr>
+                  <tr><td>Mil (thou)</td><td>mil</td><td>0.0000254</td></tr>
+                  <tr><td>Inch</td><td>in</td><td>0.0254</td></tr>
+                  <tr><td>Foot</td><td>ft</td><td>0.3048</td></tr>
+                  <tr><td>Yard</td><td>yd</td><td>0.9144</td></tr>
+                  <tr><td>Mile</td><td>mi</td><td>1,609.344</td></tr>
+                  <tr><td>Nautical Mile</td><td>nmi</td><td>1,852</td></tr>
+                  <tr><td>Light-year</td><td>ly</td><td>9.4607304725808 × 10¹⁵</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: inch/foot/yard/mile use the exact international yard-and-pound definition (1959). The nautical mile is defined exactly as 1,852 m. The light-year uses the IAU-adopted Julian-year definition.</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — Miles to Kilometers</p>
+                <p>A road sign shows 5 miles to the next town: 5 × 1.609344 km/mi = <strong>8.05 km</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — Inches to Centimeters</p>
+                <p>A 15-inch laptop screen: 15 × 2.54 cm/in = <strong>38.1 cm</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — Millimeters to Mils</p>
+                <p>A machining tolerance of 0.05 mm: 0.05 mm ÷ 0.0254 mm/mil ≈ <strong>1.97 mil</strong> — a common conversion in manufacturing drawings.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — Light-years to Kilometers</p>
+                <p>The nearest star system, Proxima Centauri, is about 4.25 light-years away: 4.25 × 9.4607 × 10¹⁵ m ≈ <strong>4.02 × 10¹³ km</strong>.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>How many centimeters are in an inch?</summary>
+              <div class="edu-faq-answer">Exactly 2.54 cm. This is the internationally agreed definition of the inch, so the conversion is exact, not an approximation.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How do I convert miles to kilometers?</summary>
+              <div class="edu-faq-answer">Multiply the mile value by 1.609344 to get kilometers. Equivalently, 1 km ≈ 0.621371 miles.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What's the difference between a mile and a nautical mile?</summary>
+              <div class="edu-faq-answer">A statute mile (used on land in the US) is 1,609.344 m. A nautical mile, used in aviation and maritime navigation, is 1,852 m — based on one minute of latitude on Earth's surface.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What is a mil, and how is it different from a millimeter?</summary>
+              <div class="edu-faq-answer">A mil (or "thou") is one thousandth of an inch — 0.0254 mm. It's commonly used in manufacturing and electronics to specify tight tolerances, and it's easy to confuse with the millimeter because the names sound similar despite being different units.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How many feet are in a meter?</summary>
+              <div class="edu-faq-answer">1 meter ≈ 3.28084 feet. Conversely, 1 foot = 0.3048 m exactly.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Is a light-year a unit of time or distance?</summary>
+              <div class="edu-faq-answer">Distance. A light-year is the distance light travels in one Julian year (365.25 days) through a vacuum — about 9.46 trillion kilometers. The name refers to the time taken, but the unit itself measures length.</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

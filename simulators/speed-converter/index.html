@@ -1,0 +1,290 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Speed Converter — Convert m/s, km/h, mph, Knots, Mach & More | EngSim</title>
+  <meta name="description" content="Free speed unit converter. Enter one value and instantly see it converted to meters per second, kilometers per hour, miles per hour, knots, Mach and the speed of light." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Speed Converter — Convert Between All Speed Units" />
+  <meta property="og:description" content="Convert speed between m/s, km/h, mph, ft/s, knots, Mach and the speed of light — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/speed-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/speed-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — spc- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Speed Converter",
+    "url": "https://engsim.app/simulators/speed-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert speed values between meters per second, kilometers per hour, miles per hour, feet per second, knots, Mach and the speed of light, with built-in physical limit validation.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.spc-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Speed Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Speed Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any speed unit and instantly see the equivalent in m/s, km/h, mph, knots, Mach and the speed of light.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">km/h</span>
+            <span class="sim-hero__tag">mph</span>
+            <span class="sim-hero__tag">Knots</span>
+            <span class="sim-hero__tag">Mach</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                <span class="sim-panel__title">Speed Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="100" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="spc-table-wrap" id="results-table-wrap">
+                    <table class="spc-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Speed Converter</h2>
+            <p>Speed is measured differently depending on where you are and what you're doing — road signs in mph or km/h, aviation and shipping in knots, aircraft performance in Mach numbers, and physics in fractions of the speed of light. This tool lets you enter a value once and see it converted to every common speed unit at the same time.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the speed value you want to convert.</li>
+              <li>Select the unit that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value in every other unit.</li>
+            </ol>
+            <p>Values below zero or above the speed of light are rejected, since neither is physically meaningful for a speed magnitude.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formula</h2>
+            <p>Every speed unit converts through meters per second (m/s), the SI unit of speed. To convert from unit A to unit B:</p>
+            <div class="edu-formula">value_B = value_A × factor_A→(m/s) ÷ factor_B→(m/s)</div>
+            <p>All speed units here are linear multiples of m/s, so every conversion is straightforward multiplication or division.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Speed Unit Conversion Factors (to Meters per Second)</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Value in m/s</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Meter per Second</td><td>m/s</td><td>1</td></tr>
+                  <tr><td>Kilometer per Hour</td><td>km/h</td><td>0.277778</td></tr>
+                  <tr><td>Mile per Hour</td><td>mph</td><td>0.44704</td></tr>
+                  <tr><td>Foot per Second</td><td>ft/s</td><td>0.3048</td></tr>
+                  <tr><td>Knot</td><td>kn</td><td>0.514444</td></tr>
+                  <tr><td>Mach (approx.)</td><td>Ma</td><td>343</td></tr>
+                  <tr><td>Speed of Light</td><td>c</td><td>299,792,458</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: mph, ft/s and knots are exact (derived from exact length/time definitions). The speed of light is exact by definition of the meter. <strong>Mach 1 is an approximation</strong> — the actual speed of sound depends on air temperature, pressure and humidity. 343 m/s is the commonly cited value for dry air at 20°C at sea level; at cruising altitude, where air is much colder, Mach 1 is closer to 295 m/s.</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — km/h to mph</p>
+                <p>A highway speed limit of 120 km/h: 120 ÷ 3.6 = 33.333 m/s, ÷ 0.44704 m/s/mph ≈ <strong>74.6 mph</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — Knots to km/h</p>
+                <p>A ship cruising at 20 knots: 20 × 0.514444 m/s/kn × 3.6 ≈ <strong>37.04 km/h</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — Mach to km/h</p>
+                <p>A jet at Mach 2: 2 × 343 m/s × 3.6 ≈ <strong>2,469.6 km/h</strong> (using the sea-level approximation).</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — Fraction of the Speed of Light</p>
+                <p>A spacecraft at 30,000 km/h: 30,000 ÷ 3.6 = 8,333.3 m/s, ÷ 299,792,458 m/s ≈ <strong>0.0000278 c</strong> — a good illustration of just how enormous the speed of light is.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>How do I convert km/h to mph?</summary>
+              <div class="edu-faq-answer">Divide by 1.609344, or multiply by about 0.621371. A quick rule of thumb: mph ≈ km/h × 0.62.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What is a knot, and why is it used at sea?</summary>
+              <div class="edu-faq-answer">A knot is one nautical mile per hour (0.514444 m/s). It's used in aviation and maritime navigation because a nautical mile is tied directly to a minute of latitude, making it convenient for plotting position on nautical charts.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Is Mach 1 always the same speed?</summary>
+              <div class="edu-faq-answer">No — the speed of sound (Mach 1) depends on air temperature. It's about 343 m/s (1,235 km/h) in dry air at 20°C at sea level, but drops to roughly 295 m/s at typical cruising altitudes where the air is much colder. This converter uses the common sea-level approximation.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Why can't I enter a speed faster than light?</summary>
+              <div class="edu-faq-answer">Special relativity establishes the speed of light in a vacuum (299,792,458 m/s) as the universal speed limit — nothing with mass can reach or exceed it. This tool blocks values above that limit for the same reason it blocks negative speeds: neither is physically meaningful.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How many m/s is the speed of light?</summary>
+              <div class="edu-faq-answer">Exactly 299,792,458 m/s. This value is exact because the meter itself is defined in terms of the speed of light and a fixed time interval.</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

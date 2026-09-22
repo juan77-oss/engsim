@@ -1,0 +1,379 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Power Converter — Convert Watts, kW, HP, BTU/h &amp; More | EngSim</title>
+  <meta name="description"
+    content="Free online power unit converter. Instantly convert watts, kilowatts, megawatts, horsepower (mechanical, metric, electric), BTU/h, kcal/h, tons of refrigeration and dBm — all at once." />
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/power-converter/" /> -->
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Power Converter — Convert Watts, kW, HP, BTU/h & More" />
+  <meta property="og:description"
+    content="Convert power between watts, kilowatts, horsepower, BTU/h, kcal/h, tons of refrigeration, dBm and more — instantly, all units at once." />
+  <meta property="og:type" content="website" />
+  <!-- <meta property="og:url" content="https://engsim.app/simulators/power-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (none needed beyond the shared "pwc-" block in simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none — this converter needs no charting library) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Power Converter",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Free online tool to convert power between watts, kilowatts, megawatts, horsepower (mechanical, metric, electric), BTU/h, kcal/h, cal/s, ft·lb/s, tons of refrigeration and dBm.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- ── HERO ─────────────────────────────────────────── -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Power Converter</li>
+            </ol>
+          </nav>
+
+          <span class="sim-hero__category">Unit Converters</span>
+
+          <h1 class="sim-hero__title" id="sim-title">Power Converter</h1>
+
+          <p class="sim-hero__subtitle">
+            Convert watts, kilowatts, horsepower, BTU/h, kcal/h, tons of refrigeration,
+            dBm and more — all units at once.
+          </p>
+
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">Power Engineering</span>
+            <span class="sim-hero__tag">Horsepower</span>
+            <span class="sim-hero__tag">Electrical Power</span>
+            <span class="sim-hero__tag">HVAC</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── SIMULATOR BODY ──────────────────────────────────── -->
+      <section class="sim-body">
+        <div class="container">
+
+          <div class="sim-error" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <!-- EDIT 6: layout choice — two panels (input left, full conversion table right) -->
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z" />
+                </svg>
+                <span class="sim-panel__title">Power Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" class="sim-input" id="input-value" placeholder="e.g. 1" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <div class="sim-input-wrap">
+                    <select class="sim-select" id="input-unit">
+                      <optgroup label="SI">
+                        <option value="watt">Watt (W)</option>
+                        <option value="milliwatt">Milliwatt (mW)</option>
+                        <option value="kilowatt">Kilowatt (kW)</option>
+                        <option value="megawatt">Megawatt (MW)</option>
+                      </optgroup>
+                      <optgroup label="Imperial / US">
+                        <option value="hp_mechanical">Horsepower, mechanical (hp)</option>
+                        <option value="hp_metric">Horsepower, metric (PS)</option>
+                        <option value="hp_electric">Horsepower, electric (hp(E))</option>
+                        <option value="ft_lb_per_second">Foot-pound per second (ft·lb/s)</option>
+                        <option value="ft_lb_per_minute">Foot-pound per minute (ft·lb/min)</option>
+                      </optgroup>
+                      <optgroup label="Thermal">
+                        <option value="btu_per_hour">BTU per hour (BTU/h)</option>
+                        <option value="btu_per_minute">BTU per minute (BTU/min)</option>
+                        <option value="btu_per_second">BTU per second (BTU/s)</option>
+                        <option value="kcal_per_hour">Kilocalorie per hour (kcal/h)</option>
+                        <option value="cal_per_second">Calorie per second (cal/s)</option>
+                        <option value="ton_refrigeration">Ton of refrigeration (TR)</option>
+                      </optgroup>
+                      <optgroup label="CGS">
+                        <option value="erg_per_second">Erg per second (erg/s)</option>
+                      </optgroup>
+                      <optgroup label="Telecom (logarithmic)">
+                        <option value="dbm">Decibel-milliwatt (dBm)</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                </div>
+
+                <button class="btn-primary" type="button" id="btn-calculate">
+                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 6 9 17l-5-5" />
+                  </svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <path d="M3 9h18M9 21V9" />
+                  </svg>
+                  <span class="sim-panel__title">Converted to All Units</span>
+                </div>
+                <div class="sim-panel__body">
+                  <p class="pwc-empty-state is-hidden" id="results-empty-state">Enter a valid number to see the
+                    conversion table.</p>
+                  <div class="pwc-table-wrap" id="results-table-wrap">
+                    <table class="edu-table pwc-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Symbol</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-table-body"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div><!-- /container -->
+      </section><!-- /sim-body -->
+
+      <!-- Ad slot: between simulator and educational content -->
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-XXXXXXXXXXXXXXX"
+               data-ad-slot="XXXXXXXXXX"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Power Converter</h2>
+            <p>Power measures the rate at which energy is transferred or converted — how fast work is done. Engineers
+              move between power units constantly: a motor nameplate in horsepower, a compressor rated in tons of
+              refrigeration, a boiler quoted in BTU/h, and a datasheet spec in dBm all describe the same physical
+              quantity in different unit systems. This tool converts a single power value into every common unit at
+              once, so you can read across SI, imperial, thermal, CGS and telecom (logarithmic) units without doing the
+              arithmetic by hand.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Converter</h2>
+            <div class="edu-grid">
+              <div class="edu-grid-item">
+                <h4>1. Enter a value</h4>
+                <p>Type the power value you want to convert into the input field.</p>
+              </div>
+              <div class="edu-grid-item">
+                <h4>2. Pick its unit</h4>
+                <p>Select the unit that value is currently expressed in — watts, horsepower, BTU/h, dBm, etc.</p>
+              </div>
+              <div class="edu-grid-item">
+                <h4>3. Read the table</h4>
+                <p>The table updates instantly, showing your value converted into every other supported unit.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Power Conversion Formulas</h2>
+            <p>All linear power units share a fixed multiplicative factor relative to the watt (W), the SI base unit of
+              power. To convert between any two linear units, this tool normalizes the input to watts first, then
+              converts from watts to the target unit:</p>
+            <div class="edu-formula">P (target unit) = P (watts) ÷ factor(target unit)</div>
+            <p>The one exception is the decibel-milliwatt (dBm), a logarithmic unit referenced to 1 milliwatt, used
+              mainly in telecom and RF engineering:</p>
+            <div class="edu-formula">P (dBm) = 10 × log₁₀( P (mW) / 1 mW )</div>
+            <div class="edu-formula">P (mW) = 10 ^ ( P (dBm) / 10 )</div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Power Unit Conversion Factors</h2>
+            <p>Quick reference for the most commonly looked-up power conversions (values shown for 1 unit):</p>
+            <div class="pwc-table-wrap">
+              <table class="edu-table" id="reference-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Conversion</th>
+                    <th scope="col">Result</th>
+                  </tr>
+                </thead>
+                <tbody id="reference-table-body"></tbody>
+              </table>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+
+            <div class="edu-example">
+              <div class="edu-example__title">Example 1 — Motor nameplate in horsepower</div>
+              <p>A pump motor is rated at 5 hp (mechanical). In kilowatts:</p>
+              <div class="edu-formula">5 hp × 745.6998716 W/hp = 3728.499 W ≈ 3.73 kW</div>
+            </div>
+
+            <div class="edu-example">
+              <div class="edu-example__title">Example 2 — HVAC load in tons of refrigeration</div>
+              <p>A chiller is specified at 10 tons of refrigeration. In kilowatts:</p>
+              <div class="edu-formula">10 TR × 3516.8528 W/TR = 35 168.528 W ≈ 35.17 kW</div>
+            </div>
+
+            <div class="edu-example">
+              <div class="edu-example__title">Example 3 — RF signal strength in dBm</div>
+              <p>A wireless transmitter outputs 100 mW (0.1 W). In dBm:</p>
+              <div class="edu-formula">10 × log₁₀(100 mW / 1 mW) = 10 × log₁₀(100) = 20 dBm</div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>What's the difference between mechanical, metric and electric horsepower?</summary>
+              <div class="edu-faq-answer">Mechanical horsepower (hp) is defined as 550 ft·lbf/s ≈ 745.70 W and is the
+                imperial-system standard used for engines and motors in the US and UK. Metric horsepower (PS, from
+                German "Pferdestärke") is defined as 75 kgf·m/s ≈ 735.50 W and is common in European and Asian vehicle
+                specs. Electric horsepower is a rounded convention of exactly 746 W used historically for electric motor
+                ratings in the US.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Why is a ton of refrigeration a unit of power?</summary>
+              <div class="edu-faq-answer">A ton of refrigeration describes the rate of heat absorption needed to melt
+                one short ton (2000 lb) of ice in 24 hours — a rate, which makes it a power unit (≈ 3516.85 W or ≈ 3.517
+                kW). It's still the standard way HVAC and chiller capacity is specified in the US.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Can dBm be negative?</summary>
+              <div class="edu-faq-answer">Yes. Because dBm is a logarithmic scale referenced to 1 mW, any power below 1
+                mW converts to a negative dBm value (e.g. 0.001 mW ≈ -30 dBm), while any power above 1 mW is positive. A
+                power of exactly 1 mW is 0 dBm. dBm has no representation for zero or negative watts, since the
+                logarithm of a non-positive number is undefined.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What's the difference between BTU/h and BTU alone?</summary>
+              <div class="edu-faq-answer">A BTU (British Thermal Unit) is a unit of energy, not power — it measures a
+                fixed amount of heat. BTU/h (or BTU/hr) is a unit of power: the rate at which that heat is delivered or
+                absorbed, which is what this converter uses since it's directly comparable to watts. This converter's
+                sibling Energy Converter (coming soon) handles BTU as a standalone energy unit.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How precise are these conversions?</summary>
+              <div class="edu-faq-answer">This tool uses standard engineering conversion factors (e.g. exact definitions
+                where they exist, such as 1 hp (mechanical) = 550 ft·lbf/s, and accepted rounded constants elsewhere,
+                such as 1 kcal/h = 1.163 W). Results are computed in double-precision floating point and displayed with
+                enough decimal places for engineering use; extremely large or small values switch to scientific notation
+                for readability.</div>
+            </details>
+          </section>
+
+        </div>
+      </div>
+
+      <!-- Ad slot: end of educational content -->
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-XXXXXXXXXXXXXXX"
+               data-ad-slot="XXXXXXXXXX"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+
+</html>

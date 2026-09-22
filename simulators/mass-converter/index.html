@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Mass & Weight Converter — Convert kg, lbs, oz, g, tonnes & More | EngSim</title>
+  <meta name="description" content="Free mass and weight unit converter. Enter one value and instantly see it converted to milligrams, grams, kilograms, tonnes, ounces, pounds, stones, tons and more." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Mass & Weight Converter — Convert Between All Mass Units" />
+  <meta property="og:description" content="Convert mass between mg, g, kg, tonnes, grains, ounces, pounds, stones, US/UK tons and atomic mass units — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/mass-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/mass-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — msc- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Mass & Weight Converter",
+    "url": "https://engsim.app/simulators/mass-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert mass values between milligrams, grams, kilograms, metric tons, grains, ounces, pounds, stones, US and UK tons, and atomic mass units.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.msc-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Mass & Weight Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Mass &amp; Weight Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any mass unit and instantly see the equivalent in kilograms, pounds, ounces, tonnes, stones and more.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">Kilograms</span>
+            <span class="sim-hero__tag">Pounds</span>
+            <span class="sim-hero__tag">Ounces</span>
+            <span class="sim-hero__tag">Tonnes</span>
+            <span class="sim-hero__tag">Stones</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12l4 6-10 12L2 9Z"/><path d="M11 3 8 9l4 12 4-12-3-6"/><path d="M2 9h20"/></svg>
+                <span class="sim-panel__title">Mass Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="1" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="msc-table-wrap" id="results-table-wrap">
+                    <table class="msc-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Mass &amp; Weight Converter</h2>
+            <p>Mass and weight units split sharply between the metric and imperial worlds — a US recipe in ounces, a shipping label in kilograms, a body weight in stones, a lab sample in milligrams. This tool lets you enter a value once and see it converted to every common mass unit at the same time, from milligrams up to metric tons, without hunting for a specific from/to pair.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the mass value you want to convert.</li>
+              <li>Select the unit that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value in every other unit.</li>
+            </ol>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formula</h2>
+            <p>Every mass unit converts through the kilogram (kg), the SI base unit of mass. To convert from unit A to unit B:</p>
+            <div class="edu-formula">value_B = value_A × factor_A→kg ÷ factor_B→kg</div>
+            <p>All mass units are linear multiples of the kilogram, so every conversion here is straightforward multiplication or division — mass has no offset scales the way temperature does.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Mass Unit Conversion Factors (to Kilograms)</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Value in Kilograms</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Milligram</td><td>mg</td><td>0.000001</td></tr>
+                  <tr><td>Gram</td><td>g</td><td>0.001</td></tr>
+                  <tr><td>Kilogram</td><td>kg</td><td>1</td></tr>
+                  <tr><td>Metric Ton</td><td>t</td><td>1,000</td></tr>
+                  <tr><td>Grain</td><td>gr</td><td>0.00006479891</td></tr>
+                  <tr><td>Ounce</td><td>oz</td><td>0.028349523125</td></tr>
+                  <tr><td>Pound</td><td>lb</td><td>0.45359237</td></tr>
+                  <tr><td>Stone</td><td>st</td><td>6.35029318</td></tr>
+                  <tr><td>US Ton (short)</td><td>US ton</td><td>907.18474</td></tr>
+                  <tr><td>UK Ton (long)</td><td>UK ton</td><td>1,016.0469088</td></tr>
+                  <tr><td>Atomic Mass Unit</td><td>u</td><td>1.66053906660 × 10⁻²⁷</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: grain, ounce, pound and stone use the international avoirdupois definitions (exact, 1959 agreement). The US short ton (2,000 lb) and UK long ton (2,240 lb) are different units — check which one a source means before assuming "ton".</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — Kilograms to Pounds</p>
+                <p>A 70 kg person: 70 ÷ 0.45359237 kg/lb ≈ <strong>154.32 lb</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — Ounces to Grams</p>
+                <p>An 8 oz steak: 8 × 28.349523125 g/oz ≈ <strong>226.8 g</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — Pounds to Stones</p>
+                <p>A body weight of 168 lb: 168 ÷ 14 lb/st = <strong>12 stone</strong> exactly, since 1 stone is defined as 14 lb.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — Metric Tons vs US/UK Tons</p>
+                <p>A shipment listed as 10 metric tons: 10,000 kg ÷ 907.18474 kg/US ton ≈ <strong>11.02 US tons</strong>, or ÷ 1,016.0469088 kg/UK ton ≈ <strong>9.84 UK tons</strong> — three different "tons" for the same 10,000 kg.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>How many pounds are in a kilogram?</summary>
+              <div class="edu-faq-answer">1 kg ≈ 2.20462 lb. Conversely, 1 lb = 0.45359237 kg exactly.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What's the difference between a US ton and a UK ton?</summary>
+              <div class="edu-faq-answer">A US (short) ton is 2,000 lb = 907.18474 kg. A UK (long) ton is 2,240 lb = 1,016.0469088 kg. A metric ton (tonne) is simply 1,000 kg and matches neither exactly.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How many pounds are in a stone?</summary>
+              <div class="edu-faq-answer">Exactly 14 lb. The stone is still used for body weight in the UK and Ireland — "12 stone" equals 168 lb or about 76.2 kg.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What is a grain, and where is it used?</summary>
+              <div class="edu-faq-answer">A grain is a small imperial mass unit (1/7,000 lb, about 64.8 mg), historically based on the mass of a grain of barley. It's still used today for bullet and gunpowder weights, and for medication dosing in some pharmacological contexts.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What is an atomic mass unit used for?</summary>
+              <div class="edu-faq-answer">The atomic mass unit (u), also called the dalton (Da), measures the mass of atoms and molecules — about 1.66 × 10⁻²⁷ kg. It's defined as 1/12 the mass of a carbon-12 atom and is standard in chemistry and molecular biology.</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

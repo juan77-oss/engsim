@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EngSim — Free Interactive Engineering Simulators</title>
+    <meta name="description"
+        content="Free interactive engineering simulators for thermodynamics, fluid mechanics, structures, and electrical engineering. No account required. Runs entirely in your browser." />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="EngSim — Free Interactive Engineering Simulators" />
+    <meta property="og:description"
+        content="Interactive engineering tools for thermodynamics, fluid mechanics, structures, and electrical engineering. Free, browser-based, no account required." />
+    <meta property="og:site_name" content="EngSim" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="./assets/css/base.css" />
+    <link rel="stylesheet" href="./assets/css/platform.css" />
+    <link rel="stylesheet" href="./assets/css/catalog.css" />
+
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "EngSim",
+    "description": "Free interactive engineering simulators for students and engineers.",
+    "url": "https://engsim.app"
+  }
+  </script>
+</head>
+
+<body>
+    <div class="page-wrapper">
+
+        <div id="nav-placeholder"></div>
+
+        <main class="page-main" id="main-content">
+
+            <!-- ── HERO ───────────────────────────────────────────────── -->
+            <section class="home-hero" aria-labelledby="home-title">
+                <div class="container">
+                    <p class="home-hero__eyebrow">Engineering Simulators</p>
+                    <h1 class="home-hero__title" id="home-title">
+                        Interactive Tools for<br>
+                        <em>Engineering Analysis</em>
+                    </h1>
+                    <p class="home-hero__subtitle">
+                        Explore thermodynamics, fluid mechanics, structures, and electrical
+                        engineering through interactive simulations. Free to use, no account
+                        required, runs entirely in your browser.
+                    </p>
+                    <div class="home-hero__cta">
+                        <a href="./simulators/index.html" class="btn-cta-primary">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <polygon points="5 3 19 12 5 21 5 3" />
+                            </svg>
+                            Explore Simulators
+                        </a>
+                        <a href="./pages/about.html" class="btn-cta-secondary">About EngSim</a>
+                    </div>
+                    <div class="home-hero__badges">
+                        <span class="home-hero__badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            Real-time simulation
+                        </span>
+                        <span class="home-hero__badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            Free to use
+                        </span>
+                        <span class="home-hero__badge">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="20 6 9 17 4 12" />
+                            </svg>
+                            No account required
+                        </span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── FEATURED SIMULATORS ───────────────────────────────── -->
+            <section class="catalog-section" aria-labelledby="featured-title">
+                <div class="container">
+                    <div class="catalog-section__header">
+                        <h2 class="catalog-section__title" id="featured-title">Featured Simulators</h2>
+                        <a href="./simulators/index.html" class="catalog-section__count">View all →</a>
+                    </div>
+                    <div class="cards-grid">
+
+                        <!-- Mohr Circle -->
+                        <a href="./simulators/mohr/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="2" y1="12" x2="22" y2="12" />
+                                        <line x1="12" y1="2" x2="12" y2="22" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Mechanics &amp; Structures</span>
+                            </div>
+                            <h3 class="tool-card__title">Mohr's Circle</h3>
+                            <p class="tool-card__desc">Compute principal stresses, maximum shear stress, and stress
+                                tensor transformations interactively.</p>
+                            <div class="tool-card__footer">
+                                <span>Open Simulator</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <!-- Static Beam -->
+                        <a href="./simulators/viga-estatica/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <line x1="2" y1="12" x2="22" y2="12" />
+                                        <line x1="7" y1="4" x2="7" y2="20" />
+                                        <line x1="17" y1="4" x2="17" y2="20" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Mechanics &amp; Structures</span>
+                            </div>
+                            <h3 class="tool-card__title">Static Beam</h3>
+                            <p class="tool-card__desc">Analyze simply supported beams: shear force diagrams, bending
+                                moment diagrams, and support reactions.</p>
+                            <div class="tool-card__footer">
+                                <span>Open Simulator</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg>
+                            </div>
+                        </a>
+
+                        <!-- Gaseous Combustion -->
+                        <a href="./simulators/combustion-gaseosa/index.html" class="tool-card">
+                            <div class="tool-card__top">
+                                <div class="tool-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M12 2c0 6-6 8-6 14a6 6 0 0 0 12 0c0-6-6-8-6-14z" />
+                                    </svg>
+                                </div>
+                                <span class="tool-card__category">Combustion &amp; Heat</span>
+                            </div>
+                            <h3 class="tool-card__title">Gaseous Combustion</h3>
+                            <p class="tool-card__desc">Stoichiometric simulator for pure gaseous fuels and hydrocarbon
+                                mixtures with excess air analysis.</p>
+                            <div class="tool-card__footer">
+                                <span>Open Simulator</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                    <polyline points="12 5 19 12 12 19" />
+                                </svg>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ── ABOUT / FEATURES ──────────────────────────────────── -->
+            <section class="features-section" aria-labelledby="about-title">
+                <div class="container">
+                    <h2 id="about-title">Built for Engineering Students &amp; Professionals</h2>
+                    <p style="max-width:560px; margin-top: 8px;">
+                        EngSim is an engineering-focused platform providing interactive
+                        simulators and calculation tools. Every tool runs entirely in your
+                        browser — no installation, no backend, no data collection.
+                    </p>
+                    <div class="features-grid">
+                        <div class="feature-item">
+                            <div class="feature-item__icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                </svg>
+                            </div>
+                            <p class="feature-item__title">Completely Free</p>
+                            <p class="feature-item__desc">No subscription, no paid tier, no hidden limits. Every
+                                simulator is free forever.</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-item__icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" />
+                                    <line x1="8" y1="21" x2="16" y2="21" />
+                                    <line x1="12" y1="17" x2="12" y2="21" />
+                                </svg>
+                            </div>
+                            <p class="feature-item__title">Browser-Based</p>
+                            <p class="feature-item__desc">All simulations run locally in your browser. No installation
+                                needed on any device.</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-item__icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                </svg>
+                            </div>
+                            <p class="feature-item__title">No Account Required</p>
+                            <p class="feature-item__desc">Access all tools immediately. No registration, no login, no
+                                email needed.</p>
+                        </div>
+                        <div class="feature-item">
+                            <div class="feature-item__icon" aria-hidden="true">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                </svg>
+                            </div>
+                            <p class="feature-item__title">Engineering-Focused</p>
+                            <p class="feature-item__desc">Tools built for technical analysis, learning, and conceptual
+                                exploration.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AD SLOT — home page bottom -->
+            <!-- AD-SLOT HIDDEN
+            <div class="container">
+                <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">
+                    Advertisement
+                </div>
+            </div>
+            -->
+
+        </main>
+
+        <div id="footer-placeholder"></div>
+
+    </div>
+    <script src="./assets/js/platform.js"></script>
+</body>
+
+</html>

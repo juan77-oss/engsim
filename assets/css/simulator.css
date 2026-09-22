@@ -1,0 +1,5905 @@
+/* ============================================================
+   simulator.css — Shell & layout for ALL simulators
+   Edit here → updates every simulator automatically.
+   engsim.app
+   ============================================================ */
+
+/* ══════════════════════════════════════════════════════════════
+   REQUIRED PATTERN FOR ANY NEW NAMESPACED SLIDER
+   Copy this block. Do not use accent-color for tracks. Unfilled track is var(--border-strong), thumb is var(--slider-color, var(--brand-accent)) with no border/shadow, scale(1.15) on hover.
+   ══════════════════════════════════════════════════════════════
+.sim-namespace input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+}
+.sim-namespace input[type="range"]::-webkit-slider-runnable-track {
+    background: var(--border-strong);
+}
+.sim-namespace input[type="range"]::-moz-range-track {
+    background: var(--border-strong);
+}
+.sim-namespace input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--slider-color, var(--brand-accent));
+    box-shadow: none;
+    border: none;
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+.sim-namespace input[type="range"]::-moz-range-thumb {
+    background: var(--slider-color, var(--brand-accent));
+    box-shadow: none;
+    border: none;
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+.sim-namespace input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+.sim-namespace input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.15);
+}
+*/
+
+/* ══════════════════════════════════════════════════════════════
+   SIM HERO — breadcrumb + title + tags
+   ══════════════════════════════════════════════════════════════ */
+.sim-hero {
+    background: linear-gradient(135deg, #f0f4ff 0%, #e8effe 100%);
+    border-bottom: 1px solid var(--border);
+    padding: var(--space-xl) 0 var(--space-lg);
+}
+
+body.dark .sim-hero {
+    background: linear-gradient(135deg, #1a2744 0%, #1e293b 100%);
+}
+
+.sim-hero__breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: .8rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-md);
+    flex-wrap: wrap;
+}
+
+.sim-hero__breadcrumb a {
+    color: var(--brand-accent);
+    text-decoration: none;
+}
+
+.sim-hero__breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+.sim-hero__breadcrumb span {
+    color: var(--text-muted);
+}
+
+.sim-hero__category {
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--brand-accent);
+    background: rgba(37, 99, 235, .1);
+    padding: 3px 10px;
+    border-radius: 99px;
+    margin-bottom: var(--space-md);
+}
+
+.sim-hero__title {
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+    line-height: 1.2;
+}
+
+.sim-hero__subtitle {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 640px;
+    line-height: 1.65;
+    margin-bottom: var(--space-lg);
+}
+
+.sim-hero__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+}
+
+.sim-hero__tag {
+    font-size: .75rem;
+    color: var(--text-secondary);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    padding: 4px 12px;
+    border-radius: 99px;
+    font-weight: 500;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SIM BODY — two-panel layout (sidebar + main)
+   ══════════════════════════════════════════════════════════════ */
+.sim-body {
+    padding: var(--space-xl) 0;
+}
+
+/* Two-panel layout */
+.sim-layout {
+    display: grid;
+    grid-template-columns: var(--sim-sidebar-width, 320px) 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+}
+
+.sim-layout--full {
+    display: block;
+}
+
+@media (max-width: 900px) {
+    .sim-layout {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── Panel / Card ───────────────────────────────────────────── */
+.sim-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+}
+
+.sim-panel+.sim-panel {
+    margin-top: var(--space-md);
+}
+
+.sim-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--border);
+}
+
+.sim-panel__title {
+    font-size: .8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.sim-panel__title svg {
+    width: 16px;
+    height: 16px;
+    color: var(--brand-accent);
+    flex-shrink: 0;
+}
+
+.sim-panel__badge {
+    font-size: .7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    background: var(--bg-hover);
+    padding: 3px 8px;
+    border-radius: 99px;
+}
+
+.sim-panel__body {
+    padding: var(--space-lg);
+}
+
+/* ── Form elements ──────────────────────────────────────────── */
+.sim-field {
+    margin-bottom: var(--space-md);
+}
+
+.sim-field:last-child {
+    margin-bottom: 0;
+}
+
+.sim-label {
+    display: block;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.sim-label-hint {
+    font-size: .75rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-left: var(--space-xs);
+}
+
+.sim-input-wrap {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-input);
+    transition: border-color var(--transition), box-shadow var(--transition);
+    overflow: hidden;
+}
+
+.sim-input-wrap:focus-within {
+    border-color: var(--brand-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+.sim-input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 9px 12px;
+    font-size: .9rem;
+    color: var(--text-primary);
+    outline: none;
+    min-width: 0;
+}
+
+.sim-input::placeholder {
+    color: var(--text-muted);
+}
+
+.sim-unit {
+    padding: 0 12px;
+    font-size: .8rem;
+    color: var(--text-muted);
+    background: var(--bg-hover);
+    border-left: 1px solid var(--border);
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+}
+
+.sim-hint {
+    font-size: .73rem;
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
+}
+
+.sim-select {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-input);
+    padding: 9px 12px;
+    font-size: .9rem;
+    color: var(--text-primary);
+    outline: none;
+    cursor: pointer;
+    transition: border-color var(--transition);
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+.sim-select:focus {
+    border-color: var(--brand-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+.sim-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+.sim-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: var(--space-md);
+}
+
+@media (max-width: 480px) {
+
+    .sim-grid-2,
+    .sim-grid-3 {
+        grid-template-columns: 1fr;
+    }
+}
+
+.sim-section-label {
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    margin: var(--space-lg) 0 var(--space-md);
+    padding-bottom: var(--space-xs);
+    border-bottom: 1px solid var(--border);
+}
+
+.sim-section-label:first-child {
+    margin-top: 0;
+}
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.btn-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: 11px var(--space-lg);
+    background: var(--brand-accent);
+    color: #fff;
+    font-size: .9rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: background var(--transition), transform var(--transition);
+    margin-top: var(--space-lg);
+}
+
+.btn-primary:hover {
+    background: var(--brand-accent-h);
+}
+
+.btn-primary:active {
+    transform: scale(.98);
+}
+
+.btn-primary svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+}
+
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 7px 14px;
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+    font-size: .8rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition);
+}
+
+.btn-secondary:hover {
+    background: var(--border);
+    color: var(--text-primary);
+}
+
+/* ── Result cards ───────────────────────────────────────────── */
+.sim-results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.sim-result-card {
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    text-align: center;
+}
+
+.sim-result-card--accent {
+    background: rgba(37, 99, 235, .06);
+    border-color: rgba(37, 99, 235, .2);
+}
+
+.sim-result-label {
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .07em;
+    color: var(--text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+.sim-result-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--brand-accent);
+    font-family: var(--font-mono);
+    line-height: 1.1;
+}
+
+.sim-result-unit {
+    font-size: .75rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* ── Error / alert ──────────────────────────────────────────── */
+.sim-error {
+    display: none;
+    background: rgba(220, 38, 38, .08);
+    border: 1px solid rgba(220, 38, 38, .25);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    color: var(--color-danger);
+    font-size: .875rem;
+    margin-bottom: var(--space-md);
+}
+
+.sim-error.is-visible {
+    display: block;
+}
+
+/* ── Canvas / chart containers ──────────────────────────────── */
+.sim-chart-wrap {
+    position: relative;
+    background: var(--bg-hover);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-top: var(--space-md);
+}
+
+.sim-chart-label {
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    margin-bottom: var(--space-xs);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EDUCATIONAL CONTENT — below the simulator
+   ══════════════════════════════════════════════════════════════ */
+.edu-content {
+    padding: var(--space-2xl) 0;
+    border-top: 1px solid var(--border);
+    margin-top: var(--space-xl);
+}
+
+.edu-section {
+    margin-bottom: var(--space-2xl);
+}
+
+.edu-section:last-child {
+    margin-bottom: 0;
+}
+
+.edu-section h2 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    border-bottom: 2px solid var(--brand-accent);
+    display: inline-block;
+}
+
+.edu-section h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: var(--space-lg) 0 var(--space-sm);
+}
+
+.edu-section p {
+    margin-bottom: var(--space-md);
+}
+
+.edu-section ul,
+.edu-section ol {
+    padding-left: var(--space-lg);
+    color: var(--text-secondary);
+    margin-bottom: var(--space-md);
+}
+
+.edu-section ul {
+    list-style: disc;
+}
+
+.edu-section ol {
+    list-style: decimal;
+}
+
+.edu-section li {
+    margin-bottom: var(--space-xs);
+    line-height: 1.65;
+}
+
+.edu-section hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: var(--space-xl) 0;
+}
+
+/* FAQ */
+.edu-faq {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.edu-faq-item {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.edu-faq-item summary {
+    font-weight: 600;
+    font-size: .9rem;
+    color: var(--text-primary);
+    padding: var(--space-md) var(--space-lg);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    background: var(--bg-card);
+    transition: background var(--transition);
+}
+
+.edu-faq-item summary:hover {
+    background: var(--bg-hover);
+}
+
+.edu-faq-item summary::after {
+    content: '+';
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.edu-faq-item[open] summary::after {
+    content: '−';
+}
+
+.edu-faq-item .edu-faq-answer {
+    padding: var(--space-md) var(--space-lg);
+    background: var(--bg-hover);
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: .9rem;
+    line-height: 1.7;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EDU CONTENT — extra components (grid, formula, table, example)
+   Used by educational sections across simulators.
+   ══════════════════════════════════════════════════════════════ */
+.edu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: var(--space-md);
+    margin: var(--space-md) 0 var(--space-lg);
+}
+
+.edu-grid-item {
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+}
+
+.edu-grid-item h4 {
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.edu-grid-item p {
+    font-size: .85rem;
+    margin-bottom: 0;
+}
+
+.edu-formula {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: .9rem;
+    color: var(--text-primary);
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    margin: var(--space-sm) 0;
+    overflow-x: auto;
+}
+
+.edu-process-badge {
+    display: inline-block;
+    font-size: .7rem;
+    font-weight: 700;
+    color: var(--brand-accent);
+    background: rgba(37, 99, 235, .1);
+    padding: 2px 10px;
+    border-radius: 99px;
+    margin-left: var(--space-sm);
+    vertical-align: middle;
+}
+
+.edu-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: var(--space-md) 0;
+    font-size: .85rem;
+}
+
+.edu-table th,
+.edu-table td {
+    text-align: left;
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--border);
+    vertical-align: top;
+}
+
+.edu-table th {
+    background: var(--bg-hover);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.edu-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+@media (max-width: 640px) {
+    .edu-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+.edu-example {
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--brand-accent);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    margin: var(--space-md) 0;
+}
+
+.edu-example__title {
+    font-weight: 700;
+    color: var(--brand-accent);
+    margin-bottom: var(--space-md);
+    font-size: .95rem;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+}
+
+.edu-example p {
+    margin-bottom: var(--space-sm);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CONDITIONAL FIELD VISIBILITY
+   ══════════════════════════════════════════════════════════════ */
+.is-hidden {
+    display: none !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   INVALID INPUT — shake animation
+   ══════════════════════════════════════════════════════════════ */
+.sim-input-wrap.sim-input--invalid {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, .15);
+    animation: sim-shake .4s ease-in-out;
+}
+
+@keyframes sim-shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20% {
+        transform: translateX(-6px);
+    }
+
+    40% {
+        transform: translateX(6px);
+    }
+
+    60% {
+        transform: translateX(-4px);
+    }
+
+    80% {
+        transform: translateX(4px);
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STATUS BANNER
+   ══════════════════════════════════════════════════════════════ */
+.status-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    margin: var(--space-md) 0;
+    font-size: .875rem;
+}
+
+.status-banner__title {
+    font-weight: 700;
+    font-size: .9rem;
+}
+
+.status-banner__message {
+    color: var(--text-secondary);
+}
+
+.status-banner--success {
+    background: rgba(22, 163, 74, .08);
+    border-color: rgba(22, 163, 74, .25);
+}
+
+.status-banner--success .status-banner__title {
+    color: var(--color-success);
+}
+
+.status-banner--warning {
+    background: rgba(217, 119, 6, .08);
+    border-color: rgba(217, 119, 6, .25);
+}
+
+.status-banner--warning .status-banner__title {
+    color: var(--color-warning);
+}
+
+.status-banner--danger {
+    background: rgba(220, 38, 38, .08);
+    border-color: rgba(220, 38, 38, .25);
+}
+
+.status-banner--danger .status-banner__title {
+    color: var(--color-danger);
+}
+
+.status-banner--info {
+    background: rgba(37, 99, 235, .06);
+    border-color: rgba(37, 99, 235, .2);
+}
+
+.status-banner--info .status-banner__title {
+    color: var(--brand-accent);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ADVANCED PARAMETERS (collapsible)
+   ══════════════════════════════════════════════════════════════ */
+.sim-advanced {
+    margin-top: var(--space-lg);
+    border-top: 1px solid var(--border);
+    padding-top: var(--space-sm);
+}
+
+.sim-advanced>summary {
+    cursor: pointer;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    list-style: none;
+}
+
+.sim-advanced>summary::-webkit-details-marker {
+    display: none;
+}
+
+.sim-advanced>summary::before {
+    content: '▸ ';
+}
+
+.sim-advanced[open]>summary::before {
+    content: '▾ ';
+}
+
+.sim-advanced-body {
+    margin-top: var(--space-md);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CHART WRAP — inner padding
+   ══════════════════════════════════════════════════════════════ */
+.sim-chart-wrap {
+    padding: var(--space-md);
+}
+
+.sim-chart-wrap canvas {
+    max-height: 260px;
+}
+
+.sim-grid-2>.sim-field,
+.sim-grid-3>.sim-field {
+    min-width: 0;
+}
+
+.sim-input-wrap {
+    min-width: 0;
+}
+
+
+/* ════════════════════════════════════════════════════════════════
+   T–S DIAGRAM (WATER) — namespace "ts-"
+   Component-specific styles for the Temperature–Entropy simulator.
+   Does not use the generic .sim-* system above; kept isolated under
+   its own "ts-" prefix so it can't collide with other simulators.
+   ════════════════════════════════════════════════════════════════ */
+.ts-shell {
+    --ts-primary: var(--brand-accent);
+    --ts-accent: var(--color-danger);
+    --ts-bg-panel: var(--bg-card);
+    --ts-border: var(--border);
+    --ts-text: var(--text-primary);
+    --ts-text-muted: var(--text-secondary);
+}
+
+.ts-shell {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+@media (max-width: 1024px) {
+    .ts-shell {
+        grid-template-columns: 1fr;
+    }
+}
+
+.ts-panel {
+    background: var(--ts-bg-panel);
+    border: 1px solid var(--ts-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.ts-panel__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--ts-border);
+}
+
+.ts-panel__title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--ts-text);
+    margin: 0;
+}
+
+.ts-field {
+    margin-bottom: 1.25rem;
+}
+
+.ts-label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--ts-text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.ts-input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.ts-input-number {
+    width: 80px;
+    padding: 0.5rem;
+    border: 1px solid var(--ts-border);
+    border-radius: 6px;
+    background: var(--bg-input);
+    color: var(--ts-text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+}
+
+.ts-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border-strong);
+    outline: none;
+    padding: 10px 0;
+    background-clip: content-box;
+}
+
+/* Restore keyboard focus ring (outline:none suppresses the browser default).
+   :focus-visible fires only for keyboard navigation — no visual change on
+   mouse/touch interaction. */
+.ts-slider:focus-visible {
+    outline: 2px solid var(--ts-primary);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+.ts-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--ts-primary);
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.ts-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border: none;
+    border-radius: 50%;
+    background: var(--ts-primary);
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.ts-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.ts-results {
+    margin-top: 1.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.ts-card {
+    background: var(--bg-hover);
+    border: 1px solid var(--ts-border);
+    border-radius: 8px;
+    padding: 0.75rem;
+    text-align: center;
+}
+
+.ts-card__label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: var(--ts-text-muted);
+    letter-spacing: 0.025em;
+    margin-bottom: 4px;
+}
+
+.ts-card__value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ts-primary);
+}
+
+.ts-card__unit {
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--ts-text-muted);
+    margin-left: 2px;
+}
+
+.ts-process-box {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--ts-border);
+}
+
+.ts-checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.ts-checkbox-group input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.ts-select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--ts-border);
+    border-radius: 6px;
+    background-color: var(--bg-input);
+    font-size: 0.85rem;
+    color: var(--ts-text);
+    outline: none;
+    cursor: pointer;
+}
+
+.ts-select:focus {
+    border-color: var(--ts-primary);
+}
+
+.ts-region-badge {
+    grid-column: span 2;
+    padding: 0.5rem;
+    background: rgba(37, 99, 235, .1);
+    color: var(--ts-primary);
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-align: center;
+    border: 1px solid rgba(37, 99, 235, .25);
+    transition: all 0.2s ease;
+}
+
+.ts-quality-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.ts-quality-bar__fill {
+    height: 100%;
+    background: var(--ts-primary);
+    width: 0%;
+    transition: width 0.1s ease-out;
+}
+
+.ts-didactic {
+    margin-top: 1.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--ts-primary);
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.ts-didactic__header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--ts-primary);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.ts-didactic__explanation {
+    font-size: 0.85rem;
+    color: var(--ts-text-muted);
+    margin-bottom: 1rem;
+}
+
+.ts-formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.95rem;
+    color: var(--ts-text);
+    padding: 0.5rem;
+    background: var(--bg-hover);
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    overflow-x: auto;
+}
+
+.ts-formula--values {
+    font-size: 0.9rem;
+    color: var(--ts-text-muted);
+    border-left: 2px dashed var(--border-strong);
+}
+
+.ts-formula--result {
+    font-weight: 700;
+    color: var(--ts-primary);
+    background: rgba(37, 99, 235, .1);
+    border: 1px solid rgba(37, 99, 235, .25);
+}
+
+.ts-chart-container {
+    background: var(--bg-card);
+    border: 1px solid var(--ts-border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.ts-chart-header {
+    margin-bottom: 1rem;
+}
+
+.ts-chart-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--ts-text);
+}
+
+.ts-canvas-wrap {
+    flex: 1;
+    position: relative;
+    max-height: 550px;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+
+    .ts-panel,
+    .ts-chart-container {
+        padding: 1rem;
+        border-radius: 10px;
+    }
+
+    .ts-chart-container {
+        min-height: 340px;
+    }
+
+    .ts-canvas-wrap {
+        max-height: 380px;
+    }
+
+    .ts-input-number {
+        width: 68px;
+        font-size: 0.85rem;
+    }
+
+    .ts-slider::-webkit-slider-thumb {
+        width: 22px;
+        height: 22px;
+    }
+
+    .ts-slider::-moz-range-thumb {
+        width: 22px;
+        height: 22px;
+    }
+
+    .ts-results {
+        gap: 8px;
+    }
+
+    .ts-card__value {
+        font-size: 1rem;
+    }
+
+    .ts-formula {
+        font-size: 0.85rem;
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   DC CIRCUIT ANALYZER — namespace "dcc-"
+   Component-specific styles for the DC Circuit Analyzer simulator.
+   Does not use the generic .sim-* system beyond composition; kept
+   isolated under its own "dcc-" prefix so it can't collide with
+   other simulators.
+   ════════════════════════════════════════════════════════════════ */
+
+.dcc-slider-row {
+    display: grid;
+    grid-template-columns: 1fr 90px;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+.dcc-slider-row--unit {
+    grid-template-columns: 1fr 80px 74px;
+}
+
+@media (max-width: 480px) {
+    .dcc-slider-row--unit {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dcc-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border-strong);
+    outline: none;
+    cursor: pointer;
+}
+
+.dcc-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--brand-accent);
+    cursor: pointer;
+    transition: transform .1s;
+}
+
+.dcc-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.dcc-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border: none;
+    border-radius: 50%;
+    background: var(--brand-accent);
+    cursor: pointer;
+}
+
+.dcc-unit-select {
+    padding: 9px 28px 9px 10px;
+    font-size: .8rem;
+}
+
+.dcc-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-top: var(--space-md);
+    cursor: pointer;
+}
+
+.dcc-checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.dcc-method-explain {
+    margin-top: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    background: rgba(37, 99, 235, .06);
+    border: 1px solid rgba(37, 99, 235, .2);
+    border-radius: var(--radius-md);
+    font-size: .8rem;
+    color: var(--text-secondary);
+}
+
+.dcc-method-explain strong {
+    display: block;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--brand-accent);
+    margin-bottom: 4px;
+}
+
+.dcc-canvas-wrap {
+    padding: var(--space-md);
+}
+
+.dcc-canvas-wrap canvas {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+.dcc-analysis-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    margin-top: var(--space-md);
+}
+
+@media (max-width: 900px) {
+    .dcc-analysis-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.dcc-chart-container {
+    position: relative;
+    height: 240px;
+    padding: 0 var(--space-md) var(--space-md);
+}
+
+.dcc-table-scroll {
+    overflow-x: auto;
+}
+
+.dcc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .85rem;
+}
+
+.dcc-table th {
+    text-align: right;
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--text-muted);
+    padding: var(--space-sm);
+    border-bottom: 1px solid var(--border);
+}
+
+.dcc-table th:first-child,
+.dcc-table td:first-child {
+    text-align: left;
+}
+
+.dcc-table td {
+    padding: var(--space-sm);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono);
+}
+
+.dcc-table td.val {
+    text-align: right;
+}
+
+.dcc-step-container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.dcc-step {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.dcc-step__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-hover);
+    border-bottom: 1px solid var(--border);
+}
+
+.dcc-step__num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--brand-accent);
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.dcc-step__title {
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.dcc-step__body {
+    padding: var(--space-md);
+}
+
+.dcc-step__formula {
+    font-family: var(--font-mono);
+    font-size: .85rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+}
+
+.dcc-step__result {
+    font-family: var(--font-mono);
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--brand-accent);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   FUEL CONSTRUCTION (Combustion) — namespace "comb-"
+   Estilos propios de simulators/fuel-construction/.
+   Este simulador fue construido originalmente contra un sistema de
+   tokens distinto (--color-*, --space-N, --font-size-*). El bloque
+   .sim-fuel-construction de abajo mapea esos nombres a los tokens
+   reales de base.css para que las reglas funcionen sin reescribir
+   cada declaración. Se aplica solo dentro de esta página.
+   ════════════════════════════════════════════════════════════════ */
+.sim-fuel-construction {
+    --color-bg: var(--bg-page);
+    --color-surface: var(--bg-card);
+    --color-surface-alt: var(--bg-hover);
+    --color-surface-rgb: 255, 255, 255;
+    --color-border: var(--border);
+    --color-text: var(--text-primary);
+    --color-text-muted: var(--text-secondary);
+    --color-primary: var(--brand-accent);
+    --color-primary-light: #60a5fa;
+    --color-primary-dark: var(--brand-accent-h);
+    --color-info: #0ea5e9;
+    --font-family: var(--font-sans);
+    --font-size-xs: .75rem;
+    --font-size-sm: .875rem;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --line-height-relaxed: 1.7;
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-12: 48px;
+}
+
+body.dark .sim-fuel-construction {
+    --color-surface-rgb: 30, 41, 59;
+}
+
+/* ══════════════════════════════════════════════════════
+           COMBUSTIÓN — Estilos propios del simulador FASE 1
+           Prefijo: comb-  (collision-safe)
+           ══════════════════════════════════════════════════════ */
+
+/* ── Engineering Lab Theme (Blueprint) ── */
+body.theme-lab {
+    --color-bg: var(--bg-page);
+    --color-surface: var(--bg-card);
+    --color-surface-alt: var(--bg-hover);
+    --color-border: var(--border-strong);
+    --color-text: var(--text-primary);
+    --color-text-muted: var(--text-secondary);
+    --color-primary: var(--brand-accent);
+    --color-primary-light: var(--brand-accent);
+    --color-primary-dark: var(--brand-accent-h);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+}
+
+body.theme-lab .sim-card {
+    border-color: var(--color-primary-dark);
+    box-shadow: 0 4px 20px rgba(2, 132, 199, 0.1);
+}
+
+body.theme-lab .ui-separator span {
+    background: var(--color-primary-dark);
+    color: white;
+}
+
+/* Map global body.dark to SVG icons to match Gold Standard behavior */
+body.dark .icon-sun {
+    display: block;
+}
+
+body.dark .icon-moon {
+    display: none;
+}
+
+.comb-symbol {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--comp-color) 15%, transparent);
+    border: 1px solid color-mix(in srgb, var(--comp-color) 35%, transparent);
+    color: var(--comp-color);
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    margin-right: 6px;
+    flex-shrink: 0;
+}
+
+.comb-value-display {
+    font-family: var(--font-mono);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    min-width: 54px;
+    text-align: right;
+}
+
+.comb-comp-field {
+    margin-bottom: var(--space-4);
+}
+
+/* ── Composition & humidity sliders — custom track/thumb
+   accent-color alone cannot control the unfilled-track background
+   consistently across browsers/OS themes. We use full custom
+   appearance so every slider shows:
+     • unfilled track  → var(--border-strong)  (same light gray as platform)
+     • filled thumb    → var(--slider-color)    (per-element accent set inline)
+   ── */
+.comb-comp-field input[type="range"],
+.comb-slider--humidity {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    display: block;
+    margin-top: var(--space-2);
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border-strong);
+    outline: none;
+    cursor: pointer;
+}
+
+/* Webkit thumb */
+.comb-comp-field input[type="range"]::-webkit-slider-thumb,
+.comb-slider--humidity::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--slider-color, var(--brand-accent));
+    cursor: pointer;
+    transition: transform .1s;
+}
+
+.comb-comp-field input[type="range"]::-webkit-slider-thumb:hover,
+.comb-slider--humidity::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+/* Firefox thumb */
+.comb-comp-field input[type="range"]::-moz-range-thumb,
+.comb-slider--humidity::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border: none;
+    border-radius: 50%;
+    background: var(--slider-color, var(--brand-accent));
+    cursor: pointer;
+}
+
+/* Firefox: unfilled track (the part after the thumb) */
+.comb-comp-field input[type="range"]::-moz-range-track,
+.comb-slider--humidity::-moz-range-track {
+    background: var(--border-strong);
+    height: 6px;
+    border-radius: 3px;
+}
+
+/* Humidity slider sets its own --slider-color inline */
+.comb-slider--humidity {
+    --slider-color: #0ea5e9;
+}
+
+.comb-field-note {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    margin-top: var(--space-2);
+    font-style: italic;
+    line-height: 1.4;
+}
+
+.comb-sum-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-surface-alt);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-4);
+    font-size: var(--font-size-xs);
+}
+
+.comb-sum-label {
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-text-muted);
+}
+
+.comb-sum-value {
+    font-family: var(--font-mono);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+}
+
+.comb-sum-value--ok {
+    color: var(--color-success);
+}
+
+.comb-sum-value--error {
+    color: var(--color-danger);
+}
+
+.comb-basis-banner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--space-1);
+}
+
+.comb-basis-banner--dry {
+    background: color-mix(in srgb, var(--color-success) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-success) 25%, transparent);
+    color: var(--color-success);
+}
+
+.comb-basis-banner--wet {
+    background: color-mix(in srgb, #0ea5e9 8%, transparent);
+    border: 1px solid color-mix(in srgb, #0ea5e9 30%, transparent);
+    color: #0ea5e9;
+}
+
+.comb-composition-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+}
+
+.comb-composition-table th {
+    text-align: left;
+    font-size: 10px;
+    font-weight: var(--font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 2px solid var(--color-border);
+}
+
+.comb-composition-table td {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-mono);
+}
+
+.comb-tbl-element {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-family);
+}
+
+.comb-tbl-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.comb-col-dry,
+.comb-col-wet {
+    text-align: right;
+}
+
+.comb-col--inactive {
+    color: var(--color-text-muted);
+}
+
+.comb-insights {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-top: var(--space-3);
+}
+
+.comb-insight {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-sm);
+}
+
+.comb-insight--info {
+    background: color-mix(in srgb, var(--color-info) 8%, transparent);
+    border-left: 3px solid var(--color-info);
+}
+
+.comb-insight--warning {
+    background: color-mix(in srgb, var(--color-warning) 8%, transparent);
+    border-left: 3px solid var(--color-warning);
+}
+
+.comb-insight--danger {
+    background: color-mix(in srgb, var(--color-danger) 8%, transparent);
+    border-left: 3px solid var(--color-danger);
+}
+
+.comb-insight--success {
+    background: color-mix(in srgb, var(--color-success) 8%, transparent);
+    border-left: 3px solid var(--color-success);
+}
+
+.comb-insight--locked {
+    background: var(--color-surface-alt);
+    border-left: 3px solid var(--color-primary);
+    opacity: 0.8;
+}
+
+.comb-insight__icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+    line-height: 1.4;
+}
+
+.comb-insight__title {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.comb-insight__body {
+    color: var(--color-text-muted);
+    line-height: var(--line-height-relaxed);
+    font-size: var(--font-size-sm);
+}
+
+/* Tiered Content Styling */
+.pro-tag-inline {
+    font-size: 9px;
+    font-weight: 800;
+    background: var(--color-primary);
+    color: white;
+    padding: 1px 4px;
+    border-radius: 3px;
+    margin-left: 8px;
+}
+
+.pro-upgrade-link {
+    background: none;
+    border: none;
+    color: var(--color-primary);
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    margin-top: 8px;
+}
+
+/* Read More Functionality */
+.insight-text-full {
+    display: none;
+}
+
+.insight-body-wrapper.expanded .insight-text-short {
+    display: none;
+}
+
+.insight-body-wrapper.expanded .insight-text-full {
+    display: block;
+}
+
+.insight-body-wrapper.expanded .insight-read-more {
+    display: none;
+}
+
+.insight-read-more {
+    background: none;
+    border: none;
+    color: var(--color-primary-light);
+    font-size: var(--font-size-xs);
+    font-weight: 600;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 4px;
+    text-decoration: underline;
+}
+
+.comb-reset-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-xs);
+    cursor: pointer;
+}
+
+.comb-phase-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: var(--font-weight-semibold);
+    background: color-mix(in srgb, var(--color-primary-light) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-primary-light) 30%, transparent);
+    color: var(--color-primary-light);
+    margin-bottom: var(--space-2);
+}
+
+.resultado-principal {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
+    padding: var(--space-5) var(--space-6);
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    min-height: 120px;
+    justify-content: center;
+}
+
+.resultado-principal::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(to bottom, #f97316, #ef4444);
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+}
+
+.resultado-principal__title {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.resultado-principal__values {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-8);
+    flex-wrap: wrap;
+}
+
+.resultado-principal__value--pcs {
+    font-size: 36px;
+    font-weight: 800;
+    font-family: var(--font-mono);
+}
+
+.resultado-principal__value--pci {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--color-text-muted);
+    font-family: var(--font-mono);
+}
+
+.resultado-principal__unit {
+    font-size: var(--font-size-sm);
+    margin-left: 4px;
+    color: var(--color-text-muted);
+}
+
+.resultado-principal__diff {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    opacity: 0.8;
+    font-style: italic;
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-2);
+}
+
+.resultado-principal__message {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    font-style: italic;
+    text-align: center;
+}
+
+/* ── Reorganización del Layout (Single Column Flow) ── */
+.sim-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.sim-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    width: 100%;
+}
+
+.sim-chart-wrapper {
+    aspect-ratio: 16 / 8;
+}
+
+@media (max-width: 1024px) {
+    .sim-body {
+        padding: 0 var(--space-4);
+    }
+}
+
+/* ── Collapsible Section ── */
+.collapsible {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.collapsible-header {
+    padding: var(--space-4) var(--space-5);
+    background: var(--color-surface-alt);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+    transition: background 0.2s ease;
+}
+
+.collapsible-header:hover {
+    background: color-mix(in srgb, var(--color-surface-alt) 95%, black);
+}
+
+body.dark .collapsible-header:hover {
+    background: color-mix(in srgb, var(--color-surface-alt) 90%, white);
+}
+
+.collapsible-header h2 {
+    margin-bottom: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.collapsible-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    font-size: 10px;
+    color: var(--color-text-muted);
+}
+
+.collapsible.open .collapsible-icon {
+    transform: rotate(90deg);
+}
+
+.collapsible-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.collapsible.open .collapsible-content {
+    max-height: 1200px;
+    /* Suficiente para la tabla */
+    opacity: 1;
+    border-top: 1px solid var(--color-border);
+}
+
+.collapsible-inner {
+    padding: var(--space-5);
+}
+
+/* ── PRO Tiering System ── */
+.pro-locked-container {
+    position: relative;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.pro-locked-content {
+    filter: blur(8px);
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.5;
+    padding: var(--space-6);
+    /* Simular contenido PRO */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.pro-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--color-surface-rgb, 255, 255, 255), 0.2);
+    backdrop-filter: blur(1px);
+    z-index: 10;
+    text-align: center;
+    padding: var(--space-6);
+}
+
+.pro-badge-mini {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    background: var(--color-primary);
+    color: white;
+    border-radius: 4px;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-2);
+}
+
+.pro-lock-icon {
+    font-size: 1.8rem;
+    margin-bottom: var(--space-2);
+}
+
+.pro-lock-title {
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 0.5rem;
+}
+
+.pro-lock-text {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    margin-bottom: 1.5rem;
+    max-width: 320px;
+    line-height: 1.4;
+}
+
+.pro-upgrade-btn {
+    padding: 10px 24px;
+    background: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    font-weight: var(--font-weight-bold);
+    font-size: var(--font-size-sm);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.pro-upgrade-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+}
+
+/* ── PRO Teasers (Compact) ── */
+.pro-teaser-card {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-4) var(--space-5);
+    margin-bottom: var(--space-4);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pro-teaser-card:hover {
+    border-color: var(--color-primary-light);
+    background: var(--color-surface-alt);
+}
+
+.pro-teaser-icon {
+    font-size: 1.5rem;
+    background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+}
+
+.pro-teaser-body {
+    flex: 1;
+}
+
+.pro-teaser-title {
+    font-weight: 700;
+    font-size: var(--font-size-sm);
+    margin-bottom: 2px;
+}
+
+.pro-teaser-desc {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+.pro-teaser-cta {
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ── Separators ── */
+.ui-separator {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin: var(--space-8) 0 var(--space-4);
+}
+
+.ui-separator::before,
+.ui-separator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--color-border);
+}
+
+.ui-separator span {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-text-muted);
+    background: var(--color-surface-alt);
+    padding: 2px 10px;
+    border-radius: 999px;
+}
+
+/* ── Tiered Modal Styling ── */
+.sim-modal__content--tiered {
+    max-width: 500px;
+    text-align: center;
+}
+
+.sim-modal__features {
+    text-align: left;
+    margin: var(--space-4) auto;
+    max-width: 340px;
+    font-size: var(--font-size-sm);
+}
+
+.sim-modal__pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin: var(--space-6) 0;
+}
+
+.sim-modal__price-card {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3) var(--space-4);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-surface-alt);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sim-modal__price-card:hover {
+    border-color: var(--color-primary);
+    transform: scale(1.02);
+}
+
+.sim-modal__price-label {
+    font-size: var(--font-size-xs);
+    font-weight: 700;
+    color: var(--color-text);
+}
+
+.sim-modal__price-value {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    color: var(--color-primary);
+}
+
+.sim-modal__price-note {
+    font-size: 9px;
+    color: var(--color-text-muted);
+    position: absolute;
+    bottom: -14px;
+    left: 10px;
+    display: none;
+}
+
+/* ── Page-level container spacing ───────────────────────
+           sim-layout__main / sim-container are used in place of
+           .sim-shell here. Apply equivalent outer padding so the
+           header content has the same breathing room as the cards. */
+.sim-layout__main {
+    padding-top: var(--space-8);
+}
+
+.sim-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--space-6) var(--space-12);
+}
+
+@media (max-width: 1024px) {
+    .sim-layout__main {
+        padding-top: var(--space-6);
+    }
+
+    .sim-container {
+        padding: 0 var(--space-4) var(--space-8);
+    }
+}
+
+/* ── Auditoría 2026-09-15: clases usadas en fuel-construction que no
+   tenían regla CSS en ningún lado (bloqueante #1 del informe) ──
+   NOTA (2026-09-17): el bloque "Page header" original (.sim-header,
+   .sim-badge, etc.) se eliminó — el HTML pasó a usar el .sim-hero
+   real del sitio (full-width, con breadcrumb), que ya tenía sus
+   propios estilos desde el template base. */
+
+/* Card header/title (Parameter Adjustment) */
+.sim-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sim-card__title {
+    font-size: 1.05rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+}
+
+/* Chart card */
+.sim-chart-card {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+}
+
+.sim-chart-card__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.sim-chart-card__title {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.sim-chart-card__subtitle {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+}
+
+/* System-model note */
+.simulator-note {
+    background: color-mix(in srgb, var(--color-info) 6%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-info) 25%, transparent);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+}
+
+.simulator-note__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-info);
+    margin-bottom: var(--space-2);
+    font-size: var(--font-size-sm);
+}
+
+.simulator-note__icon {
+    font-size: 1rem;
+}
+
+.simulator-note__body {
+    font-size: var(--font-size-sm);
+    color: var(--color-text-muted);
+    line-height: var(--line-height-relaxed);
+}
+
+/* Auto-Tutor card (Learning Mode — código inactivo, pero si se
+   reactiva algún día ya tiene estilos listos) */
+.tutor-card {
+    background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+    border: 1px solid color-mix(in srgb, var(--color-primary) 25%, transparent);
+    border-left: 3px solid var(--color-primary);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    margin-top: var(--space-4);
+}
+
+.tutor-card__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-primary);
+    margin-bottom: var(--space-2);
+    font-size: var(--font-size-sm);
+}
+
+.tutor-card__body {
+    font-size: var(--font-size-sm);
+    color: var(--color-text);
+    line-height: var(--line-height-relaxed);
+}
+
+.tutor-card__footer {
+    margin-top: var(--space-2);
+    padding-top: var(--space-2);
+    border-top: 1px solid var(--color-border);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+/* Composition table — water & total rows */
+.comb-row-water {
+    background: color-mix(in srgb, var(--color-info) 5%, transparent);
+}
+
+.comb-row-total {
+    font-weight: var(--font-weight-bold);
+    border-top: 2px solid var(--color-border);
+}
+
+.comb-row-total td {
+    color: var(--color-text);
+}
+
+/* Educational section headings (este simulador usa BEM en vez de h2/h3 sueltos) */
+.edu-section__heading {
+    font-size: 1.25rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-2);
+    border-bottom: 2px solid var(--color-primary);
+    display: inline-block;
+}
+
+.edu-section__subheading {
+    font-size: 1rem;
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    margin: var(--space-4) 0 var(--space-2);
+}
+
+.edu-steps {
+    padding-left: var(--space-6);
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-4);
+    list-style: decimal;
+}
+
+.edu-steps li {
+    margin-bottom: var(--space-2);
+    line-height: var(--line-height-relaxed);
+}
+
+/* FAQ — versión BEM (div planos en vez de <details>/<summary>) */
+.sim-fuel-construction .edu-faq-item+.edu-faq-item {
+    margin-top: var(--space-4);
+}
+
+.edu-faq-item__question {
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    padding: var(--space-4) var(--space-4) 0;
+    margin-bottom: var(--space-2);
+    font-size: var(--font-size-sm);
+}
+
+.edu-faq-item__answer {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    line-height: var(--line-height-relaxed);
+    padding: 0 var(--space-4) var(--space-4);
+    margin: 0;
+}
+
+/* Info tooltip (ⓘ) */
+.info-tooltip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--color-surface-alt);
+    color: var(--color-text-muted);
+    font-size: 11px;
+    cursor: help;
+}
+
+.info-tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 220px;
+    background: var(--color-text);
+    color: var(--color-surface);
+    font-size: var(--font-size-xs);
+    font-weight: 400;
+    line-height: 1.4;
+    padding: var(--space-2) var(--space-3);
+    border-radius: var(--radius-sm);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .15s ease;
+    z-index: 20;
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+.info-tooltip:hover::after,
+.info-tooltip:focus::after {
+    opacity: 1;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   COMBUSTION CHIMNEY ANALYSER — namespace "co-"
+   Component-specific styles for the Combustion Chimney Analyser
+   simulator. Does not use the generic .sim-* system beyond
+   composition; kept isolated under its own "co-" prefix so it
+   can't collide with other simulators.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Layout shell: two-column on wide screens, single on mobile ── */
+.co-shell {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-lg);
+    align-items: start;
+}
+
+@media (max-width: 860px) {
+    .co-shell {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── Panel card — shared container ── */
+.co-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+/* ── Panel header ── */
+.co-panel__header {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: var(--space-lg);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border);
+}
+
+.co-panel__icon {
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(37, 99, 235, .1);
+    color: var(--brand-accent);
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+}
+
+.co-panel__title {
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.co-panel__subtitle {
+    font-size: .75rem;
+    color: var(--text-muted);
+    margin-left: auto;
+}
+
+/* ── Custom fuel panel (was inline styles — moved here per audit) ── */
+.co-custom-panel {
+    display: none;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--bg-hover);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-md);
+}
+
+.co-custom-panel__title {
+    font-size: .7rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin-bottom: .25rem;
+}
+
+/* ── Form fields grid ── */
+.co-fields {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.co-field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.co-field__label {
+    font-size: .75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.co-field__label span {
+    /* unit inside label */
+    font-weight: 400;
+    text-transform: none;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+.co-field__input,
+.co-field__select {
+    width: 100%;
+    padding: .625rem .875rem;
+    font-size: .875rem;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color .15s, box-shadow .15s;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    box-sizing: border-box;
+}
+
+.co-field__select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right .875rem center;
+    padding-right: 2.5rem;
+    cursor: pointer;
+}
+
+.co-field__input:focus,
+.co-field__select:focus {
+    border-color: var(--brand-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+.co-field__input:hover,
+.co-field__select:hover {
+    border-color: var(--brand-accent);
+}
+
+/* CO2max indicator under CO2 input */
+.co-field__note {
+    font-size: .7rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    padding: .25rem .5rem;
+    background: var(--border);
+    border-radius: var(--radius-sm);
+    display: inline-block;
+    width: fit-content;
+}
+
+/* ── Error message area ── */
+.co-error-box {
+    display: none;
+    padding: .75rem 1rem;
+    background: rgba(220, 38, 38, .08);
+    border: 1px solid rgba(220, 38, 38, .25);
+    border-left: 3px solid var(--color-danger);
+    border-radius: var(--radius-md);
+    font-size: .875rem;
+    color: var(--color-danger);
+    margin-top: var(--space-md);
+}
+
+.co-error-box.is-visible {
+    display: block;
+}
+
+/* ── Action buttons ── */
+.co-btn-calculate {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    width: 100%;
+    padding: .75rem 1.5rem;
+    font-size: .875rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: #fff;
+    background: var(--brand-accent);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    letter-spacing: .02em;
+    transition: background .15s, transform .1s, box-shadow .15s;
+    margin-top: var(--space-lg);
+}
+
+.co-btn-calculate:hover {
+    background: var(--brand-accent-h);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, .25);
+}
+
+.co-btn-calculate:active {
+    transform: scale(.98);
+}
+
+.co-btn-reset {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: .625rem 1rem;
+    font-size: .75rem;
+    font-weight: 600;
+    font-family: inherit;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    letter-spacing: .03em;
+    transition: background .15s, border-color .15s;
+    margin-top: var(--space-sm);
+}
+
+.co-btn-reset:hover {
+    background: var(--border);
+}
+
+/* ── Results panel — spans full width ── */
+.co-results-wrapper {
+    grid-column: 1 / -1;
+    display: none;
+    /* hidden until calculation */
+}
+
+.co-results-wrapper.is-visible {
+    display: block;
+}
+
+/* ── Diagnostic badge ── */
+.co-diagnostic {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: .875rem 1.25rem;
+    border-radius: var(--radius-md);
+    border: 1px solid transparent;
+    margin-bottom: var(--space-lg);
+    font-size: .875rem;
+    font-weight: 500;
+    transition: background .25s, color .25s;
+}
+
+.co-diagnostic__dot {
+    width: .625rem;
+    height: .625rem;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* State: optimal (exceso < 15%) */
+.co-diagnostic--optimal {
+    background: #f0fdf4;
+    border-color: #bbf7d0;
+    color: #15803d;
+}
+
+.co-diagnostic--optimal .co-diagnostic__dot {
+    background: #22c55e;
+}
+
+/* State: acceptable (15% <= exceso <= 50%) */
+.co-diagnostic--acceptable {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+    color: #1d4ed8;
+}
+
+.co-diagnostic--acceptable .co-diagnostic__dot {
+    background: #3b82f6;
+}
+
+/* State: high (exceso > 50%) */
+.co-diagnostic--high {
+    background: #fff7ed;
+    border-color: #fed7aa;
+    color: #c2410c;
+}
+
+.co-diagnostic--high .co-diagnostic__dot {
+    background: #f97316;
+}
+
+/* ── Results grid: 5 metric cards ── */
+.co-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: var(--space-md);
+}
+
+.co-metric {
+    display: flex;
+    flex-direction: column;
+    gap: .375rem;
+    padding: 1rem 1.125rem;
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    transition: border-color .15s;
+}
+
+/* Highlight card — key outputs */
+.co-metric--highlight {
+    border-color: var(--brand-accent);
+    background: rgba(37, 99, 235, .06);
+}
+
+.co-metric--highlight .co-metric__label {
+    color: var(--brand-accent);
+}
+
+.co-metric__label {
+    font-size: .7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.co-metric__value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    line-height: 1;
+}
+
+.co-metric__unit {
+    font-size: .7rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+/* ── Formula reference note ── */
+.co-formula-note {
+    margin-top: var(--space-lg);
+    padding: .875rem 1rem;
+    background: var(--border);
+    border-radius: var(--radius-md);
+    font-size: .7rem;
+    color: var(--text-secondary);
+    font-family: var(--font-mono);
+    line-height: 1.7;
+}
+
+.co-formula-note strong {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+/* ── Dark-mode safety overrides (inherits --* vars from base.css) ── */
+body.dark .co-error-box {
+    background: #450a0a;
+    border-color: #7f1d1d;
+    color: #fca5a5;
+}
+
+body.dark .co-diagnostic--optimal {
+    background: #052e16;
+    border-color: #14532d;
+    color: #86efac;
+}
+
+body.dark .co-diagnostic--acceptable {
+    background: #172554;
+    border-color: #1e40af;
+    color: #93c5fd;
+}
+
+body.dark .co-diagnostic--high {
+    background: #431407;
+    border-color: #9a3412;
+    color: #fdba74;
+}
+
+/* ════════════════════════════════════════════════════════════════
+   PIPE HEAD LOSS — namespace "phl-"
+   Component-specific styles for the Pipe Head Loss simulator.
+   Composes on top of the generic .sim-* system; kept isolated
+   under its own "phl-" prefix so it can't collide with other
+   simulators.
+   ════════════════════════════════════════════════════════════════ */
+
+.phl-slider-row {
+    display: grid;
+    grid-template-columns: 1fr 90px;
+    gap: var(--space-sm);
+    align-items: center;
+}
+
+.phl-slider-row--unit {
+    grid-template-columns: 1fr 80px 60px;
+}
+
+@media (max-width: 480px) {
+    .phl-slider-row--unit {
+        grid-template-columns: 1fr;
+    }
+}
+
+.phl-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border-strong);
+    outline: none;
+    cursor: pointer;
+}
+
+.phl-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--brand-accent);
+    cursor: pointer;
+    transition: transform .1s;
+}
+
+.phl-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.phl-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border: none;
+    border-radius: 50%;
+    background: var(--brand-accent);
+    cursor: pointer;
+}
+
+.phl-unit-select {
+    padding: 9px 28px 9px 10px;
+    font-size: .8rem;
+}
+
+.phl-precision {
+    font-size: .73rem;
+    color: var(--text-muted);
+    margin-top: var(--space-xs);
+    font-family: var(--font-mono);
+}
+
+.phl-precision span {
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+/* ── Decision Engine — velocity gauge ─────────────────────────── */
+.phl-gauge {
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px dashed var(--border);
+}
+
+.phl-gauge-header {
+    display: flex;
+    justify-content: space-between;
+    font-size: .75rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+.phl-gauge-header strong {
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+}
+
+.phl-gauge-track {
+    position: relative;
+    height: 8px;
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.phl-gauge-zone {
+    position: absolute;
+    top: 0;
+    height: 100%;
+}
+
+.phl-gauge-zone--low {
+    left: 0;
+    background: var(--color-warning);
+    opacity: .3;
+}
+
+.phl-gauge-zone--mid {
+    background: var(--color-success);
+    opacity: .3;
+}
+
+.phl-gauge-zone--high {
+    background: var(--color-danger);
+    opacity: .3;
+}
+
+.phl-gauge-marker {
+    position: absolute;
+    top: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--brand-accent);
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.phl-gauge-scale {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    font-size: .68rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+}
+
+/* Larger charts for this simulator's two Chart.js canvases */
+.phl-chart-tall {
+    min-height: 380px;
+}
+
+#lossChart,
+#optimChart {
+    max-height: 380px;
+}
+
+@media (max-width: 640px) {
+    .phl-chart-tall {
+        min-height: 280px;
+    }
+
+    #lossChart,
+    #optimChart {
+        max-height: 280px;
+    }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   ENTROPY T-S DIAGRAM (GAS) — namespace "ent-"
+   Component-specific styles for the Entropy T-s Diagram simulator.
+   Everything else reuses the shared .sim-* system (sim-panel,
+   sim-field, sim-input-wrap, sim-advanced, sim-results-grid,
+   sim-result-card, status-banner, sim-chart-wrap, is-hidden,
+   edu-grid, edu-faq-item) — only the slider needs its own styling.
+   ════════════════════════════════════════════════════════════════ */
+
+.ent-slider-row {
+    display: flex;
+    align-items: center;
+    margin-top: var(--space-xs);
+}
+
+.ent-slider {
+    flex: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: var(--border-strong);
+    outline: none;
+    cursor: pointer;
+}
+
+.ent-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--brand-accent);
+    cursor: pointer;
+    transition: transform .1s;
+}
+
+.ent-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+}
+
+.ent-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border: none;
+    border-radius: 50%;
+    background: var(--brand-accent);
+    cursor: pointer;
+}
+
+/* =========================================================
+   Power Converter — namespaced "pwc-" block
+   Append to the end of assets/css/simulator.css
+   ========================================================= */
+
+.pwc-table-wrap {
+    overflow-x: auto;
+}
+
+.pwc-table {
+    min-width: 420px;
+}
+
+.pwc-value-cell {
+    font-family: var(--font-mono, 'JetBrains Mono', monospace);
+    text-align: right;
+    white-space: nowrap;
+}
+
+.pwc-row--active {
+    background: var(--bg-hover);
+}
+
+.pwc-row--active td {
+    font-weight: 600;
+    color: var(--brand-accent);
+}
+
+.pwc-empty-state {
+    color: var(--text-secondary);
+    padding: var(--space-lg, 1.5rem) 0;
+    text-align: center;
+}
+
+@media (max-width: 640px) {
+    .pwc-table {
+        min-width: 320px;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Energy Converter (enc-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   ============================================================ */
+
+.enc-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.enc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.enc-table th,
+.enc-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.enc-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.enc-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.enc-table tbody tr.enc-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.enc-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .enc-table th,
+    .enc-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Length Converter (lnc-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc- block from Energy Converter.
+   ============================================================ */
+
+.lnc-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.lnc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.lnc-table th,
+.lnc-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.lnc-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.lnc-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.lnc-table tbody tr.lnc-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.lnc-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .lnc-table th,
+    .lnc-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Mass / Weight Converter (msc-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc-/lnc- blocks from Energy/Length Converter.
+   ============================================================ */
+
+.msc-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.msc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.msc-table th,
+.msc-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.msc-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.msc-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.msc-table tbody tr.msc-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.msc-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .msc-table th,
+    .msc-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Temperature Converter (tpc-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc-/lnc-/msc- blocks from the other unit converters.
+   ============================================================ */
+
+.tpc-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.tpc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.tpc-table th,
+.tpc-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.tpc-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.tpc-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.tpc-table tbody tr.tpc-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.tpc-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .tpc-table th,
+    .tpc-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Volume Converter (vol-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc-/lnc-/msc-/tpc- blocks from the other unit converters.
+   ============================================================ */
+
+.vol-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.vol-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.vol-table th,
+.vol-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.vol-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.vol-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.vol-table tbody tr.vol-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.vol-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .vol-table th,
+    .vol-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Data Storage Converter (dsc-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc-/lnc-/msc-/tpc-/vol- blocks from the other unit converters.
+   ============================================================ */
+
+.dsc-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.dsc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.dsc-table th,
+.dsc-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.dsc-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.dsc-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.dsc-table tbody tr.dsc-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.dsc-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .dsc-table th,
+    .dsc-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Area Converter (are-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc-/lnc-/msc-/tpc-/vol-/dsc- blocks from the other
+   unit converters.
+   ============================================================ */
+
+.are-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.are-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.are-table th,
+.are-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.are-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.are-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.are-table tbody tr.are-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.are-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .are-table th,
+    .are-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Speed Converter (spc-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc-/lnc-/msc-/tpc-/vol-/dsc-/are- blocks from the
+   other unit converters.
+   ============================================================ */
+
+.spc-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.spc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.spc-table th,
+.spc-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.spc-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.spc-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.spc-table tbody tr.spc-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.spc-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .spc-table th,
+    .spc-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Pressure Converter (prc-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc-/lnc-/msc-/tpc-/vol-/dsc-/are-/spc- blocks from
+   the other unit converters.
+   ============================================================ */
+
+.prc-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.prc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.prc-table th,
+.prc-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.prc-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.prc-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.prc-table tbody tr.prc-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.prc-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .prc-table th,
+    .prc-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Torque Converter (trq-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc-/lnc-/msc-/tpc-/vol-/dsc-/are-/spc-/prc-/frc- blocks
+   from the other unit converters.
+   ============================================================ */
+
+.trq-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.trq-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.trq-table th,
+.trq-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.trq-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.trq-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.trq-table tbody tr.trq-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.trq-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .trq-table th,
+    .trq-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Mass / Weight Converter (msc-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc-/lnc- blocks from Energy/Length Converter.
+   ============================================================ */
+
+.msc-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.msc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.msc-table th,
+.msc-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.msc-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.msc-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.msc-table tbody tr.msc-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.msc-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .msc-table th,
+    .msc-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Fuel Consumption Converter (fcc-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc-/lnc-/msc-/tpc-/vol-/dsc-/are-/spc-/prc-/frc-/trq-/flr-
+   blocks from the other unit converters.
+   ============================================================ */
+
+.fcc-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.fcc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.fcc-table th,
+.fcc-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.fcc-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.fcc-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.fcc-table tbody tr.fcc-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.fcc-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .fcc-table th,
+    .fcc-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Force Converter (frc-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc-/lnc-/msc-/tpc-/vol-/dsc-/are-/spc-/prc- blocks
+   from the other unit converters.
+   ============================================================ */
+
+.frc-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.frc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.frc-table th,
+.frc-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.frc-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.frc-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.frc-table tbody tr.frc-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.frc-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .frc-table th,
+    .frc-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ============================================================
+   Flow Rate Converter (flr-) — namespaced block
+   Append to the end of assets/css/simulator.css
+   No custom slider needed (text input + select only).
+   Mirrors the enc-/lnc-/msc-/tpc-/vol-/dsc-/are-/spc-/prc-/frc-/trq-
+   blocks from the other unit converters.
+   ============================================================ */
+
+.flr-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.flr-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9375rem;
+}
+
+.flr-table th,
+.flr-table td {
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+}
+
+.flr-table th {
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 0.8125rem;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.flr-table tbody tr:nth-child(even) {
+    background: var(--bg-hover);
+}
+
+.flr-table tbody tr.flr-row--active {
+    background: var(--bg-hover);
+    border-left: 3px solid var(--brand-accent);
+    font-weight: 600;
+}
+
+.flr-value-cell {
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--text-primary);
+}
+
+@media (max-width: 640px) {
+
+    .flr-table th,
+    .flr-table td {
+        padding: 0.5rem 0.6rem;
+        font-size: 0.875rem;
+    }
+}
+
+/* ----------------------------------------------------------------
+   GAS COMBUSTION (gc-)
+   ---------------------------------------------------------------- */
+/* ════════════════════════════════════════════════════════════════
+   GAS COMBUSTION CALCULATOR — namespace "gc-"
+   simulators/gas-combustion/css/custom.css
+   Component-specific styles not covered by the shared simulator.css
+   generics (.sim-panel, .sim-field, .btn-primary, .sim-result-card…).
+   Uses base.css design tokens — no hardcoded colors.
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Formula input (monospace) ─────────────────────────────────── */
+.gc-input-mono {
+    font-family: var(--font-mono);
+    letter-spacing: .03em;
+}
+
+.gc-input--error {
+    border-color: var(--color-danger) !important;
+}
+
+/* Parsed chips row (C, H, O, molar mass) */
+.gc-parsed-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+}
+
+.gc-parsed-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+.gc-parsed-item__label {
+    font-size: .68rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.gc-parsed-item__value {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+}
+
+.gc-parsed-item__unit {
+    font-size: .65rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+}
+
+/* ── Gas analysis grid ──────────────────────────────────────────── */
+.gc-gas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: var(--space-md);
+}
+
+.gc-gas-grid .sim-field {
+    margin-bottom: 0;
+}
+
+/* Sum row */
+.gc-gas-sum-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-top: var(--space-md);
+    font-size: .8rem;
+}
+
+.gc-gas-sum-row span:first-child {
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    font-size: .7rem;
+}
+
+#gc-gas-sum {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+#gc-gas-sum.gc-sum--invalid {
+    color: var(--color-danger);
+}
+
+.gc-warning-msg {
+    font-size: .78rem;
+    color: var(--color-warning);
+    background: rgba(217, 119, 6, .1);
+    border: 1px solid rgba(217, 119, 6, .3);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-md);
+    margin-top: var(--space-sm);
+    display: none;
+}
+
+.gc-warning-msg.is-visible {
+    display: block;
+}
+
+/* ── Diagnostic badge ───────────────────────────────────────────── */
+.gc-diagnostic {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-lg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    margin-bottom: var(--space-lg);
+    font-size: .9rem;
+    font-weight: 500;
+}
+
+.gc-diagnostic__text {
+    font-weight: 600;
+}
+
+.gc-diagnostic__value {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-weight: 700;
+}
+
+.gc-diagnostic--stoich {
+    background: rgba(22, 163, 74, .08);
+    border-color: rgba(22, 163, 74, .3);
+    color: var(--color-success);
+}
+
+.gc-diagnostic--excess {
+    background: rgba(37, 99, 235, .08);
+    border-color: rgba(37, 99, 235, .3);
+    color: var(--brand-accent);
+}
+
+.gc-diagnostic--deficit {
+    background: rgba(217, 119, 6, .08);
+    border-color: rgba(217, 119, 6, .3);
+    color: var(--color-warning);
+}
+
+/* ── Products table ─────────────────────────────────────────────── */
+.gc-table-wrap {
+    overflow-x: auto;
+    margin-top: var(--space-md);
+}
+
+.gc-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .85rem;
+}
+
+.gc-table th,
+.gc-table td {
+    padding: var(--space-sm) var(--space-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.gc-table th {
+    font-size: .7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--text-muted);
+    background: var(--bg-hover);
+}
+
+.gc-table td {
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+}
+
+.gc-table__formula {
+    font-weight: 700;
+}
+
+.gc-table__origin {
+    display: block;
+    font-size: .68rem;
+    font-family: var(--font-sans);
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.gc-table tr.gc-row-total td {
+    font-weight: 700;
+    border-top: 2px solid var(--border-strong);
+    border-bottom: none;
+}
+
+.gc-model-note {
+    font-size: .78rem;
+    color: var(--text-muted);
+    font-style: italic;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-hover);
+    border-left: 3px solid var(--border-strong);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    margin-top: var(--space-md);
+}
+
+/* ── Actions row ─────────────────────────────────────────────────── */
+.gc-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.gc-actions .btn-primary,
+.gc-actions .btn-secondary {
+    margin-top: 0;
+    width: auto;
+    flex: 0 0 auto;
+}
+
+.gc-basis-note {
+    font-size: .72rem;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    margin-left: auto;
+}
+
+@media (max-width: 480px) {
+    .gc-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .gc-actions .btn-primary,
+    .gc-actions .btn-secondary {
+        width: 100%;
+    }
+
+    .gc-basis-note {
+        margin-left: 0;
+        text-align: center;
+    }
+}
+
+
+/* ----------------------------------------------------------------
+   BALANCEADOR ECUACIONES (bal-)
+   ---------------------------------------------------------------- */
+/*
+ * balanceador-ecuaciones.css
+ * EngSim — Chemical Equation Balancer
+ * ────────────────────────────────────────────────────────────────
+ * Scoped styles for simulators/balanceador-ecuaciones/
+ * Builds on top of assets/css/simulator.css tokens.
+ *
+ * TOKEN MAP (old IEM → new EngSim):
+ *   --color-primary         → --brand-accent
+ *   --color-primary-light   → rgba(37,99,235,.2)
+ *   --color-surface         → --bg-card
+ *   --color-surface-alt     → --bg-hover
+ *   --color-border          → --border
+ *   --color-text            → --text-primary
+ *   --color-text-secondary  → --text-secondary
+ *   --color-text-muted      → --text-muted
+ *   --color-success         → --color-success
+ *   --space-2 / 4 / 6 …    → --space-xs / sm / md / lg / xl
+ *   --radius-md / lg        → --radius-md / lg
+ *   --shadow-sm / md        → --shadow-sm / md
+ *   --transition-*          → --transition
+ *   --font-mono             → --font-mono  (same name)
+ *   --font-size-*           → explicit values
+ */
+
+/* ══════════════════════════════════════════════════════════════
+   MODE TABS  (above the two-panel layout)
+   ══════════════════════════════════════════════════════════════ */
+.bal-mode-tabs {
+    display: flex;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border);
+    padding-bottom: var(--space-xs);
+}
+
+.bal-tab-btn {
+    padding: 8px 18px;
+    font-size: .85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: none;
+    border: none;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    cursor: pointer;
+    transition: color var(--transition), background var(--transition);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    /* sits on the bottom border */
+}
+
+.bal-tab-btn:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+}
+
+.bal-tab-btn.active {
+    color: var(--brand-accent);
+    border-bottom-color: var(--brand-accent);
+    background: none;
+}
+
+.bal-tab-btn:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TEXT INPUT (full-width, no unit badge)
+   ══════════════════════════════════════════════════════════════ */
+.sim-input--text {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-input);
+    padding: 9px 12px;
+    font-size: .9rem;
+    font-family: var(--font-mono);
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.sim-input--text::placeholder {
+    color: var(--text-muted);
+    font-family: var(--font-sans);
+}
+
+.sim-input--text:focus {
+    border-color: var(--brand-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   INPUT ERROR
+   Inline field validation now uses the global .sim-error component
+   from assets/css/simulator.css (.sim-error + .is-visible toggle).
+   The old .bal-input-error block has been removed.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ══════════════════════════════════════════════════════════════
+   EMPTY STATE
+   ══════════════════════════════════════════════════════════════ */
+.bal-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 48px var(--space-lg);
+    background: var(--bg-card);
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-lg);
+    text-align: center;
+    color: var(--text-muted);
+}
+
+.bal-empty-icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-md);
+    opacity: .5;
+}
+
+.bal-empty-state h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-xs);
+}
+
+.bal-empty-state p {
+    font-size: .85rem;
+    line-height: 1.6;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ACTIVE EQUATION DISPLAY
+   ══════════════════════════════════════════════════════════════ */
+.bal-equation-panel {
+    position: sticky;
+    top: calc(var(--nav-h) + var(--space-sm));
+    z-index: 10;
+    border-color: rgba(37, 99, 235, .25);
+    box-shadow: var(--shadow-md);
+}
+
+.bal-equation-string {
+    font-family: var(--font-mono);
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+    font-weight: 700;
+    color: var(--brand-accent);
+    letter-spacing: .04em;
+    padding: var(--space-sm) 0;
+    word-break: break-all;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MOLECULAR VIEW
+   ══════════════════════════════════════════════════════════════ */
+.bal-molecular-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+    padding: var(--space-sm) 0;
+    min-height: 60px;
+    overflow-x: auto;
+    border-top: 1px solid var(--border);
+}
+
+.molecule-group {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: 6px var(--space-sm);
+    background: var(--bg-hover);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    transition: box-shadow var(--transition);
+}
+
+.molecule-group:hover {
+    box-shadow: var(--shadow-sm);
+}
+
+.molecule-coeff {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    min-width: 12px;
+}
+
+.atom-svg {
+    transition: transform var(--transition);
+}
+
+.atom-svg:hover {
+    transform: scale(1.15);
+}
+
+/*
+ * ATOM COLOURS — CPK / Jmol conventional palette
+ * ─────────────────────────────────────────────────────────────
+ * These are intentional domain-specific constants, NOT UI theme
+ * tokens. They follow the standard CPK/Jmol colour convention
+ * used in chemistry visualisation worldwide and must NOT be
+ * replaced with generic --brand-* or --color-* variables.
+ *   H  → white/light-gray   C  → dark-gray
+ *   N  → blue               O  → red
+ *   S  → yellow             Cl → green
+ *   Fe → orange             Al → medium-gray
+ */
+
+/* Atom colours — Light mode */
+.atom-circle {
+    transition: fill var(--transition), stroke var(--transition);
+}
+
+.atom-h {
+    fill: #f3f4f6;    /* CPK H — white/light gray */
+    stroke: #d1d5db;
+}
+
+.atom-c {
+    fill: #4b5563;    /* CPK C — dark gray */
+    stroke: #374151;
+}
+
+.atom-n {
+    fill: #3b82f6;    /* CPK N — blue */
+    stroke: #2563eb;
+}
+
+.atom-o {
+    fill: #ef4444;    /* CPK O — red */
+    stroke: #dc2626;
+}
+
+.atom-s {
+    fill: #fde047;    /* CPK S — yellow */
+    stroke: #eab308;
+}
+
+.atom-cl {
+    fill: #22c55e;    /* CPK Cl — green */
+    stroke: #16a34a;
+}
+
+.atom-fe {
+    fill: #f97316;    /* CPK Fe — orange */
+    stroke: #ea580c;
+}
+
+.atom-al {
+    fill: #9ca3af;    /* CPK Al — medium gray */
+    stroke: #6b7280;
+}
+
+.atom-default {
+    fill: #a855f7;    /* CPK generic — purple */
+    stroke: #9333ea;
+}
+
+/* Atom colours — Dark mode overrides */
+body.dark .atom-h {
+    fill: #374151;
+    stroke: #4b5563;
+}
+
+body.dark .atom-c {
+    fill: #9ca3af;
+    stroke: #d1d5db;
+}
+
+body.dark .atom-n {
+    fill: #2563eb;
+    stroke: #60a5fa;
+}
+
+body.dark .atom-o {
+    fill: #dc2626;
+    stroke: #f87171;
+}
+
+body.dark .atom-s {
+    fill: #ca8a04;
+    stroke: #fde047;
+}
+
+body.dark .atom-cl {
+    fill: #16a34a;
+    stroke: #4ade80;
+}
+
+body.dark .atom-fe {
+    fill: #ea580c;
+    stroke: #fb923c;
+}
+
+body.dark .atom-al {
+    fill: #6b7280;
+    stroke: #9ca3af;
+}
+
+body.dark .atom-default {
+    fill: #9333ea;
+    stroke: #c084fc;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   STEP TIMELINE (Learning Mode)
+   ══════════════════════════════════════════════════════════════ */
+.bal-timeline-container {
+    position: relative;
+    padding-left: var(--space-lg);
+}
+
+.bal-timeline-container::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--border);
+}
+
+.bal-step-card {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-bottom: var(--space-md);
+    opacity: .45;
+    filter: grayscale(.8);
+    transition: opacity var(--transition), filter var(--transition),
+        border-color var(--transition), box-shadow var(--transition);
+}
+
+.bal-step-card.active {
+    opacity: 1;
+    filter: none;
+    border-color: rgba(37, 99, 235, .35);
+    box-shadow: var(--shadow-sm);
+}
+
+.bal-step-card.completed {
+    opacity: .75;
+    filter: none;
+}
+
+.bal-step-marker {
+    position: absolute;
+    left: calc(var(--space-lg) * -1 - 12px);
+    top: 18px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    z-index: 2;
+    transition: background var(--transition), border-color var(--transition);
+}
+
+.bal-step-card.active .bal-step-marker {
+    border-color: var(--brand-accent);
+    background: var(--brand-accent);
+    color: var(--text-on-accent);
+}
+
+.bal-step-card.completed .bal-step-marker {
+    border-color: var(--color-success);
+    background: var(--color-success);
+    color: var(--text-on-accent);
+}
+
+.bal-step-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
+}
+
+.bal-step-icon {
+    font-size: 1.1rem;
+}
+
+.bal-step-title {
+    font-size: .9rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.bal-step-body {
+    font-size: .82rem;
+    color: var(--text-secondary);
+    line-height: 1.65;
+}
+
+.bal-step-body strong {
+    color: var(--text-primary);
+}
+
+/* Step navigation controls */
+.bal-step-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--border);
+}
+
+.bal-btn-next {
+    margin-top: 0;
+    /* override btn-primary default top margin */
+    width: auto;
+    padding: 9px var(--space-lg);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ATOM COUNT TABLE
+   ══════════════════════════════════════════════════════════════ */
+.bal-table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.bal-count-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .85rem;
+}
+
+.bal-count-table th,
+.bal-count-table td {
+    padding: var(--space-sm) var(--space-md);
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+}
+
+.bal-count-table th {
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    background: var(--bg-hover);
+}
+
+.bal-count-table td:nth-child(2),
+.bal-count-table td:nth-child(3) {
+    text-align: center;
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.bal-count-table tr:last-child td {
+    border-bottom: none;
+}
+
+/* Status pills */
+.count-pill {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 99px;
+    font-size: .7rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    white-space: nowrap;
+}
+
+.pill-balanced {
+    background: rgba(22, 163, 74, .1);
+    color: #15803d;
+}
+
+.pill-unbalanced {
+    background: rgba(220, 38, 38, .1);
+    color: #b91c1c;
+}
+
+.pill-excess {
+    background: rgba(37, 99, 235, .1);
+    color: #1d4ed8;
+}
+
+body.dark .pill-balanced {
+    background: rgba(22, 163, 74, .2);
+    color: #4ade80;
+}
+
+body.dark .pill-unbalanced {
+    background: rgba(220, 38, 38, .2);
+    color: #f87171;
+}
+
+body.dark .pill-excess {
+    background: rgba(37, 99, 235, .2);
+    color: #93c5fd;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TRAINING MODE — coefficient inputs
+   ══════════════════════════════════════════════════════════════ */
+.bal-training-grid {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+}
+
+.training-input-group {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    font-family: var(--font-mono);
+    font-size: 1rem;
+}
+
+.training-coeff-input {
+    width: 58px;
+    height: 40px;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    border: 2px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-input);
+    color: var(--text-primary);
+    transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.training-coeff-input:focus {
+    outline: none;
+    border-color: var(--brand-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+/* Feedback panel */
+.bal-feedback-panel {
+    margin-top: var(--space-md);
+    padding: var(--space-md);
+    border-radius: var(--radius-md);
+    font-size: .85rem;
+    line-height: 1.6;
+}
+
+.bal-feedback-correct {
+    background: rgba(22, 163, 74, .08);
+    border: 1px solid rgba(22, 163, 74, .3);
+    color: #15803d;
+}
+
+.bal-feedback-incorrect {
+    background: rgba(220, 38, 38, .07);
+    border: 1px solid rgba(220, 38, 38, .25);
+    color: #b91c1c;
+}
+
+body.dark .bal-feedback-correct {
+    background: rgba(22, 163, 74, .15);
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, .3);
+}
+
+body.dark .bal-feedback-incorrect {
+    background: rgba(220, 38, 38, .15);
+    color: #f87171;
+    border-color: rgba(248, 113, 113, .3);
+}
+
+.feedback-hint {
+    margin-top: var(--space-xs);
+    font-style: italic;
+    opacity: .85;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   EXERCISE BANK — topic filters + example buttons
+   ══════════════════════════════════════════════════════════════ */
+.bal-topic-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+}
+
+.bal-filter-chip {
+    padding: 4px 12px;
+    border-radius: 99px;
+    font-size: .72rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    border: 1px solid var(--border);
+    transition: background var(--transition), color var(--transition), border-color var(--transition);
+    background: var(--bg-hover);
+    color: var(--text-secondary);
+}
+
+.bal-filter-chip:hover,
+.bal-filter-chip.active {
+    background: var(--brand-accent);
+    color: var(--text-on-accent);
+    border-color: var(--brand-accent);
+}
+
+.bal-example-btns {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.bal-example-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-align: left;
+    transition: border-color var(--transition), background var(--transition), transform var(--transition);
+}
+
+.bal-example-btn:hover {
+    background: var(--bg-card);
+    border-color: var(--brand-accent);
+    transform: translateX(3px);
+}
+
+.bal-example-title {
+    font-size: .82rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.bal-example-formula {
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    color: var(--text-muted);
+}
+
+.bal-example-meta {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: var(--space-xs);
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.bal-example-diff {
+    font-weight: 700;
+    color: var(--brand-accent);
+}
+
+
+/* ----------------------------------------------------------------
+   MOHR CIRCLE (mohr-)
+   ---------------------------------------------------------------- */
+/* ============================================================
+   custom.css — Mohr's Circle Calculator
+   Simulator-specific styles only. Anything shared across
+   simulators belongs in assets/css/simulator.css instead.
+   engsim.app
+   ============================================================ */
+
+/* The plot canvases render their own dark theme (see js/plot.js THEME.bg)
+   regardless of the site's light/dark mode, so they need a bit more room
+   than the default .sim-chart-wrap canvas cap (260px) — the circle needs
+   height to stay legible. */
+#sim-chart {
+    width: 100%;
+    height: min(380px, 75vw);
+    max-height: none;
+    display: block;
+}
+
+#sim-chart-element {
+    width: 100%;
+    height: 260px;
+    max-height: none;
+    display: block;
+}
+
+/* ── Angle slider (θ) ─────────────────────────────────────────── */
+.sim-slider-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.sim-slider-row input[type="range"] {
+    flex: 1;
+    accent-color: var(--brand-accent);
+}
+
+.sim-slider-value {
+    min-width: 60px;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--brand-accent);
+    font-size: .9rem;
+}
+
+/* ── Hydrostatic-state badge on the results header ─────────────── */
+.sim-panel__badge--info {
+    background: rgba(37, 99, 235, .12);
+    color: var(--brand-accent);
+}
+
+/* ── Chart header (label + fullscreen button) ───────────────────── */
+.sim-chart-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-xs);
+}
+
+.sim-chart-header .sim-chart-label {
+    margin-bottom: 0;
+}
+
+.sim-chart-fullscreen-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition);
+}
+
+.sim-chart-fullscreen-btn:hover {
+    background: var(--bg-card);
+    color: var(--brand-accent);
+}
+
+.sim-chart-fullscreen-btn .icon-collapse {
+    display: none;
+}
+
+.sim-chart-fullscreen-btn.is-fullscreen .icon-expand {
+    display: none;
+}
+
+.sim-chart-fullscreen-btn.is-fullscreen .icon-collapse {
+    display: block;
+}
+
+/* ── Fullscreen mode ──────────────────────────────────────────────
+   The plot canvases keep their own dark theme (js/plot.js THEME.bg)
+   in fullscreen too, regardless of the site's light/dark mode. */
+.sim-chart-wrap:fullscreen,
+.sim-chart-wrap:-webkit-full-screen {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-page);
+    padding: var(--space-lg);
+}
+
+.sim-chart-wrap:fullscreen .sim-chart-header,
+.sim-chart-wrap:-webkit-full-screen .sim-chart-header {
+    flex-shrink: 0;
+}
+
+.sim-chart-wrap:fullscreen .sim-chart-label,
+.sim-chart-wrap:-webkit-full-screen .sim-chart-label {
+    color: var(--text-secondary);
+}
+
+.sim-chart-wrap:fullscreen .sim-chart-fullscreen-btn,
+.sim-chart-wrap:-webkit-full-screen .sim-chart-fullscreen-btn {
+    border-color: var(--border);
+    color: var(--text-primary);
+}
+
+.sim-chart-wrap:fullscreen #sim-chart,
+.sim-chart-wrap:-webkit-full-screen #sim-chart,
+.sim-chart-wrap:fullscreen #sim-chart-element,
+.sim-chart-wrap:-webkit-full-screen #sim-chart-element {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    max-height: none;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 640px) {
+    #sim-chart {
+        max-height: 260px;
+    }
+
+    #sim-chart-element {
+        max-height: 180px;
+    }
+}
+
+
+/* ----------------------------------------------------------------
+   CHEMICAL REACTIONS (chr-)
+   ---------------------------------------------------------------- */
+/* ============================================================
+   simulator.css — Chemical Reactions Simulator
+   Scoped styles for THIS simulator only. Reuses the shared
+   .sim-* / .edu-* / .status-banner components from
+   assets/css/simulator.css — only genuinely chemistry-specific
+   pieces live here (reactant rows, redox cards, electron flow,
+   the local module tabs).
+   engsim.app
+   ============================================================ */
+
+/* ── Local module tabs (not part of the shared .sim-* system) ── */
+.chem-tabs {
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
+    border-bottom: 2px solid var(--border);
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+.chem-tab-btn {
+    padding: var(--space-sm) var(--space-lg);
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    font-family: var(--font-sans);
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color var(--transition), background var(--transition);
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.chem-tab-btn:hover {
+    color: var(--brand-accent);
+    background: var(--bg-hover);
+}
+
+.chem-tab-btn.active {
+    color: var(--brand-accent);
+    border-bottom-color: var(--brand-accent);
+}
+
+/* ── Training-mode toggle switch ───────────────────────────────── */
+.mode-toggle-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--border);
+}
+
+.mode-label { font-size: .8rem; font-weight: 600; color: var(--text-primary); }
+
+.mode-toggle-container .switch { position: relative; display: inline-block; width: 38px; height: 20px; }
+.mode-toggle-container .switch input { opacity: 0; width: 0; height: 0; }
+
+.mode-toggle-container .slider {
+    position: absolute; inset: 0;
+    background: var(--border-strong);
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background .2s ease;
+}
+
+.mode-toggle-container .slider::before {
+    content: '';
+    position: absolute;
+    width: 14px; height: 14px;
+    left: 3px; bottom: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform .2s ease;
+}
+
+.mode-toggle-container .switch input:checked + .slider { background: var(--brand-accent); }
+.mode-toggle-container .switch input:checked + .slider::before { transform: translateX(18px); }
+.mode-toggle-container .switch input:disabled + .slider { opacity: .5; cursor: not-allowed; }
+
+/* ── Reactant rows (dynamic, limiting-reagent module) ───────────── */
+.reactant-rows-title {
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+.reactants-placeholder {
+    color: var(--text-muted);
+    font-size: .875rem;
+    font-style: italic;
+    padding: var(--space-sm) 0;
+}
+
+.example-btns { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+
+.reactant-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.reactant-row:last-child { border-bottom: none; }
+
+.reactant-row__label { flex: 0 0 auto; min-width: 100px; }
+
+.reactant-formula {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--brand-accent);
+}
+
+.reactant-mass {
+    display: block;
+    font-size: .72rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* Reuses .sim-input / .sim-select for consistent look, custom layout.
+   min-width: 0 overrides the flex-item default (min-width: auto),
+   which otherwise refuses to shrink below the content's natural
+   width and pushes the unit <select> outside the panel. */
+.reactant-row__input { display: flex; gap: var(--space-xs); flex: 1; min-width: 0; }
+.reactant-row__input .sim-input {
+    flex: 1;
+    min-width: 80px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-input);
+}
+.reactant-row__input .sim-select { flex: 0 0 78px; min-width: 78px; padding-right: 28px; }
+
+@media (max-width: 420px) {
+    .reactant-row { flex-direction: column; align-items: stretch; gap: var(--space-xs); }
+    .reactant-row__label { min-width: 0; }
+}
+
+/* ── Conversion / ratio table cells ────────────────────────────── */
+.ratio-cell { font-family: var(--font-mono); font-weight: 800; }
+.conversion-eq { font-family: var(--font-mono); max-width: 280px; }
+
+.limiting-row td { background: rgba(220, 38, 38, .04); }
+.limiting-row .ratio-cell { color: var(--color-danger); }
+
+.limiting-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    background: rgba(220, 38, 38, .08);
+    border: 1px solid rgba(220, 38, 38, .3);
+    border-radius: 99px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-danger);
+    letter-spacing: .05em;
+}
+
+.excess-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    background: rgba(22, 163, 74, .08);
+    border: 1px solid rgba(22, 163, 74, .3);
+    border-radius: 99px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-success);
+    letter-spacing: .05em;
+}
+
+body.dark .limiting-badge { color: #fca5a5; }
+body.dark .excess-badge { color: #86efac; }
+
+.ratio-explanation {
+    margin-top: var(--space-md);
+    font-size: .875rem;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bg-hover);
+    border-radius: var(--radius-md);
+    border-left: 3px solid var(--brand-accent);
+}
+
+/* Result-table (generic table, not in the shared file — used for
+   the conversion & ratio tables which need row-level highlighting
+   that .edu-table doesn't provide) */
+.chem-table-scroll { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+
+.result-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+
+.result-table th {
+    text-align: left;
+    padding: var(--space-sm);
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    background: var(--bg-hover);
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+}
+
+.result-table td {
+    padding: var(--space-sm);
+    border-bottom: 1px solid var(--border);
+    color: var(--text-primary);
+    vertical-align: middle;
+}
+
+.result-table tr:last-child td { border-bottom: none; }
+.result-table tr:hover td { background: rgba(37, 99, 235, .03); }
+
+.formula-cell {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--brand-accent);
+}
+
+/* Result-section wrapper (groups a numbered step + its content) */
+.result-section { margin-bottom: var(--space-lg); }
+.result-section:last-child { margin-bottom: 0; }
+
+.result-section__title {
+    font-size: .85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin: 0 0 var(--space-md);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.step-number {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px; height: 22px;
+    background: var(--brand-accent);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.section-note {
+    font-size: .72rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    margin-left: auto;
+}
+
+/* ── Equation display / comparison ─────────────────────────────── */
+.equation-display {
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md) var(--space-lg);
+}
+
+.equation-string {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    color: var(--brand-accent);
+    font-weight: 700;
+}
+
+.equation-comparison { display: flex; flex-direction: column; gap: var(--space-xs); }
+.eq-comp-item { display: flex; align-items: baseline; gap: var(--space-xs); flex-wrap: wrap; }
+
+.eq-comp-label {
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.eq-comp-str { font-family: var(--font-mono); font-size: 1rem; }
+.eq-comp-str.highlight { color: var(--brand-accent); font-weight: 700; }
+
+/* ── Result-card colour variants (extends .sim-result-card) ─────── */
+.sim-result-card--limiting { background: rgba(220, 38, 38, .06); border-color: rgba(220, 38, 38, .25); }
+.sim-result-card--limiting .sim-result-value { color: var(--color-danger); }
+.sim-result-card--product  { background: rgba(22, 163, 74, .06); border-color: rgba(22, 163, 74, .25); }
+.sim-result-card--product  .sim-result-value { color: var(--color-success); }
+.sim-result-card--excess   { background: rgba(37, 99, 235, .06); border-color: rgba(37, 99, 235, .2); }
+
+/* ── Quiz / training mode reveal ───────────────────────────────── */
+.quiz-hidden .sim-result-value,
+.quiz-hidden .sim-result-unit { display: none !important; }
+
+.quiz-prompt {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md);
+    background: var(--bg-hover);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--border-strong);
+    text-align: center;
+}
+
+.quiz-question { font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-sm); }
+.quiz-reveal-btn { margin: 0 auto; }
+
+/* ── Bar chart visualisation (inside .sim-chart-wrap) ──────────── */
+.bar-chart { display: flex; flex-direction: column; gap: var(--space-md); }
+.bar-row { display: flex; flex-direction: column; gap: var(--space-xs); }
+.bar-label { display: flex; align-items: center; gap: var(--space-xs); flex-wrap: wrap; }
+
+.bar-formula {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: .875rem;
+}
+
+.bar-track {
+    height: 28px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    display: flex;
+    border: 1px solid var(--border);
+}
+
+.bar-segment { height: 100%; transition: width .7s cubic-bezier(.4,0,.2,1); }
+.bar-consumed { background: var(--color-warning); }
+.bar-row--limiting .bar-consumed { background: var(--color-danger); }
+.bar-leftover { background: var(--color-success); }
+
+.bar-legend { display: flex; gap: var(--space-md); flex-wrap: wrap; color: var(--text-muted); font-size: .8rem; }
+.legend-consumed { color: var(--color-warning); }
+.bar-row--limiting .legend-consumed { color: var(--color-danger); }
+.legend-leftover { color: var(--color-success); }
+
+/* ── Redox — header & final equation ───────────────────────────── */
+.redox-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-md);
+}
+
+.redox-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin: 0; }
+
+/* Extensions for .edu-process-badge */
+.edu-process-badge--acidic {
+    background: rgba(217, 119, 6, .1);
+    color: var(--color-warning);
+    border: 1px solid rgba(217, 119, 6, .35);
+}
+
+.edu-process-badge--basic {
+    background: rgba(37, 99, 235, .1);
+    color: var(--brand-accent);
+    border: 1px solid rgba(37, 99, 235, .35);
+}
+
+body.dark .edu-process-badge--acidic { color: #fde68a; }
+body.dark .edu-process-badge--basic  { color: #bfdbfe; }
+
+.final-equation-box {
+    margin-bottom: var(--space-lg);
+    padding: var(--space-md) var(--space-lg);
+    background: var(--bg-hover);
+    border-left: 4px solid var(--brand-accent);
+    border-radius: 0 var(--radius-md) var(--radius-md) 0;
+}
+
+.final-equation-label {
+    display: block;
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+.final-equation-str {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--brand-accent);
+    word-break: break-word;
+}
+
+/* ── Redox — oxidation numbers table ───────────────────────────── */
+.ox-number { font-family: var(--font-mono); font-weight: 800; font-size: 1rem; color: var(--brand-accent); }
+
+/* ── Redox — identification cards ──────────────────────────────── */
+.redox-identification {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+}
+
+@media (max-width: 500px) {
+    .redox-identification { grid-template-columns: 1fr; }
+}
+
+.redox-id-card { padding: var(--space-lg); border-radius: var(--radius-md); border: 1px solid; }
+
+.id-oxidation { background: rgba(239, 68, 68, .08); border-color: rgba(239, 68, 68, .3); }
+.id-reduction { background: rgba(37, 99, 235, .08); border-color: rgba(37, 99, 235, .3); }
+
+.id-card__label {
+    font-size: .72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin-bottom: var(--space-xs);
+}
+
+.id-oxidation .id-card__label { color: #b91c1c; }
+.id-reduction .id-card__label { color: #1d4ed8; }
+
+.id-card__species {
+    font-family: var(--font-mono);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.id-card__change {
+    font-family: var(--font-mono);
+    font-size: .875rem;
+    color: var(--text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+.id-card__note { font-size: .875rem; color: var(--text-primary); margin-bottom: var(--space-xs); }
+.id-card__agent { font-size: .75rem; color: var(--text-muted); font-style: italic; }
+
+/* ── Electron flow animation ────────────────────────────────────── */
+.electron-flow {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-md);
+    background: var(--bg-hover);
+    border-radius: var(--radius-md);
+    flex-wrap: wrap;
+}
+
+.ef-species {
+    font-family: var(--font-mono);
+    font-size: 1.1rem;
+    font-weight: 800;
+    padding: var(--space-xs) var(--space-md);
+    border-radius: var(--radius-md);
+    white-space: nowrap;
+}
+
+.ef-oxidation { background: rgba(239, 68, 68, .08); border: 1px solid rgba(239, 68, 68, .3); color: #b91c1c; }
+.ef-reduction { background: rgba(37, 99, 235, .08); border: 1px solid rgba(37, 99, 235, .3); color: #1d4ed8; }
+
+.ef-arrow-container {
+    flex: 1;
+    min-width: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-xs);
+}
+
+.ef-arrow { position: relative; width: 100%; display: flex; align-items: center; }
+.ef-svg { width: 100%; height: 40px; }
+
+.ef-electrons {
+    position: absolute;
+    top: 50%;
+    left: -8px;
+    transform: translateY(-50%);
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    font-weight: 800;
+    color: var(--brand-accent);
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 99px;
+    padding: 2px 6px;
+    animation: slideAlongArrow 2.5s ease-in-out infinite;
+    white-space: nowrap;
+}
+
+@keyframes slideAlongArrow {
+    0%   { left: 0%;   opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 1; }
+    100% { left: 85%;  opacity: 0; }
+}
+
+.ef-label { text-align: center; font-size: .8rem; color: var(--text-muted); }
+
+/* ── Redox step-by-step breakdown ──────────────────────────────── */
+.steps-toggle-btn {
+    margin-left: auto;
+    padding: 4px 12px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: .72rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color var(--transition), border-color var(--transition);
+}
+
+.steps-toggle-btn:hover { color: var(--brand-accent); border-color: var(--brand-accent); }
+
+.steps-container { display: flex; flex-direction: column; margin-top: var(--space-sm); }
+
+/* Extensions for .edu-example to handle step variants */
+.edu-example--info      { border-left-color: var(--brand-accent); }
+.edu-example--info .edu-example__title { color: var(--brand-accent); }
+
+/* Note: Redox conventions dictate Oxidation = Red, Reduction = Blue. 
+   These hex values are domain-specific pedagogical conventions. */
+.edu-example--oxidation { border-left-color: #dc2626; }
+.edu-example--oxidation .edu-example__title { color: #b91c1c; }
+
+.edu-example--reduction { border-left-color: #1d4ed8; }
+.edu-example--reduction .edu-example__title { color: #1d4ed8; }
+
+.edu-example--combined  { border-left-color: var(--color-success); }
+.edu-example--combined .edu-example__title { color: var(--color-success); }
+
+body.dark .edu-example--oxidation .edu-example__title { color: #fca5a5; }
+body.dark .edu-example--reduction .edu-example__title { color: #93c5fd; }
+body.dark .edu-example--combined  .edu-example__title { color: #86efac; }
+
+.step-line { font-family: var(--font-mono); font-size: .875rem; color: var(--text-primary); line-height: 1.8; }
+
+
+
+/* ----------------------------------------------------------------
+   VOLTAGE DIVIDER (vd-)
+   ---------------------------------------------------------------- */
+/**
+ * custom.css — Voltage Divider — Simulator-specific styles
+ * engsim.app
+ *
+ * Everything here is scoped to THIS simulator only. Shared look and
+ * feel (panels, inputs, buttons, results cards, validation shake,
+ * .is-hidden) already comes from base.css / simulator.css — this
+ * file only adds what those don't cover: mode tabs, the design-mode
+ * toggle switch, fixed-resistor radio cards, the dynamic resistor
+ * list, the breakdown table, and result-card overload warnings.
+ * ─────────────────────────────────────────────────────────────────
+ */
+
+/* ── Mode tabs (Two-Resistor / Series Chain) ─────────────────────── */
+.mode-tabs {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+}
+
+.mode-tab {
+  flex: 1;
+  padding: 10px var(--space-md);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  font-size: .8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition), border-color var(--transition);
+}
+
+.mode-tab:hover {
+  border-color: var(--brand-accent);
+}
+
+.mode-tab.is-active {
+  background: var(--brand-accent);
+  border-color: var(--brand-accent);
+  color: var(--text-on-accent);
+}
+
+/* ── Design mode toggle row ───────────────────────────────────────── */
+.design-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+  background: var(--bg-hover);
+}
+
+.design-toggle-row label {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.design-toggle-row p {
+  margin: 2px 0 0;
+  font-size: .73rem;
+  color: var(--text-muted);
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 22px;
+  flex-shrink: 0;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.switch-track {
+  position: absolute;
+  inset: 0;
+  background: var(--border-strong);
+  border-radius: 99px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.switch-track::before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  transition: transform var(--transition);
+}
+
+.switch input:checked + .switch-track {
+  background: var(--brand-accent);
+}
+
+.switch input:checked + .switch-track::before {
+  transform: translateX(16px);
+}
+
+/* ── Fixed-resistor radio cards (design mode) ─────────────────────── */
+.radio-card-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-md);
+}
+
+.radio-card {
+  position: relative;
+  display: block;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.radio-card input {
+  position: absolute;
+  opacity: 0;
+}
+
+.radio-card__title {
+  font-size: .8125rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.radio-card__desc {
+  display: block;
+  font-size: .7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* Highlight the selected card. :has() is well supported in current
+   evergreen browsers; on the rare browser without it the radio still
+   works correctly, it just won't get the accent highlight. */
+.radio-card:has(input:checked) {
+  border-color: var(--brand-accent);
+  background: rgba(37, 99, 235, .06);
+}
+
+/* Radio-card equivalent of .sim-input-wrap.sim-input--invalid —
+   reuses the @keyframes sim-shake already defined in simulator.css. */
+.radio-card.is-invalid {
+  border-color: var(--color-danger);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, .15);
+  animation: sim-shake .4s ease-in-out;
+}
+
+/* Field that is currently being computed by design mode */
+.sim-field.is-computed .sim-input {
+  background: var(--bg-hover);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* ── Dynamic resistor list (series chain mode) ─────────────────────
+   Mirrors the static-beam load-list pattern: a clear visual separator
+   between the "add" control and the list of rows. */
+#resistor-list {
+  border-top: 1px solid var(--border);
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.resistor-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.resistor-row__label {
+  flex-shrink: 0;
+  width: 32px;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.resistor-row .sim-input-wrap {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.resistor-row__remove {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--color-danger);
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.resistor-row__remove:hover {
+  background: rgba(220, 38, 38, .08);
+  border-color: var(--color-danger);
+}
+
+.resistor-row__remove:disabled {
+  opacity: .35;
+  cursor: not-allowed;
+}
+
+.chain-list-hint {
+  font-size: .73rem;
+  color: var(--text-muted);
+  margin-top: var(--space-sm);
+}
+
+/* "+ Add resistor" reuses .btn-secondary but needs to span the panel */
+.btn-add-resistor {
+  width: 100%;
+  justify-content: center;
+}
+
+/* ── Circuit diagram (SVG injected by diagram.js via simulator.js) ─── */
+#circuit-diagram svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 260px;
+  margin: 0 auto;
+}
+.breakdown-table-wrap {
+  overflow-x: auto;
+  margin-top: var(--space-md);
+}
+
+.breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .8125rem;
+}
+
+.breakdown-table th,
+.breakdown-table td {
+  text-align: left;
+  padding: var(--space-xs) var(--space-sm);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+}
+
+.breakdown-table th {
+  font-size: .68rem;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+}
+
+.breakdown-table tr.is-overload td {
+  color: var(--color-danger);
+}
+
+.breakdown-table tr.is-overload td:last-child {
+  font-weight: 700;
+}
+
+/* ── Power overload warning on result cards ─────────────────────────── */
+.sim-result-warning {
+  display: block;
+  margin-top: 4px;
+  font-size: .68rem;
+  font-weight: 700;
+  color: var(--color-danger);
+}
+
+.sim-result-warning:empty {
+  display: none;
+}
+

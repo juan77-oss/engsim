@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Pressure Converter — Convert Pa, bar, psi, atm, mmHg & More | EngSim</title>
+  <meta name="description" content="Free pressure unit converter. Enter one value and instantly see it converted to pascals, bar, psi, atmospheres, mmHg, inHg and kgf/cm²." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Pressure Converter — Convert Between All Pressure Units" />
+  <meta property="og:description" content="Convert pressure between pascals, kPa, MPa, bar, atm, psi, mmHg, inHg and kgf/cm² — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/pressure-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/pressure-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — prc- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Pressure Converter",
+    "url": "https://engsim.app/simulators/pressure-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert absolute pressure values between pascals, hectopascals, kilopascals, megapascals, bar, standard atmospheres, psi, mmHg, inHg and kgf/cm².",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.prc-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Pressure Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Pressure Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any pressure unit and instantly see the equivalent in pascals, bar, psi, atmospheres, mmHg and more.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">Bar</span>
+            <span class="sim-hero__tag">PSI</span>
+            <span class="sim-hero__tag">Atmospheres</span>
+            <span class="sim-hero__tag">mmHg</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                <span class="sim-panel__title">Pressure Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="1" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="prc-table-wrap" id="results-table-wrap">
+                    <table class="prc-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Pressure Converter</h2>
+            <p>Pressure units multiply fast across industries — tire pressure in psi, weather reports in hPa, industrial gauges in bar, medical blood pressure in mmHg, and scientific work in pascals. This tool lets you enter a value once and see it converted to every common pressure unit at the same time.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the pressure value you want to convert.</li>
+              <li>Select the unit that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value in every other unit.</li>
+            </ol>
+            <p>This tool converts <strong>absolute pressure</strong>, where 0 represents a perfect vacuum, so negative values are rejected. See the FAQ below for the distinction between absolute and gauge pressure.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formula</h2>
+            <p>Every pressure unit converts through the pascal (Pa), the SI unit of pressure. To convert from unit A to unit B:</p>
+            <div class="edu-formula">value_B = value_A × factor_A→Pa ÷ factor_B→Pa</div>
+            <p>All pressure units here are linear multiples of the pascal, so every conversion is straightforward multiplication or division.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Pressure Unit Conversion Factors (to Pascals)</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Value in Pascals</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Pascal</td><td>Pa</td><td>1</td></tr>
+                  <tr><td>Hectopascal</td><td>hPa</td><td>100</td></tr>
+                  <tr><td>Kilopascal</td><td>kPa</td><td>1,000</td></tr>
+                  <tr><td>Megapascal</td><td>MPa</td><td>1,000,000</td></tr>
+                  <tr><td>Bar</td><td>bar</td><td>100,000</td></tr>
+                  <tr><td>Standard Atmosphere</td><td>atm</td><td>101,325</td></tr>
+                  <tr><td>Pound per Square Inch</td><td>psi</td><td>6,894.757293</td></tr>
+                  <tr><td>Millimeter of Mercury</td><td>mmHg</td><td>133.322387</td></tr>
+                  <tr><td>Inch of Mercury</td><td>inHg</td><td>3,386.388640</td></tr>
+                  <tr><td>Kilogram-force per Square Centimeter</td><td>kgf/cm²</td><td>98,066.5</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: atm, psi, mmHg (conventional Torr) and kgf/cm² are all exact by definition, using the standard gravity constant (9.80665 m/s²) and the conventional mercury density (13,595.1 kg/m³).</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — Bar to PSI</p>
+                <p>A tire inflated to 2.2 bar: 2.2 × 100,000 Pa ÷ 6,894.757293 Pa/psi ≈ <strong>31.9 psi</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — Atmospheres to kPa</p>
+                <p>Standard sea-level pressure, 1 atm: 101,325 Pa ÷ 1,000 = <strong>101.325 kPa</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — mmHg to kPa (Blood Pressure)</p>
+                <p>A blood pressure reading of 120 mmHg: 120 × 133.322387 Pa ÷ 1,000 ≈ <strong>16.0 kPa</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — MPa to kgf/cm² (Hydraulics)</p>
+                <p>A hydraulic system rated at 20 MPa: 20,000,000 Pa ÷ 98,066.5 Pa ≈ <strong>203.9 kgf/cm²</strong>.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>What's the difference between absolute and gauge pressure?</summary>
+              <div class="edu-faq-answer">Absolute pressure is measured from a perfect vacuum (0 Pa) — this is what this tool converts. Gauge pressure is measured relative to atmospheric pressure, so it reads 0 at normal atmospheric conditions and can go negative in a partial vacuum. A tire pressure gauge reads gauge pressure; add 1 atm (≈101.3 kPa) to get the absolute value.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How do I convert bar to psi?</summary>
+              <div class="edu-faq-answer">Multiply by 14.5038. So 1 bar ≈ 14.5 psi, and 1 psi ≈ 0.0689 bar.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What is 1 atmosphere in other units?</summary>
+              <div class="edu-faq-answer">1 atm = 101,325 Pa = 101.325 kPa = 1.01325 bar ≈ 14.696 psi = 760 mmHg exactly.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Why is blood pressure measured in mmHg?</summary>
+              <div class="edu-faq-answer">Historically, mercury column manometers were the standard instrument for measuring pressure precisely, and the mmHg unit stuck in medicine even after most other fields moved to SI units like kPa.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What is kgf/cm² used for?</summary>
+              <div class="edu-faq-answer">Kilogram-force per square centimeter is a technical (non-SI) pressure unit still common in some hydraulic, industrial and older engineering specifications, especially in regions that used the metric technical system before fully adopting SI. It's roughly equal to 1 atm (0.9678 atm exactly).</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

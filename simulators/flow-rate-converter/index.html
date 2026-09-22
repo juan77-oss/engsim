@@ -1,0 +1,289 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Flow Rate Converter — Convert m³/s, L/min, GPM, CFM & More | EngSim</title>
+  <meta name="description" content="Free flow rate unit converter. Enter one value and instantly see it converted to cubic meters per second/hour, liters per second/minute/hour, GPM and CFM." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Flow Rate Converter — Convert Between All Flow Rate Units" />
+  <meta property="og:description" content="Convert flow rate between m³/s, m³/h, L/s, L/min, L/h, US GPM and CFM — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/flow-rate-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/flow-rate-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — flr- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Flow Rate Converter",
+    "url": "https://engsim.app/simulators/flow-rate-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert flow rate values between cubic meters per second, cubic meters per hour, liters per second, liters per minute, liters per hour, US gallons per minute and cubic feet per minute.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.flr-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Flow Rate Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Flow Rate Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any flow rate unit and instantly see the equivalent in m³/s, L/min, GPM, CFM and more.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">m³/s</span>
+            <span class="sim-hero__tag">L/min</span>
+            <span class="sim-hero__tag">GPM</span>
+            <span class="sim-hero__tag">CFM</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12h6"/><path d="M14 12h8"/><path d="M8 12a4 4 0 0 1 4-4h0a4 4 0 0 1 4 4h0a4 4 0 0 1-4 4h0a4 4 0 0 1-4-4Z"/></svg>
+                <span class="sim-panel__title">Flow Rate Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="1" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="flr-table-wrap" id="results-table-wrap">
+                    <table class="flr-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Flow Rate Converter</h2>
+            <p>Flow rate specifications span plumbing (GPM on a pump), HVAC (CFM on a fan), industrial process design (m³/h on a pipeline) and lab work (L/min on a peristaltic pump). This tool lets you enter a value once and see it converted to every common flow rate unit at the same time.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the flow rate value you want to convert.</li>
+              <li>Select the unit that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value in every other unit.</li>
+            </ol>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formula</h2>
+            <p>Every flow rate unit converts through cubic meters per second (m³/s), the SI unit of volumetric flow rate. To convert from unit A to unit B:</p>
+            <div class="edu-formula">value_B = value_A × factor_A→(m³/s) ÷ factor_B→(m³/s)</div>
+            <p>All flow rate units here are linear multiples of m³/s, so every conversion is straightforward multiplication or division.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Flow Rate Unit Conversion Factors (to m³/s)</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Value in m³/s</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Cubic Meter per Second</td><td>m³/s</td><td>1</td></tr>
+                  <tr><td>Cubic Meter per Hour</td><td>m³/h</td><td>0.000277778</td></tr>
+                  <tr><td>Liter per Second</td><td>L/s</td><td>0.001</td></tr>
+                  <tr><td>Liter per Minute</td><td>L/min</td><td>0.0000166667</td></tr>
+                  <tr><td>Liter per Hour</td><td>L/h</td><td>0.000000278</td></tr>
+                  <tr><td>US Gallon per Minute</td><td>GPM</td><td>0.0000630902</td></tr>
+                  <tr><td>Cubic Foot per Minute</td><td>CFM</td><td>0.0004719474</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: GPM here refers to the US gallon per minute; the UK/imperial GPM is about 20% larger (based on the UK gallon) and is not included in this list to avoid ambiguity.</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — GPM to L/min</p>
+                <p>A pump rated at 10 GPM: 10 × 3.785411784 L ÷ 1 min ≈ <strong>37.85 L/min</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — CFM to L/s</p>
+                <p>An HVAC fan rated at 400 CFM: 400 × 0.028316846592 m³ ÷ 60 s × 1000 ≈ <strong>188.8 L/s</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — m³/h to L/min</p>
+                <p>A pipeline flow of 5 m³/h: 5,000 L ÷ 60 min ≈ <strong>83.33 L/min</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — L/min to GPM</p>
+                <p>A lab pump running at 50 L/min: 50 ÷ 3.785411784 ≈ <strong>13.21 GPM</strong>.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>How do I convert GPM to L/min?</summary>
+              <div class="edu-faq-answer">Multiply by 3.785411784 (the number of liters in a US gallon). So 1 GPM ≈ 3.785 L/min.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What is CFM used for?</summary>
+              <div class="edu-faq-answer">Cubic feet per minute (CFM) is the standard unit for airflow in HVAC systems, fans, and air compressors in countries using imperial units.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Is GPM always the US gallon?</summary>
+              <div class="edu-faq-answer">Not always — "GPM" is ambiguous between US and UK (imperial) gallons, which differ by about 20%. This converter uses the US gallon, the more commonly intended one in modern usage, but always double-check the source when the stakes are high.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How many liters per minute are in a cubic meter per hour?</summary>
+              <div class="edu-faq-answer">1 m³/h = 1,000 L ÷ 60 min ≈ 16.6667 L/min.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Can flow rate be negative?</summary>
+              <div class="edu-faq-answer">Yes — a negative flow rate can represent reverse flow or backflow relative to a chosen positive direction (for example, net outflow from a tank vs. inflow). This converter allows negative values for that reason.</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

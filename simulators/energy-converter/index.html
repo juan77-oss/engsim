@@ -1,0 +1,303 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Energy Converter — Convert J, kWh, BTU, cal, eV & More | EngSim</title>
+  <meta name="description" content="Free energy unit converter. Enter one value and instantly see it converted to joules, kilojoules, kWh, calories, BTU, foot-pounds, eV, erg and more." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Energy Converter — Convert Between All Energy Units" />
+  <meta property="og:description" content="Convert energy between joules, kWh, BTU, calories, eV, erg and more — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/energy-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/energy-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — enc- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Energy Converter",
+    "url": "https://engsim.app/simulators/energy-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert energy values between joules, kilojoules, megajoules, watt-hours, kilowatt-hours, calories, BTU, therms, foot-pounds, electronvolts, ergs and litre-atmospheres.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.enc-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Energy Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Energy Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any energy unit and instantly see the equivalent in joules, kWh, calories, BTU, eV and more.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">Joules</span>
+            <span class="sim-hero__tag">kWh</span>
+            <span class="sim-hero__tag">BTU</span>
+            <span class="sim-hero__tag">Calories</span>
+            <span class="sim-hero__tag">Electronvolt</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></svg>
+                <span class="sim-panel__title">Energy Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="1" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="enc-table-wrap" id="results-table-wrap">
+                    <table class="enc-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Energy Converter</h2>
+            <p>Energy shows up in wildly different unit systems depending on the field: physicists use joules and electronvolts, electrical engineers and utility bills use kilowatt-hours, chemists and nutrition labels use calories, and US heating bills use therms and BTU. This tool lets you enter a value once and see it converted to every common energy unit at the same time — no need to look up a from/to pair.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the energy value you want to convert.</li>
+              <li>Select the unit that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value in every other unit.</li>
+            </ol>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formula</h2>
+            <p>Every energy unit converts through the joule (J), the SI base unit of energy. To convert from unit A to unit B:</p>
+            <div class="edu-formula">value_B = value_A × factor_A→J ÷ factor_B→J</div>
+            <p>Unlike power units (which include the non-linear dBm scale), every energy unit is a simple linear multiple of the joule — so all conversions here are straightforward multiplication or division.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Energy Unit Conversion Factors (to Joules)</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Value in Joules</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Joule</td><td>J</td><td>1</td></tr>
+                  <tr><td>Kilojoule</td><td>kJ</td><td>1,000</td></tr>
+                  <tr><td>Megajoule</td><td>MJ</td><td>1,000,000</td></tr>
+                  <tr><td>Gigajoule</td><td>GJ</td><td>1,000,000,000</td></tr>
+                  <tr><td>Watt-hour</td><td>Wh</td><td>3,600</td></tr>
+                  <tr><td>Kilowatt-hour</td><td>kWh</td><td>3,600,000</td></tr>
+                  <tr><td>Megawatt-hour</td><td>MWh</td><td>3,600,000,000</td></tr>
+                  <tr><td>Calorie (thermochemical)</td><td>cal</td><td>4.184</td></tr>
+                  <tr><td>Kilocalorie (food Calorie)</td><td>kcal</td><td>4,184</td></tr>
+                  <tr><td>British Thermal Unit (IT)</td><td>BTU</td><td>1,055.056</td></tr>
+                  <tr><td>Therm (US)</td><td>therm</td><td>105,480,400</td></tr>
+                  <tr><td>Foot-pound</td><td>ft·lb</td><td>1.355818</td></tr>
+                  <tr><td>Electronvolt</td><td>eV</td><td>1.602176634 × 10⁻¹⁹</td></tr>
+                  <tr><td>Erg</td><td>erg</td><td>1 × 10⁻⁷</td></tr>
+                  <tr><td>Litre-atmosphere</td><td>L·atm</td><td>101.325</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: "calorie" above refers to the thermochemical (small) calorie. Nutrition labels use the kilocalorie, commonly written "Calorie" with a capital C. The therm figure uses the US definition (100,000 BTU at 59°F).</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — kWh to Joules</p>
+                <p>A household appliance uses 1 kWh of electricity. In joules: 1 kWh × 3,600,000 J/kWh = <strong>3,600,000 J</strong> (3.6 MJ).</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — BTU to kWh</p>
+                <p>A gas heater rated at 100,000 BTU: 100,000 × 1,055.056 J = 105,505,600 J, then ÷ 3,600,000 J/kWh ≈ <strong>29.3 kWh</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — Calories to Joules</p>
+                <p>A 250 kcal snack: 250 × 4,184 J = <strong>1,046,000 J</strong> (about 1.05 MJ) of food energy.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — eV to Joules</p>
+                <p>A photon with 2 eV of energy: 2 × 1.602176634×10⁻¹⁹ J = <strong>3.204 × 10⁻¹⁹ J</strong> — a good illustration of why the eV exists as a practical unit at atomic scales.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>How many joules are in 1 kWh?</summary>
+              <div class="edu-faq-answer">1 kWh equals exactly 3,600,000 joules (3.6 MJ), since a kilowatt-hour is 1,000 watts sustained for 3,600 seconds.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What's the difference between a calorie and a Calorie?</summary>
+              <div class="edu-faq-answer">A lowercase "calorie" (cal) is the small thermochemical calorie, equal to 4.184 J. A capitalized "Calorie" on nutrition labels is actually a kilocalorie (1,000 cal, or 4,184 J).</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How do I convert BTU to kWh?</summary>
+              <div class="edu-faq-answer">Multiply the BTU value by 1,055.056 to get joules, then divide by 3,600,000. Equivalently, 1 BTU ≈ 0.000293 kWh, so 1 kWh ≈ 3,412 BTU.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What is a therm, and how does it relate to BTU?</summary>
+              <div class="edu-faq-answer">A therm (US) is defined as 100,000 BTU, commonly used for natural gas billing. 1 therm equals about 105.48 MJ or 29.3 kWh.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Why use electronvolts instead of joules?</summary>
+              <div class="edu-faq-answer">The joule is far too large a unit for atomic and subatomic energies. The electronvolt (1.602 × 10⁻¹⁹ J) keeps numbers in physics — like photon or particle energies — in a convenient, human-readable range.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Is an erg the same as a joule?</summary>
+              <div class="edu-faq-answer">No. The erg is the CGS (centimetre-gram-second) unit of energy, equal to 10⁻⁷ J. It takes 10,000,000 ergs to make one joule.</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- EDIT 1: SEO title / description -->
+  <title>Entropy T-s Diagram Simulator | EngSim</title>
+  <meta name="description"
+    content="Interactive T-s (temperature-entropy) diagram simulator for ideal gas processes: isothermal, adiabatic, polytropic, isobaric and isochoric, with reversible and irreversible modes.">
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/entropy-diagram/"> -->
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Entropy T-s Diagram Simulator | EngSim">
+  <meta property="og:description"
+    content="Visualize entropy generation for isothermal, adiabatic, polytropic, isobaric and isochoric ideal-gas processes on an interactive T-s diagram.">
+  <meta property="og:type" content="website">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap"
+    rel="stylesheet">
+
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Entropy T-s Diagram Simulator",
+  "applicationCategory": "EngineeringApplication",
+  "operatingSystem": "Any",
+  "description": "Interactive T-s diagram simulator for ideal gas thermodynamic processes: isothermal, adiabatic, polytropic, isobaric and isochoric, reversible and irreversible.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+
+  <link rel="stylesheet" href="../../assets/css/base.css">
+  <link rel="stylesheet" href="../../assets/css/platform.css">
+  <link rel="stylesheet" href="../../assets/css/simulator.css">
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — uses shared "ent-" block in simulator.css) -->
+
+  <!-- EDIT 4: external libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Entropy T-s Diagram</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Thermodynamics</span>
+          <h1 class="sim-hero__title" id="sim-title">Entropy T-s Diagram Simulator</h1>
+          <p class="sim-hero__subtitle">Model isothermal, adiabatic, polytropic, isobaric and isochoric processes for an
+            ideal gas (air) and visualize entropy generation on an interactive temperature-entropy diagram.</p>
+        </div>
+      </section>
+
+      <section class="sim-body">
+        <div class="container">
+
+          <div class="sim-error" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <!-- EDIT 6: layout -->
+          <div class="sim-layout" style="--sim-sidebar-width: 340px;">
+
+            <!-- EDIT 7: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12 2v6.5l4 7.5a4 4 0 0 1-3.5 6h-1a4 4 0 0 1-3.5-6l4-7.5V2" />
+                  <path d="M8.5 2h7" />
+                  <path d="M7 16h10" />
+                </svg>
+                <span class="sim-panel__title">Process Inputs</span>
+              </div>
+              <div class="sim-panel__body">
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-t1">Initial Temperature (T₁)</label>
+                  <div class="sim-input-wrap" id="wrap-t1">
+                    <input type="number" id="input-t1" class="sim-input" value="300" step="1">
+                    <span class="sim-unit">K</span>
+                  </div>
+                  <div class="ent-slider-row">
+                    <input type="range" id="slider-t1" class="ent-slider" min="200" max="600" step="1" value="300">
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-p1">Initial Pressure (P₁)</label>
+                  <div class="sim-input-wrap" id="wrap-p1">
+                    <input type="number" id="input-p1" class="sim-input" value="100" step="1">
+                    <span class="sim-unit">kPa</span>
+                  </div>
+                  <div class="ent-slider-row">
+                    <input type="range" id="slider-p1" class="ent-slider" min="50" max="500" step="1" value="100">
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="select-process">Process Type</label>
+                  <select id="select-process" class="sim-select">
+                    <option value="isothermal">Isothermal (T = constant)</option>
+                    <option value="adiabatic">Adiabatic (Q = 0)</option>
+                    <option value="polytropic">Polytropic (P·vⁿ = constant)</option>
+                    <option value="isobaric">Isobaric (P = constant)</option>
+                    <option value="isochoric">Isochoric (v = constant)</option>
+                  </select>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-target" id="label-target">Final Pressure (P₂)</label>
+                  <div class="sim-input-wrap" id="wrap-target">
+                    <input type="number" id="input-target" class="sim-input" value="200" step="1">
+                    <span class="sim-unit" id="unit-target">kPa</span>
+                  </div>
+                  <div class="ent-slider-row">
+                    <input type="range" id="slider-target" class="ent-slider" min="50" max="500" step="1" value="200">
+                  </div>
+                </div>
+
+                <div class="sim-field is-hidden" id="field-n">
+                  <label class="sim-label" for="input-n">Polytropic Exponent (n)</label>
+                  <div class="sim-input-wrap">
+                    <input type="number" id="input-n" class="sim-input" value="1.3" step="0.01">
+                    <span class="sim-unit">—</span>
+                  </div>
+                  <div class="ent-slider-row">
+                    <input type="range" id="slider-n" class="ent-slider" min="1.0" max="1.67" step="0.01" value="1.3">
+                  </div>
+                </div>
+
+                <details class="sim-advanced" id="irrev-controls">
+                  <summary>Irreversibility Analysis</summary>
+                  <div class="sim-advanced-body">
+                    <div class="sim-field">
+                      <label class="sim-label" for="input-eta">Process Efficiency (η)</label>
+                      <div class="sim-input-wrap">
+                        <input type="number" id="input-eta" class="sim-input" value="0.85" step="0.01" min="0.5"
+                          max="1">
+                        <span class="sim-unit">—</span>
+                      </div>
+                      <div class="ent-slider-row">
+                        <input type="range" id="slider-eta" class="ent-slider" min="0.5" max="1" step="0.01"
+                          value="0.85">
+                      </div>
+                    </div>
+                  </div>
+                </details>
+
+                <button class="btn-primary" id="btn-calculate">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  Calculate
+                </button>
+              </div>
+            </aside>
+
+            <!-- Results panel -->
+            <div>
+              <div class="sim-results-grid">
+                <div class="sim-result-card">
+                  <div class="sim-result-label">Specific Volume (v₁)</div>
+                  <div class="sim-result-value" id="res-v1">—</div>
+                  <div class="sim-result-unit">m³/kg</div>
+                </div>
+                <div class="sim-result-card sim-result-card--accent">
+                  <div class="sim-result-label">Entropy Change (ΔS)</div>
+                  <div class="sim-result-value" id="res-ds">—</div>
+                  <div class="sim-result-unit">kJ/kg·K</div>
+                </div>
+                <div class="sim-result-card">
+                  <div class="sim-result-label">Heat Transfer (Q)</div>
+                  <div class="sim-result-value" id="res-q">—</div>
+                  <div class="sim-result-unit">kJ/kg</div>
+                </div>
+                <div class="sim-result-card is-hidden" id="res-sgen-card">
+                  <div class="sim-result-label">Entropy Generated (Sgen)</div>
+                  <div class="sim-result-value" id="res-sgen">—</div>
+                  <div class="sim-result-unit">kJ/kg·K</div>
+                </div>
+              </div>
+
+              <div class="status-banner status-banner--info" id="res-indicator">
+                <span class="status-banner__title" id="res-indicator-title">—</span>
+                <span class="status-banner__message" id="res-indicator-message"></span>
+              </div>
+
+              <div class="sim-chart-wrap" style="--sim-chart-height: 560px; --sim-chart-height-mobile: 340px;">
+                <canvas id="entropy-chart"></canvas>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+      </div>
+-->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <div class="edu-section">
+            <h2>About the Entropy T-s Diagram Simulator</h2>
+            <p>This tool models a single-step thermodynamic process for air, treated as an ideal gas, between an initial
+              state (1) and a final state (2). It supports five classic process types — isothermal, adiabatic,
+              polytropic, isobaric and isochoric — and plots the path on a temperature-entropy (T-s) diagram, the
+              standard way engineers visualize how much entropy a process generates.</p>
+          </div>
+
+          <hr />
+
+          <div class="edu-section">
+            <h2>How to Use</h2>
+            <p>Set the initial temperature and pressure (state 1), then choose a process type. For isothermal, adiabatic
+              and polytropic processes, the target field asks for the final pressure (P₂); for isobaric and isochoric
+              processes — where pressure alone can't describe the process — it switches automatically to the final
+              temperature (T₂). For polytropic processes, also set the exponent n. Open <strong>Irreversibility
+                Analysis</strong> to introduce a process efficiency η below 1.0 and see how entropy generation (Sgen)
+              appears on the diagram as the path shifts to the right.</p>
+          </div>
+
+          <hr />
+
+          <div class="edu-section">
+            <h2>Reading the Results</h2>
+            <div class="edu-grid">
+              <div class="edu-grid-item">
+                <h4>ΔS (Entropy Change)</h4>
+                <p>Total change in specific entropy between state 1 and state 2, in kJ/kg·K. A positive value means
+                  entropy increased.</p>
+              </div>
+              <div class="edu-grid-item">
+                <h4>Q (Heat Transfer)</h4>
+                <p>Specific heat transferred during the process, in kJ/kg. Zero by definition for an adiabatic process.
+                </p>
+              </div>
+              <div class="edu-grid-item">
+                <h4>Sgen (Entropy Generated)</h4>
+                <p>Only shown in irreversibility mode. Represents entropy produced by internal irreversibilities
+                  (friction, mixing, etc.) — always ≥ 0 by the second law.</p>
+              </div>
+            </div>
+          </div>
+
+          <hr />
+
+          <div class="edu-section">
+            <h2>FAQ</h2>
+            <div class="edu-faq">
+              <details class="edu-faq-item">
+                <summary>Why does the isothermal path appear as a horizontal line?</summary>
+                <div class="edu-faq-answer">Because temperature stays constant by definition, so every point on the
+                  process path shares the same T while entropy changes.</div>
+              </details>
+              <details class="edu-faq-item">
+                <summary>Why is ΔS = 0 for an ideal adiabatic process?</summary>
+                <div class="edu-faq-answer">An ideal (reversible) adiabatic process is isentropic — no heat transfer and
+                  no internal irreversibility means entropy stays constant.</div>
+              </details>
+              <details class="edu-faq-item">
+                <summary>What does the efficiency η represent?</summary>
+                <div class="edu-faq-answer">It's a simplified irreversibility factor: η = 1 is the ideal reversible
+                  case; values below 1 model real losses (friction, turbulence) that generate extra entropy.</div>
+              </details>
+              <details class="edu-faq-item">
+                <summary>Why does the target field ask for temperature instead of pressure sometimes?</summary>
+                <div class="edu-faq-answer">For isobaric processes pressure stays fixed (P₂ = P₁), and for isochoric
+                  processes specific volume stays fixed — in both cases pressure alone can't describe how far the
+                  process goes, so temperature (T₂) becomes the input that drives the calculation.</div>
+              </details>
+              <details class="edu-faq-item">
+                <summary>How is the final pressure found for an isochoric process?</summary>
+                <div class="edu-faq-answer">Since specific volume is constant, the ideal gas law gives P₂ = P₁·(T₂/T₁)
+                  directly — it's calculated for you and doesn't need to be entered.</div>
+              </details>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+  <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+      </div>
+-->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+
+</html>

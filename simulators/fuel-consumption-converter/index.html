@@ -1,0 +1,289 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Fuel Consumption Converter — Convert MPG, L/100km, km/L | EngSim</title>
+  <meta name="description" content="Free fuel economy converter. Enter one value and instantly see it converted to miles per US gallon, miles per UK gallon, km/L and L/100km." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Fuel Consumption Converter — Convert MPG, L/100km and km/L" />
+  <meta property="og:description" content="Convert fuel economy between mpg (US), mpg (UK), km/L and L/100km — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/fuel-consumption-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/fuel-consumption-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — fcc- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Fuel Consumption Converter",
+    "url": "https://engsim.app/simulators/fuel-consumption-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert fuel economy values between miles per US gallon, miles per UK gallon, kilometers per liter and liters per 100 kilometers.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.fcc-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Fuel Consumption Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Fuel Consumption Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any fuel economy unit and instantly see the equivalent in mpg (US), mpg (UK), km/L and L/100km.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">MPG</span>
+            <span class="sim-hero__tag">L/100km</span>
+            <span class="sim-hero__tag">km/L</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 22h12"/><path d="M8 22V10a3 3 0 0 1 3-3h0"/><path d="M14 22V6a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h0"/><path d="M14 13h4"/></svg>
+                <span class="sim-panel__title">Fuel Economy Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="8" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="fcc-table-wrap" id="results-table-wrap">
+                    <table class="fcc-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Fuel Consumption Converter</h2>
+            <p>Fuel economy is reported two fundamentally different ways around the world: as "distance per volume" (miles per gallon in the US and UK, kilometers per liter elsewhere) or as "volume per distance" (liters per 100 km in most of Europe and beyond). These aren't just different units — they're inverses of each other, which is why a bigger mpg number means better economy, but a bigger L/100km number means worse economy. This tool lets you enter a value once and see it converted to every common fuel economy unit at the same time.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the fuel economy value you want to convert.</li>
+              <li>Select the unit that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value in every other unit.</li>
+            </ol>
+            <p>Values must be positive — a fuel economy of zero or less isn't physically meaningful (it would imply infinite or undefined fuel use).</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formula</h2>
+            <p>Miles per US gallon, miles per UK gallon and km/L are all "distance per volume" and scale directly against each other, using kilometers per liter (km/L) as the bridge unit:</p>
+            <div class="edu-formula">value_B = value_A × factor_A→(km/L) ÷ factor_B→(km/L)</div>
+            <p>L/100km measures "volume per distance" — the reciprocal relationship — so converting to or from it is a division, not a multiplication by a fixed factor:</p>
+            <div class="edu-formula">km/L = 100 ÷ (L/100km)
+L/100km = 100 ÷ (km/L)</div>
+            <p>This is why L/100km can't just be added to the same factor table as the other three units — it needs its own reciprocal step.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Fuel Economy Unit Reference (to km/L)</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Relationship to km/L</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Miles per US Gallon</td><td>mpg (US)</td><td>× 0.425143707</td></tr>
+                  <tr><td>Miles per UK Gallon</td><td>mpg (UK)</td><td>× 0.354006190</td></tr>
+                  <tr><td>Kilometers per Liter</td><td>km/L</td><td>× 1 (base unit)</td></tr>
+                  <tr><td>Liters per 100 Kilometers</td><td>L/100km</td><td>= 100 ÷ km/L (reciprocal)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: mpg (US) and mpg (UK) differ because the US gallon (3.785411784 L) and UK gallon (4.54609 L) are different sizes — the same mpg number means better real-world economy in the UK gallon than the US gallon.</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — L/100km to mpg (US)</p>
+                <p>A car rated at 8 L/100km: km/L = 100 ÷ 8 = 12.5 km/L, ÷ 0.425143707 ≈ <strong>29.4 mpg (US)</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — mpg (US) to L/100km</p>
+                <p>A car rated at 30 mpg (US): 30 × 0.425143707 ≈ 12.75 km/L, then 100 ÷ 12.75 ≈ <strong>7.84 L/100km</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — mpg (US) vs mpg (UK)</p>
+                <p>A car advertised as "40 mpg" without specifying which gallon: in US gallons that's 40 × 0.425143707 ≈ 17.0 km/L; in UK gallons, 40 × 0.354006190 ≈ <strong>14.2 km/L</strong> — a meaningful difference, which is why the unit needs to be specified.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — Why Lower L/100km Is Better</p>
+                <p>Car A: 5 L/100km (20 km/L). Car B: 10 L/100km (10 km/L). Car A uses half the fuel to go the same distance — for L/100km, lower is always more efficient, the opposite of mpg.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>Why is a higher L/100km worse, but a higher mpg better?</summary>
+              <div class="edu-faq-answer">Because they measure opposite things. mpg measures how far you go per unit of fuel — more is better. L/100km measures how much fuel you use per unit of distance — less is better. They're reciprocals of each other, which is why the direction of "better" flips.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How do I convert L/100km to mpg?</summary>
+              <div class="edu-faq-answer">First convert to km/L (divide 100 by the L/100km value), then convert km/L to mpg by dividing by 0.425143707 (US) or 0.354006190 (UK). There's no single fixed multiplier from L/100km directly to mpg, because the relationship is a reciprocal, not a scale factor.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Is US mpg the same as UK mpg?</summary>
+              <div class="edu-faq-answer">No — they use different gallon sizes. The UK (imperial) gallon is about 20% larger than the US gallon, so the same mpg number represents better real fuel economy in UK gallons than in US gallons.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Why can't I enter 0 or a negative fuel economy value?</summary>
+              <div class="edu-faq-answer">A fuel economy of exactly 0 would imply either infinite fuel consumption (0 km/L) or infinite distance per drop of fuel (0 L/100km), depending on which unit you started from — neither is physically meaningful. Negative values have no real-world interpretation either.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Which unit should I use to compare cars fairly?</summary>
+              <div class="edu-faq-answer">L/100km (or km/L) tends to make comparisons more intuitive for percentage savings, since it's linear with fuel used — a 10% reduction in L/100km always saves the same 10% of fuel, while a 10% increase in mpg doesn't correspond to a clean 10% fuel saving because of the reciprocal relationship.</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

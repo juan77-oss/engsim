@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<!--
+  engsim/simulators/combustion-chimenea/index.html
+  EngSim Platform
+  ─────────────────────────────────────────────────────────────────
+  Combustion Analysis Simulator (Combustion Chimney Analyser)
+  ─────────────────────────────────────────────────────────────────
+  Calculates dilution, excess air, sensible heat losses and
+  combustion efficiency from flue gas measurements
+  (electronic or manual analyzer).
+
+  Formulas:
+    Dilution        = CO2max / Measured CO2
+    Excess air      = (Dilution − 1) × 100          [%]
+    Flue gas losses = K × (Tgas − Tamb) / CO2med    [%] (Siegert)
+    Efficiency      = 100 − Losses                  [%]
+
+  Constants by fuel:
+    Natural Gas → CO2max = 11.7 %,  K = 0.39
+    Fuel oil    → CO2max = 15.7 %,  K = 0.50
+    LPG         → CO2max = 13.7 %,  K = 0.42
+
+  Architecture:
+    index.html          — HTML structure (this file)
+    js/constants.js      — fuel data table (no logic, no DOM)
+    js/core.js            — calculation engine (no DOM access)
+    js/simulator.js        — UI layer and events (imports constants.js + core.js)
+
+  Shared (DO NOT EDIT here — lives in ../../assets/css/):
+    base.css      — tokens, reset, typography
+    platform.css  — navbar + footer
+    simulator.css — shell/layout for ALL simulators, incl. the
+                    ".co-" namespaced section for this simulator
+-->
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Combustion Analysis Simulator. Calculates dilution, excess air, sensible heat losses and combustion efficiency from flue gas measurements. Free, no account required." />
+
+    <title>Combustion Analysis Simulator — Chimney Combustion | EngSim</title>
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Combustion Analysis Simulator | EngSim" />
+    <meta property="og:description"
+        content="Calculates dilution, excess air, sensible heat losses and combustion efficiency from flue gas measurements." />
+    <meta property="og:site_name" content="EngSim" />
+
+    <!-- <link rel="canonical" href="https://engsim.app/simulators/combustion-chimenea/" /> -->
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- ── Shared platform styles (DO NOT EDIT paths) ── -->
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/platform.css" />
+    <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+    <!-- Structured data for Google (SEO) -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Combustion Analysis Simulator",
+    "description": "Calculates dilution, excess air, sensible heat losses and combustion efficiency from flue gas measurements.",
+    "url": "https://engsim.app/simulators/combustion-chimenea/",
+    "applicationCategory": "EducationalApplication",
+    "isAccessibleForFree": true,
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0" }
+  }
+  </script>
+</head>
+
+<body>
+
+    <div class="page-wrapper">
+
+        <!-- ═══════════════════════════════════════════════
+             TOP NAVIGATION
+             ═══════════════════════════════════════════════ -->
+        <header class="nav" role="banner">
+            <div class="nav__inner">
+
+                <a href="../../index.html" class="nav__brand" aria-label="Home — EngSim">
+                    <div class="nav__brand-icon" aria-hidden="true">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" aria-hidden="true" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path
+                                d="M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.92c.04-.34.07-.67.07-1.08s-.03-.75-.07-1.08l2.32-1.81c.21-.16.27-.46.13-.7l-2.2-3.81a.55.55 0 0 0-.67-.23l-2.73 1.1c-.57-.44-1.18-.81-1.84-1.08L14 2.42C13.93 2.18 13.7 2 13.43 2h-2.86c-.27 0-.5.18-.57.42l-.41 2.47c-.66.27-1.27.64-1.84 1.08L4.75 4.87a.54.54 0 0 0-.67.23L1.88 8.91c-.14.25-.08.54.13.7l2.32 1.81C4.29 11.75 4.25 12.1 4.25 12.5s.04.75.08 1.08L2.01 15.39c-.21.17-.27.46-.13.7l2.2 3.81c.13.25.41.33.66.23l2.74-1.1c.57.44 1.17.81 1.83 1.08l.41 2.47c.07.24.3.42.57.42h2.86c.27 0 .5-.18.57-.42l.41-2.47c.66-.27 1.26-.64 1.83-1.08l2.74 1.1c.25.1.53.02.66-.23l2.2-3.81c.14-.24.08-.53-.13-.7l-2.32-1.81z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="nav__brand-name">EngSim</span>
+                        <span class="nav__brand-sub">Engineering Simulators</span>
+                    </div>
+                </a>
+
+                <nav aria-label="Main Navigation">
+                    <ul class="nav__links" id="nav-links">
+                        <li><a href="../../index.html" class="nav__link">Home</a></li>
+                        <li><a href="../index.html" class="nav__link is-active">Simulators</a></li>
+                        <li><a href="../../pages/about.html" class="nav__link">About</a></li>
+                    </ul>
+                </nav>
+
+                <div class="nav__actions">
+                    <button id="theme-toggle" class="nav__icon-btn" aria-label="Toggle color mode">
+                        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                        </svg>
+                        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="5" />
+                            <line x1="12" y1="1" x2="12" y2="3" />
+                            <line x1="12" y1="21" x2="12" y2="23" />
+                            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                            <line x1="1" y1="12" x2="3" y2="12" />
+                            <line x1="21" y1="12" x2="23" y2="12" />
+                            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                    </button>
+                    <button class="nav__hamburger" id="nav-hamburger" aria-label="Menu" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="3" y1="12" x2="21" y2="12" />
+                            <line x1="3" y1="6" x2="21" y2="6" />
+                            <line x1="3" y1="18" x2="21" y2="18" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════════════════════════════════════
+             MAIN CONTENT
+             ═══════════════════════════════════════════════ -->
+        <main class="page-main" id="main-content">
+
+            <!-- ─── HERO ─── -->
+            <section class="sim-hero" aria-labelledby="co-sim-title">
+                <div class="container">
+
+                    <nav aria-label="Breadcrumb navigation">
+                        <ol class="sim-hero__breadcrumb">
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><span aria-hidden="true">/</span></li>
+                            <li><a href="../index.html">Simulators</a></li>
+                            <li><span aria-hidden="true">/</span></li>
+                            <li>Chimney Combustion</li>
+                        </ol>
+                    </nav>
+
+                    <span class="sim-hero__category">Thermodynamics</span>
+
+                    <h1 class="sim-hero__title" id="co-sim-title">
+                        Combustion Analysis Simulator
+                    </h1>
+
+                    <p class="sim-hero__subtitle">
+                        Tool to calculate dilution, excess air, losses and combustion efficiency from flue gas measurements.
+                    </p>
+
+                    <div class="sim-hero__tags">
+                        <span class="sim-hero__tag">Gas Analysis</span>
+                        <span class="sim-hero__tag">Siegert Formula</span>
+                        <span class="sim-hero__tag">Natural Gas · LPG · Fuel Oil</span>
+                        <span class="sim-hero__tag">Boilers</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- AdSlot 1 -->
+<!-- AD-SLOT HIDDEN
+            <div class="container">
+                <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">
+                    Advertisement
+                </div>
+            </div>
+            -->
+
+            <!-- ═══════════════════════════════════════════════
+                 SIMULATOR FORM
+                 ═══════════════════════════════════════════════ -->
+            <section class="sim-body" aria-label="Simulator form">
+                <div class="container">
+
+                    <div class="sim-layout" style="--sim-sidebar-width: 1fr;">
+
+                        <!-- ─── PANEL 1: Combustible y Medición CO2 ─── -->
+                        <div class="co-panel" role="group" aria-labelledby="co-panel-input-title">
+
+                            <div class="co-panel__header">
+                                <div class="co-panel__icon" aria-hidden="true">
+                                    <!-- Flame icon -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M12 2c0 6-6 8-6 14a6 6 0 0 0 12 0c0-6-6-8-6-14z" />
+                                        <path d="M12 2c0 4 3 6 3 10a3 3 0 0 1-6 0c0-4 3-6 3-10z" />
+                                    </svg>
+                                </div>
+                                <h2 class="co-panel__title" id="co-panel-input-title">Input Data</h2>
+                                <span class="co-panel__subtitle">Fuel · Stack</span>
+                            </div>
+
+                            <div class="co-fields">
+
+                                <!-- Selector de combustible -->
+                                <div class="co-field">
+                                    <label class="co-field__label" for="co-sel-fuel">
+                                        Fuel
+                                    </label>
+                                    <select id="co-sel-fuel" class="co-field__select"
+                                        aria-label="Select fuel type" aria-describedby="co-fuel-note">
+                                        <option value="gas_natural">Natural Gas</option>
+                                        <option value="fuel_oil">Fuel Oil</option>
+                                        <option value="glp">LPG (Liquefied Petroleum Gas)</option>
+                                        <option value="custom">Custom fuel</option>
+                                    </select>
+                                    <!-- Muestra CO2max y K del combustible seleccionado -->
+                                    <span id="co-fuel-note" class="co-field__note" aria-live="polite">
+                                        Theoretical max CO₂ = 11.7 % &nbsp;|&nbsp; K (Siegert) = 0.39
+                                    </span>
+                                </div>
+
+                                <!-- Panel de parámetros personalizados (oculto por defecto) -->
+                                <div id="co-custom-params" class="co-custom-panel">
+                                    <p class="co-custom-panel__title">
+                                        Fuel parameters
+                                    </p>
+                                    <div class="co-field">
+                                        <label class="co-field__label" for="co-inp-custom-co2max">
+                                            Theoretical max CO₂ <span>(%)</span>
+                                        </label>
+                                        <input type="number" id="co-inp-custom-co2max" class="co-field__input" min="0.1"
+                                            max="100" step="0.1" placeholder="Ex: 15.0" inputmode="decimal"
+                                            autocomplete="off" />
+                                    </div>
+                                    <div class="co-field">
+                                        <label class="co-field__label" for="co-inp-custom-k">
+                                            Siegert constant (K)
+                                        </label>
+                                        <input type="number" id="co-inp-custom-k" class="co-field__input" min="0.01"
+                                            max="2" step="0.01" placeholder="Ex: 0.48" inputmode="decimal"
+                                            autocomplete="off" />
+                                    </div>
+                                </div>
+
+                                <!-- Modo de cálculo -->
+                                <div class="co-field">
+                                    <label class="co-field__label" for="co-sel-mode">
+                                        Calculation mode
+                                    </label>
+                                    <select id="co-sel-mode" class="co-field__select"
+                                        aria-label="Select calculation mode (based on CO2 or O2)">
+                                        <option value="co2">Use measured CO₂</option>
+                                        <option value="o2">Use measured O₂</option>
+                                    </select>
+                                </div>
+
+                                <!-- CO2 medido -->
+                                <div id="co-field-co2" class="co-field">
+                                    <label class="co-field__label" for="co-inp-co2">
+                                        Measured CO₂ <span>(%)</span>
+                                    </label>
+                                    <input type="number" id="co-inp-co2" class="co-field__input" min="0.1" max="22"
+                                        step="0.1" placeholder="Ex: 9.5" inputmode="decimal" autocomplete="off"
+                                        aria-label="Measured CO₂ percentage in flue gas"
+                                        aria-describedby="co-co2-hint" />
+                                    <span id="co-co2-hint" style="font-size:0.68rem; color:var(--text-muted);">
+                                        Must be less than the theoretical maximum CO₂ of the fuel.
+                                    </span>
+                                </div>
+
+                                <!-- O2 medido (oculto por defecto) -->
+                                <div id="co-field-o2" class="co-field" style="display:none;">
+                                    <label class="co-field__label" for="co-inp-o2">
+                                        Measured O₂ <span>(%)</span>
+                                    </label>
+                                    <input type="number" id="co-inp-o2" class="co-field__input" min="0.1" max="20.9"
+                                        step="0.1" placeholder="Ex: 5.5" inputmode="decimal" autocomplete="off"
+                                        aria-label="Measured O₂ percentage in flue gas" />
+                                    <span style="font-size:0.68rem; color:var(--text-muted);">
+                                        Must be less than 21%.
+                                    </span>
+                                </div>
+
+                                <!-- Temperatura gases chimenea -->
+                                <div class="co-field">
+                                    <label class="co-field__label" for="co-inp-tg">
+                                        Flue gas temperature <span>(°C)</span>
+                                    </label>
+                                    <input type="number" id="co-inp-tg" class="co-field__input" min="0" max="1200"
+                                        step="1" placeholder="Ex: 220" inputmode="decimal" autocomplete="off"
+                                        aria-label="Flue gas temperature in degrees Celsius" />
+                                </div>
+
+                                <!-- Temperatura ambiente -->
+                                <div class="co-field">
+                                    <label class="co-field__label" for="co-inp-ta">
+                                        Ambient temperature <span>(°C)</span>
+                                    </label>
+                                    <input type="number" id="co-inp-ta" class="co-field__input" min="-20" max="60"
+                                        step="1" placeholder="Ex: 20" inputmode="decimal" autocomplete="off"
+                                        aria-label="Ambient temperature in degrees Celsius" />
+                                </div>
+
+                            </div><!-- /co-fields -->
+
+                            <!-- Error message box -->
+                            <div id="co-error-box" class="co-error-box" role="alert" aria-live="assertive">
+                                <!-- Populated by JS -->
+                            </div>
+
+                            <!-- Actions -->
+                            <button type="button" id="btn-calculate" class="btn-primary"
+                                aria-label="Execute combustion analysis calculation">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="4" y="2" width="16" height="20" rx="2" />
+                                    <line x1="8" y1="6" x2="16" y2="6" />
+                                    <line x1="8" y1="10" x2="16" y2="10" />
+                                    <line x1="8" y1="14" x2="12" y2="14" />
+                                </svg>
+                                Calculate
+                            </button>
+                            <button type="button" id="co-btn-reset" class="co-btn-reset"
+                                aria-label="Clear all fields and results">
+                                Clear fields
+                            </button>
+
+                        </div><!-- /co-panel input -->
+
+                        <!-- ─── PANEL 2: Base técnica ─── -->
+                        <div class="co-panel" role="complementary" aria-label="Method technical basis">
+
+                            <div class="co-panel__header">
+                                <div class="co-panel__icon" aria-hidden="true">
+                                    <!-- Info icon -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="12" y1="16" x2="12" y2="12" />
+                                        <line x1="12" y1="8" x2="12.01" y2="8" />
+                                    </svg>
+                                </div>
+                                <h2 class="co-panel__title">Method Basis</h2>
+                                <span class="co-panel__subtitle">Siegert</span>
+                            </div>
+
+                            <!-- Constantes tabla -->
+                            <table class="edu-table" aria-label="Thermodynamic constants by fuel">
+                                <thead>
+                                    <tr>
+                                        <th>Fuel</th>
+                                        <th style="text-align:center;">CO₂max (%)</th>
+                                        <th style="text-align:center;">K (Siegert)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td style="font-family:var(--font-mono);">Natural Gas</td>
+                                        <td style="text-align:center; font-family:var(--font-mono);">11.7</td>
+                                        <td style="text-align:center; font-family:var(--font-mono);">0.39</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family:var(--font-mono);">Fuel Oil</td>
+                                        <td style="text-align:center; font-family:var(--font-mono);">15.7</td>
+                                        <td style="text-align:center; font-family:var(--font-mono);">0.50</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-family:var(--font-mono);">LPG</td>
+                                        <td style="text-align:center; font-family:var(--font-mono);">13.7</td>
+                                        <td style="text-align:center; font-family:var(--font-mono);">0.42</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- Fórmulas aplicadas -->
+                            <p
+                                style="font-size:0.7rem; font-weight:600; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem;">
+                                Applied formulas
+                            </p>
+                            <div class="co-formula-note" role="note">
+                                <strong>If CO₂ is measured:</strong><br>
+                                D = CO₂max / Measured CO₂<br>
+                                EA = (D − 1) × 100 &nbsp;[%]<br><br>
+                                <strong>If O₂ is measured:</strong><br>
+                                EA = (O₂ / (21 − O₂)) × 100 &nbsp;[%]<br>
+                                CO₂est = CO₂max × (1 − O₂ / 21)<br><br>
+                                <strong>Flue gas losses — Siegert (q)</strong><br>
+                                q = K × (T_gas − T_amb) / CO₂ &nbsp;[%]<br><br>
+                                <strong>Combustion efficiency (η)</strong><br>
+                                η = 100 − q &nbsp;[%]
+                            </div>
+
+                            <!-- Nota sobre Siegert -->
+                            <p
+                                style="margin-top:var(--space-md); font-size:0.68rem; color:var(--text-muted); line-height:1.6;">
+                                The Siegert formula is a widely used empirical approximation to estimate sensible heat losses in flue gases. It does not include CO losses or incomplete combustion.
+                            </p>
+
+                        </div><!-- /co-panel info -->
+
+                        <!-- ═══════════════════════════════════════════════
+                             RESULTS — aparece tras el cálculo
+                             ═══════════════════════════════════════════════ -->
+                        <div id="co-results-wrapper" class="co-results-wrapper co-panel" role="region"
+                            aria-label="Combustion analysis results" aria-live="polite">
+
+                            <div class="co-panel__header">
+                                <div class="co-panel__icon" aria-hidden="true">
+                                    <!-- Pulse / results icon -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" aria-hidden="true">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                    </svg>
+                                </div>
+                                <h2 class="co-panel__title">Results</h2>
+                                <span class="co-panel__subtitle" id="co-res-subtitle">— / — / —</span>
+                            </div>
+
+                            <!-- Diagnostic badge (state updated by JS) -->
+                            <div id="co-diagnostic" class="co-diagnostic co-diagnostic--acceptable" role="status"
+                                aria-label="Combustion diagnostic">
+                                <span class="co-diagnostic__dot" aria-hidden="true"></span>
+                                <span id="co-diag-text">—</span>
+                            </div>
+
+                            <!-- 5 metric cards -->
+                            <div class="co-metrics">
+
+                                <!-- CO2max teórico -->
+                                <div class="co-metric">
+                                    <span class="co-metric__label">Theoretical max CO₂</span>
+                                    <span class="co-metric__value" id="co-res-co2max">—</span>
+                                    <span class="co-metric__unit">%</span>
+                                </div>
+
+                                <!-- Dilución -->
+                                <div class="co-metric co-metric--highlight">
+                                    <span class="co-metric__label">Dilution (D)</span>
+                                    <span class="co-metric__value" id="co-res-dilucion">—</span>
+                                    <span class="co-metric__unit">dimensionless</span>
+                                </div>
+
+                                <!-- Exceso de aire -->
+                                <div class="co-metric co-metric--highlight">
+                                    <span class="co-metric__label">Excess air</span>
+                                    <span class="co-metric__value" id="co-res-exceso">—</span>
+                                    <span class="co-metric__unit">%</span>
+                                </div>
+
+                                <!-- Pérdidas gases -->
+                                <div class="co-metric co-metric--highlight">
+                                    <span class="co-metric__label">Flue gas losses (q)</span>
+                                    <span class="co-metric__value" id="co-res-perdidas">—</span>
+                                    <span class="co-metric__unit">%</span>
+                                </div>
+
+                                <!-- Eficiencia -->
+                                <div class="co-metric co-metric--highlight">
+                                    <span class="co-metric__label">Combustion eff. (η)</span>
+                                    <span class="co-metric__value" id="co-res-eficiencia">—</span>
+                                    <span class="co-metric__unit">%</span>
+                                </div>
+
+                            </div><!-- /co-metrics -->
+
+                        </div><!-- /co-results-wrapper -->
+
+                    </div><!-- /co-shell -->
+                </div><!-- /container -->
+            </section>
+
+            <!-- ═══════════════════════════════════════════════
+                 EDUCATIONAL CONTENT
+                 ═══════════════════════════════════════════════ -->
+            <div class="container container--narrow">
+                <div class="edu-content" id="edu-content">
+
+                    <!-- About This Simulator -->
+                    <section class="edu-section" id="about-simulator" aria-labelledby="about-sim-heading">
+                        <h2 id="about-sim-heading">About This Simulator</h2>
+                        <p>
+                            Combustion analysis is the process of measuring the composition of exhaust gases to determine how efficiently fuel is being burned. This simulator estimates combustion <strong>excess air</strong> and <strong>stack (flue-gas) heat loss</strong> using gas measurements and the empirical Siegert method.
+                        </p>
+                        <p>
+                            Measuring CO₂ and O₂ concentrations is essential because they indicate the amount of air supplied to the combustion process relative to the theoretical minimum required. <strong>Excess air</strong> is the extra air provided to ensure complete combustion. While necessary, too much excess air lowers boiler or furnace efficiency by carrying sensible heat out through the stack. The <strong>flue-gas temperature</strong> represents the thermal energy leaving the system. The <strong>Siegert method</strong> provides a rapid engineering estimate of these stack heat losses based on measured gas composition and temperatures.
+                        </p>
+                    </section>
+
+                    <hr />
+
+                    <!-- How to Use -->
+                    <section class="edu-section" id="how-to-use" aria-labelledby="how-to-use-heading">
+                        <h2 id="how-to-use-heading">How to Use the Simulator</h2>
+                        <ol>
+                            <li><strong>Select the fuel:</strong> Choose from Natural Gas, Fuel Oil, LPG, or define custom parameters.</li>
+                            <li><strong>Select calculation mode:</strong> Choose whether you are entering measured CO₂ or measured O₂.</li>
+                            <li><strong>Enter the measured gas concentration:</strong> Input the CO₂ or O₂ percentage obtained from the flue-gas analyzer.</li>
+                            <li><strong>Enter flue-gas temperature:</strong> Input the temperature of the exhaust gases leaving the stack.</li>
+                            <li><strong>Enter ambient temperature:</strong> Input the combustion-air (ambient) temperature entering the burner.</li>
+                            <li><strong>Run the calculation:</strong> Review the estimated dilution, excess air, heat loss, and combustion efficiency.</li>
+                        </ol>
+                    </section>
+
+                    <hr />
+
+                    <!-- AdSlot 2: In-content -->
+                    <!-- AD-SLOT HIDDEN
+                    <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">
+                        Advertisement
+                    </div>
+                    -->
+
+                    <hr />
+
+                    <!-- Engineering Background -->
+                    <section class="edu-section" id="engineering-background" aria-labelledby="eng-bg-heading">
+                        <h2 id="eng-bg-heading">Engineering Background</h2>
+
+                        <h3>Excess Air</h3>
+                        <p>
+                            <strong>Theoretical or stoichiometric air</strong> is the exact amount of air required to completely burn a specific quantity of fuel. In practice, achieving perfect mixing is impossible, so burners are supplied with <strong>actual combustion air</strong>, which is greater than the theoretical requirement.
+                        </p>
+                        <p>
+                            <strong>Excess air</strong> is defined as the percentage of air supplied above the theoretical minimum:
+                        </p>
+                        <div class="edu-formula">Excess Air = (Actual Air / Theoretical Air - 1) × 100</div>
+                        <p>
+                            Instead of manually calculating mass flow rates, this simulator determines excess air directly from the flue-gas composition (CO₂ or O₂ concentrations). Proper excess air control is vital: too little causes incomplete combustion (producing CO and soot), while too much dilutes the heat and wastes energy.
+                        </p>
+
+                        <h3>CO₂ Method</h3>
+                        <p>
+                            When a fuel burns completely with exact stoichiometric air, the resulting CO₂ concentration in dry exhaust gases reaches its <strong>maximum theoretical CO₂</strong> (CO₂max). If excess air is introduced, this extra air dilutes the combustion gases. Therefore, more excess air leads to greater dilution and a lower measured CO₂.
+                        </p>
+                        <p>The simulator calculates the dilution factor (D) and excess air using:</p>
+                        <div class="edu-formula">D = CO₂max / Measured CO₂<br>Excess Air = (D - 1) × 100</div>
+                        <p>
+                            Make clear that this is a combustion-gas analysis approach based on the relationship between measured and theoretical maximums.
+                        </p>
+
+                        <h3>O₂ Method</h3>
+                        <p>
+                            Alternatively, the residual oxygen in the exhaust gas directly indicates the amount of excess air. The simulator relies on the assumption that dry atmospheric air contains approximately 21% oxygen by volume:
+                        </p>
+                        <div class="edu-formula">Excess Air = [ Measured O₂ / (21 - Measured O₂) ] × 100</div>
+                        <p>
+                            This method is widely preferred in modern analyzers because oxygen measurement is less sensitive to fuel composition variations than CO₂ measurement.
+                        </p>
+
+                        <h3>Siegert Method</h3>
+                        <p>
+                            The Siegert method estimates the sensible heat loss (q) carried away by the hot exhaust gases. It relates the temperature difference between the flue gas (Tg) and combustion-air ambient temperature (Ta) to the CO₂ concentration:
+                        </p>
+                        <div class="edu-formula">q = K × (Tg - Ta) / CO₂</div>
+                        <p>
+                            Here, <code>K</code> is an empirical constant specific to the fuel type. This equation provides the percentage of total fuel energy lost to the stack under the assumptions of the method.
+                        </p>
+                    </section>
+
+                    <hr />
+
+                    <!-- AD-SLOT HIDDEN
+                    <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">
+                        Advertisement
+                    </div>
+                    -->
+
+                    <hr />
+
+                    <!-- Interpreting the Results -->
+                    <section class="edu-section" id="interpreting-results" aria-labelledby="interp-heading">
+                        <h2 id="interp-heading">Interpreting the Results</h2>
+
+                        <h3>Excess Air</h3>
+                        <ul>
+                            <li><strong>Low excess air:</strong> Risks incomplete combustion, soot formation, and safety hazards.</li>
+                            <li><strong>Appropriate excess air:</strong> Varies by fuel and burner design, but typically ensures complete combustion while minimizing dilution losses.</li>
+                            <li><strong>Excessively high excess air:</strong> Decreases efficiency because a large volume of nitrogen and extra oxygen is needlessly heated and discharged through the stack.</li>
+                        </ul>
+
+                        <h3>Siegert Heat Loss</h3>
+                        <p>
+                            A higher calculated stack loss generally indicates more energy is leaving with the flue gases. This loss increases with high flue-gas temperatures, low CO₂ concentrations, and elevated excess air.
+                        </p>
+
+                        <h3>Estimated Efficiency</h3>
+                        <p>
+                            The simulator derives combustion efficiency (η) directly from the Siegert stack-loss estimate:
+                        </p>
+                        <div class="edu-formula">η = 100 - q</div>
+                        <p>
+                            This value represents the efficiency estimate associated strictly with the Siegert stack-loss model. It should not automatically be interpreted as a complete boiler efficiency including every possible loss. This distinction is important.
+                        </p>
+                    </section>
+
+                    <hr />
+
+                    <!-- Engineering Applications -->
+                    <section class="edu-section" id="engineering-applications" aria-labelledby="eng-app-heading">
+                        <h2 id="eng-app-heading">Engineering Applications</h2>
+                        <p>This type of calculation is widely useful in:</p>
+                        <ul>
+                            <li>Industrial boilers and furnaces</li>
+                            <li>Burner tuning</li>
+                            <li>Boiler commissioning</li>
+                            <li>Combustion diagnostics</li>
+                            <li>Energy-efficiency analysis</li>
+                            <li>Maintenance and performance monitoring</li>
+                        </ul>
+                    </section>
+
+                    <hr />
+
+                    <!-- Assumptions and Limitations -->
+                    <section class="edu-section" id="assumptions" aria-labelledby="assumptions-heading">
+                        <h2 id="assumptions-heading">Assumptions and Limitations</h2>
+                        <p>To ensure engineering credibility, users must understand the limitations of this model:</p>
+                        <ul>
+                            <li>The simulator uses standard parameters for the selected fuel model.</li>
+                            <li>The combustion analysis is based entirely on the entered gas composition.</li>
+                            <li>The Siegert method is an empirical/engineering estimation method.</li>
+                            <li>The estimated efficiency is associated exclusively with stack/flue-gas loss represented by the model.</li>
+                            <li>Real boiler/furnace efficiency may also depend on other losses not calculated here, such as:
+                                <ul>
+                                    <li>Radiation</li>
+                                    <li>Unburned fuel or incomplete combustion (e.g. CO formation)</li>
+                                    <li>Ash-related losses where applicable</li>
+                                    <li>Other heat losses through the boiler shell</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <hr />
+
+                    <!-- Worked Example -->
+                    <section class="edu-section" id="worked-example" aria-labelledby="example-heading">
+                        <h2 id="example-heading">Example</h2>
+                        <p>Consider a natural gas boiler being tested during maintenance. The following data is recorded:</p>
+                        <ul>
+                            <li><strong>Fuel:</strong> Natural Gas (CO₂max = 11.7%, K = 0.39)</li>
+                            <li><strong>Measured CO₂:</strong> 9.5%</li>
+                            <li><strong>Flue-gas temperature:</strong> 220 °C</li>
+                            <li><strong>Combustion-air temperature:</strong> 20 °C</li>
+                        </ul>
+                        <div class="edu-example">
+                            <div class="edu-example__title">Worked Example</div>
+                            <p><strong>Conceptually, you should expect:</strong></p>
+                            <p>The simulator will calculate the dilution factor as <code>D = 11.7 / 9.5 ≈ 1.23</code>. The <strong>calculated excess air</strong> is approximately <code>(1.23 - 1) × 100 = 23%</code>. The <strong>estimated stack loss</strong> is roughly <code>q = 0.39 × (220 - 20) / 9.5 ≈ 8.2%</code>. Consequently, the <strong>estimated efficiency</strong> associated with the stack loss is <code>100 - 8.2 = 91.8%</code>.</p>
+                        </div>
+                    </section>
+
+                </div><!-- /edu-content -->
+            </div><!-- /container -->
+
+        </main><!-- /page-main -->
+
+        <!-- FOOTER -->
+        <footer class="page-footer" role="contentinfo">
+            <div class="container">
+                <div class="page-footer__inner">
+                    <span class="page-footer__brand">EngSim</span>
+                    <nav aria-label="Footer navigation">
+                        <ul class="page-footer__links">
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><a href="../../pages/about.html">About</a></li>
+                            <li><a href="../index.html">Simulators</a></li>
+                        </ul>
+                    </nav>
+                    <span class="page-footer__legal">Simulator · Thermodynamics · Chimney Combustion</span>
+                </div>
+            </div>
+        </footer>
+
+    </div><!-- /page-wrapper -->
+
+    <!-- ═══════════════════════════════════════════════
+         JAVASCRIPT
+         ═══════════════════════════════════════════════ -->
+
+    <!-- Platform theme module (no modificar) -->
+    <script src="../../assets/js/theme.js"></script>
+
+    <!-- Mobile nav toggle -->
+    <script>
+        (function () {
+            var hamburger = document.getElementById('nav-hamburger');
+            var navLinks = document.getElementById('nav-links');
+            if (hamburger && navLinks) {
+                hamburger.addEventListener('click', function () {
+                    var isOpen = navLinks.classList.toggle('is-mobile-open');
+                    hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                });
+            }
+        })();
+    </script>
+
+    <!-- Simulator logic (ES module entry point) -->
+    <script type="module" src="./js/simulator.js"></script>
+
+</body>
+
+</html>
+
+

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About — EngSim</title>
+    <meta name="description"
+        content="Learn about EngSim, a free platform of interactive engineering simulators for students and professionals in thermodynamics, fluid mechanics, structures, and electrical engineering." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/platform.css" />
+    <link rel="stylesheet" href="../assets/css/catalog.css" />
+
+    <style>
+        .about-hero {
+            padding: var(--space-2xl) 0 var(--space-xl);
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, #f0f4ff 0%, var(--bg-page) 70%);
+        }
+
+        body.dark .about-hero {
+            background: linear-gradient(135deg, #1a2744 0%, var(--bg-page) 70%);
+        }
+
+        .about-body {
+            padding: var(--space-2xl) 0;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+            align-items: start;
+        }
+
+        @media (max-width: 720px) {
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .about-body h2 {
+            font-size: 1.2rem;
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+        }
+
+        .about-body p {
+            margin-bottom: var(--space-md);
+        }
+
+        .feature-card {
+            display: flex;
+            gap: var(--space-md);
+            align-items: flex-start;
+            padding: var(--space-lg);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-md);
+        }
+
+        .feature-card__icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(37, 99, 235, .1);
+            color: var(--brand-accent);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .feature-card__icon svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .feature-card__title {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            font-size: .95rem;
+        }
+
+        .feature-card__desc {
+            font-size: .85rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+
+        <div id="nav-placeholder"></div>
+
+        <main class="page-main" id="main-content">
+
+            <section class="about-hero" aria-labelledby="about-title">
+                <div class="container">
+                    <nav aria-label="Breadcrumb">
+                        <ol class="sim-hero__breadcrumb">
+                            <li><a href="../index.html">Home</a></li>
+                            <li><span>/</span></li>
+                            <li>About</li>
+                        </ol>
+                    </nav>
+                    <h1 id="about-title">About EngSim</h1>
+                    <p
+                        style="max-width:580px; margin-top: 12px; color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7;">
+                        A free, open platform of interactive engineering simulators built for
+                        students, educators, and working engineers.
+                    </p>
+                </div>
+            </section>
+
+            <div class="about-body">
+                <div class="container">
+                    <div class="about-grid">
+
+                        <!-- Left: text -->
+                        <div>
+                            <h2>What is EngSim?</h2>
+                            <p>
+                                EngSim is an engineering-focused learning environment that provides
+                                interactive simulators and calculation tools for students and engineers.
+                                The tools are designed to support conceptual understanding, numerical
+                                exploration, and visual analysis of engineering systems.
+                            </p>
+                            <p>
+                                Every simulator runs entirely in the browser. There is no backend, no
+                                account, and no data collection. The platform is free to use and
+                                intended to remain so.
+                            </p>
+                            <p>
+                                The platform covers thermodynamics, fluid mechanics, mechanics and
+                                structures, electrical engineering, and applied chemistry — with new
+                                simulators added continuously as development progresses.
+                            </p>
+
+                            <h2 style="margin-top: 32px;">Why was it built?</h2>
+                            <p>
+                                Engineering education often relies on textbook problems that are
+                                static and disconnected from real physical intuition. EngSim was
+                                created to bridge that gap — making it easy to visualize what happens
+                                when you change a parameter, see a Mohr's Circle respond in real time,
+                                or watch a T-s diagram update as you adjust cycle conditions.
+                            </p>
+                            <p>
+                                The simulators reflect real engineering theory — including approaches
+                                used in university courses across South America — and are designed to
+                                be useful both as learning aids and as quick calculation tools in
+                                professional practice.
+                            </p>
+
+                            <h2 style="margin-top: 32px;">Contact</h2>
+                            <p>
+                                For questions, suggestions, or to report an issue with a simulator,
+                                reach us at
+                                <a href="mailto:contact@engsim.app">contact@engsim.app</a>.
+                            </p>
+                        </div>
+
+                        <!-- Right: feature cards -->
+                        <div>
+                            <div class="feature-card">
+                                <div class="feature-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="feature-card__title">Completely Free</p>
+                                    <p class="feature-card__desc">No subscription, no paid tier, no hidden limits. Every
+                                        simulator is free forever.</p>
+                                </div>
+                            </div>
+
+                            <div class="feature-card">
+                                <div class="feature-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <rect x="2" y="3" width="20" height="14" rx="2" />
+                                        <line x1="8" y1="21" x2="16" y2="21" />
+                                        <line x1="12" y1="17" x2="12" y2="21" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="feature-card__title">Browser-Based</p>
+                                    <p class="feature-card__desc">All simulations run locally in your browser. No
+                                        installation needed on any device.</p>
+                                </div>
+                            </div>
+
+                            <div class="feature-card">
+                                <div class="feature-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                        <circle cx="9" cy="7" r="4" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="feature-card__title">No Account Required</p>
+                                    <p class="feature-card__desc">Access all tools immediately. No registration, no
+                                        login, no email needed.</p>
+                                </div>
+                            </div>
+
+                            <div class="feature-card">
+                                <div class="feature-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="feature-card__title">Engineering-Focused</p>
+                                    <p class="feature-card__desc">Built for technical analysis, conceptual learning, and
+                                        real engineering exploration.</p>
+                                </div>
+                            </div>
+
+                            <div class="feature-card">
+                                <div class="feature-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="2" y1="12" x2="22" y2="12" />
+                                        <path
+                                            d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="feature-card__title">Multilingual-Ready</p>
+                                    <p class="feature-card__desc">Built in English for global reach. Browser translation
+                                        works seamlessly on all pages.</p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ad slot -->
+            <!-- AD-SLOT HIDDEN
+            <div class="container">
+                <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">Advertisement</div>
+            </div>
+            -->
+
+        </main>
+
+        <div id="footer-placeholder"></div>
+
+    </div>
+    <script src="../assets/js/platform.js"></script>
+</body>
+
+</html>

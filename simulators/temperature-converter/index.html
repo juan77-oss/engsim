@@ -1,0 +1,293 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Temperature Converter — Convert °C, °F, K, °R & More | EngSim</title>
+  <meta name="description" content="Free temperature unit converter. Enter one value and instantly see it converted to Celsius, Fahrenheit, Kelvin, Rankine and Réaumur." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Temperature Converter — Convert Between All Temperature Scales" />
+  <meta property="og:description" content="Convert temperature between Celsius, Fahrenheit, Kelvin, Rankine and Réaumur — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/temperature-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/temperature-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — tpc- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Temperature Converter",
+    "url": "https://engsim.app/simulators/temperature-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert temperature values between Celsius, Fahrenheit, Kelvin, Rankine and Réaumur, with built-in absolute zero validation.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.tpc-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Temperature Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Temperature Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any temperature scale and instantly see the equivalent in Celsius, Fahrenheit, Kelvin, Rankine and Réaumur.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">Celsius</span>
+            <span class="sim-hero__tag">Fahrenheit</span>
+            <span class="sim-hero__tag">Kelvin</span>
+            <span class="sim-hero__tag">Rankine</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4v10.54a4 4 0 1 1-4 0V4a2 2 0 0 1 4 0Z"/></svg>
+                <span class="sim-panel__title">Temperature Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="20" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="tpc-table-wrap" id="results-table-wrap">
+                    <table class="tpc-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Temperature Converter</h2>
+            <p>Temperature is the one measurement where the different unit systems don't just use a different scale factor — they start counting from a different zero. A weather forecast in Fahrenheit, a lab reading in Kelvin, a thermodynamics textbook in Rankine: this tool lets you enter a value once and see it converted to every common temperature scale at the same time.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the temperature value you want to convert.</li>
+              <li>Select the scale that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value on every other scale.</li>
+            </ol>
+            <p>Values below absolute zero (−273.15 °C) are rejected, since no temperature scale can go lower than that physical limit.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formulas</h2>
+            <p>Unlike energy, length or mass, temperature scales are not simple multiples of each other — each one has its own offset. Celsius is used as the common bridge:</p>
+            <div class="edu-formula">°F = °C × 9/5 + 32
+K = °C + 273.15
+°R = (°C + 273.15) × 9/5
+°Ré = °C × 4/5</div>
+            <p>To go the other way (from any scale back to Celsius), each formula is simply solved in reverse.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Temperature Scale Reference</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Scale</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Water Freezes</th>
+                    <th scope="col">Water Boils</th>
+                    <th scope="col">Absolute Zero</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Celsius</td><td>°C</td><td>0 °C</td><td>100 °C</td><td>−273.15 °C</td></tr>
+                  <tr><td>Fahrenheit</td><td>°F</td><td>32 °F</td><td>212 °F</td><td>−459.67 °F</td></tr>
+                  <tr><td>Kelvin</td><td>K</td><td>273.15 K</td><td>373.15 K</td><td>0 K</td></tr>
+                  <tr><td>Rankine</td><td>°R</td><td>491.67 °R</td><td>671.67 °R</td><td>0 °R</td></tr>
+                  <tr><td>Réaumur</td><td>°Ré</td><td>0 °Ré</td><td>80 °Ré</td><td>−218.52 °Ré</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: Kelvin and Rankine are absolute scales (their zero point is absolute zero), while Celsius, Fahrenheit and Réaumur are relative scales anchored to the freezing point of water.</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — Celsius to Fahrenheit</p>
+                <p>A pleasant 25 °C day: 25 × 9/5 + 32 = <strong>77 °F</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — Fahrenheit to Celsius</p>
+                <p>Body temperature at 98.6 °F: (98.6 − 32) × 5/9 = <strong>37 °C</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — Celsius to Kelvin</p>
+                <p>Room temperature at 20 °C: 20 + 273.15 = <strong>293.15 K</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — Kelvin to Rankine</p>
+                <p>A cryogenic system at 77 K (liquid nitrogen boiling point): (77 − 273.15 + 273.15) × 9/5 = <strong>138.6 °R</strong>.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>What is absolute zero, and why can't I enter a lower value?</summary>
+              <div class="edu-faq-answer">Absolute zero (−273.15 °C, 0 K, −459.67 °F) is the coldest temperature theoretically possible — the point where particles have minimal thermal motion. No real or converted temperature can go below it, so this tool blocks values under that limit in whichever unit you enter.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How do I convert Celsius to Fahrenheit?</summary>
+              <div class="edu-faq-answer">Multiply by 9/5 (or 1.8) and add 32: °F = °C × 9/5 + 32. To go back, subtract 32 first and multiply by 5/9.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What's the difference between Kelvin and Celsius?</summary>
+              <div class="edu-faq-answer">They use the same size of degree — a 1 K change equals a 1 °C change — but Kelvin starts at absolute zero instead of the freezing point of water. K = °C + 273.15.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What is the Rankine scale used for?</summary>
+              <div class="edu-faq-answer">Rankine is an absolute scale (like Kelvin) but sized in Fahrenheit-sized degrees. It shows up in US thermodynamics and engineering formulas that need an absolute temperature but are otherwise working in imperial units.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Is the Réaumur scale still used?</summary>
+              <div class="edu-faq-answer">Rarely today — it was common in parts of Europe until the 20th century, and still appears occasionally in some traditional cheese and jam-making recipes. Water freezes at 0 °Ré and boils at 80 °Ré.</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

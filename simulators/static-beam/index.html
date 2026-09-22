@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Static Beam Calculator — Shear, Moment &amp; Deflection | EngSim</title>
+    <meta name="description"
+        content="Free online static beam calculator. Compute support reactions, shear force diagram, bending moment diagram, and deflection curve for simply supported beams with point and distributed loads." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Static Beam Calculator | EngSim" />
+    <meta property="og:description"
+        content="Calculate shear force, bending moment, and deflection for simply supported beams. Free, no signup." />
+    <meta property="og:site_name" content="EngSim" />
+
+    <!-- Canonical URL — fill in once you have the domain -->
+    <!-- <link rel="canonical" href="https://engsim.app/simulators/static-beam/" /> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/platform.css" />
+    <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+    <style>
+        /* -- Error shake animation ----------------------------------- */
+        @keyframes error-shake {
+            0% {
+                transform: translateX(0);
+                border-color: var(--color-error);
+            }
+
+            20% {
+                transform: translateX(-6px);
+                border-color: var(--color-error);
+            }
+
+            40% {
+                transform: translateX(6px);
+                border-color: var(--color-error);
+            }
+
+            60% {
+                transform: translateX(-4px);
+                border-color: var(--color-error);
+            }
+
+            80% {
+                transform: translateX(4px);
+                border-color: var(--color-error);
+            }
+
+            100% {
+                transform: translateX(0);
+                border-color: var(--color-error);
+            }
+        }
+
+        @keyframes error-flash-bg {
+
+            0%,
+            100% {
+                background: transparent;
+            }
+
+            30% {
+                background: color-mix(in srgb, var(--color-error) 12%, transparent);
+            }
+        }
+
+        .input-error {
+            border-color: var(--color-error) !important;
+            animation: error-shake 0.4s ease;
+        }
+
+        .input-error-wrap {
+            animation: error-flash-bg 0.6s ease;
+        }
+
+        /* -- Error banner -------------------------------------------- */
+        .sim-error {
+            display: none;
+            background: color-mix(in srgb, var(--color-error) 10%, transparent);
+            border: 1.5px solid var(--color-error);
+            border-radius: var(--radius-md);
+            color: var(--color-error);
+            padding: var(--space-3) var(--space-4);
+            margin-bottom: var(--space-4);
+            font-size: var(--text-sm);
+            font-weight: 500;
+        }
+
+        /* -- Load type selector -------------------------------------- */
+        .load-type-selector {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+            margin-bottom: 8px;
+            margin-top: 12px;
+        }
+
+        .btn-load-type {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-4);
+            border: 2px solid var(--color-border);
+            border-radius: var(--radius-md);
+            background: var(--color-surface);
+            color: var(--color-text);
+            font-size: var(--text-sm);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s;
+            text-align: left;
+            width: 100%;
+        }
+
+        .btn-load-type:hover {
+            border-color: var(--color-primary);
+            color: var(--color-primary);
+            background: color-mix(in srgb, var(--color-primary) 6%, transparent);
+        }
+
+        .btn-load-type__icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+            background: var(--color-surface-raised);
+            flex-shrink: 0;
+            color: var(--color-primary);
+        }
+
+        .btn-load-type__text {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .btn-load-type__title {
+            font-size: var(--text-sm);
+            font-weight: 600;
+        }
+
+        .btn-load-type__desc {
+            font-size: var(--text-xs);
+            color: var(--color-text-muted);
+            font-weight: 400;
+        }
+
+        .btn-load-type:hover .btn-load-type__desc {
+            color: color-mix(in srgb, var(--color-primary) 70%, transparent);
+        }
+
+        /* -- Load cards -------------------------------------------- */
+        .load-card {
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-3);
+            overflow: hidden;
+        }
+
+        .load-card__header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-2) var(--space-3);
+            background: var(--color-surface-raised);
+            gap: var(--space-2);
+            border-left: 3px solid transparent;
+        }
+
+        .load-card__label {
+            font-size: var(--text-sm);
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .load-card__type-badge {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-sm);
+            padding: 2px 6px;
+            margin-left: auto;
+        }
+
+        .load-card__remove {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: transparent;
+            color: var(--color-text-muted);
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: color 0.15s, background 0.15s;
+            flex-shrink: 0;
+        }
+
+        .load-card__remove:hover {
+            color: var(--color-error);
+            background: color-mix(in srgb, var(--color-error) 10%, transparent);
+        }
+
+        .load-card__body {
+            padding: var(--space-3);
+        }
+
+        .load-card__hint {
+            font-size: var(--text-xs);
+            color: var(--color-text-muted);
+            margin-top: var(--space-2);
+            padding: var(--space-2) var(--space-3);
+            background: var(--color-surface-raised);
+            border-top: 1px solid var(--color-border);
+        }
+
+        /* Inputs dentro de load cards: siempre 2 columnas con mínimo generoso */
+        .load-card__body .sim-grid-2 {
+            grid-template-columns: 1fr 1fr;
+            min-width: 0;
+        }
+
+        .load-card__body .sim-grid-2 .sim-input-wrap {
+            min-width: 0;
+        }
+
+        .load-card__body .sim-grid-2 .sim-input {
+            min-width: 0;
+            width: 100%;
+        }
+
+        .load-card__body .sim-unit {
+            flex-shrink: 0;
+            white-space: nowrap;
+            padding: 0 8px;
+            font-size: var(--text-xs);
+        }
+
+        /* -- Empty state ------------------------------------------- */
+        .sim-empty-state {
+            text-align: center;
+            color: var(--color-text-muted);
+            font-size: var(--text-sm);
+            padding: var(--space-3) var(--space-2);
+            line-height: 1.6;
+        }
+
+        /* -- Beam diagram ------------------------------------------- */
+        .beam-diagram-wrap {
+            padding: var(--space-3) var(--space-2);
+            background: var(--color-surface-raised);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-4);
+        }
+
+        .beam-diagram-wrap svg {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        /* -- Charts ------------------------------------------------ */
+        .sim-chart-wrap {
+            min-height: 200px;
+            margin-bottom: var(--space-4);
+        }
+
+        .sim-chart-wrap canvas {
+            max-height: 200px;
+        }
+
+        /* -- Critical sub-label ------------------------------------ */
+        .sim-result-sub {
+            font-size: var(--text-xs);
+            color: var(--color-text-muted);
+            margin-top: 2px;
+        }
+
+        .sim-section-divider {
+            border: none;
+            border-top: 1px solid var(--color-border);
+            margin: var(--space-4) 0 var(--space-3);
+        }
+
+        #load-list {
+            margin-top: 16px;
+            border-top: 1px solid var(--color-border);
+            padding-top: 16px;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Static Beam Calculator",
+        "description": "Calculate support reactions, shear force, bending moment, and deflection for simply supported beams with multiple point and distributed loads.",
+        "url": "https://engsim.app/simulators/static-beam/",
+        "applicationCategory": "EducationalApplication",
+        "isAccessibleForFree": true,
+        "operatingSystem": "Any",
+        "offers": { "@type": "Offer", "price": "0" }
+    }
+    </script>
+</head>
+
+<body>
+    <div class="page-wrapper">
+        <div id="nav-placeholder"></div>
+
+        <main class="page-main" id="main-content">
+
+            <!-- HERO -->
+            <section class="sim-hero" aria-labelledby="sim-title">
+                <div class="container">
+                    <nav aria-label="Breadcrumb">
+                        <ol class="sim-hero__breadcrumb">
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><span aria-hidden="true">/</span></li>
+                            <li><a href="../index.html">Simulators</a></li>
+                            <li><span aria-hidden="true">/</span></li>
+                            <li>Static Beam</li>
+                        </ol>
+                    </nav>
+                    <span class="sim-hero__category">Structural Engineering</span>
+                    <h1 class="sim-hero__title" id="sim-title">Static Beam Calculator</h1>
+                    <p class="sim-hero__subtitle">
+                        Compute support reactions, shear force diagram, bending moment diagram, and
+                        deflection curve for simply supported beams. Add any combination of point
+                        loads and uniform distributed loads.
+                    </p>
+                    <div class="sim-hero__tags">
+                        <span class="sim-hero__tag">Simply Supported Beam</span>
+                        <span class="sim-hero__tag">Shear Force Diagram</span>
+                        <span class="sim-hero__tag">Bending Moment</span>
+                        <span class="sim-hero__tag">Deflection</span>
+                        <span class="sim-hero__tag">Bernoulli-Euler</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SIMULATOR BODY -->
+            <section class="sim-body">
+                <div class="container">
+
+                    <!-- Error banner — scrolled into view on error -->
+                    <div class="sim-error" id="sim-error" role="alert" aria-live="polite"></div>
+
+                    <div class="sim-layout">
+
+                        <!-- ---- LEFT PANEL ---- -->
+                        <aside aria-label="Input parameters">
+
+                            <!-- Beam parameters -->
+                            <div class="sim-panel">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <path d="M12 20h9" />
+                                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                        </svg>
+                                        Beam Parameters
+                                    </span>
+                                </div>
+                                <div class="sim-panel__body">
+
+                                    <div class="sim-field">
+                                        <label for="input-L" class="sim-label">
+                                            Beam Length <span class="sim-label-hint">(L)</span>
+                                        </label>
+                                        <div class="sim-input-wrap">
+                                            <input type="number" id="input-L" class="sim-input" value="10" min="0.1"
+                                                max="100" step="0.5" aria-label="Beam length in meters" />
+                                            <span class="sim-unit">m</span>
+                                        </div>
+                                        <p class="sim-hint">Distance between supports A and B.</p>
+                                    </div>
+
+                                    <hr class="sim-section-divider" />
+                                    <p class="sim-section-label">Material &amp; Section</p>
+
+                                    <div class="sim-field">
+                                        <label for="input-E" class="sim-label">
+                                            Elastic Modulus <span class="sim-label-hint">(E)</span>
+                                        </label>
+                                        <div class="sim-input-wrap">
+                                            <input type="number" id="input-E" class="sim-input" value="200" min="1"
+                                                max="500" step="1" aria-label="Elastic modulus in GPa" />
+                                            <span class="sim-unit">GPa</span>
+                                        </div>
+                                        <p class="sim-hint">Steel ˜ 200 GPa · Aluminum ˜ 70 GPa · Concrete ˜ 30 GPa</p>
+                                    </div>
+
+                                    <div class="sim-field">
+                                        <label for="input-I" class="sim-label">
+                                            Moment of Inertia <span class="sim-label-hint">(I)</span>
+                                        </label>
+                                        <div class="sim-input-wrap">
+                                            <input type="number" id="input-I" class="sim-input" value="10000" min="1"
+                                                max="1000000" step="100" aria-label="Second moment of area in cm4" />
+                                            <span class="sim-unit">cm4</span>
+                                        </div>
+                                        <p class="sim-hint">IPE 300 ˜ 8 360 cm4 · HEB 300 ˜ 25 170 cm4</p>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- Loads panel -->
+                            <div class="sim-panel" style="margin-top: var(--space-4);">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
+                                            <polyline points="17 6 23 6 23 12" />
+                                        </svg>
+                                        Loads
+                                    </span>
+                                </div>
+                                <div class="sim-panel__body">
+
+                                    <p class="sim-section-label" style="margin-bottom: var(--space-2);">Add load type
+                                    </p>
+
+                                    <!-- Type selector — always visible, horizontal layout -->
+                                    <div class="load-type-selector">
+                                        <button type="button" id="btn-add-point" class="btn-load-type"
+                                            aria-label="Add a point load">
+                                            <div class="btn-load-type__icon">
+                                                <svg width="22" height="26" viewBox="0 0 22 26" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="11" y1="0" x2="11" y2="16" stroke="currentColor"
+                                                        stroke-width="2.5" />
+                                                    <polygon points="11,26 3,12 19,12" fill="currentColor" />
+                                                </svg>
+                                            </div>
+                                            <div class="btn-load-type__text">
+                                                <span class="btn-load-type__title">+ Point Load</span>
+                                                <span class="btn-load-type__desc">Concentrated force at a
+                                                    position</span>
+                                            </div>
+                                        </button>
+                                        <button type="button" id="btn-add-distributed" class="btn-load-type"
+                                            aria-label="Add a distributed load">
+                                            <div class="btn-load-type__icon">
+                                                <svg width="32" height="26" viewBox="0 0 32 26" fill="none"
+                                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                                    <line x1="1" y1="1" x2="31" y2="1" stroke="currentColor"
+                                                        stroke-width="2" />
+                                                    <line x1="6" y1="1" x2="6" y2="14" stroke="currentColor"
+                                                        stroke-width="1.8" />
+                                                    <line x1="14" y1="1" x2="14" y2="14" stroke="currentColor"
+                                                        stroke-width="1.8" />
+                                                    <line x1="22" y1="1" x2="22" y2="14" stroke="currentColor"
+                                                        stroke-width="1.8" />
+                                                    <polygon points="6,26  2,13  10,13" fill="currentColor" />
+                                                    <polygon points="14,26 10,13  18,13" fill="currentColor" />
+                                                    <polygon points="22,26 18,13  26,13" fill="currentColor" />
+                                                </svg>
+                                            </div>
+                                            <div class="btn-load-type__text">
+                                                <span class="btn-load-type__title">+ Distributed Load</span>
+                                                <span class="btn-load-type__desc">Uniform load over a span</span>
+                                            </div>
+                                        </button>
+                                    </div>
+
+                                    <!-- Dynamic load cards -->
+                                    <div id="load-list" aria-label="Load list" aria-live="polite"></div>
+
+                                </div>
+                            </div>
+
+                            <!-- Calculate -->
+                            <button type="button" id="btn-calculate" class="btn-primary"
+                                style="width:100%; margin-top:var(--space-4);">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <polyline points="9 11 12 14 22 4" />
+                                    <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                                </svg>
+                                Calculate
+                            </button>
+
+                        </aside>
+
+                        <!-- ---- RIGHT PANEL ---- -->
+                        <div id="results-panel" style="display:none;">
+
+                            <!-- Beam diagram -->
+                            <div class="sim-panel">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" />
+                                            <path d="M3 9h18M9 21V9" />
+                                        </svg>
+                                        Beam Diagram
+                                    </span>
+                                </div>
+                                <div class="sim-panel__body">
+                                    <div class="beam-diagram-wrap">
+                                        <svg id="beam-diagram" viewBox="0 0 560 130" role="img"
+                                            aria-label="Beam schematic with supports and loads"></svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Reactions -->
+                            <div class="sim-panel" style="margin-top:var(--space-4);">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                                        </svg>
+                                        Support Reactions
+                                    </span>
+                                    <span class="sim-panel__badge">Real-time</span>
+                                </div>
+                                <div class="sim-panel__body">
+                                    <div class="sim-results-grid">
+                                        <div class="sim-result-card sim-result-card--accent">
+                                            <div class="sim-result-label">Reaction R<sub>A</sub></div>
+                                            <div class="sim-result-value" id="out-Ra">—</div>
+                                            <div class="sim-result-unit">kN</div>
+                                        </div>
+                                        <div class="sim-result-card">
+                                            <div class="sim-result-label">Reaction R<sub>B</sub></div>
+                                            <div class="sim-result-value" id="out-Rb">—</div>
+                                            <div class="sim-result-unit">kN</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Critical values -->
+                            <div class="sim-panel" style="margin-top:var(--space-4);">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <circle cx="12" cy="12" r="10" />
+                                            <line x1="12" y1="8" x2="12" y2="12" />
+                                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                                        </svg>
+                                        Critical Values
+                                    </span>
+                                </div>
+                                <div class="sim-panel__body">
+                                    <div class="sim-results-grid" style="grid-template-columns: repeat(3,1fr);">
+                                        <div class="sim-result-card">
+                                            <div class="sim-result-label">Max |Q|</div>
+                                            <div class="sim-result-value" id="out-Vmax">—</div>
+                                            <div class="sim-result-unit">kN</div>
+                                            <div class="sim-result-sub">at x = <span id="out-Vmax-x">—</span> m</div>
+                                        </div>
+                                        <div class="sim-result-card sim-result-card--accent">
+                                            <div class="sim-result-label">Max |M|</div>
+                                            <div class="sim-result-value" id="out-Mmax">—</div>
+                                            <div class="sim-result-unit">kNm</div>
+                                            <div class="sim-result-sub">at x = <span id="out-Mmax-x">—</span> m</div>
+                                        </div>
+                                        <div class="sim-result-card">
+                                            <div class="sim-result-label">Max |y|</div>
+                                            <div class="sim-result-value" id="out-Ymax">—</div>
+                                            <div class="sim-result-unit">mm</div>
+                                            <div class="sim-result-sub">at x = <span id="out-Ymax-x">—</span> m</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Shear -->
+                            <div class="sim-panel" style="margin-top:var(--space-4);">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">Shear Force Diagram (Q)</span>
+                                </div>
+                                <div class="sim-panel__body">
+                                    <div class="sim-chart-wrap">
+                                        <canvas id="chart-shear" aria-label="Shear force diagram" role="img"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Moment -->
+                            <div class="sim-panel" style="margin-top:var(--space-4);">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">Bending Moment Diagram (M)</span>
+                                </div>
+                                <div class="sim-panel__body">
+                                    <div class="sim-chart-wrap">
+                                        <canvas id="chart-moment" aria-label="Bending moment diagram"
+                                            role="img"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Deflection -->
+                            <div class="sim-panel" style="margin-top:var(--space-4);">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">Deflection Curve (y)</span>
+                                </div>
+                                <div class="sim-panel__body">
+                                    <div class="sim-chart-wrap">
+                                        <canvas id="chart-deflection" aria-label="Deflection curve" role="img"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div><!-- /results-panel -->
+
+                    </div><!-- /sim-layout -->
+                </div><!-- /container -->
+            </section>
+
+            <!-- AD SLOT 1 -->
+<!-- AD-SLOT HIDDEN
+            <div class="container">
+                <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">Advertisement</div>
+            </div>
+            -->
+
+            <!-- EDUCATIONAL CONTENT -->
+            <div class="container container--narrow">
+                <div class="edu-content">
+
+                    <section class="edu-section" id="about" aria-labelledby="h-about">
+                        <h2 id="h-about">About This Simulator</h2>
+                        <p>
+                            This calculator analyzes <strong>simply supported beams</strong> — one of the most
+                            fundamental
+                            structural elements in civil and mechanical engineering. The beam rests on a pin support at
+                            end A
+                            and a roller support at end B, making it statically determinate: reactions, internal forces,
+                            and deflections can all be computed from equilibrium equations alone.
+                        </p>
+                        <p>
+                            The simulator applies the <strong>principle of superposition</strong>: each load (point or
+                            distributed) is processed independently, its contribution to shear V(x) and bending moment
+                            M(x)
+                            calculated analytically, and the results summed across the full beam length. This produces
+                            exact
+                            diagrams — not approximations — for any combination of loads within the isostatic model.
+                        </p>
+                        <p>
+                            Deflections are computed by double-integrating the curvature ? = M(x)/EI using the
+                            <strong>Bernoulli-Euler beam theory</strong>. This assumes the beam is linearly elastic,
+                            cross-sections remain plane after bending, and deformations are small relative to beam
+                            length.
+                        </p>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="how-to-use" aria-labelledby="h-howto">
+                        <h2 id="h-howto">How to Use</h2>
+                        <ol>
+                            <li><strong>Set beam length L.</strong> Enter the span between support A (x = 0) and support
+                                B (x = L). Valid range: 0.1 m to 100 m.</li>
+                            <li><strong>Set material and section properties.</strong> Enter E (GPa) and I (cm4). These
+                                affect deflection but not the shear or moment diagrams.</li>
+                            <li><strong>Add loads.</strong> Click <em>Point Load</em> or <em>Distributed</em> to add a
+                                load card. Enter the magnitude and position(s) within [0, L].</li>
+                            <li><strong>Click Calculate.</strong> The simulator computes reactions, critical values, and
+                                renders three diagrams: Q(x), M(x), and y(x).</li>
+                            <li><strong>Read the results.</strong> Hover over any chart to see exact values at any
+                                position. Critical maximums and their locations are shown in the summary cards.</li>
+                        </ol>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="results" aria-labelledby="h-results">
+                        <h2 id="h-results">Understanding the Results</h2>
+                        <h3>Support Reactions R<sub>A</sub> and R<sub>B</sub></h3>
+                        <p>Vertical forces exerted by the supports. Found from SF = 0 and SM = 0. Check: R<sub>A</sub> +
+                            R<sub>B</sub> must equal the total applied load.</p>
+                        <h3>Shear Force Diagram Q(x)</h3>
+                        <p>Algebraic sum of vertical forces to the left of any cross-section. Constant between point
+                            loads, linear under distributed loads. Maximum shear typically occurs at supports.</p>
+                        <h3>Bending Moment Diagram M(x)</h3>
+                        <p>Sum of moments of all forces to the left of a section. Linear between point loads, parabolic
+                            under UDLs. Maximum moment occurs where Q = 0 — the critical section for flexural design.
+                        </p>
+                        <h3>Deflection Curve y(x)</h3>
+                        <p>Obtained by double-integrating M(x)/EI with y(0) = y(L) = 0. Results in mm. Compare against
+                            code limits: Eurocode 3 limits L/300 for floors, L/500 for elements supporting brittle
+                            finishes.</p>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="faq" aria-labelledby="h-faq">
+                        <h2 id="h-faq">Frequently Asked Questions</h2>
+                        <div class="edu-faq">
+                            <details class="edu-faq-item">
+                                <summary>What sign convention is used?</summary>
+                                <div class="edu-faq-answer">Downward loads are positive. Shear Q is positive when the
+                                    left portion tends to slide upward. Moment M is positive (sagging) when the beam
+                                    bends concave upward — tension on the bottom fiber.</div>
+                            </details>
+                            <details class="edu-faq-item">
+                                <summary>Can I add multiple loads at the same position?</summary>
+                                <div class="edu-faq-answer">Yes. Superposition handles any combination correctly.
+                                    Multiple point loads at the same x, overlapping distributed loads — all are summed
+                                    algebraically.</div>
+                            </details>
+                            <details class="edu-faq-item">
+                                <summary>Why do I enter I directly instead of the cross-section dimensions?</summary>
+                                <div class="edu-faq-answer">The second moment of area I is the only cross-section
+                                    property that affects deflection under Bernoulli-Euler theory. Entering I directly
+                                    makes the calculator applicable to any section shape: I-beams, rectangular, circular
+                                    pipe, composite sections.</div>
+                            </details>
+                            <details class="edu-faq-item">
+                                <summary>How do I find I for a standard steel profile?</summary>
+                                <div class="edu-faq-answer">Section tables are published by steel manufacturers and
+                                    standards bodies. Reference values: IPE 200 ? 1 943 cm4; IPE 300 ? 8 356 cm4; HEB
+                                    200 ? 5 696 cm4; HEB 300 ? 25 170 cm4. For custom sections, compute I from the
+                                    parallel-axis theorem.</div>
+                            </details>
+                            <details class="edu-faq-item">
+                                <summary>What are the limitations?</summary>
+                                <div class="edu-faq-answer">The model assumes: linear elastic, isotropic material; plane
+                                    sections remain plane; small deformations; transverse loads only (no axial force or
+                                    torsion); simply supported ends. It does not cover cantilevers, fixed-end beams,
+                                    continuous beams, or non-uniform sections.</div>
+                            </details>
+                        </div>
+                    </section>
+
+<!-- AD-SLOT HIDDEN
+                    <div class="ad-slot ad-slot--leaderboard" style="margin-top:40px;" aria-label="Advertisement">
+                        Advertisement
+                    </div>
+                    -->
+
+                </div>
+            </div>
+
+        </main>
+
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <script src="../../assets/js/platform.js"></script>
+    <script type="module" src="./js/simulator.js"></script>
+</body>
+
+</html>

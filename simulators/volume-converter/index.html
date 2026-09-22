@@ -1,0 +1,297 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Volume Converter — Convert L, mL, gal, m³, cups & More | EngSim</title>
+  <meta name="description" content="Free volume unit converter. Enter one value and instantly see it converted to liters, milliliters, cubic meters, gallons, quarts, cups, fluid ounces and more." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Volume Converter — Convert Between All Volume Units" />
+  <meta property="og:description" content="Convert volume between liters, milliliters, cubic meters, cubic feet, US/UK gallons, cups, tablespoons and more — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/volume-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/volume-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — vol- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Volume Converter",
+    "url": "https://engsim.app/simulators/volume-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert volume values between milliliters, liters, cubic meters, cubic centimeters, cubic inches, cubic feet, US and UK gallons, quarts, pints, cups, fluid ounces, tablespoons and teaspoons.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.vol-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Volume Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Volume Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any volume unit and instantly see the equivalent in liters, milliliters, gallons, cubic meters, cups and more.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">Liters</span>
+            <span class="sim-hero__tag">Gallons</span>
+            <span class="sim-hero__tag">Cubic Meters</span>
+            <span class="sim-hero__tag">Cups</span>
+            <span class="sim-hero__tag">Fluid Ounces</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 2h8"/><path d="M12 2v6.34a2 2 0 0 1-.6 1.43l-5.8 5.68A3 3 0 0 0 4.5 20h15a3 3 0 0 0 .9-5.55l-5.8-5.68a2 2 0 0 1-.6-1.43V2"/><path d="M7 15h10"/></svg>
+                <span class="sim-panel__title">Volume Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="1" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="vol-table-wrap" id="results-table-wrap">
+                    <table class="vol-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Volume Converter</h2>
+            <p>Volume conversions come up constantly in cooking, shipping, construction and chemistry — a recipe in cups needs to become milliliters, a shipping container's capacity in cubic meters needs to become gallons, a lab measurement in fluid ounces needs to become liters. This tool lets you enter a value once and see it converted to every common volume unit at the same time — metric, US customary and imperial.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the volume value you want to convert.</li>
+              <li>Select the unit that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value in every other unit.</li>
+            </ol>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formula</h2>
+            <p>Every volume unit converts through the liter (L). To convert from unit A to unit B:</p>
+            <div class="edu-formula">value_B = value_A × factor_A→L ÷ factor_B→L</div>
+            <p>All volume units are linear multiples of the liter, so every conversion here is straightforward multiplication or division.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Volume Unit Conversion Factors (to Liters)</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Value in Liters</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Milliliter</td><td>mL</td><td>0.001</td></tr>
+                  <tr><td>Liter</td><td>L</td><td>1</td></tr>
+                  <tr><td>Cubic Meter</td><td>m³</td><td>1,000</td></tr>
+                  <tr><td>Cubic Centimeter</td><td>cm³</td><td>0.001</td></tr>
+                  <tr><td>Cubic Inch</td><td>in³</td><td>0.016387064</td></tr>
+                  <tr><td>Cubic Foot</td><td>ft³</td><td>28.316846592</td></tr>
+                  <tr><td>US Gallon</td><td>gal (US)</td><td>3.785411784</td></tr>
+                  <tr><td>UK Gallon</td><td>gal (UK)</td><td>4.54609</td></tr>
+                  <tr><td>US Quart</td><td>qt (US)</td><td>0.946352946</td></tr>
+                  <tr><td>US Pint</td><td>pt (US)</td><td>0.473176473</td></tr>
+                  <tr><td>US Cup</td><td>cup (US)</td><td>0.2365882365</td></tr>
+                  <tr><td>US Fluid Ounce</td><td>fl oz (US)</td><td>0.0295735295625</td></tr>
+                  <tr><td>US Tablespoon</td><td>tbsp (US)</td><td>0.0147867647813</td></tr>
+                  <tr><td>US Teaspoon</td><td>tsp (US)</td><td>0.00492892159375</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: cubic centimeter and milliliter are numerically identical (1 cm³ = 1 mL exactly), but both are listed since each is common in its own context (cm³ in engineering/medicine, mL in cooking/chemistry). US customary units (gallon, quart, pint, cup, fl oz, tbsp, tsp) differ from UK imperial units — only the UK gallon is included here since it's the one most often confused with its US counterpart.</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — Liters to US Gallons</p>
+                <p>A 20 L fuel can: 20 ÷ 3.785411784 L/gal ≈ <strong>5.28 US gal</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — Cups to Milliliters</p>
+                <p>A recipe calling for 2 cups: 2 × 236.5882365 mL/cup ≈ <strong>473.18 mL</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — Cubic Meters to US Gallons</p>
+                <p>A 1 m³ water tank: 1,000 L ÷ 3.785411784 L/gal ≈ <strong>264.17 US gal</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — US Gallon vs UK Gallon</p>
+                <p>A car rated at 1 UK gallon: 4.54609 L, which converts to 4.54609 ÷ 3.785411784 ≈ <strong>1.20 US gal</strong> — the UK gallon is about 20% larger than the US gallon.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>How many milliliters are in a liter?</summary>
+              <div class="edu-faq-answer">Exactly 1,000 mL. The prefix "milli-" always means one thousandth in the metric system.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How do I convert liters to US gallons?</summary>
+              <div class="edu-faq-answer">Divide the liter value by 3.785411784. Equivalently, 1 US gallon ≈ 3.785 liters, so 1 liter ≈ 0.264 US gallons.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Is a UK gallon the same as a US gallon?</summary>
+              <div class="edu-faq-answer">No. A UK (imperial) gallon is 4.54609 L, while a US gallon is 3.785411784 L — the UK gallon is about 20% larger. This trips people up constantly when comparing fuel economy figures between the US and UK.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Is 1 cm³ the same as 1 mL?</summary>
+              <div class="edu-faq-answer">Yes, exactly. A milliliter is defined as one cubic centimeter, so the two are interchangeable — you'll see cm³ used more in engineering and medicine, and mL more in cooking and chemistry.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>How many cups are in a liter?</summary>
+              <div class="edu-faq-answer">About 4.227 US cups. Since 1 US cup = 236.5882365 mL, 1 L ÷ 236.5882365 mL ≈ 4.227 cups.</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

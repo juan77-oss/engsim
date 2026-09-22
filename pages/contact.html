@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact — EngSim</title>
+    <meta name="description"
+        content="Contact EngSim. Send us your questions, suggestions, or report an issue with any of our engineering simulators." />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/platform.css" />
+
+    <style>
+        .contact-hero {
+            padding: var(--space-2xl) 0 var(--space-xl);
+            border-bottom: 1px solid var(--border);
+            background: linear-gradient(135deg, #f0f4ff 0%, var(--bg-page) 70%);
+        }
+
+        body.dark .contact-hero {
+            background: linear-gradient(135deg, #1a2744 0%, var(--bg-page) 70%);
+        }
+
+        .contact-body {
+            padding: var(--space-2xl) 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-2xl);
+            align-items: start;
+        }
+
+        @media (max-width: 720px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Form */
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+
+        .contact-form label {
+            display: block;
+            font-size: .8rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--space-xs);
+        }
+
+        .contact-form input,
+        .contact-form select,
+        .contact-form textarea {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            background: var(--bg-input);
+            padding: 10px 14px;
+            font-size: .9rem;
+            color: var(--text-primary);
+            outline: none;
+            font-family: var(--font-sans);
+            transition: border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .contact-form input:focus,
+        .contact-form select:focus,
+        .contact-form textarea:focus {
+            border-color: var(--brand-accent);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+        }
+
+        .contact-form textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+
+        .contact-form .submit-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: 12px 28px;
+            background: var(--brand-accent);
+            color: #fff;
+            font-size: .9rem;
+            font-weight: 700;
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            transition: background var(--transition);
+            width: 100%;
+        }
+
+        .contact-form .submit-btn:hover {
+            background: var(--brand-accent-h);
+        }
+
+        .contact-note {
+            font-size: .8rem;
+            color: var(--text-muted);
+            text-align: center;
+            margin-top: -var(--space-sm);
+        }
+
+        /* Info cards */
+        .info-card {
+            display: flex;
+            gap: var(--space-md);
+            align-items: flex-start;
+            padding: var(--space-lg);
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-md);
+        }
+
+        .info-card__icon {
+            width: 38px;
+            height: 38px;
+            background: rgba(37, 99, 235, .1);
+            color: var(--brand-accent);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .info-card__icon svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        .info-card__title {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            font-size: .9rem;
+        }
+
+        .info-card__desc {
+            font-size: .85rem;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .info-card__desc a {
+            color: var(--brand-accent);
+        }
+
+        /* Success message */
+        .form-success {
+            display: none;
+            padding: var(--space-lg);
+            background: rgba(22, 163, 74, .08);
+            border: 1px solid rgba(22, 163, 74, .25);
+            border-radius: var(--radius-md);
+            color: var(--color-success);
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .form-success.is-visible {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-wrapper">
+
+        <div id="nav-placeholder"></div>
+
+        <main class="page-main" id="main-content">
+
+            <section class="contact-hero" aria-labelledby="contact-title">
+                <div class="container">
+                    <nav aria-label="Breadcrumb">
+                        <ol class="sim-hero__breadcrumb">
+                            <li><a href="../index.html">Home</a></li>
+                            <li><span>/</span></li>
+                            <li>Contact</li>
+                        </ol>
+                    </nav>
+                    <h1 id="contact-title">Contact</h1>
+                    <p
+                        style="max-width:520px; margin-top:12px; color:var(--text-secondary); font-size:1.05rem; line-height:1.7;">
+                        Questions, suggestions, or found a bug in a simulator?
+                        We'd love to hear from you.
+                    </p>
+                </div>
+            </section>
+
+            <div class="contact-body">
+                <div class="container container--narrow">
+                    <div class="contact-grid">
+
+                        <!-- Contact form -->
+                        <div>
+                            <h2 style="margin-bottom: var(--space-lg);">Send a message</h2>
+
+                            <!--
+              NOTE: This form uses mailto: as a simple starting point.
+              When you're ready, replace with Formspree (formspree.io) or
+              a similar free form backend — no server required.
+              Formspree is free for up to 50 submissions/month.
+
+              Replace action with:
+              action="https://formspree.io/f/YOUR_FORM_ID"
+              method="POST"
+            -->
+                            <form class="contact-form" id="contact-form" action="mailto:contact@engsim.app"
+                                method="POST" enctype="text/plain">
+
+                                <div>
+                                    <label for="cf-name">Your name</label>
+                                    <input type="text" id="cf-name" name="name" placeholder="John Smith" required
+                                        autocomplete="name" />
+                                </div>
+
+                                <div>
+                                    <label for="cf-email">Email address</label>
+                                    <input type="email" id="cf-email" name="email" placeholder="john@example.com"
+                                        required autocomplete="email" />
+                                </div>
+
+                                <div>
+                                    <label for="cf-subject">Subject</label>
+                                    <select id="cf-subject" name="subject" required>
+                                        <option value="">Select a topic…</option>
+                                        <option value="bug">Bug report — simulator not working correctly</option>
+                                        <option value="suggestion">Suggestion — new simulator or feature</option>
+                                        <option value="theory">Theory question — calculation or formula</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+
+                                <div>
+                                    <label for="cf-message">Message</label>
+                                    <textarea id="cf-message" name="message"
+                                        placeholder="Describe your question or suggestion in detail…"
+                                        required></textarea>
+                                </div>
+
+                                <button type="submit" class="submit-btn">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" aria-hidden="true">
+                                        <line x1="22" y1="2" x2="11" y2="13" />
+                                        <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                                    </svg>
+                                    Send Message
+                                </button>
+
+                            </form>
+
+                            <div class="form-success" id="form-success" role="status">
+                                ✓ Message sent. We'll get back to you as soon as possible.
+                            </div>
+                        </div>
+
+                        <!-- Info -->
+                        <div>
+                            <h2 style="margin-bottom: var(--space-lg);">Other ways to reach us</h2>
+
+                            <div class="info-card">
+                                <div class="info-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path
+                                            d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                                        <polyline points="22,6 12,13 2,6" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="info-card__title">Email</p>
+                                    <p class="info-card__desc">
+                                        <a href="mailto:contact@engsim.app">contact@engsim.app</a><br>
+                                        We typically respond within 2–3 business days.
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="info-card">
+                                <div class="info-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <path
+                                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="info-card__title">GitHub</p>
+                                    <p class="info-card__desc">
+                                        Found a bug? Open an issue on our GitHub repository.
+                                        <!-- Add your GitHub URL here when the repo is public -->
+                                        <br><span style="color:var(--text-muted);">Repository link coming soon.</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div class="info-card">
+                                <div class="info-card__icon" aria-hidden="true">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="12" y1="8" x2="12" y2="12" />
+                                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="info-card__title">What to include in a bug report</p>
+                                    <p class="info-card__desc">
+                                        Simulator name, input values you used, expected result vs.
+                                        what you got, and your browser. Screenshots are very helpful.
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <div id="footer-placeholder"></div>
+
+    </div>
+    <script src="../assets/js/platform.js"></script>
+</body>
+
+</html>

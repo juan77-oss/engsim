@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>T–s Diagram of Water — EngSim</title>
+    <meta name="description" content="Interactive Temperature–Entropy (T–s) diagram for water and steam. Analyze thermodynamic states, vapor quality, saturation regions, and process paths. Engineering learning resource for Rankine cycles, steam turbines, and thermodynamics students." />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="T–s Diagram of Water — Thermodynamic State Visualizer | EngSim" />
+    <meta property="og:description" content="Plot thermodynamic states on the Temperature–Entropy diagram for water and steam. Visualize the saturation dome, compute vapor quality (x), and explore steam tables and Rankine cycle concepts interactively." />
+    <meta property="og:site_name" content="EngSim" />
+    <meta property="og:url" content="https://engsim.app/simulators/ts-diagram-water/" />
+
+    <!-- Canonical URL — fill in once you have the domain -->
+    <!-- <link rel="canonical" href="https://engsim.app/simulators/ts-diagram-water/" /> -->
+
+    <!-- Structured data for Google (SEO) -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "T–s Diagram of Water",
+    "description": "Interactive Temperature–Entropy (T–s) diagram visualizer for water and steam. Input temperature and specific entropy to locate a state point on the saturation dome, determine vapor quality (x), and explore Rankine cycle and steam table concepts.",
+    "url": "https://engsim.app/simulators/ts-diagram-water/",
+    "applicationCategory": "EducationalApplication",
+    "isAccessibleForFree": true,
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0" }
+  }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Platform CSS -->
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/platform.css" />
+
+    <!-- Global simulator CSS (shared across all simulators) -->
+    <link rel="stylesheet" href="../../assets/css/simulator.css" />
+</head>
+
+<body>
+
+    <div class="page-wrapper">
+        <!-- TOP NAVIGATION (injected by platform.js) -->
+        <div id="nav-placeholder"></div>
+
+        <main class="page-main" id="main-content">
+            <!-- HERO -->
+            <section class="sim-hero" aria-labelledby="sim-title">
+                <div class="container">
+                    <nav aria-label="Breadcrumb">
+                        <ol class="sim-hero__breadcrumb">
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><span aria-hidden="true">/</span></li>
+                            <li><a href="../index.html">Simulators</a></li>
+                            <li><span aria-hidden="true">/</span></li>
+                            <li>T–s Diagram</li>
+                        </ol>
+                    </nav>
+                    <span class="sim-hero__category">Thermodynamics</span>
+                    <h1 class="sim-hero__title" id="sim-title">T–s Diagram — Water</h1>
+                    <p class="sim-hero__subtitle">
+                        Interactive visualizer of thermodynamic states on the Temperature–Entropy diagram.
+                        Analyze saturation regions, mixture quality, and steam properties.
+                    </p>
+                    <div class="sim-hero__tags">
+                        <span class="sim-hero__tag">T–s diagram</span>
+                        <span class="sim-hero__tag">Steam tables</span>
+                        <span class="sim-hero__tag">Rankine cycle</span>
+                        <span class="sim-hero__tag">Vapor quality</span>
+                    </div>
+                </div>
+            </section>
+
+            <section class="sim-body">
+            <div class="container">
+                <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+                    <!-- LEFT PANEL: CONTROLS -->
+                    <aside class="ts-shell__sidebar">
+                        <div class="ts-panel">
+                            <div class="ts-panel__header">
+                                <h2 class="ts-panel__title">State Configuration</h2>
+                            </div>
+
+                            <div class="ts-field">
+                                <label class="ts-label" for="input-t">Temperature (T) [°C]</label>
+                                <div class="ts-input-group">
+                                    <input type="number" id="input-t" class="ts-input-number" value="150" step="1" min="0" max="500">
+                                    <input type="range" id="slider-t" class="ts-slider" min="0" max="500" value="150" aria-label="Temperature slider">
+                                </div>
+                            </div>
+
+                            <div class="ts-field">
+                                <label class="ts-label" for="input-s">Specific Entropy (s) [kJ/kg·K]</label>
+                                <div class="ts-input-group">
+                                    <input type="number" id="input-s" class="ts-input-number" value="2.0" step="0.1" min="0" max="10">
+                                    <input type="range" id="slider-s" class="ts-slider" min="0" max="10" step="0.01" value="2.0" aria-label="Specific entropy slider">
+                                </div>
+                            </div>
+
+                            <!-- PROCESS MODE -->
+                            <div class="ts-process-box">
+                                <label class="ts-checkbox-group">
+                                    <input type="checkbox" id="check-process">
+                                    <span class="ts-label" style="margin: 0;">Enable process mode</span>
+                                </label>
+                                <div id="process-selector-group" class="ts-field" style="display: none; margin-top: 10px; margin-bottom: 0;">
+                                    <select id="select-process" class="ts-select">
+                                        <option value="isentropic">Isentropic Process</option>
+                                        <option value="isothermal">Isothermal Process</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="ts-results">
+                                <div class="ts-region-badge" id="res-region">Detecting region...</div>
+                                
+                                <div class="ts-card">
+                                    <span class="ts-card__label">Current T</span>
+                                    <span class="ts-card__value" id="res-temp">150.0</span>
+                                    <span class="ts-card__unit">°C</span>
+                                </div>
+                                <div class="ts-card">
+                                    <span class="ts-card__label">Current s</span>
+                                    <span class="ts-card__value" id="res-entropy">2.00</span>
+                                    <span class="ts-card__unit">kJ/kgK</span>
+                                </div>
+                                <div class="ts-card" style="grid-column: span 2;">
+                                    <span class="ts-card__label">Quality (x)</span>
+                                    <span class="ts-card__value" id="res-quality">-</span>
+                                    
+                                    <!-- Quality Bar (Mixture) -->
+                                    <div id="quality-bar-container" style="display: none; margin-top: 10px;">
+                                        <div style="display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--ts-text-muted); margin-bottom: 4px;">
+                                            <span>Liquid (x=0)</span>
+                                            <span>Vapor (x=1)</span>
+                                        </div>
+                                        <div class="ts-quality-bar">
+                                            <div id="quality-bar-fill" class="ts-quality-bar__fill"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Didactic Block: dynamic equation -->
+                        <div id="didactic-analysis" class="ts-didactic" style="display: none;">
+                            <div class="ts-didactic__header">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" focusable="false">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                                <span>Didactic Analysis</span>
+                            </div>
+                            <div class="ts-didactic__content">
+                                <p class="ts-didactic__explanation">Quality (x) calculation in two-phase mixture:</p>
+                                <div id="equation-formula" class="ts-formula">
+                                    x = (s - s<sub>f</sub>) / (s<sub>g</sub> - s<sub>f</sub>)
+                                </div>
+                                <div id="equation-values" class="ts-formula ts-formula--values">
+                                    x = (2.00 - 0.70) / (7.00 - 0.70)
+                                </div>
+                                <div id="equation-result" class="ts-formula ts-formula--result">
+                                    x = 0.206
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+
+                    <!-- RIGHT PANEL: CHART -->
+                    <section class="ts-chart-container">
+                        <div class="ts-chart-header">
+                            <h2 class="ts-chart-title">Temperature vs. Entropy Diagram</h2>
+                        </div>
+                        <div class="ts-canvas-wrap">
+                            <canvas id="ts-chart"></canvas>
+                        </div>
+                    </section>
+                </div>
+            </div>
+            </section>
+
+            <!-- AD SLOT: after simulator, before educational content -->
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+            <div class="container" style="padding-bottom: 0;">
+                <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">Advertisement</div>
+            </div>
+            -->
+
+            <!-- ══════════════════════════════════════════════════════
+                 EDUCATIONAL CONTENT
+                 A standalone engineering learning resource accompanying
+                 the interactive T–s diagram simulator.
+                 ══════════════════════════════════════════════════════ -->
+            <div class="container edu-content" id="edu-content">
+
+                <!-- ── 1. About This Simulator ── -->
+                <section class="edu-section" id="about-simulator" aria-labelledby="about-heading">
+                    <h2 class="edu-section__heading" id="about-heading">About This Simulator</h2>
+                    <p>
+                        A <strong>Temperature–Entropy (T–s) diagram</strong> is a thermodynamic property chart
+                        in which temperature <em>T</em> is plotted on the vertical axis and specific entropy
+                        <em>s</em> is plotted on the horizontal axis. Each point on the diagram represents a
+                        distinct thermodynamic state of the working fluid — in this case, water or steam.
+                    </p>
+                    <p>
+                        T–s diagrams are indispensable tools in engineering thermodynamics because the area
+                        under a process path on the T–s plane is directly proportional to the heat transferred
+                        per unit mass during a <em>reversible</em> process (<code>δq<sub>rev</sub> = T ds</code>).
+                        This geometric interpretation makes it straightforward to compare heat addition, heat
+                        rejection, and work interactions across different thermodynamic cycles.
+                    </p>
+                    <p>
+                        <strong>Why water / steam?</strong> Water is the standard working fluid in steam power
+                        plants and Rankine cycles. Its well-documented saturation properties make it the natural
+                        reference fluid for introducing T–s analysis in engineering courses.
+                    </p>
+                    <p>
+                        The <strong>saturation dome</strong> is the most prominent feature of the water T–s
+                        diagram. It separates three thermodynamic regions:
+                    </p>
+                    <ul>
+                        <li><strong>Compressed (subcooled) liquid</strong> — to the left of the dome.</li>
+                        <li><strong>Two-phase liquid–vapor mixture</strong> — inside the dome.</li>
+                        <li><strong>Superheated vapor</strong> — to the right of the dome.</li>
+                    </ul>
+                    <p>
+                        This simulator allows you to explore any thermodynamic state by specifying temperature
+                        and specific entropy. The engine interpolates the saturation boundary at the given
+                        temperature, classifies the region, and — when applicable — computes vapor quality.
+                        An optional process-analysis mode overlays an isentropic or isothermal path on the diagram.
+                    </p>
+                </section>
+
+                <!-- ── 2. How to Use ── -->
+                <section class="edu-section" id="how-to-use" aria-labelledby="howto-heading">
+                    <h2 class="edu-section__heading" id="howto-heading">How to Use the Simulator</h2>
+                    <ol class="edu-steps">
+                        <li>
+                            <span><strong>Set the temperature.</strong> Use the numeric input or the slider
+                            labeled <em>Temperature (T) [°C]</em>. The valid range is 0 °C to 500 °C.
+                            The simulator interpolates saturation properties at the selected temperature.</span>
+                        </li>
+                        <li>
+                            <span><strong>Set the specific entropy.</strong> Use the <em>Specific Entropy (s)
+                            [kJ/kg·K]</em> input or its slider (range 0–10 kJ/kg·K) to position the state
+                            point along the horizontal axis of the T–s diagram.</span>
+                        </li>
+                        <li>
+                            <span><strong>Read the thermodynamic region.</strong> The colored badge at the top
+                            of the results panel identifies the current region: Compressed Liquid, Two-phase
+                            Mixture, Superheated Vapor, or Supercritical Fluid.</span>
+                        </li>
+                        <li>
+                            <span><strong>Interpret vapor quality.</strong> When the state falls inside the
+                            saturation dome, the <em>Quality (x)</em> card and the quality progress bar
+                            indicate the mass fraction of vapor in the mixture (0 = saturated liquid,
+                            1 = saturated vapor). The <em>Didactic Analysis</em> panel below the results
+                            shows the live quality equation with the current numerical values substituted in.</span>
+                        </li>
+                        <li>
+                            <span><strong>Observe the diagram.</strong> The red point marks the current state
+                            on the T–s chart. The saturation dome, quality iso-lines, and — when process
+                            mode is active — the process trajectory are all drawn automatically.</span>
+                        </li>
+                        <li>
+                            <span><strong>Enable process analysis.</strong> Check <em>Enable process mode</em>
+                            and select either <em>Isentropic Process</em> or <em>Isothermal Process</em>.
+                            The simulator draws the selected process path starting from the current state,
+                            providing a visual reference for the entropy or temperature change involved.</span>
+                        </li>
+                    </ol>
+                </section>
+
+                <!-- ── 3. Engineering Background ── -->
+                <section class="edu-section" id="engineering-background" aria-labelledby="bg-heading">
+                    <h2 class="edu-section__heading" id="bg-heading">Engineering Background</h2>
+
+                    <h3 class="edu-section__subheading">Temperature–Entropy Diagram</h3>
+                    <p>
+                        On a T–s diagram:
+                    </p>
+                    <ul>
+                        <li>The <strong>vertical axis</strong> represents temperature in <strong>°C</strong>.</li>
+                        <li>The <strong>horizontal axis</strong> represents specific entropy in
+                            <strong>kJ/(kg·K)</strong>.</li>
+                        <li>A <strong>single point</strong> defines a complete thermodynamic state (provided
+                            the region is known, since entropy is not uniquely related to temperature in the
+                            two-phase region without the quality).</li>
+                        <li>A <strong>process path</strong> is a curve connecting two or more states;
+                            its shape reveals the nature of the process (e.g., vertical = constant entropy,
+                            horizontal = constant temperature).</li>
+                    </ul>
+
+                    <h3 class="edu-section__subheading">Saturation Dome</h3>
+                    <p>
+                        The saturation dome is the bell-shaped boundary that encloses the two-phase
+                        liquid–vapor region of water. It consists of two curves that meet at the
+                        <strong>critical point</strong>:
+                    </p>
+                    <div class="edu-grid">
+                        <div class="edu-grid-item">
+                            <h4>Saturated Liquid Line (left)</h4>
+                            <p>
+                                The left boundary of the dome. Points on this curve represent water at the
+                                onset of vaporization — liquid at its boiling point for the given pressure.
+                                Specific entropy here is denoted <em>s<sub>f</sub></em>.
+                            </p>
+                        </div>
+                        <div class="edu-grid-item">
+                            <h4>Saturated Vapor Line (right)</h4>
+                            <p>
+                                The right boundary. Points on this curve represent steam that is exactly at
+                                the boundary between wet and superheated vapor.
+                                Specific entropy here is denoted <em>s<sub>g</sub></em>.
+                            </p>
+                        </div>
+                        <div class="edu-grid-item">
+                            <h4>Two-Phase Region (inside dome)</h4>
+                            <p>
+                                A coexisting mixture of liquid and vapor at saturation conditions.
+                                Temperature and pressure are not independent here; both are fixed once
+                                the saturation condition is set.
+                            </p>
+                        </div>
+                        <div class="edu-grid-item">
+                            <h4>Compressed Liquid (left of dome)</h4>
+                            <p>
+                                Liquid at a pressure above its saturation pressure. Properties are close to
+                                those of saturated liquid at the same temperature. Relevant for pump and
+                                boiler feedwater analysis.
+                            </p>
+                        </div>
+                        <div class="edu-grid-item">
+                            <h4>Superheated Vapor (right of dome)</h4>
+                            <p>
+                                Steam whose temperature exceeds the saturation temperature at the prevailing
+                                pressure. Both <em>T</em> and <em>s</em> can vary independently. Used in
+                                turbine stages and high-efficiency Rankine cycles.
+                            </p>
+                        </div>
+                        <div class="edu-grid-item">
+                            <h4>Critical Point</h4>
+                            <p>
+                                The apex of the saturation dome. For water:
+                                <em>T<sub>c</sub> = 374.1 °C</em>,
+                                <em>s<sub>c</sub> = 4.43 kJ/(kg·K)</em>.
+                                Above this point the distinction between liquid and vapor vanishes — the fluid
+                                enters the supercritical region.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h3 class="edu-section__subheading">Two-Phase Mixture and Vapor Quality</h3>
+                    <p>
+                        Inside the saturation dome, liquid and vapor coexist at the same temperature and
+                        pressure. The <strong>vapor quality</strong> <em>x</em> quantifies the proportion
+                        of vapor by mass:
+                    </p>
+                    <code class="edu-formula">x = m<sub>vapor</sub> / (m<sub>liquid</sub> + m<sub>vapor</sub>)</code>
+                    <p>
+                        Boundary conditions:
+                        <strong>x = 0</strong> → saturated liquid (left boundary);
+                        <strong>x = 1</strong> → saturated vapor (right boundary);
+                        <strong>0 &lt; x &lt; 1</strong> → liquid–vapor mixture.
+                    </p>
+                    <p>
+                        The simulator calculates quality from specific entropy using the lever rule:
+                    </p>
+                    <code class="edu-formula">x = (s − s<sub>f</sub>) / (s<sub>g</sub> − s<sub>f</sub>)</code>
+                    <p>
+                        where <em>s<sub>f</sub></em> and <em>s<sub>g</sub></em> are the saturated-liquid
+                        and saturated-vapor specific entropies at the current temperature, obtained by
+                        linear interpolation of the built-in saturation data. This formula is displayed
+                        with live values in the <em>Didactic Analysis</em> panel when the state lies inside
+                        the dome.
+                    </p>
+
+                    <h3 class="edu-section__subheading">Superheated Vapor</h3>
+                    <p>
+                        Superheated steam has a temperature above the saturation temperature corresponding
+                        to its pressure. On the T–s diagram it lies to the <em>right</em> of the saturated
+                        vapor line. Unlike saturated states, both temperature and entropy can change
+                        independently. Superheated steam is essential in practical steam turbines because
+                        it reduces blade erosion caused by condensate droplets and improves cycle efficiency.
+                    </p>
+
+                    <h3 class="edu-section__subheading">Compressed Liquid</h3>
+                    <p>
+                        Also called <strong>subcooled liquid</strong>, this region appears to the
+                        <em>left</em> of the saturated liquid line. The liquid is at a pressure exceeding
+                        its saturation pressure for the given temperature. In a Rankine cycle this state
+                        corresponds to the pump discharge — highly pressurized water before entering the
+                        boiler. Specific entropy changes very little with pressure in the compressed-liquid
+                        region.
+                    </p>
+                </section>
+
+                <!-- ── 4. Specific Entropy ── -->
+                <section class="edu-section" id="specific-entropy" aria-labelledby="entropy-heading">
+                    <h2 class="edu-section__heading" id="entropy-heading">Specific Entropy and Its Meaning</h2>
+                    <p>
+                        <strong>Specific entropy</strong> (<em>s</em>) is a thermodynamic property that
+                        quantifies the amount of thermal energy per unit mass that cannot be converted into
+                        useful work in a reversible process. It is defined differentially by:
+                    </p>
+                    <code class="edu-formula">ds = δq<sub>rev</sub> / T</code>
+                    <p>
+                        where <em>δq<sub>rev</sub></em> is the infinitesimal reversible heat transfer per
+                        unit mass and <em>T</em> is the absolute temperature in kelvin. The units of
+                        specific entropy are <strong>kJ/(kg·K)</strong>.
+                    </p>
+                    <p>
+                        Entropy is not "disorder" in the engineering sense; it is a precise thermodynamic
+                        coordinate with well-defined values in steam tables. On a T–s diagram:
+                    </p>
+                    <ul>
+                        <li>The <strong>area under a process curve</strong> equals the reversible heat
+                            transfer per unit mass for that process.</li>
+                        <li>A <strong>vertical line</strong> (constant entropy, Δs = 0) represents an
+                            isentropic (reversible adiabatic) process — ideal turbines and compressors
+                            operate along such paths.</li>
+                        <li>A <strong>horizontal line</strong> (constant temperature) represents an
+                            isothermal process — relevant during phase change inside the dome, where
+                            temperature remains constant as heat is added or removed.</li>
+                        <li>Entropy always <strong>increases or stays constant</strong> in real
+                            (irreversible) adiabatic processes — the Second Law of Thermodynamics.</li>
+                    </ul>
+                    <p>
+                        Using entropy as a coordinate provides direct visual insight into irreversibility,
+                        heat transfer, and the practical limits of thermodynamic cycles — this is why the
+                        T–s diagram is a standard analysis tool in engineering thermodynamics.
+                    </p>
+                </section>
+
+                <!-- ── 5. Process Analysis ── -->
+                <section class="edu-section" id="process-analysis" aria-labelledby="process-heading">
+                    <h2 class="edu-section__heading" id="process-heading">Process Analysis</h2>
+                    <p>
+                        Activating <em>Enable process mode</em> in the simulator overlays a thermodynamic
+                        process trajectory on the T–s diagram, originating from the current state point.
+                        Two processes are implemented:
+                    </p>
+
+                    <h3 class="edu-section__subheading">
+                        Isentropic Process
+                        <span class="edu-process-badge">Δs = 0</span>
+                    </h3>
+                    <p>
+                        An isentropic process is simultaneously <em>adiabatic</em> (no heat exchange with
+                        the surroundings) and <em>reversible</em>. Because entropy does not change, the path
+                        appears as a <strong>vertical line</strong> on the T–s diagram — the entropy
+                        coordinate remains fixed while temperature changes.
+                    </p>
+                    <p>
+                        Engineering relevance:
+                    </p>
+                    <ul>
+                        <li><strong>Ideal turbine expansion</strong> — steam expands isentropically,
+                            producing maximum shaft work.</li>
+                        <li><strong>Ideal pump compression</strong> — liquid is pressurized isentropically
+                            with minimum work input.</li>
+                        <li><strong>Ideal compressor</strong> — gas is compressed isentropically.</li>
+                    </ul>
+                    <p>
+                        Real devices deviate from isentropic behavior; the degree of deviation is
+                        quantified by <em>isentropic efficiency</em> (η<sub>s</sub>).
+                    </p>
+
+                    <h3 class="edu-section__subheading">
+                        Isothermal Process
+                        <span class="edu-process-badge">T = const</span>
+                    </h3>
+                    <p>
+                        An isothermal process occurs at constant temperature. On the T–s diagram it
+                        appears as a <strong>horizontal line</strong> — entropy changes while temperature
+                        remains fixed.
+                    </p>
+                    <p>
+                        Engineering relevance:
+                    </p>
+                    <ul>
+                        <li><strong>Phase change inside the dome</strong> — condensation and vaporization
+                            of a pure substance occur at constant temperature (and pressure), so the
+                            process path runs horizontally across the two-phase region.</li>
+                        <li><strong>Condenser and boiler idealization</strong> — in an ideal Rankine cycle,
+                            heat rejection in the condenser and part of heat addition in the boiler are
+                            approximated as isothermal processes.</li>
+                        <li><strong>Isothermal compression/expansion</strong> — relevant in gas cycles
+                            and theoretical analysis where heat is continuously rejected during compression
+                            to maintain constant temperature.</li>
+                    </ul>
+                </section>
+
+                <!-- ── 6. Interpreting the Diagram ── -->
+                <section class="edu-section" id="interpreting-diagram" aria-labelledby="interp-heading">
+                    <h2 class="edu-section__heading" id="interp-heading">Interpreting the Diagram</h2>
+                    <p>
+                        The red marker on the T–s chart represents the current thermodynamic state.
+                        Its position relative to the saturation dome determines the physical interpretation:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Left of the saturated liquid line</strong> — the fluid is
+                            <em>compressed liquid</em>. Entropy is below s<sub>f</sub> at that temperature.
+                            In a Rankine cycle this corresponds to the pump exit or boiler inlet.
+                        </li>
+                        <li>
+                            <strong>On the saturated liquid line</strong> — the state is exactly
+                            <em>saturated liquid</em> (x = 0). This is the onset of boiling.
+                        </li>
+                        <li>
+                            <strong>Inside the dome</strong> — a <em>two-phase mixture</em> of liquid and
+                            vapor. Temperature and pressure are not independent; vapor quality
+                            <em>x</em> locates the state between the two saturation boundaries.
+                            A value of x = 0.25 means 25 % of the mass is vapor.
+                        </li>
+                        <li>
+                            <strong>On the saturated vapor line</strong> — the state is exactly
+                            <em>saturated vapor</em> (x = 1). Any further heat addition produces
+                            superheated steam.
+                        </li>
+                        <li>
+                            <strong>Right of the saturated vapor line</strong> — the fluid is
+                            <em>superheated vapor</em>. Temperature exceeds the saturation temperature
+                            at the prevailing pressure. Both T and s can vary independently.
+                            This region is relevant to turbine inlet conditions.
+                        </li>
+                        <li>
+                            <strong>Above the critical point (T &gt; 374.1 °C)</strong> — the fluid is
+                            <em>supercritical</em>. The phase distinction disappears; the fluid behaves
+                            neither as a classical liquid nor as a gas.
+                        </li>
+                    </ul>
+                    <p>
+                        When process mode is active, the path line shows the direction of the process
+                        from the initial state. A vertical path means no entropy change; a horizontal path
+                        means no temperature change. Any deviation from these ideals in a real process
+                        would appear as a path with positive slope, indicating entropy generation.
+                    </p>
+                </section>
+
+                <!-- ── 7. T–s in the Rankine Cycle ── -->
+                <section class="edu-section" id="rankine-cycle" aria-labelledby="rankine-heading">
+                    <h2 class="edu-section__heading" id="rankine-heading">T–s Diagram in the Rankine Cycle</h2>
+                    <p>
+                        The ideal Rankine cycle — the standard thermodynamic model for steam power plants —
+                        consists of four processes, each with a characteristic appearance on the T–s diagram:
+                    </p>
+                    <table class="edu-table">
+                        <thead>
+                            <tr>
+                                <th>Process</th>
+                                <th>Component</th>
+                                <th>T–s Appearance</th>
+                                <th>Engineering Note</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1 → 2 Isentropic compression</td>
+                                <td>Feed pump</td>
+                                <td>Vertical line (very short) — compressed liquid. Δs = 0; small T rise.</td>
+                                <td>Minimal work input due to the low specific volume of liquid.</td>
+                            </tr>
+                            <tr>
+                                <td>2 → 3 Constant-pressure heat addition</td>
+                                <td>Boiler</td>
+                                <td>Rightward path — from compressed liquid, through the dome (at constant T), into superheated vapor.</td>
+                                <td>Large entropy increase; heat supplied from an external source (combustion, nuclear, solar).</td>
+                            </tr>
+                            <tr>
+                                <td>3 → 4 Isentropic expansion</td>
+                                <td>Turbine</td>
+                                <td>Vertical line downward — entropy constant; temperature and pressure drop.</td>
+                                <td>Work output stage. Isentropic efficiency η<sub>s</sub> quantifies deviation from ideal.</td>
+                            </tr>
+                            <tr>
+                                <td>4 → 1 Constant-pressure heat rejection</td>
+                                <td>Condenser</td>
+                                <td>Leftward horizontal line inside the dome — wet steam condenses at constant T.</td>
+                                <td>Heat rejected to a cold reservoir (cooling water, atmosphere). Entropy decreases.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 1rem;">
+                        The enclosed area of the cycle on the T–s diagram represents the <em>net specific
+                        work output</em> of the ideal cycle. The ratio of this area to the total heat added
+                        (area under the heat-addition path) equals the ideal thermal efficiency.
+                        Maximizing the enclosed area — by superheating and reheating — is a core strategy
+                        in modern power-plant design.
+                    </p>
+                </section>
+
+                <!-- ── 8. Engineering Applications ── -->
+                <section class="edu-section" id="engineering-applications" aria-labelledby="apps-heading">
+                    <h2 class="edu-section__heading" id="apps-heading">Engineering Applications</h2>
+                    <p>
+                        T–s diagrams and steam-state analysis have direct application across multiple
+                        engineering domains:
+                    </p>
+                    <ul>
+                        <li>
+                            <strong>Steam power plants (Rankine cycles).</strong> Visualize and analyze
+                            each cycle process, determine turbine and pump work, and evaluate thermal
+                            efficiency. Superheating and reheating are easily assessed on the T–s plane.
+                        </li>
+                        <li>
+                            <strong>Steam turbine design and analysis.</strong> Identify inlet and exit
+                            states, compute isentropic enthalpy drop (turbine work), and calculate
+                            isentropic efficiency from actual versus ideal exit states.
+                        </li>
+                        <li>
+                            <strong>Boiler and heat-exchanger analysis.</strong> Determine the entropy
+                            change during heat addition and verify whether steam is wet, saturated, or
+                            superheated at the boiler exit.
+                        </li>
+                        <li>
+                            <strong>Condenser performance.</strong> Verify that exit steam quality or
+                            degree of subcooling meets design requirements; assess heat rejection to the
+                            cooling medium.
+                        </li>
+                        <li>
+                            <strong>Feed pump sizing.</strong> Compressed-liquid pump work appears as
+                            a small area on the T–s diagram; the isentropic work is computed from the
+                            specific volume and pressure rise.
+                        </li>
+                        <li>
+                            <strong>Refrigeration and heat pump cycles.</strong> T–s analysis extends
+                            to vapor-compression refrigeration, where the same regions (subcooled liquid,
+                            two-phase mixture, superheated vapor) appear with refrigerants as working fluids.
+                        </li>
+                        <li>
+                            <strong>Moisture content estimation.</strong> In low-pressure turbine stages,
+                            states may fall inside the dome. Quality calculations directly indicate the
+                            moisture fraction — excessive moisture causes blade erosion and limits
+                            last-stage turbine blade design.
+                        </li>
+                        <li>
+                            <strong>Steam-property verification.</strong> Cross-checking state points
+                            against steam tables or property software; the T–s diagram provides a rapid
+                            visual sanity check before detailed numerical analysis.
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- ── 9. Assumptions and Limitations ── -->
+                <section class="edu-section" id="assumptions" aria-labelledby="assum-heading">
+                    <h2 class="edu-section__heading" id="assum-heading">Assumptions and Limitations</h2>
+                    <ul>
+                        <li>
+                            <strong>Discrete saturation dataset.</strong> The saturation curve is defined by
+                            a fixed set of (T, s<sub>f</sub>, s<sub>g</sub>) data points covering
+                            approximately 0 °C to 374 °C. Values between points are obtained by linear
+                            interpolation, which introduces small numerical errors relative to IAPWS-IF97
+                            or published steam tables.
+                        </li>
+                        <li>
+                            <strong>Temperature-driven state classification.</strong> The simulator
+                            classifies the state using temperature <em>T</em> and specific entropy
+                            <em>s</em> as the two independent variables. Pressure is not an explicit
+                            input; it is implicitly fixed by the saturation condition when inside the dome.
+                        </li>
+                        <li>
+                            <strong>Interpolation accuracy.</strong> Linear interpolation between discrete
+                            data points is adequate for educational purposes but may differ from published
+                            steam tables in the second or third decimal place of specific entropy.
+                        </li>
+                        <li>
+                            <strong>No enthalpy or pressure output.</strong> The simulator computes region,
+                            quality, s<sub>f</sub>, and s<sub>g</sub>. It does not output enthalpy, pressure,
+                            specific volume, or other properties. For complete thermodynamic analysis, use
+                            full steam tables or a validated property library (e.g., IAPWS-IF97).
+                        </li>
+                        <li>
+                            <strong>Supercritical region.</strong> States above T = 374.1 °C are classified
+                            as Supercritical Fluid; no further property distinction is made within that region.
+                        </li>
+                        <li>
+                            <strong>Process visualization is qualitative.</strong> The isentropic and
+                            isothermal process lines are drawn as visual aids to indicate the direction of
+                            the process. They do not compute end-state properties or cycle performance metrics.
+                        </li>
+                        <li>
+                            <strong>Water / steam only.</strong> The saturation data is specific to water.
+                            The simulator is not applicable to other working fluids without replacing the
+                            underlying property dataset.
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- ── 10. Example ── -->
+                <section class="edu-section" id="example" aria-labelledby="example-heading">
+                    <h2 class="edu-section__heading" id="example-heading">Worked Example</h2>
+                    <p>
+                        The simulator loads the following default state on startup:
+                    </p>
+                    <div class="edu-example">
+                        <div class="edu-example__title">Default State — Two-Phase Mixture</div>
+                        <p><strong>Temperature:</strong> T = 150 °C</p>
+                        <p><strong>Specific entropy:</strong> s = 2.0 kJ/(kg·K)</p>
+                        <p>
+                            <strong>Step 1 — Obtain saturation properties at T = 150 °C</strong><br>
+                            By interpolating the built-in saturation data:
+                        </p>
+                        <code class="edu-formula">s<sub>f</sub>(150 °C) ≈ 0.5382 kJ/(kg·K)</code>
+                        <code class="edu-formula">s<sub>g</sub>(150 °C) ≈ 6.6625 kJ/(kg·K)</code>
+                        <p>
+                            <strong>Step 2 — Classify the region</strong><br>
+                            Since s<sub>f</sub> &lt; s &lt; s<sub>g</sub>
+                            (0.5382 &lt; 2.0 &lt; 6.6625), the state lies
+                            <em>inside the saturation dome</em> → <strong>Two-phase Mixture</strong>.
+                        </p>
+                        <p><strong>Step 3 — Calculate vapor quality</strong></p>
+                        <code class="edu-formula">x = (s − s<sub>f</sub>) / (s<sub>g</sub> − s<sub>f</sub>)</code>
+                        <code class="edu-formula">x = (2.0 − 0.5382) / (6.6625 − 0.5382)</code>
+                        <code class="edu-formula">x = 1.4618 / 6.1243 ≈ 0.239</code>
+                        <p>
+                            <strong>Physical interpretation:</strong> Approximately <strong>23.9 %</strong>
+                            of the mixture mass is vapor and 76.1 % is liquid at 150 °C. The state point
+                            on the T–s diagram appears well to the left inside the dome, closer to the
+                            saturated liquid boundary than the saturated vapor boundary. In a steam power
+                            plant, this quality level would be unacceptable at a turbine exit — it would
+                            indicate significant moisture and associated blade erosion risk. Superheating
+                            the steam before turbine admission prevents this condition.
+                        </p>
+                        <p>
+                            The <em>Didactic Analysis</em> panel in the control sidebar displays this
+                            calculation in real time, updating as you adjust T and s.
+                        </p>
+                    </div>
+                </section>
+
+            </div><!-- /.edu-content -->
+
+        </main>
+
+
+        <!-- FOOTER (injected by platform.js) -->
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <!-- JAVASCRIPT -->
+    <script src="../../assets/js/platform.js"></script>
+
+    <script type="module" src="./js/simulator.js"></script>
+
+</body>
+
+</html>
+

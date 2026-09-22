@@ -1,0 +1,288 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- EDIT 1: SEO title/description -->
+  <title>Torque Converter — Convert N·m, lbf·ft, lbf·in, kgf·m & More | EngSim</title>
+  <meta name="description" content="Free torque unit converter. Enter one value and instantly see it converted to newton-meters, pound-force-feet, pound-force-inches, kilogram-force-meters and dyne-centimeters." />
+
+  <!-- EDIT 2: Open Graph tags -->
+  <meta property="og:title" content="Torque Converter — Convert Between All Torque Units" />
+  <meta property="og:description" content="Convert torque between N·m, kN·m, lbf·ft, lbf·in, kgf·m and dyn·cm — all units at once, with formulas and worked examples." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://engsim.app/simulators/torque-converter/" />
+
+  <!-- Canonical (uncomment on real deploy) -->
+  <!-- <link rel="canonical" href="https://engsim.app/simulators/torque-converter/" /> -->
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../../assets/css/base.css" />
+  <link rel="stylesheet" href="../../assets/css/platform.css" />
+  <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+  <!-- EDIT 3: simulator-specific CSS (not needed — trq- block lives in shared simulator.css) -->
+
+  <!-- EDIT 4: external libraries (none needed for this simulator) -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Torque Converter",
+    "url": "https://engsim.app/simulators/torque-converter/",
+    "applicationCategory": "EngineeringApplication",
+    "operatingSystem": "Any",
+    "description": "Convert torque values between newton-meters, kilonewton-meters, pound-force-feet, pound-force-inches, kilogram-force-meters and dyne-centimeters.",
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+  }
+  </script>
+</head>
+<body>
+  <!--
+    Mobile / consistency checklist (see _template):
+    - Wide tables (.trq-table-wrap) scroll via overflow-x, never overflow the page.
+    - No canvas/chart in this simulator, so no max-height media query needed.
+    - .sim-layout uses the standard 900px breakpoint, no custom BEM classes.
+    - No slider in this simulator (text input + select), so no custom track needed.
+  -->
+  <div class="page-wrapper">
+    <div id="nav-placeholder"></div>
+
+    <main class="page-main" id="main-content">
+
+      <!-- EDIT 5: hero / breadcrumb -->
+      <section class="sim-hero" aria-labelledby="sim-title">
+        <div class="container">
+          <nav aria-label="Breadcrumb">
+            <ol class="sim-hero__breadcrumb">
+              <li><a href="../../index.html">Home</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li><a href="../index.html">Simulators</a></li>
+              <li><span aria-hidden="true">/</span></li>
+              <li>Torque Converter</li>
+            </ol>
+          </nav>
+          <span class="sim-hero__category">Unit Converter</span>
+          <h1 id="sim-title">Torque Converter</h1>
+          <p class="sim-hero__subtitle">Enter a value in any torque unit and instantly see the equivalent in newton-meters, pound-force-feet, kilogram-force-meters and more.</p>
+          <div class="sim-hero__tags">
+            <span class="sim-hero__tag">N·m</span>
+            <span class="sim-hero__tag">lbf·ft</span>
+            <span class="sim-hero__tag">lbf·in</span>
+            <span class="sim-hero__tag">kgf·m</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- EDIT 6: layout -->
+      <section class="sim-body">
+        <div class="container">
+          <div class="sim-error is-hidden" id="sim-error" role="alert" aria-live="polite"></div>
+
+          <div class="sim-layout" style="--sim-sidebar-width: 350px;">
+
+            <!-- EDIT 7a: input panel -->
+            <aside aria-label="Input parameters" class="sim-panel">
+              <div class="sim-panel__header">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21.2 8A10 10 0 1 0 22 12"/><path d="M22 4v6h-6"/></svg>
+                <span class="sim-panel__title">Torque Value</span>
+              </div>
+              <div class="sim-panel__body">
+                <div class="sim-field">
+                  <label class="sim-label" for="input-value">Value</label>
+                  <div class="sim-input-wrap">
+                    <input type="text" inputmode="decimal" id="input-value" class="sim-input" value="1" aria-describedby="sim-error" />
+                  </div>
+                </div>
+
+                <div class="sim-field">
+                  <label class="sim-label" for="input-unit">Unit</label>
+                  <select id="input-unit" class="sim-select"></select>
+                </div>
+
+                <button class="btn-primary" id="btn-calculate" type="button">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+                  Convert
+                </button>
+              </div>
+            </aside>
+
+            <!-- EDIT 7b: results panel -->
+            <div>
+              <div class="sim-panel">
+                <div class="sim-panel__header">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+                  <span class="sim-panel__title">Conversion Results</span>
+                </div>
+                <div class="sim-panel__body">
+                  <div class="trq-table-wrap" id="results-table-wrap">
+                    <table class="trq-table" id="results-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Unit</th>
+                          <th scope="col">Value</th>
+                        </tr>
+                      </thead>
+                      <tbody id="results-tbody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+      <!-- EDIT 8: educational content -->
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <section class="edu-section">
+            <h2>About the Torque Converter</h2>
+            <p>Torque specifications are everywhere in mechanical work — a car manual calling for lbf·ft on lug nuts, a bicycle stem bolt rated in N·m, a small electronics screw in lbf·in. Getting the wrong unit can mean over-tightening and stripping a bolt, or under-tightening a critical joint. This tool lets you enter a value once and see it converted to every common torque unit at the same time.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>How to Use This Tool</h2>
+            <ol>
+              <li>Enter the torque value you want to convert.</li>
+              <li>Select the unit that value is currently in.</li>
+              <li>The table updates automatically, showing the equivalent value in every other unit.</li>
+            </ol>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Conversion Formula</h2>
+            <p>Every torque unit converts through the newton-meter (N·m), the SI unit of torque. To convert from unit A to unit B:</p>
+            <div class="edu-formula">value_B = value_A × factor_A→(N·m) ÷ factor_B→(N·m)</div>
+            <p>Torque and energy share the same base unit (N·m = J) since both are force × distance, but they measure different physical quantities — torque is a vector describing rotational tendency, energy is a scalar. That's why this stays a separate converter from Energy Converter rather than reusing it.</p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Torque Unit Conversion Factors (to Newton-meters)</h2>
+            <div class="chem-table-scroll">
+              <table class="edu-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Unit</th>
+                    <th scope="col">Symbol</th>
+                    <th scope="col">Value in N·m</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td>Newton-meter</td><td>N·m</td><td>1</td></tr>
+                  <tr><td>Kilonewton-meter</td><td>kN·m</td><td>1,000</td></tr>
+                  <tr><td>Pound-force-foot</td><td>lbf·ft</td><td>1.3558179483</td></tr>
+                  <tr><td>Pound-force-inch</td><td>lbf·in</td><td>0.1129848290</td></tr>
+                  <tr><td>Kilogram-force-meter</td><td>kgf·m</td><td>9.80665</td></tr>
+                  <tr><td>Dyne-centimeter</td><td>dyn·cm</td><td>0.0000001</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><small>Note: lbf·ft and lbf·in are exact, derived from the exact pound-force and foot/inch definitions. 1 lbf·ft = 12 lbf·in exactly, matching the 12 inches in a foot.</small></p>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Worked Examples</h2>
+            <div class="edu-grid">
+              <div class="edu-example">
+                <p class="edu-example__title">Example 1 — N·m to lbf·ft</p>
+                <p>A car manual specifying 100 N·m for lug nuts: 100 ÷ 1.3558179483 N·m per lbf·ft ≈ <strong>73.8 lbf·ft</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 2 — lbf·in to N·m</p>
+                <p>An electronics spec calling for 15 lbf·in: 15 × 0.1129848290 ≈ <strong>1.69 N·m</strong> — a good example of why small hardware needs the finer lbf·in scale instead of lbf·ft.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 3 — kgf·m to N·m</p>
+                <p>An older spec listing 5 kgf·m: 5 × 9.80665 ≈ <strong>49.03 N·m</strong>.</p>
+              </div>
+              <div class="edu-example">
+                <p class="edu-example__title">Example 4 — lbf·ft to lbf·in</p>
+                <p>A torque wrench reading of 8 lbf·ft: 8 × 12 = <strong>96 lbf·in</strong> exactly, since 1 ft = 12 in.</p>
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          <section class="edu-section">
+            <h2>Frequently Asked Questions</h2>
+
+            <details class="edu-faq-item">
+              <summary>How do I convert N·m to lbf·ft?</summary>
+              <div class="edu-faq-answer">Divide by 1.3558179483. Equivalently, 1 lbf·ft ≈ 1.356 N·m, so 1 N·m ≈ 0.7376 lbf·ft.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>What's the difference between lbf·ft and lbf·in?</summary>
+              <div class="edu-faq-answer">They're the same physical quantity at different scales — lbf·ft is used for larger torques (like lug nuts or engine bolts), lbf·in for small precision hardware (like electronics or eyeglass screws). 1 lbf·ft = 12 lbf·in exactly.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Is torque the same as energy?</summary>
+              <div class="edu-faq-answer">They share the same units (N·m = J) because both are force multiplied by distance, but they're conceptually different: energy is a scalar (just a magnitude), while torque is a vector with a direction of rotation. That's why torque isn't measured in joules even though the units match dimensionally.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Why do car manuals sometimes use kgf·m instead of N·m?</summary>
+              <div class="edu-faq-answer">kgf·m (kilogram-force-meter) was the standard technical torque unit in many countries before SI units became universal, and it still appears in older manuals and some regional specifications. 1 kgf·m ≈ 9.807 N·m.</div>
+            </details>
+
+            <details class="edu-faq-item">
+              <summary>Can torque values be negative?</summary>
+              <div class="edu-faq-answer">Yes — torque is a vector, so a negative value indicates rotation in the opposite direction (for example, loosening vs. tightening, or clockwise vs. counterclockwise relative to a chosen convention). This converter allows negative values for that reason.</div>
+            </details>
+
+          </section>
+
+        </div>
+      </div>
+
+<!-- AD-SLOT HIDDEN (uncomment when AdSense approved)
+      <div class="container">
+        <div class="ad-slot ad-slot--leaderboard">
+          Advertisement
+          <!--
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+          -->
+        </div>
+      </div>
+      -->
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+  </div>
+
+  <script src="../../assets/js/platform.js"></script>
+  <script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

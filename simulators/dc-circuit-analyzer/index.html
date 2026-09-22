@@ -1,0 +1,461 @@
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- EDIT 1 — SEO -->
+    <title>DC Circuit Analyzer — Series & Parallel Resistive Networks | EngSim</title>
+    <meta name="description"
+        content="Interactive DC circuit analyzer for series and parallel resistive networks. Compute load power, total current, Thevenin resistance, and maximum power transfer in real time. Free, no account required." />
+
+    <!-- EDIT 2 — OG tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DC Circuit Analyzer | EngSim" />
+    <meta property="og:description" content="Interactive simulator for series and parallel DC resistive networks and maximum power transfer." />
+    <meta property="og:site_name" content="EngSim" />
+
+    <!-- <link rel="canonical" href="https://engsim.app/simulators/dc-circuit-analyzer/" /> -->
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- ── Shared platform styles (DO NOT EDIT paths) ── -->
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/platform.css" />
+    <link rel="stylesheet" href="../../assets/css/simulator.css" />
+
+    <!-- EDIT 3 — Simulator-specific CSS: not needed. Styles live in the
+         shared simulator.css under the "dcc-" namespace (see bottom of file). -->
+
+    <!-- EDIT 4 — External libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3"></script>
+
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "DC Circuit Analyzer",
+    "description": "Interactive simulator for series and parallel DC resistive networks: load power, total current, Thevenin resistance, and maximum power transfer.",
+    "url": "https://engsim.app/simulators/dc-circuit-analyzer/",
+    "applicationCategory": "EducationalApplication",
+    "isAccessibleForFree": true,
+    "operatingSystem": "Any",
+    "offers": { "@type": "Offer", "price": "0" }
+  }
+  </script>
+</head>
+
+<body>
+    <div class="page-wrapper">
+
+        <div id="nav-placeholder"></div>
+
+        <main class="page-main" id="main-content">
+
+            <!-- EDIT 5 — Hero -->
+            <section class="sim-hero" aria-labelledby="sim-title">
+                <div class="container">
+                    <nav aria-label="Breadcrumb">
+                        <ol class="sim-hero__breadcrumb">
+                            <li><a href="../../index.html">Home</a></li>
+                            <li><span aria-hidden="true">/</span></li>
+                            <li><a href="../index.html">Simulators</a></li>
+                            <li><span aria-hidden="true">/</span></li>
+                            <li>DC Circuit Analyzer</li>
+                        </ol>
+                    </nav>
+
+                    <span class="sim-hero__category">Electrical Engineering</span>
+
+                    <h1 class="sim-hero__title" id="sim-title">DC Circuit Analyzer</h1>
+
+                    <p class="sim-hero__subtitle">
+                        Analyze series and parallel resistive DC networks in real time: currents, voltages,
+                        power dissipation, and the maximum power transfer point.
+                    </p>
+
+                    <div class="sim-hero__tags">
+                        <span class="sim-hero__tag">DC circuits</span>
+                        <span class="sim-hero__tag">Thevenin</span>
+                        <span class="sim-hero__tag">Norton</span>
+                        <span class="sim-hero__tag">Max power transfer</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EDIT 6 — Layout: two-panel -->
+            <section class="sim-body">
+                <div class="container">
+
+                    <div class="sim-error" id="sim-error" role="alert" aria-live="polite"></div>
+
+                    <div class="sim-layout" style="--sim-sidebar-width: 360px;">
+
+                        <!-- ════ LEFT PANEL — INPUTS ════ (EDIT 7) -->
+                        <aside aria-label="Input parameters">
+
+                            <div class="sim-panel">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <path d="M12 20h9" />
+                                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                        </svg>
+                                        Parameters
+                                    </span>
+                                </div>
+                                <div class="sim-panel__body">
+
+                                    <p class="sim-section-label">Network</p>
+                                    <div class="sim-field">
+                                        <label for="select-network-type" class="sim-label">Topology</label>
+                                        <select id="select-network-type" class="sim-select" aria-label="Network topology">
+                                            <option value="parallel" selected>Parallel — R1 series, R2 ∥ RL</option>
+                                            <option value="series">Series — R1, R2, RL in series</option>
+                                        </select>
+                                    </div>
+
+                                    <p class="sim-section-label">Source</p>
+                                    <div class="sim-field">
+                                        <label for="input-v1" class="sim-label">Source Voltage V1 <span class="sim-label-hint">(volts)</span></label>
+                                        <div class="dcc-slider-row">
+                                            <input type="range" id="range-v1" class="dcc-slider" min="1" max="100" step="1" value="12" aria-label="Source voltage slider">
+                                            <div class="sim-input-wrap">
+                                                <input type="number" id="input-v1" class="sim-input" value="12" min="0" step="1" aria-label="Source voltage value" />
+                                                <span class="sim-unit">V</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <p class="sim-section-label">Resistances</p>
+
+                                    <div class="sim-field">
+                                        <label for="input-r1" class="sim-label">Resistance R1</label>
+                                        <div class="dcc-slider-row dcc-slider-row--unit">
+                                            <input type="range" id="range-r1" class="dcc-slider" min="1" max="1000" step="1" value="10" aria-label="R1 slider">
+                                            <div class="sim-input-wrap">
+                                                <input type="number" id="input-r1" class="sim-input" value="10" min="0" aria-label="R1 value" />
+                                            </div>
+                                            <select id="unit-r1" class="sim-select dcc-unit-select" aria-label="R1 unit">
+                                                <option value="mΩ">mΩ</option>
+                                                <option value="Ω" selected>Ω</option>
+                                                <option value="kΩ">kΩ</option>
+                                                <option value="MΩ">MΩ</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="sim-field">
+                                        <label for="input-r2" class="sim-label">Resistance R2</label>
+                                        <div class="dcc-slider-row dcc-slider-row--unit">
+                                            <input type="range" id="range-r2" class="dcc-slider" min="1" max="1000" step="1" value="20" aria-label="R2 slider">
+                                            <div class="sim-input-wrap">
+                                                <input type="number" id="input-r2" class="sim-input" value="20" min="0" aria-label="R2 value" />
+                                            </div>
+                                            <select id="unit-r2" class="sim-select dcc-unit-select" aria-label="R2 unit">
+                                                <option value="mΩ">mΩ</option>
+                                                <option value="Ω" selected>Ω</option>
+                                                <option value="kΩ">kΩ</option>
+                                                <option value="MΩ">MΩ</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="sim-field">
+                                        <label for="input-rl" class="sim-label">Variable Load RL</label>
+                                        <div class="dcc-slider-row dcc-slider-row--unit">
+                                            <input type="range" id="range-rl" class="dcc-slider" min="1" max="1000" step="1" value="20" aria-label="RL slider">
+                                            <div class="sim-input-wrap">
+                                                <input type="number" id="input-rl" class="sim-input" value="20" min="0" aria-label="RL value" />
+                                            </div>
+                                            <select id="unit-rl" class="sim-select dcc-unit-select" aria-label="RL unit">
+                                                <option value="mΩ">mΩ</option>
+                                                <option value="Ω" selected>Ω</option>
+                                                <option value="kΩ">kΩ</option>
+                                                <option value="MΩ">MΩ</option>
+                                            </select>
+                                        </div>
+                                        <p class="sim-hint">Drag toward the R-Thevenin KPI value to approach maximum power transfer.</p>
+                                    </div>
+
+                                    <details class="sim-advanced">
+                                        <summary>Guided Analysis</summary>
+                                        <div class="sim-advanced-body">
+                                            <div class="sim-field">
+                                                <label for="select-method" class="sim-label">Resolution method</label>
+                                                <select id="select-method" class="sim-select" aria-label="Resolution method">
+                                                    <option value="none" selected>Standard Circuit (no analysis)</option>
+                                                    <option value="nodos">Node Voltages</option>
+                                                    <option value="mallas">Mesh Currents</option>
+                                                    <option value="thevenin">Thevenin's Theorem</option>
+                                                    <option value="norton">Norton's Theorem</option>
+                                                    <option value="delta-wye">Delta - Wye</option>
+                                                </select>
+                                            </div>
+                                            <div id="method-explain" class="dcc-method-explain is-hidden"></div>
+                                            <label class="dcc-checkbox-label">
+                                                <input type="checkbox" id="toggle-steps" checked>
+                                                Show step-by-step derivation
+                                            </label>
+                                        </div>
+                                    </details>
+
+                                </div>
+                            </div><!-- /sim-panel -->
+
+                        </aside>
+                        <!-- /Left panel -->
+
+                        <!-- ════ RIGHT PANEL — RESULTS ════ -->
+                        <div>
+
+                            <div class="sim-panel">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                                        </svg>
+                                        Results
+                                    </span>
+                                    <span class="sim-panel__badge">Real-time</span>
+                                </div>
+                                <div class="sim-panel__body">
+
+                                    <div class="sim-results-grid">
+                                        <div class="sim-result-card sim-result-card--accent">
+                                            <div class="sim-result-label">Load Power</div>
+                                            <div class="sim-result-value" id="out-prl">—</div>
+                                            <div class="sim-result-unit">W</div>
+                                        </div>
+                                        <div class="sim-result-card">
+                                            <div class="sim-result-label">Total Current</div>
+                                            <div class="sim-result-value" id="out-itotal">—</div>
+                                            <div class="sim-result-unit">A</div>
+                                        </div>
+                                        <div class="sim-result-card">
+                                            <div class="sim-result-label">R-Thevenin</div>
+                                            <div class="sim-result-value" id="out-rth">—</div>
+                                            <div class="sim-result-unit">Ω</div>
+                                        </div>
+                                        <div class="sim-result-card">
+                                            <div class="sim-result-label">Efficiency η</div>
+                                            <div class="sim-result-value" id="out-eta">—</div>
+                                            <div class="sim-result-unit">%</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="status-banner status-banner--info" id="status-banner">
+                                        <strong class="status-banner__title" id="status-title">Stable</strong>
+                                        <p class="status-banner__message" id="status-message">Circuit physics active.</p>
+                                    </div>
+
+                                </div>
+                            </div><!-- /sim-panel -->
+
+                            <div class="sim-panel">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title" id="canvas-title">Circuit Diagram</span>
+                                </div>
+                                <div class="sim-chart-wrap dcc-canvas-wrap">
+                                    <canvas id="circuit-canvas" width="800" height="300" aria-label="Circuit diagram" role="img"></canvas>
+                                </div>
+                            </div>
+
+                            <div class="dcc-analysis-grid">
+                                <div class="sim-panel">
+                                    <div class="sim-panel__header">
+                                        <span class="sim-panel__title">RL Power Curve</span>
+                                    </div>
+                                    <div class="sim-chart-wrap">
+                                        <p class="sim-chart-label">Power delivered to RL vs. load resistance</p>
+                                        <div class="dcc-chart-container">
+                                            <canvas id="power-chart" aria-label="Power versus load resistance chart" role="img"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="sim-panel">
+                                    <div class="sim-panel__header">
+                                        <span class="sim-panel__title">Technical Results</span>
+                                    </div>
+                                    <div class="sim-panel__body dcc-table-scroll">
+                                        <table class="dcc-table">
+                                            <thead><tr><th>Element</th><th>V (V)</th><th>I (A)</th><th>P (W)</th></tr></thead>
+                                            <tbody id="results-table-body"></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="step-panel" class="sim-panel">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">Mathematical Analysis — <span id="current-method-label">Parallel Circuit Analysis</span></span>
+                                </div>
+                                <div class="sim-panel__body">
+                                    <div id="step-content" class="dcc-step-container"></div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- /Right panel -->
+
+                    </div><!-- /sim-layout -->
+                </div><!-- /container -->
+            </section>
+
+            <!-- AD SLOT 1 -->
+<!-- AD-SLOT HIDDEN
+            <div class="container">
+                <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">
+                    <!-- <ins class="adsbygoogle" ... ></ins> -->
+                    Advertisement
+                </div>
+            </div>
+            -->
+
+            <!-- EDIT 8 — Educational content -->
+            <div class="container container--narrow">
+                <div class="edu-content">
+
+                    <section class="edu-section" id="about" aria-labelledby="h-about">
+                        <h2 id="h-about">About This Simulator</h2>
+                        <p>
+                            The DC Circuit Analyzer models a simple resistive network driven by an ideal DC
+                            voltage source V1, with a fixed resistor R1, a second resistor R2, and a variable
+                            load RL. Two topologies are supported: a <strong>series</strong> network, where R1,
+                            R2, and RL share a single current path, and a <strong>parallel</strong> network,
+                            where R1 acts as the source's series resistance and R2/RL share a common node.
+                        </p>
+                        <p>
+                            Beyond basic current/voltage/power results, the simulator highlights the
+                            <strong>maximum power transfer theorem</strong>: for any fixed source and internal
+                            resistance, the power delivered to a variable load RL is maximized when
+                            RL equals the Thevenin resistance R<sub>th</sub> seen from the load terminals.
+                            The RL Power Curve chart marks this optimal point directly on the graph.
+                        </p>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="how-to-use" aria-labelledby="h-howto">
+                        <h2 id="h-howto">How to Use</h2>
+                        <ol>
+                            <li><strong>Step 1.</strong> Choose the network topology — series or parallel.</li>
+                            <li><strong>Step 2.</strong> Set the source voltage V1 and the values of R1 and R2.</li>
+                            <li><strong>Step 3.</strong> Drag the RL slider and watch the KPIs and the RL Power
+                                Curve update in real time. The status banner tells you whether RL is above,
+                                below, or matched to the optimal load.</li>
+                            <li><strong>Step 4.</strong> Open <em>Guided Analysis</em> to pick a resolution
+                                method (node voltages, mesh currents, Thevenin, Norton, or Delta–Wye) and see
+                                the equivalent diagram redrawn accordingly, alongside the full numeric
+                                derivation below.</li>
+                        </ol>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="results" aria-labelledby="h-results">
+                        <h2 id="h-results">Understanding the Results</h2>
+
+                        <h3>Load Power (P<sub>RL</sub>)</h3>
+                        <p>The power dissipated by the variable load RL, in watts. This is the quantity
+                            maximized by the max power transfer theorem.</p>
+
+                        <h3>Total Current (I<sub>total</sub>)</h3>
+                        <p>The current delivered by the source V1, in amperes.</p>
+
+                        <h3>R-Thevenin</h3>
+                        <p>The equivalent resistance of the source network as seen from the RL terminals,
+                            with the source shorted and the load removed. RL = R<sub>th</sub> is the load
+                            value that maximizes power transfer.</p>
+
+                        <h3>Efficiency η</h3>
+                        <p>The fraction of total source power that reaches the load
+                            (η = P<sub>RL</sub> / P<sub>source</sub>). Efficiency and maximum power transfer
+                            are not the same goal: efficiency keeps improving as RL grows, while power
+                            transfer peaks at RL = R<sub>th</sub> and then decreases.</p>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="faq" aria-labelledby="h-faq">
+                        <h2 id="h-faq">Frequently Asked Questions</h2>
+                        <div class="edu-faq">
+
+                            <details class="edu-faq-item">
+                                <summary>What does RL = Rth actually mean?</summary>
+                                <div class="edu-faq-answer">
+                                    It means the load resistance matches the Thevenin resistance of the
+                                    source network seen from the load terminals. At that point, the power
+                                    delivered to the load is at its maximum possible value for the given
+                                    source and internal resistances — though efficiency at that point is
+                                    always exactly 50%.
+                                </div>
+                            </details>
+
+                            <details class="edu-faq-item">
+                                <summary>Why does higher RL give better efficiency but less power?</summary>
+                                <div class="edu-faq-answer">
+                                    As RL increases beyond Rth, more of the source voltage appears across the
+                                    load and less is lost internally, so efficiency rises toward 100%. But the
+                                    total current drops, and since power depends on both current and voltage,
+                                    the actual watts delivered to the load decrease past the optimal point.
+                                </div>
+                            </details>
+
+                            <details class="edu-faq-item">
+                                <summary>What's the difference between the series and parallel topology here?</summary>
+                                <div class="edu-faq-answer">
+                                    In the series topology, R1, R2, and RL all carry the same current. In the
+                                    parallel topology, R1 sits between the source and a node where R2 and RL
+                                    are connected in parallel, so R2 and RL share the same node voltage but
+                                    carry different currents.
+                                </div>
+                            </details>
+
+                            <details class="edu-faq-item">
+                                <summary>What are the limitations of this simulator?</summary>
+                                <div class="edu-faq-answer">
+                                    The source is modeled as an ideal DC voltage source (zero internal
+                                    resistance of its own — R1 represents any source/line resistance
+                                    explicitly). All components are assumed linear and time-invariant;
+                                    transients, reactive elements, and non-ideal sources are outside the
+                                    scope of this model.
+                                </div>
+                            </details>
+
+                        </div>
+                    </section>
+
+<!-- AD-SLOT HIDDEN
+                    <div class="ad-slot ad-slot--leaderboard" style="margin-top: 40px;" aria-label="Advertisement">
+                        Advertisement
+                    </div>
+                    -->
+
+                </div><!-- /edu-content -->
+            </div><!-- /container -->
+
+        </main>
+
+        <div id="footer-placeholder"></div>
+
+    </div><!-- /page-wrapper -->
+
+    <script src="../../assets/js/platform.js"></script>
+    <script type="module" src="./js/simulator.js"></script>
+
+</body>
+
+</html>
