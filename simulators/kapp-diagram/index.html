@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <!--
   +--------------------------------------------------------------+
-  ¦  ENGSIM — Kapp Diagram Calculator                           ¦
-  ¦  simulators/kapp-diagram/                                   ¦
+  |  ENGSIM &mdash; Kapp Diagram Calculator                           |
+  |  simulators/kapp-diagram/                                   |
   +--------------------------------------------------------------+
 -->
 <html lang="en" dir="ltr">
@@ -11,18 +11,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- EDIT 1 — SEO -->
-    <title>Kapp Diagram Calculator — Transformer Voltage Regulation &amp; Phasor | EngSim</title>
+    <!-- EDIT 1 &mdash; SEO -->
+    <title>Kapp Diagram Calculator &mdash; Transformer Voltage Regulation &amp; Phasor | EngSim</title>
     <meta name="description"
         content="Calculate transformer voltage regulation, secondary voltage drop, and equivalent impedance from short-circuit test data. Interactive phasor diagram. Free, no account required." />
 
-    <!-- EDIT 2 — OG tags -->
+    <!-- EDIT 2 &mdash; OG tags -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Kapp Diagram Calculator | EngSim" />
     <meta property="og:description"
         content="Compute secondary voltage U2, voltage drop ?V, and regulation e for inductive or capacitive loads using the infinite bus model." />
     <meta property="og:site_name" content="EngSim" />
-    <!-- Canonical URL — fill in once you have the domain -->
+    <!-- Canonical URL &mdash; fill in once you have the domain -->
     <!-- <link rel="canonical" href="https://engsim.app/simulators/kapp-diagram/" /> -->
 
     <!-- Fonts -->
@@ -37,9 +37,9 @@
     <link rel="stylesheet" href="../../assets/css/platform.css" />
     <link rel="stylesheet" href="../../assets/css/simulator.css" />
 
-    <!-- EDIT 3 — Simulator-specific styles -->
+    <!-- EDIT 3 &mdash; Simulator-specific styles -->
     <style>
-        /* -- Error shake — mirrors static-beam exactly ----------- */
+        /* -- Error shake &mdash; mirrors static-beam exactly ----------- */
         @keyframes error-shake {
             0% {
                 transform: translateX(0);
@@ -232,7 +232,7 @@
         }
     </style>
 
-    <!-- EDIT 4 — No external libraries needed -->
+    <!-- EDIT 4 &mdash; No external libraries needed -->
 
     <!-- Structured data -->
     <script type="application/ld+json">
@@ -253,12 +253,12 @@
 <body>
     <div class="page-wrapper">
 
-        <!-- Nav injected by platform.js — DO NOT EDIT -->
+        <!-- Nav injected by platform.js &mdash; DO NOT EDIT -->
         <div id="nav-placeholder"></div>
 
         <main class="page-main" id="main-content">
 
-            <!-- -- EDIT 5 — HERO ------------------------------------ -->
+            <!-- -- EDIT 5 &mdash; HERO ------------------------------------ -->
             <section class="sim-hero" aria-labelledby="sim-title">
                 <div class="container">
                     <nav aria-label="Breadcrumb">
@@ -279,7 +279,7 @@
 
                     <p class="sim-hero__subtitle">
                         Compute secondary voltage, voltage drop, and regulation for single-phase
-                        transformers under inductive or capacitive loads — using the infinite bus
+                        transformers under inductive or capacitive loads &mdash; using the infinite bus
                         model and short-circuit test data. Includes live phasor diagram.
                     </p>
 
@@ -293,17 +293,17 @@
                 </div>
             </section>
 
-            <!-- -- EDIT 6 — SIMULATOR BODY (two-panel layout) -------- -->
+            <!-- -- EDIT 6 &mdash; SIMULATOR BODY (two-panel layout) -------- -->
             <section class="sim-body">
                 <div class="container">
 
-                    <!-- Error banner — JS shows/hides and scrolls to this -->
+                    <!-- Error banner &mdash; JS shows/hides and scrolls to this -->
                     <div class="sim-error" id="sim-error" role="alert" aria-live="polite"></div>
 
                     <div class="sim-layout">
 
-                        <!-- ---- LEFT PANEL — INPUTS ---- -->
-                        <!-- EDIT 7 — Inputs -->
+                        <!-- ---- LEFT PANEL &mdash; INPUTS ---- -->
+                        <!-- EDIT 7 &mdash; Inputs -->
                         <aside aria-label="Input parameters">
 
                             <div class="sim-panel">
@@ -368,7 +368,7 @@
                                             <input type="number" id="in-cosphi" class="sim-input" value="0.85" min="0"
                                                 max="1" step="0.01" aria-label="Load power factor" />
                                         </div>
-                                        <p class="sim-hint">0 = purely reactive · 1 = purely resistive</p>
+                                        <p class="sim-hint">0 = purely reactive &middot; 1 = purely resistive</p>
                                     </div>
 
                                     <div class="sim-field">
@@ -395,7 +395,7 @@
                                                 <option value="absolute">V</option>
                                             </select>
                                         </div>
-                                        <p class="sim-hint">Typically 4–6 % for distribution transformers.</p>
+                                        <p class="sim-hint">Typically 4&ndash;6 % for distribution transformers.</p>
                                     </div>
 
                                     <div class="sim-field">
@@ -405,10 +405,10 @@
                                         <div class="sim-input-wrap">
                                             <input type="number" id="in-phi-cc" class="sim-input" value="75" min="0"
                                                 max="90" step="1" aria-label="Short-circuit angle in degrees" />
-                                            <span class="sim-unit">°</span>
+                                            <span class="sim-unit">&deg;</span>
                                         </div>
                                         <p class="sim-hint">
-                                            Angle of Z<sub>eq</sub>. High values (70–80°) indicate a
+                                            Angle of Z<sub>eq</sub>. High values (70&ndash;80&deg;) indicate a
                                             predominantly inductive impedance.
                                         </p>
                                     </div>
@@ -428,7 +428,7 @@
                         </aside>
                         <!-- /Left panel -->
 
-                        <!-- ---- RIGHT PANEL — RESULTS ---- -->
+                        <!-- ---- RIGHT PANEL &mdash; RESULTS ---- -->
                         <div>
 
                             <div class="sim-panel">
@@ -450,13 +450,13 @@
 
                                         <div class="sim-result-card sim-result-card--accent">
                                             <div class="sim-result-label">Secondary Voltage U2</div>
-                                            <div class="sim-result-value" id="out-u2">—</div>
+                                            <div class="sim-result-value" id="out-u2">&mdash;</div>
                                             <div class="sim-result-unit">V</div>
                                         </div>
 
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Voltage Drop |?V|</div>
-                                            <div class="sim-result-value" id="out-deltav">—</div>
+                                            <div class="sim-result-value" id="out-deltav">&mdash;</div>
                                             <div class="sim-result-unit">V</div>
                                         </div>
 
@@ -465,7 +465,7 @@
                                                 Regulation e
                                                 <span id="out-reg-badge" class="sim-reg-badge"></span>
                                             </div>
-                                            <div class="sim-result-value" id="out-reg">—</div>
+                                            <div class="sim-result-value" id="out-reg">&mdash;</div>
                                             <div class="sim-result-unit">%</div>
                                         </div>
 
@@ -475,12 +475,12 @@
                                     <div class="sim-impedance-row">
                                         <div class="sim-result-card sim-result-card--sm">
                                             <div class="sim-result-label">R<sub>eq</sub></div>
-                                            <div class="sim-result-value" id="out-req">—</div>
+                                            <div class="sim-result-value" id="out-req">&mdash;</div>
                                             <div class="sim-result-unit">O</div>
                                         </div>
                                         <div class="sim-result-card sim-result-card--sm">
                                             <div class="sim-result-label">X<sub>eq</sub></div>
-                                            <div class="sim-result-value" id="out-xeq">—</div>
+                                            <div class="sim-result-value" id="out-xeq">&mdash;</div>
                                             <div class="sim-result-unit">O</div>
                                         </div>
                                     </div>
@@ -488,8 +488,8 @@
                                     <!-- Load angle -->
                                     <div class="sim-result-card sim-result-card--sm" style="margin-top:10px;">
                                         <div class="sim-result-label">Load angle f</div>
-                                        <div class="sim-result-value" id="out-phi">—</div>
-                                        <div class="sim-result-unit">°</div>
+                                        <div class="sim-result-value" id="out-phi">&mdash;</div>
+                                        <div class="sim-result-unit">&deg;</div>
                                     </div>
 
                                     <!-- Triangle zoom slider -->
@@ -497,12 +497,12 @@
                                         <label class="sim-label" style="display:flex;justify-content:space-between;">
                                             <span>Triangle Zoom <span class="sim-label-hint">(didactic)</span></span>
                                             <span id="zoom-val"
-                                                style="font-variant-numeric:tabular-nums;color:var(--brand-accent)">1×</span>
+                                                style="font-variant-numeric:tabular-nums;color:var(--brand-accent)">1&times;</span>
                                         </label>
                                         <input type="range" id="slider-zoom" min="1" max="20" step="1" value="1"
                                             style="width:100%;accent-color:var(--brand-accent);cursor:pointer;"
                                             aria-label="Triangle zoom factor" />
-                                        <p class="sim-hint">Scales the ?V triangle independently — useful when Vcc is
+                                        <p class="sim-hint">Scales the ?V triangle independently &mdash; useful when Vcc is
                                             small.</p>
                                     </div>
 
@@ -567,7 +567,7 @@
             </div>
             -->
 
-            <!-- -- EDIT 8 — EDUCATIONAL CONTENT ------------------------ -->
+            <!-- -- EDIT 8 &mdash; EDUCATIONAL CONTENT ------------------------ -->
             <div class="container container--narrow">
                 <div class="edu-content">
 
@@ -587,16 +587,16 @@
                             the impedance is split into:
                         </p>
                         <p>
-                            <em>Z<sub>eq</sub> = V<sub>cc</sub> / I<sub>n</sub></em> &nbsp;·&nbsp;
-                            <em>R<sub>eq</sub> = Z<sub>eq</sub> · cos f<sub>cc</sub></em> &nbsp;·&nbsp;
-                            <em>X<sub>eq</sub> = Z<sub>eq</sub> · sin f<sub>cc</sub></em>
+                            <em>Z<sub>eq</sub> = V<sub>cc</sub> / I<sub>n</sub></em> &nbsp;&middot;&nbsp;
+                            <em>R<sub>eq</sub> = Z<sub>eq</sub> &middot; cos f<sub>cc</sub></em> &nbsp;&middot;&nbsp;
+                            <em>X<sub>eq</sub> = Z<sub>eq</sub> &middot; sin f<sub>cc</sub></em>
                         </p>
                         <p>
                             The secondary voltage is computed as the complex difference
-                            <em>U2 = U1 - Z<sub>eq</sub> · I</em>,
+                            <em>U2 = U1 - Z<sub>eq</sub> &middot; I</em>,
                             where the load current phasor I is constructed from its magnitude and power
                             factor angle. Voltage regulation is defined as:
-                            <em>e = (|U1| - |U2|) / |U2| × 100 %</em>.
+                            <em>e = (|U1| - |U2|) / |U2| &times; 100 %</em>.
                             A positive e indicates a voltage drop (inductive loads); a negative e
                             indicates a voltage rise (capacitive loads).
                         </p>
@@ -626,7 +626,7 @@
                                 <strong>Enter the short-circuit test data.</strong> V<sub>cc</sub>
                                 can be entered as a percentage of U1 (most common in datasheets) or
                                 as an absolute voltage. f<sub>cc</sub> is the impedance angle from
-                                the test: cos f<sub>cc</sub> = P<sub>cc</sub> / (V<sub>cc</sub> · I<sub>n</sub>).
+                                the test: cos f<sub>cc</sub> = P<sub>cc</sub> / (V<sub>cc</sub> &middot; I<sub>n</sub>).
                             </li>
                             <li>
                                 <strong>Read the results.</strong> The phasor diagram updates in
@@ -653,8 +653,8 @@
                         <h3>Voltage Drop |?V|</h3>
                         <p>
                             The magnitude of the complex drop across Z<sub>eq</sub>:
-                            |?V| = |Z<sub>eq</sub> · I|. This is not simply |U1| - |U2|,
-                            because the phasors are not collinear — the diagram makes the vector
+                            |?V| = |Z<sub>eq</sub> &middot; I|. This is not simply |U1| - |U2|,
+                            because the phasors are not collinear &mdash; the diagram makes the vector
                             triangle clear. For inductive loads the drop has a significant quadrature
                             component that increases regulation.
                         </p>
@@ -662,7 +662,7 @@
                         <h3>Voltage Regulation e</h3>
                         <p>
                             Regulation measures how much U2 changes from no-load to full-load, relative
-                            to U2: e = (|U1| - |U2|) / |U2| × 100 %. Distribution transformers are
+                            to U2: e = (|U1| - |U2|) / |U2| &times; 100 %. Distribution transformers are
                             designed for e = 5 %. A negative value means capacitive compensation is
                             actually boosting the secondary voltage above U1.
                         </p>
@@ -671,7 +671,7 @@
                         <p>
                             The total series resistance and leakage reactance referred to one winding,
                             extracted from the short-circuit test. X<sub>eq</sub> dominates in most
-                            power transformers (f<sub>cc</sub> ˜ 70–85°), which is why inductive loads
+                            power transformers (f<sub>cc</sub> &asymp; 70&ndash;85&deg;), which is why inductive loads
                             produce significantly more regulation than resistive ones at the same current.
                         </p>
 
@@ -710,8 +710,8 @@
                                 <div class="edu-faq-answer">
                                     f<sub>cc</sub> is the phase angle between V<sub>cc</sub> and I<sub>n</sub>
                                     during the short-circuit test. It is derived from the active power consumed:
-                                    cos f<sub>cc</sub> = P<sub>cc</sub> / (V<sub>cc</sub> · I<sub>n</sub>).
-                                    For most power transformers f<sub>cc</sub> is between 70° and 85°,
+                                    cos f<sub>cc</sub> = P<sub>cc</sub> / (V<sub>cc</sub> &middot; I<sub>n</sub>).
+                                    For most power transformers f<sub>cc</sub> is between 70&deg; and 85&deg;,
                                     indicating a highly inductive Z<sub>eq</sub> dominated by leakage flux
                                     rather than winding resistance.
                                 </div>
@@ -732,9 +732,9 @@
                             <details class="edu-faq-item">
                                 <summary>What is the difference between voltage drop and voltage regulation?</summary>
                                 <div class="edu-faq-answer">
-                                    Voltage drop |?V| = |Z<sub>eq</sub> · I| is the magnitude of the
+                                    Voltage drop |?V| = |Z<sub>eq</sub> &middot; I| is the magnitude of the
                                     phasor across the series impedance. Voltage regulation e compares the
-                                    primary and secondary magnitudes: e = (|U1| - |U2|) / |U2| × 100 %.
+                                    primary and secondary magnitudes: e = (|U1| - |U2|) / |U2| &times; 100 %.
                                     Because U1, U2, and ?V form a triangle (not a straight line), |?V| ?
                                     |U1| - |U2|. The phasor diagram makes this geometry explicit.
                                 </div>
@@ -744,7 +744,7 @@
                                 <summary>What are the limitations of this simulator?</summary>
                                 <div class="edu-faq-answer">
                                     This model uses the simplified series equivalent circuit and assumes:
-                                    (1) the core magnetizing branch is negligible — no-load losses and
+                                    (1) the core magnetizing branch is negligible &mdash; no-load losses and
                                     magnetizing current are ignored; (2) single-phase operation;
                                     (3) the load is linear and balanced; (4) skin effect and frequency
                                     dependence of R<sub>eq</sub> are not modeled; (5) the turns ratio is
@@ -770,7 +770,7 @@
 
         </main>
 
-        <!-- Footer injected by platform.js — DO NOT EDIT -->
+        <!-- Footer injected by platform.js &mdash; DO NOT EDIT -->
         <div id="footer-placeholder"></div>
 
     </div><!-- /page-wrapper -->

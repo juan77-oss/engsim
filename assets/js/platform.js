@@ -25,15 +25,36 @@
        Depth 2 = /simulators/mohr/ → path = "../../"
     ──────────────────────────────────────────────────────────── */
     function getRootPath() {
-        var parts = window.location.pathname.replace(/\/$/, '').split('/');
-        // Count how many levels deep we are from the repo root.
-        // GitHub Pages: /repo-name/simulators/mohr/ → parts = ['','repo-name','simulators','mohr']
-        // We need to go up (parts.length - 2) levels from the file's directory.
-        var depth = parts.length - 2; // -1 for empty string at start, -1 for filename/index
-        if (depth < 1) depth = 0;
-        var path = '';
-        for (var i = 0; i < depth; i++) path += '../';
-        return path || './';
+        var path = window.location.pathname;
+        var dirPath = path;
+        // If it's a file (e.g. index.html), strip the filename to get its directory
+        if (!dirPath.endsWith('/')) {
+            dirPath = dirPath.substring(0, dirPath.lastIndexOf('/') + 1);
+        }
+        
+        // Find base path (where index.html / simulators / assets live)
+        var knownDirs = ['/simulators/', '/pages/', '/assets/'];
+        var basePath = dirPath;
+        for (var i = 0; i < knownDirs.length; i++) {
+            var idx = dirPath.indexOf(knownDirs[i]);
+            if (idx !== -1) {
+                basePath = dirPath.substring(0, idx + 1);
+                break;
+            }
+        }
+        
+        // Calculate relative depth from the current directory to the base path
+        var remainder = dirPath.substring(basePath.length); // e.g. "simulators/mohr-circle/"
+        if (remainder.length === 0) return './';
+        
+        // Count the number of subdirectories
+        remainder = remainder.replace(/\/$/, ''); // remove trailing slash
+        var parts = remainder.split('/');
+        var relativePath = '';
+        for (var i = 0; i < parts.length; i++) {
+            relativePath += '../';
+        }
+        return relativePath;
     }
 
     var ROOT = getRootPath();

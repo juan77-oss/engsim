@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <!--
   simulators/gas-combustion/index.html
-  Built from the EngSim _template — see /simulators/_template/ for the source.
+  Built from the EngSim _template &mdash; see /simulators/_template/ for the source.
   DO NOT touch: ../../assets/, platform.js, platform.css, simulator.css.
 -->
 <html lang="en" dir="ltr">
@@ -10,7 +10,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Gas Combustion Calculator — Theoretical Air, ? & Products | EngSim</title>
+    <title>Gas Combustion Calculator &mdash; Theoretical Air, ? & Products | EngSim</title>
     <meta name="description"
         content="Interactive gas combustion calculator. Compute theoretical O2, theoretical air, excess air ratio (?), and combustion products from a CxHyOz fuel formula and dry flue gas analysis. Free, no account required." />
 
@@ -101,7 +101,7 @@
 
                     <div class="sim-layout sim-layout--full">
 
-                        <!-- --- PANEL — FUEL --- -->
+                        <!-- --- PANEL &mdash; FUEL --- -->
                         <div class="sim-panel">
                             <div class="sim-panel__header">
                                 <span class="sim-panel__title">
@@ -128,7 +128,7 @@
                                             spellcheck="false" autocapitalize="characters"
                                             aria-describedby="gc-formula-error" />
                                     </div>
-                                    <p class="sim-hint">Enter the formula: CH4, C2H6, C3H8, C2H4O — only C, H and O
+                                    <p class="sim-hint">Enter the formula: CH4, C2H6, C3H8, C2H4O &mdash; only C, H and O
                                         atoms.</p>
                                     <p id="gc-formula-error" class="sim-hint" style="color: var(--color-danger);"
                                         role="alert"></p>
@@ -137,22 +137,22 @@
                                 <div class="gc-parsed-row">
                                     <div class="gc-parsed-item">
                                         <span class="gc-parsed-item__label">C (x)</span>
-                                        <span class="gc-parsed-item__value" id="gc-parsed-x">—</span>
+                                        <span class="gc-parsed-item__value" id="gc-parsed-x">&mdash;</span>
                                         <span class="gc-parsed-item__unit">atoms/mol</span>
                                     </div>
                                     <div class="gc-parsed-item">
                                         <span class="gc-parsed-item__label">H (y)</span>
-                                        <span class="gc-parsed-item__value" id="gc-parsed-y">—</span>
+                                        <span class="gc-parsed-item__value" id="gc-parsed-y">&mdash;</span>
                                         <span class="gc-parsed-item__unit">atoms/mol</span>
                                     </div>
                                     <div class="gc-parsed-item">
                                         <span class="gc-parsed-item__label">O (z)</span>
-                                        <span class="gc-parsed-item__value" id="gc-parsed-z">—</span>
+                                        <span class="gc-parsed-item__value" id="gc-parsed-z">&mdash;</span>
                                         <span class="gc-parsed-item__unit">atoms/mol</span>
                                     </div>
                                     <div class="gc-parsed-item">
                                         <span class="gc-parsed-item__label">Molar Mass</span>
-                                        <span class="gc-parsed-item__value" id="gc-parsed-mm">—</span>
+                                        <span class="gc-parsed-item__value" id="gc-parsed-mm">&mdash;</span>
                                         <span class="gc-parsed-item__unit">kg/kmol</span>
                                     </div>
                                 </div>
@@ -160,7 +160,7 @@
                             </div>
                         </div><!-- /panel fuel -->
 
-                        <!-- --- PANEL — DRY FLUE GAS ANALYSIS --- -->
+                        <!-- --- PANEL &mdash; DRY FLUE GAS ANALYSIS --- -->
                         <div class="sim-panel">
                             <div class="sim-panel__header">
                                 <span class="sim-panel__title">
@@ -210,7 +210,7 @@
                                         <label class="sim-label" for="gc-input-n2">N2 <span class="sim-label-hint">By
                                                 difference</span></label>
                                         <div class="sim-input-wrap">
-                                            <input type="number" id="gc-input-n2" class="sim-input" placeholder="—"
+                                            <input type="number" id="gc-input-n2" class="sim-input" placeholder="&mdash;"
                                                 readonly tabindex="-1" aria-label="N2 calculated by difference" />
                                             <span class="sim-unit">auto</span>
                                         </div>
@@ -219,14 +219,14 @@
 
                                 <div class="gc-gas-sum-row" role="status" aria-live="polite">
                                     <span>S CO2 + CO + O2</span>
-                                    <span id="gc-gas-sum">—</span>
+                                    <span id="gc-gas-sum">&mdash;</span>
                                 </div>
                                 <p class="gc-warning-msg" id="gc-gas-warning" role="alert"></p>
 
                             </div>
                         </div><!-- /panel gas -->
 
-                        <!-- --- PANEL — CALCULATION --- -->
+                        <!-- --- PANEL &mdash; CALCULATION --- -->
                         <div class="sim-panel">
                             <div class="sim-panel__header">
                                 <span class="sim-panel__title">
@@ -259,11 +259,11 @@
                             </div>
                         </div><!-- /panel calc -->
 
-                        <!-- --- RESULTS — hidden until calculation --- -->
+                        <!-- --- RESULTS &mdash; hidden until calculation --- -->
                         <div id="gc-results" style="display:none;" role="region" aria-label="Calculation results">
 
                             <div id="gc-diagnostic" class="gc-diagnostic" role="status">
-                                <span class="gc-diagnostic__text" id="gc-diag-text">—</span>
+                                <span class="gc-diagnostic__text" id="gc-diag-text">&mdash;</span>
                                 <span class="gc-diagnostic__value" id="gc-diag-value"></span>
                             </div>
 
@@ -283,37 +283,37 @@
                                     <div class="sim-results-grid">
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Parsed Formula</div>
-                                            <div class="sim-result-value" id="gc-res-formula">—</div>
+                                            <div class="sim-result-value" id="gc-res-formula">&mdash;</div>
                                             <div class="sim-result-unit">C?H?O_z</div>
                                         </div>
                                         <div class="sim-result-card sim-result-card--accent">
                                             <div class="sim-result-label">Theoretical O2</div>
-                                            <div class="sim-result-value" id="gc-res-o2teo">—</div>
+                                            <div class="sim-result-value" id="gc-res-o2teo">&mdash;</div>
                                             <div class="sim-result-unit">kmol O2/kmol fuel</div>
                                         </div>
                                         <div class="sim-result-card sim-result-card--accent">
                                             <div class="sim-result-label">Theoretical Air (L0)</div>
-                                            <div class="sim-result-value" id="gc-res-l0">—</div>
+                                            <div class="sim-result-value" id="gc-res-l0">&mdash;</div>
                                             <div class="sim-result-unit">kmol air/kmol fuel</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Theoretical Air (mass)</div>
-                                            <div class="sim-result-value" id="gc-res-l0-mass">—</div>
+                                            <div class="sim-result-value" id="gc-res-l0-mass">&mdash;</div>
                                             <div class="sim-result-unit">kg air/kg fuel</div>
                                         </div>
                                         <div class="sim-result-card sim-result-card--accent">
                                             <div class="sim-result-label">Excess Air Ratio (?)</div>
-                                            <div class="sim-result-value" id="gc-res-lambda">—</div>
+                                            <div class="sim-result-value" id="gc-res-lambda">&mdash;</div>
                                             <div class="sim-result-unit">dimensionless</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">% Excess / Deficit</div>
-                                            <div class="sim-result-value" id="gc-res-excess">—</div>
+                                            <div class="sim-result-value" id="gc-res-excess">&mdash;</div>
                                             <div class="sim-result-unit">% relative to L0</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Actual Air (L)</div>
-                                            <div class="sim-result-value" id="gc-res-lreal">—</div>
+                                            <div class="sim-result-value" id="gc-res-lreal">&mdash;</div>
                                             <div class="sim-result-unit">kmol air/kmol fuel</div>
                                         </div>
                                     </div>
@@ -334,7 +334,7 @@
                                         </svg>
                                         Combustion Products
                                     </span>
-                                    <span class="sim-panel__badge">1 kmol fuel · actual analysis</span>
+                                    <span class="sim-panel__badge">1 kmol fuel &middot; actual analysis</span>
                                 </div>
                                 <div class="sim-panel__body">
 
@@ -347,7 +347,7 @@
 
                                     <div class="gc-table-wrap">
                                         <table class="gc-table"
-                                            aria-label="Molar combustion products — based on measured flue gas analysis">
+                                            aria-label="Molar combustion products &mdash; based on measured flue gas analysis">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">Component</th>
@@ -359,36 +359,36 @@
                                                 <tr>
                                                     <td><span class="gc-table__formula">CO2</span><span
                                                             class="gc-table__origin">Carbon dioxide</span></td>
-                                                    <td id="gc-tbl-co2-kmol">—</td>
-                                                    <td id="gc-tbl-co2-pct">—</td>
+                                                    <td id="gc-tbl-co2-kmol">&mdash;</td>
+                                                    <td id="gc-tbl-co2-pct">&mdash;</td>
                                                 </tr>
                                                 <tr>
                                                     <td><span class="gc-table__formula">CO</span><span
                                                             class="gc-table__origin">Carbon monoxide</span></td>
-                                                    <td id="gc-tbl-co-kmol">—</td>
-                                                    <td id="gc-tbl-co-pct">—</td>
+                                                    <td id="gc-tbl-co-kmol">&mdash;</td>
+                                                    <td id="gc-tbl-co-pct">&mdash;</td>
                                                 </tr>
                                                 <tr>
                                                     <td><span class="gc-table__formula">H2O</span><span
                                                             class="gc-table__origin">Water vapor</span></td>
-                                                    <td id="gc-tbl-h2o-kmol">—</td>
-                                                    <td id="gc-tbl-h2o-pct">—</td>
+                                                    <td id="gc-tbl-h2o-kmol">&mdash;</td>
+                                                    <td id="gc-tbl-h2o-pct">&mdash;</td>
                                                 </tr>
                                                 <tr>
                                                     <td><span class="gc-table__formula">N2</span><span
                                                             class="gc-table__origin">Nitrogen from air</span></td>
-                                                    <td id="gc-tbl-n2-kmol">—</td>
-                                                    <td id="gc-tbl-n2-pct">—</td>
+                                                    <td id="gc-tbl-n2-kmol">&mdash;</td>
+                                                    <td id="gc-tbl-n2-pct">&mdash;</td>
                                                 </tr>
                                                 <tr>
                                                     <td><span class="gc-table__formula">O2</span><span
                                                             class="gc-table__origin">Excess oxygen</span></td>
-                                                    <td id="gc-tbl-o2ex-kmol">—</td>
-                                                    <td id="gc-tbl-o2ex-pct">—</td>
+                                                    <td id="gc-tbl-o2ex-kmol">&mdash;</td>
+                                                    <td id="gc-tbl-o2ex-pct">&mdash;</td>
                                                 </tr>
                                                 <tr class="gc-row-total">
                                                     <td>Wet total</td>
-                                                    <td id="gc-tbl-total-kmol">—</td>
+                                                    <td id="gc-tbl-total-kmol">&mdash;</td>
                                                     <td>100.000</td>
                                                 </tr>
                                             </tbody>
@@ -423,7 +423,7 @@
                         <h2 id="h-about">About This Simulator</h2>
                         <p>
                             Combustion is a high-temperature exothermic redox reaction between a fuel (the
-                            reductant) and an oxidizer — usually atmospheric oxygen. For gaseous fuels this
+                            reductant) and an oxidizer &mdash; usually atmospheric oxygen. For gaseous fuels this
                             reaction occurs rapidly in the gas phase. <strong>Complete combustion</strong> happens
                             when the fuel reacts entirely with oxygen, producing only fully oxidized products
                             such as carbon dioxide (CO2) and water vapor (H2O). <strong>Incomplete
@@ -434,7 +434,7 @@
                             This calculator solves the stoichiometry of pure gaseous fuels (C?H?O_z) on a
                             molar basis, referenced to 1 kmol of fuel. It determines the theoretical oxygen and
                             air requirement, then back-calculates the actual air supplied from a measured dry
-                            flue gas analysis via a carbon balance — a standard technique for evaluating real
+                            flue gas analysis via a carbon balance &mdash; a standard technique for evaluating real
                             combustion equipment such as boilers and furnaces.
                         </p>
                     </section>
@@ -481,7 +481,7 @@
 
                         <h3>Combustion Products</h3>
                         <p>The carbon in the fuel is split between CO2 and CO in the same proportion measured in
-                            your dry gas analysis — so if you entered CO &gt; 0, it shows up as a real product
+                            your dry gas analysis &mdash; so if you entered CO &gt; 0, it shows up as a real product
                             here instead of being silently converted to CO2. Hydrogen is assumed to fully oxidize
                             to H2O, N2 is inert (from the combustion air), and if ? &gt; 1 there is leftover O2. The
                             table reports each in kmol per kmol of fuel and as % volume on a wet basis.</p>
@@ -522,7 +522,7 @@
                                 <summary>What are the limitations of this simulator?</summary>
                                 <div class="edu-faq-answer">It only supports pure gaseous fuels made of C, H and O
                                     (no sulfur or fuel-bound nitrogen). CO shown in the products table comes
-                                    directly from your measured gas analysis — the simulator does not predict how
+                                    directly from your measured gas analysis &mdash; the simulator does not predict how
                                     much CO would form under a given air deficit, nor does it model other
                                     intermediate species (soot, unburnt hydrocarbons, H2). Air is assumed to be
                                     exactly 21% O2 / 79% N2, and the flue gas analysis is assumed to be on a dry

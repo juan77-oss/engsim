@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Mohr's Circle Calculator &mdash; Plane Stress Analysis | EngSim</title>
+    <title>Mohr's Circle Calculator � Plane Stress Analysis | EngSim</title>
     <meta name="description"
         content="Interactive Mohr's Circle calculator for plane stress. Compute principal stresses, maximum shear stress, and stress at any rotated angle in real time. Free, no account required." />
 
@@ -47,7 +47,7 @@
 <body>
     <div class="page-wrapper">
 
-        <!-- Nav injected by platform.js &mdash; DO NOT EDIT -->
+        <!-- Nav injected by platform.js � DO NOT EDIT -->
         <div id="nav-placeholder"></div>
 
         <main class="page-main" id="main-content">
@@ -71,7 +71,7 @@
 
                     <p class="sim-hero__subtitle">
                         Enter a plane stress state and get principal stresses, maximum shear,
-                        and the full Mohr's Circle diagram &mdash; with an interactive angle slider
+                        and the full Mohr's Circle diagram � with an interactive angle slider
                         to inspect the stress on any rotated plane.
                     </p>
 
@@ -91,7 +91,7 @@
 
                     <div class="sim-layout" style="--sim-sidebar-width: 340px;">
 
-                        <!-- ---- LEFT PANEL &mdash; INPUTS ---- -->
+                        <!-- ---- LEFT PANEL � INPUTS ---- -->
                         <aside aria-label="Input parameters">
 
                             <div class="sim-panel">
@@ -151,7 +151,7 @@
                                             <option value="psi">psi</option>
                                         </select>
                                         <p class="sim-hint">
-                                            The math only needs sx, sy, and txy in the SAME unit &mdash;
+                                            The math only needs sx, sy, and txy in the SAME unit �
                                             this selector relabels the fields, it does not convert values.
                                         </p>
                                     </div>
@@ -165,11 +165,11 @@
                                         </label>
                                         <select id="select-convention" class="sim-select"
                                             aria-label="Mohr's Circle sign convention">
-                                            <option value="materials" selected>Materials (t+ up &mdash; Callister)</option>
-                                            <option value="mechanics">Mechanics (t+ down &mdash; Hibbeler)</option>
+                                            <option value="materials" selected>Materials (t+ up � Callister)</option>
+                                            <option value="mechanics">Mechanics (t+ down � Hibbeler)</option>
                                         </select>
                                         <p class="sim-hint">
-                                            s1, s2, and tmax never change &mdash; only the t-axis direction
+                                            s1, s2, and tmax never change � only the t-axis direction
                                             on the diagrams below does.
                                         </p>
                                     </div>
@@ -182,7 +182,7 @@
                                         <div class="sim-slider-row">
                                             <input type="range" id="input-theta" min="-90" max="90" step="1" value="0"
                                                 aria-label="Rotation angle theta in degrees" />
-                                            <span class="sim-slider-value" id="theta-value">0&deg;</span>
+                                            <span class="sim-slider-value" id="theta-value">0�</span>
                                         </div>
                                         <p class="sim-hint">
                                             Drag to see the stress state on a plane rotated ? from the x-face,
@@ -206,7 +206,7 @@
                         </aside>
                         <!-- /Left panel -->
 
-                        <!-- ---- RIGHT PANEL &mdash; RESULTS ---- -->
+                        <!-- ---- RIGHT PANEL � RESULTS ---- -->
                         <div>
 
                             <div class="sim-panel">
@@ -231,37 +231,37 @@
                                     <div class="sim-results-grid">
                                         <div class="sim-result-card sim-result-card--accent">
                                             <div class="sim-result-label">s1 (max)</div>
-                                            <div class="sim-result-value" id="out-sigma1">&mdash;</div>
+                                            <div class="sim-result-value" id="out-sigma1">�</div>
                                             <div class="sim-result-unit js-unit-label">MPa</div>
                                         </div>
                                         <div class="sim-result-card sim-result-card--accent">
                                             <div class="sim-result-label">s2 (min)</div>
-                                            <div class="sim-result-value" id="out-sigma2">&mdash;</div>
+                                            <div class="sim-result-value" id="out-sigma2">�</div>
                                             <div class="sim-result-unit js-unit-label">MPa</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">t max</div>
-                                            <div class="sim-result-value" id="out-tau-max">&mdash;</div>
+                                            <div class="sim-result-value" id="out-tau-max">�</div>
                                             <div class="sim-result-unit js-unit-label">MPa</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">s avg</div>
-                                            <div class="sim-result-value" id="out-sigma-avg">&mdash;</div>
+                                            <div class="sim-result-value" id="out-sigma-avg">�</div>
                                             <div class="sim-result-unit js-unit-label">MPa</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">?p (plane 1)</div>
-                                            <div class="sim-result-value" id="out-theta-p">&mdash;</div>
+                                            <div class="sim-result-value" id="out-theta-p">�</div>
                                             <div class="sim-result-unit">deg</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">?p (plane 2)</div>
-                                            <div class="sim-result-value" id="out-theta-p2">&mdash;</div>
+                                            <div class="sim-result-value" id="out-theta-p2">�</div>
                                             <div class="sim-result-unit">deg</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">?s (max shear)</div>
-                                            <div class="sim-result-value" id="out-theta-s">&mdash;</div>
+                                            <div class="sim-result-value" id="out-theta-s">�</div>
                                             <div class="sim-result-unit">deg</div>
                                         </div>
                                     </div>
@@ -311,12 +311,12 @@
                                     <div class="sim-results-grid">
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">s(?)</div>
-                                            <div class="sim-result-value" id="out-sigma-theta">&mdash;</div>
+                                            <div class="sim-result-value" id="out-sigma-theta">�</div>
                                             <div class="sim-result-unit js-unit-label">MPa</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">t(?)</div>
-                                            <div class="sim-result-value" id="out-tau-theta">&mdash;</div>
+                                            <div class="sim-result-value" id="out-tau-theta">�</div>
                                             <div class="sim-result-unit js-unit-label">MPa</div>
                                         </div>
                                     </div>
@@ -375,24 +375,24 @@
                             Mohr's Circle is a graphical method for visualizing how normal and
                             shear stress on a material element change as the plane of interest
                             is rotated. Given a plane stress state (sx, sy, txy), every possible
-                            combination of normal stress s and shear stress t &mdash; on every plane
-                            through that point &mdash; falls on a single circle in the s&ndash;t plane.
+                            combination of normal stress s and shear stress t � on every plane
+                            through that point � falls on a single circle in the s�t plane.
                         </p>
                         <p>
                             The circle is centered at s_avg = (sx + sy)/2 on the s-axis, with
-                            radius R = v[((sx - sy)/2)&sup2; + txy&sup2;]. The points where the circle
-                            crosses the s-axis give the principal stresses s1 and s2 &mdash; the
+                            radius R = v[((sx - sy)/2)� + txy�]. The points where the circle
+                            crosses the s-axis give the principal stresses s1 and s2 � the
                             maximum and minimum normal stresses at that point, occurring on
                             planes where shear is zero. The top and bottom of the circle give
                             the maximum in-plane shear stress, tmax = R, which always occurs
-                            45&deg; from the principal planes.
+                            45� from the principal planes.
                         </p>
                         <p>
                             This calculator supports both sign conventions found in textbooks:
                             the Materials convention (Callister, Shackelford), where positive
                             shear plots upward, and the Mechanics convention (Hibbeler, Beer &
-                            Johnston), where positive shear plots downward. The physics &mdash;
-                            s1, s2, tmax, and the angles to reach them &mdash; is identical either way;
+                            Johnston), where positive shear plots downward. The physics �
+                            s1, s2, tmax, and the angles to reach them � is identical either way;
                             only the diagram's orientation changes.
                         </p>
                     </section>
@@ -405,12 +405,12 @@
                             <li><strong>Step 1.</strong> Enter sx, sy, and txy for your plane stress
                                 state, in any consistent unit.</li>
                             <li><strong>Step 2.</strong> Pick the sign convention that matches your
-                                textbook or course &mdash; it only changes how the diagram looks, not the
+                                textbook or course � it only changes how the diagram looks, not the
                                 results.</li>
                             <li><strong>Step 3.</strong> Read s1, s2, tmax, and the principal/max-shear
                                 angles directly from the result cards.</li>
                             <li><strong>Step 4.</strong> Drag the ? slider to inspect the normal and
-                                shear stress on a plane rotated by any angle &mdash; both the circle and the
+                                shear stress on a plane rotated by any angle � both the circle and the
                                 rotated stress element update live.</li>
                         </ol>
                     </section>
@@ -428,22 +428,22 @@
 
                         <h3>tmax (Maximum In-Plane Shear Stress)</h3>
                         <p>
-                            Equal to the circle's radius R. It occurs on planes rotated 45&deg; from
+                            Equal to the circle's radius R. It occurs on planes rotated 45� from
                             the principal planes, where the normal stress equals s_avg.
                         </p>
 
                         <h3>?p and ?s (Plane Angles)</h3>
                         <p>
                             ?p is the physical rotation angle (from the x-face) to reach the first
-                            principal plane; the second principal plane is 90&deg; away. ?s is the
-                            angle to the maximum shear plane, 45&deg; from ?p.
+                            principal plane; the second principal plane is 90� away. ?s is the
+                            angle to the maximum shear plane, 45� from ?p.
                         </p>
 
                         <h3>s(?) and t(?)</h3>
                         <p>
                             The normal and shear stress on a plane rotated by the angle ? you set
                             with the slider, computed with the general stress transformation
-                            equations &mdash; not just read off the circle.
+                            equations � not just read off the circle.
                         </p>
                     </section>
 
@@ -458,7 +458,7 @@
                                     s2, or tmax?</summary>
                                 <div class="edu-faq-answer">
                                     The convention only flips which direction on the page counts as
-                                    "positive t." It's a drawing choice, not a physics choice &mdash; the
+                                    "positive t." It's a drawing choice, not a physics choice � the
                                     stress state itself, and therefore every principal quantity, stays
                                     the same.
                                 </div>
@@ -476,7 +476,7 @@
                             <details class="edu-faq-item">
                                 <summary>Can I use any unit for sx, sy, and txy?</summary>
                                 <div class="edu-faq-answer">
-                                    Yes &mdash; MPa, ksi, psi, or anything else &mdash; as long as all three
+                                    Yes � MPa, ksi, psi, or anything else � as long as all three
                                     inputs use the SAME unit. The unit selector only relabels the
                                     fields; it does not convert your numbers.
                                 </div>
@@ -485,7 +485,7 @@
                             <details class="edu-faq-item">
                                 <summary>What are the limitations of this calculator?</summary>
                                 <div class="edu-faq-answer">
-                                    This tool covers plane stress (2D) only &mdash; it does not compute the
+                                    This tool covers plane stress (2D) only � it does not compute the
                                     third principal stress or the full 3D Mohr's Circle. It assumes
                                     linear elastic behavior and does not account for material failure
                                     criteria.
@@ -506,7 +506,7 @@
 
         </main>
 
-        <!-- Footer injected by platform.js &mdash; DO NOT EDIT -->
+        <!-- Footer injected by platform.js � DO NOT EDIT -->
         <div id="footer-placeholder"></div>
 
     </div><!-- /page-wrapper -->
@@ -517,3 +517,4 @@
 </body>
 
 </html>
+

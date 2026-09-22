@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Static Beam Calculator — Shear, Moment &amp; Deflection | EngSim</title>
+    <title>Static Beam Calculator &mdash; Shear, Moment &amp; Deflection | EngSim</title>
     <meta name="description"
         content="Free online static beam calculator. Compute support reactions, shear force diagram, bending moment diagram, and deflection curve for simply supported beams with point and distributed loads." />
     <meta property="og:type" content="website" />
@@ -13,7 +13,7 @@
         content="Calculate shear force, bending moment, and deflection for simply supported beams. Free, no signup." />
     <meta property="og:site_name" content="EngSim" />
 
-    <!-- Canonical URL — fill in once you have the domain -->
+    <!-- Canonical URL &mdash; fill in once you have the domain -->
     <!-- <link rel="canonical" href="https://engsim.app/simulators/static-beam/" /> -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -228,7 +228,7 @@
             border-top: 1px solid var(--color-border);
         }
 
-        /* Inputs dentro de load cards: siempre 2 columnas con mínimo generoso */
+        /* Inputs dentro de load cards: siempre 2 columnas con m&iacute;nimo generoso */
         .load-card__body .sim-grid-2 {
             grid-template-columns: 1fr 1fr;
             min-width: 0;
@@ -360,7 +360,7 @@
             <section class="sim-body">
                 <div class="container">
 
-                    <!-- Error banner — scrolled into view on error -->
+                    <!-- Error banner &mdash; scrolled into view on error -->
                     <div class="sim-error" id="sim-error" role="alert" aria-live="polite"></div>
 
                     <div class="sim-layout">
@@ -407,7 +407,7 @@
                                                 max="500" step="1" aria-label="Elastic modulus in GPa" />
                                             <span class="sim-unit">GPa</span>
                                         </div>
-                                        <p class="sim-hint">Steel ˜ 200 GPa · Aluminum ˜ 70 GPa · Concrete ˜ 30 GPa</p>
+                                        <p class="sim-hint">Steel &asymp; 200 GPa &middot; Aluminum &asymp; 70 GPa &middot; Concrete &asymp; 30 GPa</p>
                                     </div>
 
                                     <div class="sim-field">
@@ -419,7 +419,7 @@
                                                 max="1000000" step="100" aria-label="Second moment of area in cm4" />
                                             <span class="sim-unit">cm4</span>
                                         </div>
-                                        <p class="sim-hint">IPE 300 ˜ 8 360 cm4 · HEB 300 ˜ 25 170 cm4</p>
+                                        <p class="sim-hint">IPE 300 &asymp; 8 360 cm4 &middot; HEB 300 &asymp; 25 170 cm4</p>
                                     </div>
 
                                 </div>
@@ -443,7 +443,7 @@
                                     <p class="sim-section-label" style="margin-bottom: var(--space-2);">Add load type
                                     </p>
 
-                                    <!-- Type selector — always visible, horizontal layout -->
+                                    <!-- Type selector &mdash; always visible, horizontal layout -->
                                     <div class="load-type-selector">
                                         <button type="button" id="btn-add-point" class="btn-load-type"
                                             aria-label="Add a point load">
@@ -547,12 +547,12 @@
                                     <div class="sim-results-grid">
                                         <div class="sim-result-card sim-result-card--accent">
                                             <div class="sim-result-label">Reaction R<sub>A</sub></div>
-                                            <div class="sim-result-value" id="out-Ra">—</div>
+                                            <div class="sim-result-value" id="out-Ra">&mdash;</div>
                                             <div class="sim-result-unit">kN</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Reaction R<sub>B</sub></div>
-                                            <div class="sim-result-value" id="out-Rb">—</div>
+                                            <div class="sim-result-value" id="out-Rb">&mdash;</div>
                                             <div class="sim-result-unit">kN</div>
                                         </div>
                                     </div>
@@ -577,21 +577,21 @@
                                     <div class="sim-results-grid" style="grid-template-columns: repeat(3,1fr);">
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Max |Q|</div>
-                                            <div class="sim-result-value" id="out-Vmax">—</div>
+                                            <div class="sim-result-value" id="out-Vmax">&mdash;</div>
                                             <div class="sim-result-unit">kN</div>
-                                            <div class="sim-result-sub">at x = <span id="out-Vmax-x">—</span> m</div>
+                                            <div class="sim-result-sub">at x = <span id="out-Vmax-x">&mdash;</span> m</div>
                                         </div>
                                         <div class="sim-result-card sim-result-card--accent">
                                             <div class="sim-result-label">Max |M|</div>
-                                            <div class="sim-result-value" id="out-Mmax">—</div>
+                                            <div class="sim-result-value" id="out-Mmax">&mdash;</div>
                                             <div class="sim-result-unit">kNm</div>
-                                            <div class="sim-result-sub">at x = <span id="out-Mmax-x">—</span> m</div>
+                                            <div class="sim-result-sub">at x = <span id="out-Mmax-x">&mdash;</span> m</div>
                                         </div>
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Max |y|</div>
-                                            <div class="sim-result-value" id="out-Ymax">—</div>
+                                            <div class="sim-result-value" id="out-Ymax">&mdash;</div>
                                             <div class="sim-result-unit">mm</div>
-                                            <div class="sim-result-sub">at x = <span id="out-Ymax-x">—</span> m</div>
+                                            <div class="sim-result-sub">at x = <span id="out-Ymax-x">&mdash;</span> m</div>
                                         </div>
                                     </div>
                                 </div>
@@ -654,7 +654,7 @@
                     <section class="edu-section" id="about" aria-labelledby="h-about">
                         <h2 id="h-about">About This Simulator</h2>
                         <p>
-                            This calculator analyzes <strong>simply supported beams</strong> — one of the most
+                            This calculator analyzes <strong>simply supported beams</strong> &mdash; one of the most
                             fundamental
                             structural elements in civil and mechanical engineering. The beam rests on a pin support at
                             end A
@@ -667,7 +667,7 @@
                             M(x)
                             calculated analytically, and the results summed across the full beam length. This produces
                             exact
-                            diagrams — not approximations — for any combination of loads within the isostatic model.
+                            diagrams &mdash; not approximations &mdash; for any combination of loads within the isostatic model.
                         </p>
                         <p>
                             Deflections are computed by double-integrating the curvature ? = M(x)/EI using the
@@ -707,7 +707,7 @@
                             loads, linear under distributed loads. Maximum shear typically occurs at supports.</p>
                         <h3>Bending Moment Diagram M(x)</h3>
                         <p>Sum of moments of all forces to the left of a section. Linear between point loads, parabolic
-                            under UDLs. Maximum moment occurs where Q = 0 — the critical section for flexural design.
+                            under UDLs. Maximum moment occurs where Q = 0 &mdash; the critical section for flexural design.
                         </p>
                         <h3>Deflection Curve y(x)</h3>
                         <p>Obtained by double-integrating M(x)/EI with y(0) = y(L) = 0. Results in mm. Compare against
@@ -724,12 +724,12 @@
                                 <summary>What sign convention is used?</summary>
                                 <div class="edu-faq-answer">Downward loads are positive. Shear Q is positive when the
                                     left portion tends to slide upward. Moment M is positive (sagging) when the beam
-                                    bends concave upward — tension on the bottom fiber.</div>
+                                    bends concave upward &mdash; tension on the bottom fiber.</div>
                             </details>
                             <details class="edu-faq-item">
                                 <summary>Can I add multiple loads at the same position?</summary>
                                 <div class="edu-faq-answer">Yes. Superposition handles any combination correctly.
-                                    Multiple point loads at the same x, overlapping distributed loads — all are summed
+                                    Multiple point loads at the same x, overlapping distributed loads &mdash; all are summed
                                     algebraically.</div>
                             </details>
                             <details class="edu-faq-item">
