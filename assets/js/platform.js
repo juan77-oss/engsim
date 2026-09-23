@@ -22,7 +22,7 @@
        Root = the folder containing index.html (home page).
        Depth 0 = root         → path = "./"
        Depth 1 = /simulators/ → path = "../"
-       Depth 2 = /simulators/mohr/ → path = "../../"
+       Depth 2 = /simulators/mohr-circle/ → path = "../../"
     ──────────────────────────────────────────────────────────── */
     function getRootPath() {
         var path = window.location.pathname;
