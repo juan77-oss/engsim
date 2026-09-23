@@ -10,14 +10,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Gas Combustion Calculator &mdash; Theoretical Air, ? & Products | EngSim</title>
+    <title>Gas Combustion Calculator &mdash; Theoretical Air, &lambda; &amp; Products | EngSim</title>
     <meta name="description"
-        content="Interactive gas combustion calculator. Compute theoretical O2, theoretical air, excess air ratio (?), and combustion products from a CxHyOz fuel formula and dry flue gas analysis. Free, no account required." />
+        content="Interactive gas combustion calculator. Compute theoretical O2, theoretical air, excess air ratio (&lambda;), and combustion products from a CxHyOz fuel formula and dry flue gas analysis. Free, no account required." />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Gas Combustion Calculator | EngSim" />
     <meta property="og:description"
-        content="Compute theoretical air, excess air ratio (?) and combustion products for pure gaseous fuels." />
+        content="Compute theoretical air, excess air ratio (&lambda;) and combustion products for pure gaseous fuels." />
     <meta property="og:site_name" content="EngSim" />
 
     <!-- <link rel="canonical" href="https://engsim.app/simulators/gas-combustion/" /> -->
@@ -120,7 +120,7 @@
                     <h1 class="sim-hero__title" id="sim-title">Gas Combustion Calculator</h1>
 
                     <p class="sim-hero__subtitle">
-                        Determine theoretical oxygen, theoretical air, excess air ratio (?), and combustion
+                        Determine theoretical oxygen, theoretical air, excess air ratio (&lambda;), and combustion
                         products from a pure gaseous fuel's chemical formula and its measured dry flue gas
                         analysis. Calculation basis: 1 kmol of fuel.
                     </p>
@@ -128,8 +128,8 @@
                     <div class="sim-hero__tags">
                         <span class="sim-hero__tag">Gas Combustion</span>
                         <span class="sim-hero__tag">Molar Basis</span>
-                        <span class="sim-hero__tag">C?H?O_z</span>
-                        <span class="sim-hero__tag">Excess Air (?)</span>
+                        <span class="sim-hero__tag">CxHyOz</span>
+                        <span class="sim-hero__tag">Excess Air (&lambda;)</span>
                     </div>
                 </div>
             </section>
@@ -157,7 +157,7 @@
                                     </svg>
                                     Fuel
                                 </span>
-                                <span class="sim-panel__badge">C?H?O_z</span>
+                                <span class="sim-panel__badge">CxHyOz</span>
                             </div>
                             <div class="sim-panel__body">
 
@@ -325,7 +325,7 @@
                                         <div class="sim-result-card">
                                             <div class="sim-result-label">Parsed Formula</div>
                                             <div class="sim-result-value" id="gc-res-formula">&mdash;</div>
-                                            <div class="sim-result-unit">C?H?O_z</div>
+                                            <div class="sim-result-unit">CxHyOz</div>
                                         </div>
                                         <div class="sim-result-card sim-result-card--accent">
                                             <div class="sim-result-label">Theoretical O2</div>
@@ -343,7 +343,7 @@
                                             <div class="sim-result-unit">kg air/kg fuel</div>
                                         </div>
                                         <div class="sim-result-card sim-result-card--accent">
-                                            <div class="sim-result-label">Excess Air Ratio (?)</div>
+                                            <div class="sim-result-label">Excess Air Ratio (&lambda;)</div>
                                             <div class="sim-result-value" id="gc-res-lambda">&mdash;</div>
                                             <div class="sim-result-unit">dimensionless</div>
                                         </div>
@@ -472,7 +472,7 @@
                             leading to carbon monoxide (CO), unburnt hydrocarbons, or soot.
                         </p>
                         <p>
-                            This calculator solves the stoichiometry of pure gaseous fuels (C?H?O_z) on a
+                            This calculator solves the stoichiometry of pure gaseous fuels (CxHyOz) on a
                             molar basis, referenced to 1 kmol of fuel. It determines the theoretical oxygen and
                             air requirement, then back-calculates the actual air supplied from a measured dry
                             flue gas analysis via a carbon balance &mdash; a standard technique for evaluating real
@@ -485,7 +485,7 @@
                     <section class="edu-section" id="how-to-use" aria-labelledby="h-howto">
                         <h2 id="h-howto">How to Use</h2>
                         <ol>
-                            <li><strong>Step 1.</strong> Enter the fuel's chemical formula (C?H?O_z), e.g. CH4,
+                            <li><strong>Step 1.</strong> Enter the fuel's chemical formula (CxHyOz), e.g. CH4,
                                 C3H8, or C2H4O. The parsed atom counts and molar mass appear automatically.</li>
                             <li><strong>Step 2.</strong> Enter the measured dry flue gas analysis: CO2, CO and
                                 O2, all in kmol per 100 kmol of dry gas. N2 is calculated automatically by
@@ -508,12 +508,12 @@
                             by volume, theoretical air (L0) is the amount of air needed to supply that oxygen. It
                             is the baseline reference for designing and evaluating combustion equipment.</p>
 
-                        <h3>Excess Air Ratio (?)</h3>
-                        <p>? = Actual air (L) / Theoretical air (L0). If ? = 1 the combustion is stoichiometric;
-                            ? &gt; 1 means the system runs lean (excess air); ? &lt; 1 means it runs rich (air
+                        <h3>Excess Air Ratio (&lambda;)</h3>
+                        <p>&lambda; = Actual air (L) / Theoretical air (L0). If &lambda; = 1 the combustion is stoichiometric;
+                            &lambda; &gt; 1 means the system runs lean (excess air); &lambda; &lt; 1 means it runs rich (air
                             deficit). Real equipment operates with excess air to ensure complete combustion, but
                             too much excess air wastes energy heating unnecessary nitrogen and lowers thermal
-                            efficiency. Typical industrial burners operate with ? between 1.05 and 1.20.</p>
+                            efficiency. Typical industrial burners operate with &lambda; between 1.05 and 1.20.</p>
 
                         <h3>Actual Air (L) and Air-Fuel Ratio</h3>
                         <p>Actual air is back-calculated from the dry gas analysis via a carbon balance, then
@@ -524,7 +524,7 @@
                         <p>The carbon in the fuel is split between CO2 and CO in the same proportion measured in
                             your dry gas analysis &mdash; so if you entered CO &gt; 0, it shows up as a real product
                             here instead of being silently converted to CO2. Hydrogen is assumed to fully oxidize
-                            to H2O, N2 is inert (from the combustion air), and if ? &gt; 1 there is leftover O2. The
+                            to H2O, N2 is inert (from the combustion air), and if &lambda; &gt; 1 there is leftover O2. The
                             table reports each in kmol per kmol of fuel and as % volume on a wet basis.</p>
                     </section>
 

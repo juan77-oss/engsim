@@ -46,6 +46,7 @@ export function initChart() {
     const colors = COMPONENT_META.map(m => m.color);
     const labels = COMPONENT_META.map(m => `${m.symbol} – ${m.label}`);
 
+    canvas.style.maxHeight = '400px';
     _chart = new Chart(canvas.getContext('2d'), {
         type: 'bar',
 
@@ -53,12 +54,12 @@ export function initChart() {
             // Dos filas: base seca, base húmeda
             labels: ['Dry basis', 'Wet basis'],
             datasets: COMPONENT_META.map((meta, i) => ({
-                label:           `${meta.symbol} ${meta.label}`,
-                data:            [0, 0],
+                label: `${meta.symbol} ${meta.label}`,
+                data: [0, 0],
                 backgroundColor: colors[i] + 'cc',  // leve transparencia
-                borderColor:     colors[i],
-                borderWidth:     1,
-                borderRadius:    2
+                borderColor: colors[i],
+                borderWidth: 1,
+                borderRadius: 2
             }))
         },
 
@@ -68,51 +69,51 @@ export function initChart() {
             maintainAspectRatio: true,
             animation: {
                 duration: 350,
-                easing:   'easeOutQuart'
+                easing: 'easeOutQuart'
             },
             scales: {
                 x: {
                     stacked: true,
-                    min:     0,
-                    max:     100,
+                    min: 0,
+                    max: 100,
                     title: {
                         display: true,
-                        text:    'Composition (%)',
-                        font:    { size: 11, weight: '600' },
-                        color:   '#9ca3af'
+                        text: 'Composition (%)',
+                        font: { size: 11, weight: '600' },
+                        color: '#9ca3af'
                     },
-                    ticks:  { color: '#9ca3af' },
-                    grid:   { color: 'rgba(107,114,128,0.10)' },
+                    ticks: { color: '#9ca3af' },
+                    grid: { color: 'rgba(107,114,128,0.10)' },
                     border: { color: 'rgba(107,114,128,0.20)' }
                 },
                 y: {
                     stacked: true,
-                    ticks:  { color: '#9ca3af' },
-                    grid:   { color: 'rgba(107,114,128,0.06)' },
+                    ticks: { color: '#9ca3af' },
+                    grid: { color: 'rgba(107,114,128,0.06)' },
                     border: { color: 'rgba(107,114,128,0.20)' }
                 }
             },
             plugins: {
                 legend: {
-                    display:  true,
+                    display: true,
                     position: 'bottom',
-                    align:    'start',
+                    align: 'start',
                     labels: {
-                        usePointStyle:    true,
-                        pointStyleWidth:  12,
-                        boxHeight:        8,
-                        padding:          14,
-                        color:            '#9ca3af',
-                        font:             { size: 11 }
+                        usePointStyle: true,
+                        pointStyleWidth: 12,
+                        boxHeight: 8,
+                        padding: 14,
+                        color: '#9ca3af',
+                        font: { size: 11 }
                     }
                 },
                 tooltip: {
                     backgroundColor: 'rgba(17,24,39,0.92)',
-                    titleColor:      '#f9fafb',
-                    bodyColor:       '#d1d5db',
-                    borderColor:     'rgba(255,255,255,0.08)',
-                    borderWidth:     1,
-                    padding:         10,
+                    titleColor: '#f9fafb',
+                    bodyColor: '#d1d5db',
+                    borderColor: 'rgba(255,255,255,0.08)',
+                    borderWidth: 1,
+                    padding: 10,
                     callbacks: {
                         label: ctx => `  ${ctx.dataset.label}: ${Number(ctx.raw).toFixed(1)} %`
                     }

@@ -20,7 +20,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Kapp Diagram Calculator | EngSim" />
     <meta property="og:description"
-        content="Compute secondary voltage U2, voltage drop ?V, and regulation e for inductive or capacitive loads using the infinite bus model." />
+        content="Compute secondary voltage U2, voltage drop &Delta;V, and regulation e for inductive or capacitive loads using the infinite bus model." />
     <meta property="og:site_name" content="EngSim" />
     <!-- Canonical URL &mdash; fill in once you have the domain -->
     <!-- <link rel="canonical" href="https://engsim.app/simulators/kapp-diagram/" /> -->
@@ -449,7 +449,7 @@
                                         </div>
 
                                         <div class="sim-result-card">
-                                            <div class="sim-result-label">Voltage Drop |?V|</div>
+                                            <div class="sim-result-label">Voltage Drop |&Delta;V|</div>
                                             <div class="sim-result-value" id="out-deltav">&mdash;</div>
                                             <div class="sim-result-unit">V</div>
                                         </div>
@@ -496,7 +496,7 @@
                                         <input type="range" id="slider-zoom" min="1" max="20" step="1" value="1"
                                             style="width:100%;accent-color:var(--brand-accent);cursor:pointer;"
                                             aria-label="Triangle zoom factor" />
-                                        <p class="sim-hint">Scales the ?V triangle independently &mdash; useful when Vcc
+                                        <p class="sim-hint">Scales the &Delta;V triangle independently &mdash; useful when Vcc
                                             is
                                             small.</p>
                                     </div>
@@ -645,10 +645,10 @@
                     under inductive loads or a slight rise under capacitive loads.
                 </p>
 
-                <h3>Voltage Drop |?V|</h3>
+                <h3>Voltage Drop |&Delta;V|</h3>
                 <p>
                     The magnitude of the complex drop across Z<sub>eq</sub>:
-                    |?V| = |Z<sub>eq</sub> &middot; I|. This is not simply |U1| - |U2|,
+                    |&Delta;V| = |Z<sub>eq</sub> &middot; I|. This is not simply |U1| - |U2|,
                     because the phasors are not collinear &mdash; the diagram makes the vector
                     triangle clear. For inductive loads the drop has a significant quadrature
                     component that increases regulation.
@@ -673,7 +673,7 @@
                 <h3>Phasor Diagram</h3>
                 <p>
                     U1 (primary, blue) is fixed as the horizontal reference. U2 (green) is the
-                    secondary voltage. ?V (amber) is the drop across Z<sub>eq</sub>, drawn from
+                    secondary voltage. &Delta;V (amber) is the drop across Z<sub>eq</sub>, drawn from
                     the tip of U2 to close the triangle at the tip of U1. The current phasor I
                     (grey, dashed) is shown at an independent scale. Angles are geometrically
                     correct but the phasor magnitudes are scaled for visibility.
@@ -727,10 +727,10 @@
                     <details class="edu-faq-item">
                         <summary>What is the difference between voltage drop and voltage regulation?</summary>
                         <div class="edu-faq-answer">
-                            Voltage drop |?V| = |Z<sub>eq</sub> &middot; I| is the magnitude of the
+                            Voltage drop |&Delta;V| = |Z<sub>eq</sub> &middot; I| is the magnitude of the
                             phasor across the series impedance. Voltage regulation e compares the
                             primary and secondary magnitudes: e = (|U1| - |U2|) / |U2| &times; 100 %.
-                            Because U1, U2, and ?V form a triangle (not a straight line), |?V| ?
+                            Because U1, U2, and &Delta;V form a triangle (not a straight line), |&Delta;V| &ne;
                             |U1| - |U2|. The phasor diagram makes this geometry explicit.
                         </div>
                     </details>

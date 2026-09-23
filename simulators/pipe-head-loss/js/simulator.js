@@ -154,6 +154,7 @@ function initLossChart() {
     const canvas = el('lossChart');
     if (!canvas || !window.Chart) return null;
     const c = themeColors();
+    canvas.style.maxHeight = '350px';
 
     return new Chart(canvas.getContext('2d'), {
         type: 'line',
@@ -198,6 +199,7 @@ function initOptimChart() {
     const canvas = el('optimChart');
     if (!canvas || !window.Chart) return null;
     const c = themeColors();
+    canvas.style.maxHeight = '350px';
 
     return new Chart(canvas.getContext('2d'), {
         type: 'line',

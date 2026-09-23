@@ -56,6 +56,7 @@ function generateQualityLine(xVal) {
  */
 function initChart(ctx) {
     const theme = getChartThemeColors();
+    ctx.canvas.style.maxHeight = '400px';
     return new Chart(ctx, {
         type: 'line',
         data: {

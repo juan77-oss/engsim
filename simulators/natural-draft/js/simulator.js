@@ -262,6 +262,9 @@ function updateChart(availableDraft, kineticHead, resistiveLosses) {
     const canvas = document.getElementById('sim-chart');
     if (!canvas || typeof Chart === 'undefined') return;
 
+    // Prevent Chart.js infinite resize loop by explicitly constraining height
+    canvas.style.maxHeight = '200px';
+
     const data = {
         labels: ['Available Draft', 'Total Requirement'],
         datasets: [

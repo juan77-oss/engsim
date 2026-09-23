@@ -217,7 +217,7 @@
 
                                     <div class="sim-field">
                                         <label for="input-theta" class="sim-label">
-                                            Plane Angle ?
+                                            Plane Angle &theta;
                                             <span class="sim-label-hint">(physical rotation from x-axis)</span>
                                         </label>
                                         <div class="sim-slider-row">
@@ -226,7 +226,7 @@
                                             <span class="sim-slider-value" id="theta-value">0&deg;</span>
                                         </div>
                                         <p class="sim-hint">
-                                            Drag to see the stress state on a plane rotated ? from the x-face,
+                                            Drag to see the stress state on a plane rotated &theta; from the x-face,
                                             on both the circle and the stress element.
                                         </p>
                                     </div>
@@ -291,17 +291,17 @@
                                             <div class="sim-result-unit js-unit-label">MPa</div>
                                         </div>
                                         <div class="sim-result-card">
-                                            <div class="sim-result-label">?p (plane 1)</div>
+                                            <div class="sim-result-label">&theta;p (plane 1)</div>
                                             <div class="sim-result-value" id="out-theta-p">&mdash;</div>
                                             <div class="sim-result-unit">deg</div>
                                         </div>
                                         <div class="sim-result-card">
-                                            <div class="sim-result-label">?p (plane 2)</div>
+                                            <div class="sim-result-label">&theta;p (plane 2)</div>
                                             <div class="sim-result-value" id="out-theta-p2">&mdash;</div>
                                             <div class="sim-result-unit">deg</div>
                                         </div>
                                         <div class="sim-result-card">
-                                            <div class="sim-result-label">?s (max shear)</div>
+                                            <div class="sim-result-label">&theta;s (max shear)</div>
                                             <div class="sim-result-value" id="out-theta-s">&mdash;</div>
                                             <div class="sim-result-unit">deg</div>
                                         </div>
@@ -344,19 +344,19 @@
                                             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                                             <rect x="3" y="3" width="18" height="18" rx="2" />
                                         </svg>
-                                        Stress at Angle ?
+                                        Stress at Angle &theta;
                                     </span>
                                 </div>
                                 <div class="sim-panel__body">
 
                                     <div class="sim-results-grid">
                                         <div class="sim-result-card">
-                                            <div class="sim-result-label">s(?)</div>
+                                            <div class="sim-result-label">&sigma;(&theta;)</div>
                                             <div class="sim-result-value" id="out-sigma-theta">&mdash;</div>
                                             <div class="sim-result-unit js-unit-label">MPa</div>
                                         </div>
                                         <div class="sim-result-card">
-                                            <div class="sim-result-label">t(?)</div>
+                                            <div class="sim-result-label">&tau;(&theta;)</div>
                                             <div class="sim-result-value" id="out-tau-theta">&mdash;</div>
                                             <div class="sim-result-unit js-unit-label">MPa</div>
                                         </div>
@@ -450,7 +450,7 @@
                                 results.</li>
                             <li><strong>Step 3.</strong> Read s1, s2, tmax, and the principal/max-shear
                                 angles directly from the result cards.</li>
-                            <li><strong>Step 4.</strong> Drag the ? slider to inspect the normal and
+                            <li><strong>Step 4.</strong> Drag the &theta; slider to inspect the normal and
                                 shear stress on a plane rotated by any angle &mdash; both the circle and the
                                 rotated stress element update live.</li>
                         </ol>
@@ -473,16 +473,16 @@
                             the principal planes, where the normal stress equals s_avg.
                         </p>
 
-                        <h3>?p and ?s (Plane Angles)</h3>
+                        <h3>&theta;p and &theta;s (Plane Angles)</h3>
                         <p>
-                            ?p is the physical rotation angle (from the x-face) to reach the first
-                            principal plane; the second principal plane is 90&deg; away. ?s is the
-                            angle to the maximum shear plane, 45&deg; from ?p.
+                            &theta;p is the physical rotation angle (from the x-face) to reach the first
+                            principal plane; the second principal plane is 90&deg; away. &theta;s is the
+                            angle to the maximum shear plane, 45&deg; from &theta;p.
                         </p>
 
-                        <h3>s(?) and t(?)</h3>
+                        <h3>&sigma;(&theta;) and &tau;(&theta;)</h3>
                         <p>
-                            The normal and shear stress on a plane rotated by the angle ? you set
+                            The normal and shear stress on a plane rotated by the angle &theta; you set
                             with the slider, computed with the general stress transformation
                             equations &mdash; not just read off the circle.
                         </p>

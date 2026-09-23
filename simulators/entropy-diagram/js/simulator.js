@@ -93,6 +93,10 @@ function initChart() {
     const ctx = canvas.getContext('2d');
     const c = getThemeColors();
 
+    if (canvas.parentElement) {
+        canvas.parentElement.style.height = '400px';
+    }
+    canvas.style.maxHeight = '400px';
     chart = new Chart(ctx, {
         type: 'line',
         data: {

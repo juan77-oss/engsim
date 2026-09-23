@@ -120,6 +120,7 @@ function setupCanvas(canvas) {
 
 function setupChart() {
     if (!powerChartCanvas || typeof Chart === 'undefined') return null;
+    powerChartCanvas.style.maxHeight = '200px';
     return new Chart(powerChartCanvas.getContext('2d'), {
         type: 'line',
         data: {

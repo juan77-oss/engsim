@@ -37,20 +37,20 @@ import { DEFAULTS, CHAIN, SWEEP_POINTS, CHART_COLORS } from './constants.js';
    ══════════════════════════════════════════════════════════════════ */
 
 // Shared
-const inputVin   = document.getElementById('input-vin');
-const btnCalc     = document.getElementById('btn-calculate');
-const errorEl     = document.getElementById('sim-error');
+const inputVin = document.getElementById('input-vin');
+const btnCalc = document.getElementById('btn-calculate');
+const errorEl = document.getElementById('sim-error');
 const chartCanvas = document.getElementById('sim-chart');
-const chartLabel  = document.getElementById('chart-label');
+const chartLabel = document.getElementById('chart-label');
 const diagramContainer = document.getElementById('circuit-diagram');
 
 // Mode tabs
 const tabDirect = document.getElementById('tab-direct');
-const tabChain  = document.getElementById('tab-chain');
+const tabChain = document.getElementById('tab-chain');
 const panelDirect = document.querySelector('[data-mode-panel="direct"]');
-const panelChain  = document.querySelector('[data-mode-panel="chain"]');
+const panelChain = document.querySelector('[data-mode-panel="chain"]');
 const resultsDirect = document.querySelector('[data-mode-results="direct"]');
-const resultsChain  = document.querySelector('[data-mode-results="chain"]');
+const resultsChain = document.querySelector('[data-mode-results="chain"]');
 
 // Direct mode — inputs
 const inputR1 = document.getElementById('input-r1');
@@ -58,13 +58,13 @@ const inputR2 = document.getElementById('input-r2');
 const fieldR1 = document.getElementById('field-r1');
 const fieldR2 = document.getElementById('field-r2');
 const chkDesignMode = document.getElementById('chk-design-mode');
-const designFields  = document.getElementById('design-fields');
+const designFields = document.getElementById('design-fields');
 const inputVoutTarget = document.getElementById('input-vout-target');
 const radioFixR1 = document.getElementById('radio-fix-r1');
 const radioFixR2 = document.getElementById('radio-fix-r2');
 
 // Direct mode — results
-const outVout   = document.getElementById('out-vout');
+const outVout = document.getElementById('out-vout');
 const outCurrent = document.getElementById('out-current');
 const unitCurrent = document.getElementById('unit-current');
 const outPR1 = document.getElementById('out-p-r1');
@@ -82,12 +82,12 @@ const btnAddResistor = document.getElementById('btn-add-resistor');
 const btnAddResistorLabel = document.getElementById('btn-add-resistor-label');
 
 // Chain mode — results
-const outChainVout    = document.getElementById('out-chain-vout');
+const outChainVout = document.getElementById('out-chain-vout');
 const outChainCurrent = document.getElementById('out-chain-current');
 const unitChainCurrent = document.getElementById('unit-chain-current');
-const outChainPTotal  = document.getElementById('out-chain-p-total');
+const outChainPTotal = document.getElementById('out-chain-p-total');
 const unitChainPTotal = document.getElementById('unit-chain-p-total');
-const breakdownBody   = document.getElementById('chain-breakdown-body');
+const breakdownBody = document.getElementById('chain-breakdown-body');
 
 /* ══════════════════════════════════════════════════════════════════
    STATE
@@ -516,6 +516,12 @@ function renderDirectChart(V, R1, R2) {
 
   destroyChart();
 
+  if (chartCanvas.parentElement) {
+    chartCanvas.parentElement.style.height = '400px';
+  }
+  chartCanvas.style.maxHeight = '400px';
+
+
   chartInstance = new Chart(chartCanvas, {
     type: 'line',
     data: {
@@ -563,6 +569,11 @@ function renderDirectChart(V, R1, R2) {
 
 function renderChainChart(breakdown) {
   destroyChart();
+
+  if (chartCanvas.parentElement) {
+    chartCanvas.parentElement.style.height = '400px';
+  }
+  chartCanvas.style.maxHeight = '400px';
 
   chartInstance = new Chart(chartCanvas, {
     type: 'bar',
