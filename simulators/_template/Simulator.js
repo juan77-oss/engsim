@@ -85,6 +85,30 @@ function calculate() {
   outC.textContent = fmt(resultC, 3);
 }
 
+/* ── Charting (Optional) ─────────────────────────────────────── */
+/**
+ * Problema de fondo: Chart.js entra en un loop infinito de resize con 
+ * responsive:true + maintainAspectRatio:false sin un límite de altura.
+ * Para evitarlo, siempre definimos un maxHeight explícito en el canvas.
+ */
+// function renderChart() {
+//   const canvas = document.getElementById('sim-chart');
+//   if (!canvas) return;
+// 
+//   // Chart.js resize-loop guard — ajustar este valor según el gráfico 
+//   // de este simulador (ver /projects/engsim, valores usados: 200-400px)
+//   canvas.style.maxHeight = 'XXXpx'; // TODO: ajustar
+// 
+//   // Si el gráfico queda achatado a pesar del maxHeight de arriba, 
+//   // descomentar y ajustar (mismo valor que el maxHeight):
+//   // if (canvas.parentElement) {
+//   //     canvas.parentElement.style.height = 'XXXpx';
+//   // }
+// 
+//   // Ejemplo de init:
+//   // new Chart(canvas, { ... });
+// }
+
 /* ── Event listeners ─────────────────────────────────────────── */
 // Button click
 btnCalculate.addEventListener('click', calculate);
