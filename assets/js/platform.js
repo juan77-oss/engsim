@@ -1,6 +1,6 @@
 /* ============================================================
    platform.js — Shared navbar + footer injector
-   engsim.app
+   engsimapp.com
 
    HOW IT WORKS:
    Each page has:

@@ -1,6 +1,6 @@
 /**
  * constants.js — Mohr's Circle Calculator
- * engsim.app
+ * engsimapp.com
  *
  * WHAT GOES HERE:
  *   - UI-only constants: default field values, unit labels, slider ranges

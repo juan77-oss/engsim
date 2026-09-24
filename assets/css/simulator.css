@@ -1,7 +1,7 @@
 /* ============================================================
    simulator.css — Shell & layout for ALL simulators
    Edit here → updates every simulator automatically.
-   engsim.app
+   engsimapp.com
    ============================================================ */
 
 /* ══════════════════════════════════════════════════════════════
@@ -4901,7 +4901,7 @@ body.dark .bal-feedback-incorrect {
    custom.css — Mohr's Circle Calculator
    Simulator-specific styles only. Anything shared across
    simulators belongs in assets/css/simulator.css instead.
-   engsim.app
+   engsimapp.com
    ============================================================ */
 
 /* The plot canvases render their own dark theme (see js/plot.js THEME.bg)
@@ -5052,7 +5052,7 @@ body.dark .bal-feedback-incorrect {
    assets/css/simulator.css — only genuinely chemistry-specific
    pieces live here (reactant rows, redox cards, electron flow,
    the local module tabs).
-   engsim.app
+   engsimapp.com
    ============================================================ */
 
 /* ── Local module tabs (not part of the shared .sim-* system) ── */
@@ -5609,7 +5609,7 @@ body.dark .edu-example--combined  .edu-example__title { color: #86efac; }
    ---------------------------------------------------------------- */
 /**
  * custom.css — Voltage Divider — Simulator-specific styles
- * engsim.app
+ * engsimapp.com
  *
  * Everything here is scoped to THIS simulator only. Shared look and
  * feel (panels, inputs, buttons, results cards, validation shake,

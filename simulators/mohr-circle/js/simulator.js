@@ -1,6 +1,6 @@
 /**
  * simulator.js — Mohr's Circle Calculator
- * engsim.app
+ * engsimapp.com
  *
  * WHAT GOES HERE:
  *   - Input reading

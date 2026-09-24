@@ -1,6 +1,6 @@
 /**
  * core.js — Chemical Reactions Simulator
- * engsim.app
+ * engsimapp.com
  * ─────────────────────────────────────────────────────────────────
  * PURPOSE: Pure calculation engine. Zero DOM. Zero side effects.
  *          All physics/chemistry logic lives here. Reads its

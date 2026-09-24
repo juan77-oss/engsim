@@ -2,7 +2,7 @@
  * balanceador-ui.js — UI Module for Equation Balancer
  * ─────────────────────────────────────────────────────
  * PURPOSE : Pure DOM manipulation. Zero business logic.
- * PLATFORM: EngSim (engsim.app)
+ * PLATFORM: EngSim (engsimapp.com)
  *
  * CLASS MAP (old IEM → new EngSim):
  *   .alert-error          → .sim-error + .is-visible  (global platform component)

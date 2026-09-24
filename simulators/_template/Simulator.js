@@ -1,6 +1,6 @@
 /**
  * simulator.js — [SIMULATOR NAME]
- * engsim.app
+ * engsimapp.com
  *
  * WHAT GOES HERE:
  *   - Input reading

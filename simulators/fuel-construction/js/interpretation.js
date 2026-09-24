@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ui/interpretation.js — Intelligent Interpretation Engine (Auto-Tutor)
  * -------------------------------------------------------------------
  * PURPOSE : Generates engineering interpretations based on results.

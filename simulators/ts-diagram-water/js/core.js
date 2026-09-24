@@ -1,6 +1,6 @@
 /**
  * core.js — T–s Diagram (Water)
- * engsim.app
+ * engsimapp.com
  *
  * Pure thermodynamic calculations for the T–s diagram engine.
  * No DOM access here, and no Chart.js — just math over the

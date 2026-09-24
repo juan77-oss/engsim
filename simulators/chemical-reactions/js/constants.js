@@ -1,6 +1,6 @@
 /**
  * constants.js — Chemical Reactions Simulator
- * engsim.app
+ * engsimapp.com
  * ─────────────────────────────────────────────────────────────────
  * PURPOSE: Pure data. Zero logic. Zero DOM.
  *          Static reference tables consumed by core.js.

@@ -1,6 +1,6 @@
 /**
  * simulator.js — Voltage Divider
- * engsim.app
+ * engsimapp.com
  *
  * WHAT GOES HERE:
  *   - DOM reading/writing, event wiring

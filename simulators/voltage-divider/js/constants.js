@@ -1,6 +1,6 @@
 /**
  * constants.js — Voltage Divider — Shared constants
- * engsim.app
+ * engsimapp.com
  *
  * PURE MODULE — default values, validation limits, and tuning constants.
  * No DOM access. No physics logic. Just numbers other modules import.

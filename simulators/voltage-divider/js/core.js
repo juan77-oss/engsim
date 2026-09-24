@@ -1,6 +1,6 @@
 /**
  * core.js — Voltage Divider — Physics Engine
- * engsim.app
+ * engsimapp.com
  *
  * PURE MODULE — no DOM access, no side effects, fully deterministic.
  * Every function here is stateless and can be unit-tested standalone.

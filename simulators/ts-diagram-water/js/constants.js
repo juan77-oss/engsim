@@ -1,6 +1,6 @@
 /**
  * constants.js — T–s Diagram (Water)
- * engsim.app
+ * engsimapp.com
  *
  * Saturation dome dataset for water (approximate values).
  * T in °C, s in kJ/(kg·K)

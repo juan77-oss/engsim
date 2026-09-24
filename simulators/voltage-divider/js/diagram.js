@@ -1,6 +1,6 @@
 /**
  * diagram.js — Voltage Divider — Circuit diagram generator
- * engsim.app
+ * engsimapp.com
  *
  * Builds the SVG markup for the schematic shown in the results panel.
  * PURE-ish MODULE: takes already-formatted display strings and returns

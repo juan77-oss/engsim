@@ -1,6 +1,6 @@
 /**
  * simulator.js — Chemical Reactions Simulator
- * engsim.app
+ * engsimapp.com
  *
  * WHAT GOES HERE:
  *   - DOM references & input reading

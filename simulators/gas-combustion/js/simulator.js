@@ -1,6 +1,6 @@
 /**
  * simulator.js — Gas Combustion Calculator
- * engsim.app / simulators/gas-combustion/
+ * engsimapp.com / simulators/gas-combustion/
  *
  * WHAT GOES HERE: input reading, DOM wiring, output writing.
  * WHAT DOES NOT GO HERE: navbar/footer/theme (platform.js),

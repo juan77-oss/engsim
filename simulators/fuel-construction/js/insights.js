@@ -1,4 +1,4 @@
-﻿/**
+/**
  * ui/insights.js — Pedagogical Insights · Combustion Phase 1
  * -------------------------------------------------------------------
  * PURPOSE : Generates and renders contextual educational messages

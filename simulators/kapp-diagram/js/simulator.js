@@ -1,6 +1,6 @@
 /**
  * simulator.js — Kapp Diagram Calculator · UI Layer
- * engsim.app
+ * engsimapp.com
  *
  * THEORY NOTES:
  *   Infinite bus model: U1 (primary) is held fixed at grid voltage.

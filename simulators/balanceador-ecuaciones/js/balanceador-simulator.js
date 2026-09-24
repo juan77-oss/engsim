@@ -3,7 +3,7 @@
  * ──────────────────────────────────────────────────────────────
  * PURPOSE : Wires DOM events to core logic and UI rendering.
  *           Manages global state (current mode, equation, steps).
- * PLATFORM: EngSim (engsim.app)
+ * PLATFORM: EngSim (engsimapp.com)
  *
  * CHANGES FROM IEM VERSION:
  *   - Error display: uses #sim-error (.sim-error) for fatal/parse

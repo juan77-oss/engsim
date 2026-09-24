@@ -1,6 +1,6 @@
 /**
  * simulator.js — Natural Draft Calculator
- * engsim.app
+ * engsimapp.com
  *
  * WHAT GOES HERE:
  *   - Input reading

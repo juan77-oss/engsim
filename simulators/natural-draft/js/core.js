@@ -1,6 +1,6 @@
 /**
  * core.js — Natural Draft Calculator
- * engsim.app
+ * engsimapp.com
  *
  * Pure engineering calculations for chimney natural draft analysis.
  * No DOM access, no UI logic — inputs in, numbers out.

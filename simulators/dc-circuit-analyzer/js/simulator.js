@@ -1,6 +1,6 @@
 /**
  * simulator.js — DC Circuit Analyzer
- * engsim.app
+ * engsimapp.com
  *
  * WHAT GOES HERE:
  *   - Input reading (voltage, resistances, network topology, unit selects)

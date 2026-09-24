@@ -1,6 +1,6 @@
 /**
  * theme.js — Dark / light mode toggle
- * engsim.app
+ * engsimapp.com
  *
  * NOTE: If you load platform.js, theme is already handled there.
  * This file exists only for pages or simulators that need

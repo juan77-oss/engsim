@@ -1,6 +1,6 @@
 /**
  * constants.js — Natural Draft Calculator
- * engsim.app
+ * engsimapp.com
  *
  * Physical constants and default parameters shared by core.js and simulator.js.
  */

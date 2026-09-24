@@ -1,6 +1,6 @@
 /**
  * simulator.js — T–s Diagram (Water)
- * engsim.app
+ * engsimapp.com
  *
  * WHAT GOES HERE:
  *   - Chart.js setup and updates

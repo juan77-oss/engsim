@@ -1,6 +1,6 @@
 /**
  * core.js — Gas Combustion Calculator
- * engsim.app / simulators/gas-combustion/
+ * engsimapp.com / simulators/gas-combustion/
  * ──────────────────────────────────────────────────
  * Pure calculation engine. No DOM access here.
  *

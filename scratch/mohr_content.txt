@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 
 <head>
@@ -14,7 +14,7 @@
     <meta property="og:description" content="Interactive Mohr's Circle calculator for plane stress analysis." />
     <meta property="og:site_name" content="EngSim" />
 
-    <!-- <link rel="canonical" href="https://engsim.app/simulators/mohr-circle/" /> -->
+    <!-- <link rel="canonical" href="https://engsimapp.com/simulators/mohr-circle/" /> -->
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -35,7 +35,7 @@
     "@type": "WebApplication",
     "name": "Mohr's Circle Calculator",
     "description": "Interactive Mohr's Circle calculator for plane stress analysis.",
-    "url": "https://engsim.app/simulators/mohr-circle/",
+    "url": "https://engsimapp.com/simulators/mohr-circle/",
     "applicationCategory": "EducationalApplication",
     "isAccessibleForFree": true,
     "operatingSystem": "Any",
