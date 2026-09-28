@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Analytics (GA4) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-M3G5E9XP8R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-M3G5E9XP8R');
+</script>
+<!-- Google Search Console verification -->
+<meta name="google-site-verification" content="IsonpLQAguEXEzaXseWH8GDbOLo6xvF0BJBOlMVcE4A" />
+<!-- PENDING (copy from the <head> of any published simulator, then delete this note):
+     Google Tag Manager container snippet, if the other simulators include one -->
+
+<!-- ═══════════════════════════════════════════════════════════════
+     EDIT 1 — SEO title & meta description
+     Path: /simulators/parallel-transformers/index.html (two levels
+     deep — ../../assets/ for shared assets, per platform.js
+     getRootPath() knownDirs).
+═══════════════════════════════════════════════════════════════ -->
+<title>Parallel Transformers Calculator: Load Sharing | EngSim</title>
+<meta name="description" content="Calculate load sharing, circulating current and maximum group power for two single-phase transformers in parallel, with a phasor diagram. Free.">
+<link rel="canonical" href="https://engsimapp.com/simulators/parallel-transformers/">
+<!-- hreflang stays commented until the /es/ page exists and is live; enable both lines together
+     (and add the matching reciprocal tags to the /es/ page) -->
+<!-- <link rel="alternate" hreflang="es" href="https://engsimapp.com/es/simulators/parallel-transformers/"> -->
+<!-- <link rel="alternate" hreflang="x-default" href="https://engsimapp.com/simulators/parallel-transformers/"> -->
+
+<!-- ═══════════════════════════════════════════════════════════════
+     EDIT 2 — Open Graph
+═══════════════════════════════════════════════════════════════ -->
+<meta property="og:title" content="Parallel Transformers Calculator | EngSim">
+<meta property="og:description" content="Compute load sharing, circulating current, and group power for two transformers in parallel.">
+<meta property="og:url" content="https://engsimapp.com/simulators/parallel-transformers/">
+<meta property="og:type" content="website">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../../assets/css/base.css">
+<link rel="stylesheet" href="../../assets/css/platform.css">
+<link rel="stylesheet" href="../../assets/css/simulator.css">
+<!-- No custom.css: this simulator's rules live namespaced ("pt-")
+     at the end of assets/css/simulator.css, per project convention. -->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Parallel Transformers Calculator",
+  "url": "https://engsimapp.com/simulators/parallel-transformers/",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web browser)",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "description": "Free calculator for two single-phase transformers connected in parallel: load sharing, circulating current, group power, and eligibility checks."
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does circulating current exist even with no load connected?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "When two transformers have different transformation ratios, their no-load secondary voltages differ slightly. Since both secondaries are tied together, that small voltage difference drives a current through the internal impedances — which are small — so even a tiny mismatch produces a noticeable circulating current."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens if I connect transformers of different power ratings in parallel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It's allowed as long as the eligibility conditions are met. The load then splits inversely proportional to each transformer's percentage impedance (u_cc%) — the transformer with the lower u_cc% reaches its nominal rating first, regardless of which one is physically larger."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the catalog short-circuit voltage (Ucc) referred to the primary winding?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The short-circuit test is normally run by shorting the low-voltage winding and applying a reduced voltage to the high-voltage winding, since that side draws lower, easier-to-measure currents. That's why manufacturer datasheets list Ucc referred to the HV (primary) side."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What conditions must two transformers meet to operate in parallel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Four conditions are mandatory: the same frequency, the same transformation ratio (within about 0.5%), the same polarity and, for three-phase units, the same connection group. Two more do not forbid the connection but improve load sharing: equal percentage short-circuit voltages (u_cc%) and equal resistive and reactive components (u_r% and u_x%)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which transformer overloads first when two units are in parallel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The one with the lower percentage short-circuit voltage (u_cc%). The load divides inversely to u_cc%, so that unit reaches 100% of its rating first. The calculator reports it as the limiting transformer and turns its loading bar red at 100%."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is the maximum power of a parallel group calculated?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The load is raised until the first transformer reaches its rated value. With equal ratios and in-phase currents, the limiting unit runs at 100% and the other at u_cc,limiting / u_cc,other of its rating, so S_max = S_N,limiting + S_N,other × (u_cc,limiting / u_cc,other). Because the two currents are never exactly in phase, the calculator solves the full phasor equations, which gives a slightly lower value than this shortcut."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body data-page-type="simulator">
+<div class="page-wrapper">
+
+<div id="nav-placeholder"></div>
+
+<main class="page-main" id="main-content">
+
+  <!-- ═══════════════════════════════════════════════════════════
+       EDIT 5 — Hero
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sim-hero" aria-labelledby="sim-title">
+    <div class="container">
+      <nav aria-label="Breadcrumb">
+        <ol class="sim-hero__breadcrumb">
+          <li><a href="../../index.html">Home</a></li>
+          <li><span aria-hidden="true">/</span></li>
+          <li><a href="../index.html">Simulators</a></li>
+          <li><span aria-hidden="true">/</span></li>
+          <li>Parallel Transformers</li>
+        </ol>
+      </nav>
+      <span class="sim-hero__category">Electrical Machines</span>
+      <h1 class="sim-hero__title" id="sim-title">Parallel Transformers Calculator</h1>
+      <p class="sim-hero__subtitle">Connect two single-phase transformers in parallel and see how they share the load, whether a circulating current appears, and which one reaches its nominal rating first.</p>
+      <div class="sim-hero__tags">
+        <span class="sim-hero__tag">Transformers</span>
+        <span class="sim-hero__tag">Load Sharing</span>
+        <span class="sim-hero__tag">Circulating Current</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       EDIT 6 — Layout: two-panel (inputs left, results right)
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="sim-body">
+    <div class="container">
+
+      <div id="sim-error" class="sim-error" role="alert"></div>
+
+      <div class="sim-layout" style="--sim-sidebar-width: 340px;">
+
+        <!-- ═══════════════════════════════════════════════════
+             EDIT 7a — Inputs panel
+        ═══════════════════════════════════════════════════ -->
+        <aside class="sim-panel" aria-label="Input parameters">
+          <div class="sim-panel__header">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="4" x2="4" y1="21" y2="14"/><line x1="4" x2="4" y1="10" y2="3"/><line x1="12" x2="12" y1="21" y2="12"/><line x1="12" x2="12" y1="8" y2="3"/><line x1="20" x2="20" y1="21" y2="16"/><line x1="20" x2="20" y1="12" y2="3"/><line x1="2" x2="6" y1="14" y2="14"/><line x1="10" x2="14" y1="8" y2="8"/><line x1="18" x2="22" y1="16" y2="16"/></svg>
+            <span class="sim-panel__title">Inputs</span>
+          </div>
+          <div class="sim-panel__body">
+
+            <div class="sim-section-label">Transformer 1</div>
+            <div class="sim-field">
+              <label class="sim-label" for="in-sn-1">Rated power S<sub>N</sub></label>
+              <div class="sim-input-wrap">
+                <input type="number" class="sim-input" id="in-sn-1" step="0.1" min="0">
+                <span class="sim-unit">kVA</span>
+              </div>
+            </div>
+            <div class="sim-field">
+              <label class="sim-label" for="in-ucc-1">Short-circuit voltage U<sub>cc</sub> <span class="sim-label-hint">(HV side)</span></label>
+              <div class="sim-input-wrap">
+                <input type="number" class="sim-input" id="in-ucc-1" step="0.1" min="0">
+                <span class="sim-unit">V</span>
+              </div>
+            </div>
+            <div class="sim-field">
+              <label class="sim-label" for="in-pcc-1">Short-circuit losses P<sub>cc</sub></label>
+              <div class="sim-input-wrap">
+                <input type="number" class="sim-input" id="in-pcc-1" step="0.1" min="0">
+                <span class="sim-unit">W</span>
+              </div>
+            </div>
+            <div class="sim-grid-2">
+              <div class="sim-field">
+                <label class="sim-label" for="in-unhv-1">HV voltage</label>
+                <div class="sim-input-wrap">
+                  <input type="number" class="sim-input" id="in-unhv-1" step="1" min="0">
+                  <span class="sim-unit">V</span>
+                </div>
+              </div>
+              <div class="sim-field">
+                <label class="sim-label" for="in-unlv-1">LV voltage</label>
+                <div class="sim-input-wrap">
+                  <input type="number" class="sim-input" id="in-unlv-1" step="1" min="0">
+                  <span class="sim-unit">V</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="sim-section-label">Transformer 2</div>
+            <div class="sim-field">
+              <label class="sim-label" for="in-sn-2">Rated power S<sub>N</sub></label>
+              <div class="sim-input-wrap">
+                <input type="number" class="sim-input" id="in-sn-2" step="0.1" min="0">
+                <span class="sim-unit">kVA</span>
+              </div>
+            </div>
+            <div class="sim-field">
+              <label class="sim-label" for="in-ucc-2">Short-circuit voltage U<sub>cc</sub> <span class="sim-label-hint">(HV side)</span></label>
+              <div class="sim-input-wrap">
+                <input type="number" class="sim-input" id="in-ucc-2" step="0.1" min="0">
+                <span class="sim-unit">V</span>
+              </div>
+            </div>
+            <div class="sim-field">
+              <label class="sim-label" for="in-pcc-2">Short-circuit losses P<sub>cc</sub></label>
+              <div class="sim-input-wrap">
+                <input type="number" class="sim-input" id="in-pcc-2" step="0.1" min="0">
+                <span class="sim-unit">W</span>
+              </div>
+            </div>
+            <div class="sim-grid-2">
+              <div class="sim-field">
+                <label class="sim-label" for="in-unhv-2">HV voltage</label>
+                <div class="sim-input-wrap">
+                  <input type="number" class="sim-input" id="in-unhv-2" step="1" min="0">
+                  <span class="sim-unit">V</span>
+                </div>
+              </div>
+              <div class="sim-field">
+                <label class="sim-label" for="in-unlv-2">LV voltage</label>
+                <div class="sim-input-wrap">
+                  <input type="number" class="sim-input" id="in-unlv-2" step="1" min="0">
+                  <span class="sim-unit">V</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="sim-section-label">Group Load</div>
+            <div class="sim-field">
+              <label class="sim-label" for="in-load-s">Total load S <span id="load-s-value" class="sim-label-hint"></span></label>
+              <input type="range" id="in-load-s" step="0.1">
+            </div>
+            <div class="sim-field">
+              <label class="sim-label" for="in-cosphi">Power factor (inductive)</label>
+              <div class="sim-input-wrap">
+                <input type="number" class="sim-input" id="in-cosphi" step="0.01" min="0.5" max="1">
+              </div>
+            </div>
+            <div class="sim-field">
+              <label class="sim-label" for="in-u2">Working voltage U<sub>2</sub></label>
+              <div class="sim-input-wrap">
+                <input type="number" class="sim-input" id="in-u2" step="1" min="0">
+                <span class="sim-unit">V</span>
+              </div>
+            </div>
+
+            <button class="btn-primary" id="btn-calculate" type="button">Calculate</button>
+          </div>
+        </aside>
+
+        <!-- ═══════════════════════════════════════════════════
+             EDIT 7b — Results panel
+        ═══════════════════════════════════════════════════ -->
+        <div class="sim-panel">
+          <div class="sim-panel__header">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/></svg>
+            <span class="sim-panel__title">Results</span>
+          </div>
+          <div class="sim-panel__body">
+
+            <!-- Eligibility status banners -->
+            <div id="status-ratio" class="status-banner">
+              <span class="status-banner__title"></span>
+              <span class="status-banner__message"></span>
+            </div>
+            <div id="status-ic" class="status-banner">
+              <span class="status-banner__title"></span>
+              <span class="status-banner__message"></span>
+            </div>
+
+            <!-- Load share (of the 100% delivered load, how much each carries) -->
+            <div class="sim-chart-label">Load share — how much each transformer delivers</div>
+            <div id="load-share" class="pt-share"></div>
+
+            <!-- Overload bars -->
+            <div class="sim-chart-label">Loading (% of each transformer's own rating)</div>
+            <div id="overload-bars"></div>
+
+            <!-- Per-transformer results -->
+            <div class="sim-section-label">Per-transformer results</div>
+            <div class="pt-table-wrap">
+              <table class="result-table">
+                <tr><th scope="col"></th><th scope="col">T1</th><th scope="col">T2</th></tr>
+                <tr><th scope="row">Current, I (A)</th><td><span id="out-i1">—</span></td><td><span id="out-i2">—</span></td></tr>
+                <tr><th scope="row">Current angle, φ (°)</th><td><span id="out-i1-angle">—</span></td><td><span id="out-i2-angle">—</span></td></tr>
+                <tr id="row-delivered" style="display:none;"><th scope="row">Delivered to load (A)<br><span class="sim-label-hint">excl. circulating</span></th><td><span id="out-i1-delivered">—</span></td><td><span id="out-i2-delivered">—</span></td></tr>
+                <tr><th scope="row">Primary voltage, U₁ (V)</th><td><span id="out-u1-t1">—</span></td><td><span id="out-u1-t2">—</span></td></tr>
+              </table>
+            </div>
+            <p class="sim-hint">I is the actual current in each winding (includes circulating current). When circulating current is present, the row below also shows how much of that current is actually reaching the load.</p>
+
+            <!-- Group (not per-transformer) results -->
+            <div class="sim-section-label">Group results</div>
+            <div class="sim-results-grid">
+              <div class="sim-result-card">
+                <div class="sim-result-label">Circulating I<sub>C</sub></div>
+                <div class="sim-result-value"><span id="out-ic">—</span></div>
+                <div class="sim-result-unit">A</div>
+              </div>
+              <div class="sim-result-card">
+                <div class="sim-result-label">I<sub>C</sub> angle</div>
+                <div class="sim-result-value"><span id="out-ic-angle">—</span></div>
+                <div class="sim-result-unit">°</div>
+              </div>
+              <div class="sim-result-card sim-result-card--product">
+                <div class="sim-result-label">Max. group power</div>
+                <div class="sim-result-value"><span id="out-smax">—</span></div>
+                <div class="sim-result-unit">kVA</div>
+              </div>
+              <div class="sim-result-card sim-result-card--limiting">
+                <div class="sim-result-label">Limiting transformer</div>
+                <div class="sim-result-value"><span id="out-limiting">—</span></div>
+              </div>
+            </div>
+
+            <!-- Phasor diagram -->
+            <div class="sim-chart-wrap">
+              <div class="sim-chart-header">
+                <span class="sim-chart-label">Phasor diagram</span>
+                <button class="sim-chart-fullscreen-btn" aria-label="Toggle fullscreen" aria-pressed="false">
+                  <svg class="icon-expand" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+                  <svg class="icon-collapse" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14" aria-hidden="true"><path d="M9 3v4a2 2 0 0 1-2 2H3m18 0h-4a2 2 0 0 1-2-2V3m0 18v-4a2 2 0 0 1 2-2h4M3 15h4a2 2 0 0 1 2 2v4"/></svg>
+                </button>
+              </div>
+              <canvas id="sim-chart" role="img" aria-label="Phasor diagram showing the winding currents I1 and I2, the circulating current IC and the reference voltage U2"></canvas>
+            </div>
+
+            <!-- Catalog → nameplate verification block -->
+            <div class="sim-section-label">Catalog → nameplate conversion</div>
+            <p class="sim-hint">Verify against your own u<sub>r</sub>%/u<sub>x</sub>% if you already have them.</p>
+            <div class="pt-table-wrap">
+              <table class="result-table">
+                <tr><th scope="col"></th><th scope="col">T1</th><th scope="col">T2</th></tr>
+                <tr><th scope="row">u<sub>cc</sub>%</th><td><span id="out-ucc-1">—</span></td><td><span id="out-ucc-2">—</span></td></tr>
+                <tr><th scope="row">u<sub>r</sub>%</th><td><span id="out-ur-1">—</span></td><td><span id="out-ur-2">—</span></td></tr>
+                <tr><th scope="row">u<sub>x</sub>%</th><td><span id="out-ux-1">—</span></td><td><span id="out-ux-2">—</span></td></tr>
+              </table>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Ad slot — between simulator and educational content (hidden until AdSense approval) -->
+  <!--
+  <div class="container">
+    <div class="ad-slot ad-slot--leaderboard">Advertisement</div>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  -->
+
+  <!-- ═══════════════════════════════════════════════════════════
+       EDIT 8 — Educational content (About / How to Use / Results / FAQ)
+  ═══════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="container container--narrow">
+      <div class="edu-content">
+
+        <h2>About this calculator</h2>
+        <p>This calculator models two single-phase transformers operating in parallel — a common arrangement when one transformer can no longer supply a growing load, or when service continuity matters (if one unit fails, the other keeps supplying part of the load). From each transformer's nameplate and short-circuit test data it computes how the load is shared, the circulating current between the units, the maximum power the group can deliver without overloading either machine, and whether the parallel connection is acceptable at all.</p>
+
+        <hr>
+
+        <h2>How to use it</h2>
+        <p>Enter each transformer's rated power (S<sub>N</sub>), its high- and low-voltage ratings, and its short-circuit test data: U<sub>cc</sub> in volts, referred to the high-voltage winding, and P<sub>cc</sub> in watts. Then set the group's total load with the slider, the power factor (inductive) and the working voltage U<sub>2</sub>. The catalog data is converted to percentage impedance (u<sub>cc</sub>%, u<sub>r</sub>%, u<sub>x</sub>%) automatically, and that conversion is shown in its own table so you can compare it with the u<sub>r</sub>% and u<sub>x</sub>% given in your own problem. To see a circulating current appear, change the low-voltage rating of one transformer by a few volts.</p>
+
+        <hr>
+
+        <h2>Understanding the results</h2>
+        <p>The two status banners check the conditions that decide whether the parallel connection makes sense: the transformation ratios must match within 0.5%, and the circulating current must stay below 10% of the smaller transformer's rated current.</p>
+        <p>The loading bars show each winding's apparent power (U<sub>2</sub> × I) as a percentage of its own rated power S<sub>N</sub>. Each bar is scaled independently, since a small transformer can reach 100% long before a large one does. A bar turns red at 100%, and it turns yellow between 90% and 100% only when the two loadings differ by more than 5 percentage points; two well-matched units can safely run close to their rating together. The load-share chart shows what fraction of the delivered load each transformer supplies. The per-transformer table gives each winding's current and phase angle and, when a circulating current is present, an extra row with the part of each current that actually reaches the load.</p>
+        <p>The group results give the circulating current I<sub>C</sub> (magnitude and angle), the maximum group power without overloading either machine, and which transformer is the limiting one (or a tie). In the phasor diagram, I<sub>1</sub> and I<sub>2</sub> are drawn against the reference voltage U<sub>2</sub>, and I<sub>C</sub> is the dashed segment joining the tips of I<sub>1</sub> and I<sub>2</sub>: the difference the two currents would still have with the load removed.</p>
+
+        <hr>
+
+        <h2>How the load is shared</h2>
+        <h3>From catalog data to percentage impedance</h3>
+        <span class="edu-formula">u<sub>cc</sub>% = U<sub>cc</sub> / U<sub>N,HV</sub> × 100</span>
+        <span class="edu-formula">u<sub>r</sub>% = P<sub>cc</sub> / (10 · S<sub>N</sub>[kVA])</span>
+        <span class="edu-formula">u<sub>x</sub>% = √(u<sub>cc</sub>%² − u<sub>r</sub>%²)      φ<sub>cc</sub> = arctan(u<sub>x</sub>% / u<sub>r</sub>%)</span>
+
+        <h3>Equal transformation ratios</h3>
+        <p>With the same ratio, the currents divide inversely to the equivalent impedances, and the loading d = S / S<sub>N</sub> of each unit is inversely proportional to its u<sub>cc</sub>%:</p>
+        <span class="edu-formula">I<sub>1</sub> / I<sub>2</sub> = Z<sub>2</sub> / Z<sub>1</sub>      d<sub>1</sub> · u<sub>cc1</sub> = d<sub>2</sub> · u<sub>cc2</sub></span>
+        <p>The machine with the lowest u<sub>cc</sub>% carries the most load and reaches full load first. When rated powers and u<sub>cc</sub>% both differ, it is better for the smaller transformer to be the one with the higher u<sub>cc</sub>%, otherwise the smaller unit is the one that limits the group. The result does not depend on the size of the load, only on the impedances.</p>
+
+        <h3>Different transformation ratios: circulating current</h3>
+        <p>With k = U<sub>HV</sub> / U<sub>LV</sub> for each unit and Z the equivalent impedance referred to the secondary, the currents are:</p>
+        <span class="edu-formula">I<sub>1</sub> = [ k<sub>2</sub>·Z<sub>2</sub>·I + (k<sub>2</sub> − k<sub>1</sub>)·U<sub>2</sub> ] / ( k<sub>1</sub>·Z<sub>1</sub> + k<sub>2</sub>·Z<sub>2</sub> )</span>
+        <span class="edu-formula">I<sub>2</sub> = [ k<sub>1</sub>·Z<sub>1</sub>·I − (k<sub>2</sub> − k<sub>1</sub>)·U<sub>2</sub> ] / ( k<sub>1</sub>·Z<sub>1</sub> + k<sub>2</sub>·Z<sub>2</sub> )</span>
+        <span class="edu-formula">I<sub>C</sub> = (k<sub>2</sub> − k<sub>1</sub>)·U<sub>2</sub> / ( k<sub>1</sub>·Z<sub>1</sub> + k<sub>2</sub>·Z<sub>2</sub> )</span>
+        <p>I<sub>C</sub> is the value the currents take with no load (I = 0). It adds to one winding and subtracts from the other, and it disappears when k<sub>1</sub> = k<sub>2</sub>. Because the impedances are small, even a slight ratio mismatch produces a large circulating current.</p>
+
+        <h3>Maximum group power</h3>
+        <p>With equal ratios and in-phase currents, the unit with the lowest u<sub>cc</sub>% runs at d = 1 and the other at d = u<sub>cc,limiting</sub> / u<sub>cc,other</sub>:</p>
+        <span class="edu-formula">S<sub>max</sub> = S<sub>N,limiting</sub> + S<sub>N,other</sub> · (u<sub>cc,limiting</sub> / u<sub>cc,other</sub>)</span>
+        <p>The two currents are not exactly in phase when u<sub>r</sub>%/u<sub>x</sub>% differ, so the calculator solves the full phasor equations. Its value is therefore slightly lower than this shortcut.</p>
+
+        <hr>
+
+        <h2>Conditions for connecting transformers in parallel</h2>
+        <table class="edu-table">
+          <thead>
+            <tr><th>Condition</th><th>Type</th><th>If it is not met</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Same frequency</td><td>Mandatory</td><td>With primaries on lines of different frequency the waveforms are no longer sinusoidal.</td></tr>
+            <tr><td>Same transformation ratio (within 0.5%)</td><td>Mandatory</td><td>A circulating current flows between the secondaries even at no load.</td></tr>
+            <tr><td>Same polarity</td><td>Mandatory</td><td>A voltmeter across the open connection reads about twice the rated voltage instead of zero; closing it would short-circuit the units.</td></tr>
+            <tr><td>Same connection group (three-phase)</td><td>Mandatory</td><td>The phase displacement between secondaries differs and large short-circuit currents circulate.</td></tr>
+            <tr><td>Equal u<sub>cc</sub>%</td><td>Recommended</td><td>The load is not shared in proportion to the ratings, and the unit with the lowest u<sub>cc</sub>% reaches 100% first.</td></tr>
+            <tr><td>Equal u<sub>r</sub>% and u<sub>x</sub>%</td><td>Recommended</td><td>The two currents are out of phase, so the group can deliver less than the sum of the individual ratings.</td></tr>
+          </tbody>
+        </table>
+        <p>A small ratio mismatch is tolerated in practice: a difference below 0.5%, or a circulating current not exceeding 10% of the rated current of either unit, is generally acceptable.</p>
+
+        <hr>
+
+        <h2>Worked example</h2>
+        <div class="edu-example">
+          <div class="edu-example__title">Default values</div>
+          <p>T1: 5 kVA, U<sub>cc</sub> = 345.85 V, P<sub>cc</sub> = 133 W. T2: 2.3 kVA, U<sub>cc</sub> = 285.75 V, P<sub>cc</sub> = 62.1 W. Both 7620/231 V. Load: 6.5 kVA, power factor 0.8 inductive, U<sub>2</sub> = 220 V.</p>
+          <p><strong>Impedances:</strong> u<sub>cc</sub>% = 4.54% for T1 (u<sub>r</sub> = 2.66%, u<sub>x</sub> = 3.68%) and 3.75% for T2 (u<sub>r</sub> = 2.70%, u<sub>x</sub> = 2.60%).</p>
+          <p><strong>Circulating current:</strong> both units have the same ratio, so I<sub>C</sub> = 0.</p>
+          <p><strong>Currents:</strong> the load current is 6500 / 220 ≈ 29.5 A, split as I<sub>1</sub> ≈ 19.05 A and I<sub>2</sub> ≈ 10.60 A.</p>
+          <p><strong>Loading:</strong> T1 supplies about 4.19 kVA (83.8% of its rating) and T2 about 2.33 kVA (101.4%). T2 has the lower u<sub>cc</sub>%, so it is the first to be overloaded and its bar turns red.</p>
+          <p><strong>Maximum group power:</strong> about 6.41 kVA, limited by T2. The shortcut formula gives 2.3 + 5 × (3.75 / 4.54) ≈ 6.43 kVA. The 6.5 kVA load is therefore slightly above what the pair can carry.</p>
+        </div>
+
+        <hr>
+
+        <h2>Frequently asked questions</h2>
+        <div class="edu-faq">
+          <details class="edu-faq-item">
+            <summary>Why does circulating current exist even with no load connected?</summary>
+            <div class="edu-faq-answer">When two transformers have different transformation ratios, their no-load secondary voltages differ slightly. Since both secondaries are tied together, that small voltage difference drives a current through the internal impedances — which are small — so even a tiny mismatch produces a noticeable circulating current.</div>
+          </details>
+          <details class="edu-faq-item">
+            <summary>What happens if I connect transformers of different power ratings in parallel?</summary>
+            <div class="edu-faq-answer">It's allowed as long as the eligibility conditions are met. The load then splits inversely proportional to each transformer's percentage impedance (u<sub>cc</sub>%) — the transformer with the lower u<sub>cc</sub>% reaches its nominal rating first, regardless of which one is physically larger.</div>
+          </details>
+          <details class="edu-faq-item">
+            <summary>Why is the catalog short-circuit voltage (U<sub>cc</sub>) referred to the primary winding?</summary>
+            <div class="edu-faq-answer">The short-circuit test is normally run by shorting the low-voltage winding and applying a reduced voltage to the high-voltage winding, since that side draws lower, easier-to-measure currents. That's why manufacturer datasheets list U<sub>cc</sub> referred to the HV (primary) side.</div>
+          </details>
+          <details class="edu-faq-item">
+            <summary>What conditions must two transformers meet to operate in parallel?</summary>
+            <div class="edu-faq-answer">Four conditions are mandatory: the same frequency, the same transformation ratio (within about 0.5%), the same polarity and, for three-phase units, the same connection group. Two more do not forbid the connection but improve load sharing: equal percentage short-circuit voltages (u<sub>cc</sub>%) and equal resistive and reactive components (u<sub>r</sub>% and u<sub>x</sub>%).</div>
+          </details>
+          <details class="edu-faq-item">
+            <summary>Which transformer overloads first when two units are in parallel?</summary>
+            <div class="edu-faq-answer">The one with the lower percentage short-circuit voltage (u<sub>cc</sub>%). The load divides inversely to u<sub>cc</sub>%, so that unit reaches 100% of its rating first. The calculator reports it as the limiting transformer and turns its loading bar red at 100%.</div>
+          </details>
+          <details class="edu-faq-item">
+            <summary>How is the maximum power of a parallel group calculated?</summary>
+            <div class="edu-faq-answer">The load is raised until the first transformer reaches its rated value. With equal ratios and in-phase currents, the limiting unit runs at 100% and the other at u<sub>cc,limiting</sub> / u<sub>cc,other</sub> of its rating, so S<sub>max</sub> = S<sub>N,limiting</sub> + S<sub>N,other</sub> × (u<sub>cc,limiting</sub> / u<sub>cc,other</sub>). Because the two currents are never exactly in phase, the calculator solves the full phasor equations, which gives a slightly lower value than this shortcut.</div>
+          </details>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Ad slot — end of page (hidden until AdSense approval) -->
+  <!--
+  <div class="container">
+    <div class="ad-slot ad-slot--leaderboard">Advertisement</div>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="XXXXXXXXXX"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+  </div>
+  -->
+
+</main>
+
+<div id="footer-placeholder"></div>
+</div>
+
+<script src="../../assets/js/platform.js"></script>
+<script type="module" src="./js/simulator.js"></script>
+</body>
+</html>

@@ -5903,3 +5903,31 @@ body.dark .edu-example--combined  .edu-example__title { color: #86efac; }
   display: none;
 }
 
+
+/* ============================================================
+   PARALLEL TRANSFORMERS CALCULATOR — namespace "pt-"
+   Reutiliza .sim-chart-wrap/.sim-chart-fullscreen-btn, #sim-chart
+   (tamaño, fullscreen y mobile ya definidos globalmente),
+   .bar-chart/.bar-row/.bar-track/.bar-segment, .status-banner y
+   .result-table. Esto es SOLO lo que esos componentes no cubren.
+   ============================================================ */
+
+/* Scroll horizontal de las tablas de resultados en pantallas angostas
+   (.result-table tiene th con white-space:nowrap y no trae wrapper). */
+.pt-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Load-share chart (horizontal stacked bar, inline SVG — see
+   js/plot.js drawLoadShareBar() docblock). Distinct from the
+   per-unit overload bars (.bar-track/.bar-segment). */
+.pt-share {
+    margin-bottom: 20px;
+}
+
+.pt-share svg {
+    width: 100%;
+    height: auto;
+    display: block;
+}
