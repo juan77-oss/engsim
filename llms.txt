@@ -47,6 +47,7 @@ EngSim is a collection of interactive calculators and diagram tools built for en
 - [Kapp Diagram Calculator](https://juan77-oss.github.io/engsim/simulators/kapp-diagram/index.html): Compute voltage regulation, secondary voltage drop, and phasor diagram for single-phase transformers using the infinite bus model.
 - [Voltage Divider](https://juan77-oss.github.io/engsim/simulators/voltage-divider/index.html): Interactive resistive voltage divider: adjust values and visualize output voltage and current distribution.
 - [DC Circuit Analyzer](https://juan77-oss.github.io/engsim/simulators/dc-circuit-analyzer/index.html): Analyze series and parallel resistive DC networks — currents, voltages, power, and maximum power transfer — with guided Thevenin, Norton, node, and mesh analysis.
+- [Parallel Transformers Calculator](https://juan77-oss.github.io/engsim/simulators/parallel-transformers/index.html): Analyze two single-phase transformers connected in parallel: load sharing, circulating current, maximum group power, and which unit reaches its rating first, with an interactive phasor diagram.
 
 ## Chemistry
 
