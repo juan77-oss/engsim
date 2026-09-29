@@ -23,7 +23,6 @@ EngSim is a collection of interactive calculators and diagram tools built for en
 
 ## Thermodynamics
 
-- [T-s Diagram (Water)](https://engsimapp.com/simulators/ts-diagram-water/index.html): Interactive Temperature-Entropy diagram for analyzing thermodynamic states and cycles.
 - [Entropy T-s Diagram](https://engsimapp.com/simulators/entropy-diagram/index.html): Model isothermal, adiabatic, polytropic, isobaric and isochoric ideal-gas processes and visualize entropy generation.
 
 ## Combustion & Heat
