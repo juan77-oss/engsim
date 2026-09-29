@@ -123,6 +123,7 @@
         '          <li><a href="' + ROOT + 'pages/about.html">About</a></li>',
         '          <li><a href="' + ROOT + 'pages/privacy-policy.html">Privacy Policy</a></li>',
         '          <li><a href="' + ROOT + 'pages/contact.html">Contact</a></li>',
+        '          <li><a href="#" onclick="EngSimConsent.openPreferences(); return false;">Cookie preferences</a></li>',
         '        </ul>',
         '      </nav>',
         '      <span class="page-footer__legal">&copy; ' + year + ' EngSim. Free to use.</span>',

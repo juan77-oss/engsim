@@ -1,0 +1,432 @@
+/* ============================================================
+   cookie-consent.css — Cookie consent banner + preferences modal
+   Google Consent Mode v2 compatible (GA4 + AdSense via GTM)
+   engsimapp.com
+
+   Uses EngSim design tokens from base.css.
+   Supports light and dark mode via body.dark.
+   ============================================================ */
+
+/* ── z-index layer ──────────────────────────────────────────── */
+/* Banner sits above page content but below the nav (z:100)     */
+/* Modal sits above everything                                   */
+#engsim-consent-banner { z-index: 90; }
+#engsim-consent-modal  { z-index: 200; }
+
+/* ══════════════════════════════════════════════════════════════
+   BANNER
+   Fixed to the bottom of the viewport. Slides in on first visit.
+   ══════════════════════════════════════════════════════════════ */
+#engsim-consent-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--bg-card);
+    border-top: 1px solid var(--border);
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, .10);
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    /* Slide-up animation */
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+                opacity   0.35s ease;
+    opacity: 0;
+}
+
+#engsim-consent-banner.consent-banner--visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+#engsim-consent-banner.consent-banner--hidden {
+    transform: translateY(110%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Text block */
+.consent-banner__text {
+    flex: 1;
+    min-width: 240px;
+}
+
+.consent-banner__title {
+    font-size: .875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+    font-family: var(--font-sans);
+}
+
+.consent-banner__body {
+    font-size: .8125rem;
+    color: var(--text-secondary);
+    line-height: 1.55;
+    font-family: var(--font-sans);
+}
+
+.consent-banner__body a {
+    color: var(--brand-accent);
+    text-decoration: underline;
+}
+
+/* Action buttons */
+.consent-banner__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+/* ── Shared button base ─────────────────────────────────────── */
+.consent-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 36px;
+    padding: 0 var(--space-md);
+    border-radius: var(--radius-md);
+    font-family: var(--font-sans);
+    font-size: .8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease,
+                transform 0.1s ease, box-shadow 0.15s ease;
+    white-space: nowrap;
+    text-decoration: none;
+    line-height: 1;
+}
+
+.consent-btn:active {
+    transform: scale(0.97);
+}
+
+/* Accept all — primary accent */
+#consent-btn-accept-all {
+    background: var(--brand-accent);
+    color: #ffffff;
+    border-color: var(--brand-accent);
+}
+
+#consent-btn-accept-all:hover {
+    background: var(--brand-accent-h);
+    border-color: var(--brand-accent-h);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.30);
+}
+
+/* Reject — ghost/outline */
+#consent-btn-reject {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border-strong);
+}
+
+#consent-btn-reject:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+}
+
+/* Customize — text-only */
+#consent-btn-customize {
+    background: transparent;
+    color: var(--brand-accent);
+    border-color: transparent;
+    padding: 0 var(--space-sm);
+}
+
+#consent-btn-customize:hover {
+    text-decoration: underline;
+}
+
+/* Dark mode adjustments */
+body.dark #engsim-consent-banner {
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, .45);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   MODAL — Preferences
+   Centered overlay with three cookie-category toggles.
+   ══════════════════════════════════════════════════════════════ */
+#engsim-consent-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-md);
+    /* Shown/hidden state */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+}
+
+#engsim-consent-modal.consent-modal--open {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Backdrop */
+.consent-modal__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.55);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+}
+
+/* Dialog */
+.consent-modal__dialog {
+    position: relative;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    width: 100%;
+    max-width: 480px;
+    max-height: 90vh;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    /* Pop-in animation */
+    transform: scale(0.94) translateY(8px);
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+#engsim-consent-modal.consent-modal--open .consent-modal__dialog {
+    transform: scale(1) translateY(0);
+}
+
+/* Dialog header */
+.consent-modal__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--space-md) var(--space-lg);
+    border-bottom: 1px solid var(--border);
+}
+
+.consent-modal__title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-family: var(--font-sans);
+}
+
+/* Close button */
+.consent-modal__close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    flex-shrink: 0;
+}
+
+.consent-modal__close:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+.consent-modal__close svg {
+    pointer-events: none;
+}
+
+/* Dialog body */
+.consent-modal__body {
+    padding: var(--space-md) var(--space-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+/* ── Cookie category row ────────────────────────────────────── */
+.consent-category {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.consent-category:last-child {
+    border-bottom: none;
+}
+
+.consent-category__info {
+    flex: 1;
+    min-width: 0;
+}
+
+.consent-category__name {
+    font-size: .875rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 3px;
+    font-family: var(--font-sans);
+}
+
+.consent-category__desc {
+    font-size: .8rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    font-family: var(--font-sans);
+}
+
+/* ── Toggle switch ──────────────────────────────────────────── */
+.consent-toggle {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+/* Hide the native checkbox visually but keep it accessible */
+.consent-toggle input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+}
+
+/* Track */
+.consent-toggle__track {
+    display: block;
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    background: var(--border-strong);
+    cursor: pointer;
+    transition: background 0.2s ease;
+    position: relative;
+    flex-shrink: 0;
+}
+
+/* Thumb */
+.consent-toggle__track::after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .20);
+    transition: transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Checked state */
+.consent-toggle input[type="checkbox"]:checked + .consent-toggle__track {
+    background: var(--brand-accent);
+}
+
+.consent-toggle input[type="checkbox"]:checked + .consent-toggle__track::after {
+    transform: translateX(20px);
+}
+
+/* Focus ring (keyboard accessibility) */
+.consent-toggle input[type="checkbox"]:focus-visible + .consent-toggle__track {
+    outline: 2px solid var(--brand-accent);
+    outline-offset: 2px;
+}
+
+/* Disabled/required state */
+.consent-toggle input[type="checkbox"]:disabled + .consent-toggle__track {
+    cursor: not-allowed;
+    opacity: 0.75;
+}
+
+.consent-toggle input[type="checkbox"]:disabled:checked + .consent-toggle__track {
+    background: var(--text-muted);
+}
+
+/* "Required" badge shown next to the necessary-cookies toggle */
+.consent-required-badge {
+    font-size: .7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: .03em;
+    text-transform: uppercase;
+    margin-left: var(--space-xs);
+    font-family: var(--font-sans);
+    line-height: 24px; /* vertically align with toggle track */
+}
+
+/* Dialog footer */
+.consent-modal__footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-sm);
+    padding: var(--space-md) var(--space-lg);
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+}
+
+#consent-modal-btn-reject {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border-strong);
+}
+
+#consent-modal-btn-reject:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+}
+
+#consent-modal-btn-save {
+    background: var(--brand-accent);
+    color: #ffffff;
+    border-color: var(--brand-accent);
+}
+
+#consent-modal-btn-save:hover {
+    background: var(--brand-accent-h);
+    border-color: var(--brand-accent-h);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.30);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    #engsim-consent-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: var(--space-md);
+    }
+
+    .consent-banner__actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .consent-modal__dialog {
+        border-radius: var(--radius-lg);
+    }
+
+    .consent-modal__footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+    .consent-modal__footer .consent-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

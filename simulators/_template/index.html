@@ -69,16 +69,33 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
 
     <!-- Structured data for Google (SEO) — EDIT: the SoftwareApplication block lives before </body>. -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-M3G5E9XP8R"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-M3G5E9XP8R');
-</script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'wait_for_update': 500
+      });
+      gtag('set', 'ads_data_redaction', true);
+    </script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TBVL4LVC');</script>
+    <!-- End Google Tag Manager -->
+    <link rel="stylesheet" href="../../assets/css/cookie-consent.css" />
 </head>
 
 <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBVL4LVC"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     <!--
       MOBILE COMPATIBILITY CHECKLIST
       - Wrap any wide table in a container with overflow-x: auto
@@ -492,6 +509,7 @@
     <script src="../../assets/js/platform.js"></script>
     <script type="module" src="./js/simulator.js"></script>
 
+    <script src="../../assets/js/cookie-consent.js" defer></script>
 </body>
 
 </html>
