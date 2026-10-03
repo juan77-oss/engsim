@@ -1,4 +1,4 @@
-import { EXAMPLE_VALUES } from './xfm-constants.js';
+import { EXAMPLE_VALUES, LIMITS } from './xfm-constants.js';
 
 const C = window.XfmCore;
 const P = window.XfmPlot;
@@ -9,11 +9,19 @@ const el = (id) => document.getElementById(id);
 // per "Calculate" press. Load-only controls re-render from this without
 // needing the button again.
 let base = null;
-let forcedLoadState = null; // null | 'short' — 'open' is just loadPct=0, no flag needed
+let forcedLoadState = null;   // null | 'short' — 'open' is just loadPct=0, no flag needed
+let modelBeforeShort = null;  // model chosen by the user before "Short circuit" forced the exact model
 
 function fmt(n, d = 4) {
   if (!isFinite(n)) return '∞';
   return n.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: d });
+}
+
+/** Inductance with automatic unit: H if >= 1 H, mH otherwise. */
+function fmtL(L) {
+  if (!isFinite(L)) return { v: '∞', u: 'H' };
+  if (L >= 1) return { v: fmt(L, 3), u: 'H' };
+  return { v: fmt(L * 1000, 3), u: 'mH' };
 }
 
 function setText(id, txt) { const e = el(id); if (e) e.textContent = txt; }
@@ -52,17 +60,28 @@ function validateInputs() {
   const ocV = numVal('oc-v'), ocI = numVal('oc-i'), ocP = numVal('oc-p');
   const cosPhi = numVal('load-cosphi');
 
+  // Ranges come from xfm-constants.js (LIMITS) so the UI and the validation never drift apart.
+  const range = (lim, label, unit) => ({
+    ok: v => v >= lim.min && v <= lim.max,
+    msg: `${label} must be between ${lim.min.toLocaleString('en-US')} and ${lim.max.toLocaleString('en-US')} ${unit}.`
+  });
+  const rSn = range(LIMITS.Sn_kVA, 'Rated power', 'kVA');
+  const rU = range(LIMITS.voltage, 'Rated voltage', 'V');
+  const rV = range(LIMITS.testV, 'Test voltage', 'V');
+  const rI = range(LIMITS.testI, 'Test current', 'A');
+  const rP = range(LIMITS.testP, 'Test power', 'W');
+
   const req = [
-    ['sn-kva', Sn, v => v > 0, 'Rated power must be a positive number.'],
-    ['u1n', U1n, v => v > 0, 'Primary rated voltage must be a positive number.'],
-    ['u2n', U2n, v => v > 0, 'Secondary rated voltage must be a positive number.'],
-    ['sc-v', scV, v => v >= 0, 'Short-circuit voltage must be a non-negative number.'],
-    ['sc-i', scI, v => v > 0, 'Short-circuit current must be a positive number.'],
-    ['sc-p', scP, v => v > 0, 'Short-circuit power must be a positive number.'],
-    ['oc-v', ocV, v => v > 0, 'Open-circuit voltage must be a positive number.'],
-    ['oc-i', ocI, v => v > 0, 'Open-circuit current must be a positive number.'],
-    ['oc-p', ocP, v => v > 0, 'Open-circuit power must be a positive number.'],
-    ['load-cosphi', cosPhi, v => v > 0 && v <= 1, 'Power factor must be between 0 (exclusive) and 1.']
+    ['sn-kva', Sn, rSn.ok, rSn.msg],
+    ['u1n', U1n, rU.ok, 'Primary: ' + rU.msg],
+    ['u2n', U2n, rU.ok, 'Secondary: ' + rU.msg],
+    ['sc-v', scV, rV.ok, 'Short-circuit: ' + rV.msg],
+    ['sc-i', scI, rI.ok, 'Short-circuit: ' + rI.msg],
+    ['sc-p', scP, rP.ok, 'Short-circuit: ' + rP.msg],
+    ['oc-v', ocV, rV.ok, 'Open-circuit: ' + rV.msg],
+    ['oc-i', ocI, rI.ok, 'Open-circuit: ' + rI.msg],
+    ['oc-p', ocP, rP.ok, 'Open-circuit: ' + rP.msg],
+    ['load-cosphi', cosPhi, v => v >= LIMITS.cosPhi.min && v <= LIMITS.cosPhi.max, 'Power factor must be between 0 (exclusive) and 1.']
   ];
   req.forEach(([id, v, ok, msg]) => {
     if (isNaN(v) || !ok(v)) { markInvalid(id, true); errors.push(msg); }
@@ -95,6 +114,7 @@ function computeBase() {
   const powerIsTotal = systemType === 'three' ? el('power-total').checked : false;
   const scSide = el('sc-side').value;
   const ocSide = el('oc-side').value;
+  const f = parseFloat(el('frequency').value);
 
   const { Sn, U1n, U2n, scV, scI, scP, ocV, ocI, ocP } = validateInputs().values;
   const SnVA = Sn * 1000;
@@ -103,6 +123,7 @@ function computeBase() {
   const U2nPhase = systemType === 'three' && u2nMode === 'line' ? U2n / Math.sqrt(3) : U2n;
   const a = C.turnsRatio(U1nPhase, U2nPhase);
 
+  // Test voltages are read with the same line/phase convention as the rated voltage of the side where the test was done.
   const scMode = scSide === 'primary' ? u1nMode : u2nMode;
   const ocMode = ocSide === 'primary' ? u1nMode : u2nMode;
   const scReduced = C.reduceThreePhase({ V: scV, I: scI, P: scP }, systemType, scMode, powerIsTotal);
@@ -123,7 +144,7 @@ function computeBase() {
   const pctXcc = C.percentZ(sc.X, scUn, scIn);
 
   return {
-    systemType, u1nMode, u2nMode, SnVA, SnPhaseVA: rc.SnPhase, U1nPhase, U2nPhase, a,
+    systemType, u1nMode, u2nMode, f, SnVA, SnPhaseVA: rc.SnPhase, U1nPhase, U2nPhase, a,
     scSide, ocSide, sc, oc, rc,
     RccP: RccP.R, XccP: RccP.X, RfeP: RfeXmP.R, XmP: RfeXmP.X,
     pctZcc, pctRcc, pctXcc
@@ -161,6 +182,11 @@ function renderReferredTable(refSide) {
   setText('res-xcc', fmt(Rcc.X, 5));
   setText('res-rfe', isFinite(RfeXm.R) ? fmt(RfeXm.R, 2) : '∞');
   setText('res-xm', isFinite(RfeXm.X) ? fmt(RfeXm.X, 2) : '∞');
+  // Equivalent inductances from the reactances (this is the only use of the frequency input).
+  const Lcc = fmtL(C.reactanceToInductance(Rcc.X, base.f));
+  const Lm = fmtL(C.reactanceToInductance(RfeXm.X, base.f));
+  setText('res-lcc', Lcc.v); setText('res-lcc-unit', Lcc.u);
+  setText('res-lm', Lm.v); setText('res-lm-unit', Lm.u);
   setText('res-refside-label', refSide === 'primary' ? 'Primary' : 'Secondary');
   return { Rcc, RfeXm };
 }
@@ -171,10 +197,15 @@ function solvePhysicalOperatingPoint(loadPct, cosPhi, pfType) {
   const ZloadSecondary = isShort ? { re: 0, im: 0 } : C.buildLoadImpedance(loadPct, base.SnPhaseVA, base.U2nPhase, cosPhi, pfType);
   const ZloadPrimary = ZloadSecondary ? { re: ZloadSecondary.re * base.a * base.a, im: ZloadSecondary.im * base.a * base.a } : null;
 
-  const exact = C.solveExactTModel({
+  const common = {
     U1: base.U1nPhase, R1: split.R1, X1: split.X1, R2p: split.R2, X2p: split.X2,
-    Rfe: base.RfeP, Xm: base.XmP, ZloadPrimary
-  });
+    Rfe: base.RfeP, Xm: base.XmP
+  };
+  const exact = C.solveExactTModel({ ...common, ZloadPrimary });
+  // No-load secondary voltage of THIS model (the exciting current drops a little voltage across R1+jX1),
+  // used as the reference for the regulation: eps = (U20 - U2) / U20.
+  const openCircuit = C.solveExactTModel({ ...common, ZloadPrimary: null });
+  const U20 = C.cMag(openCircuit.U2p) / base.a;
 
   const I1mag = C.cMag(exact.I1);
   const I1angDeg = C.toDegrees(C.cAngle(exact.I1));
@@ -184,7 +215,7 @@ function solvePhysicalOperatingPoint(loadPct, cosPhi, pfType) {
   const I2angDeg = C.toDegrees(C.cAngle(I2actual));
   const U2mag = C.cMag(U2actual);
   const U2angDeg = C.toDegrees(C.cAngle(U2actual));
-  const regulationPct = ((base.U2nPhase - U2mag) / base.U2nPhase) * 100;
+  const regulationPct = C.regulationPct(U20, U2mag);
 
   return { exact, I1mag, I1angDeg, I2mag, I2angDeg, U2mag, U2angDeg, regulationPct, ZloadSecondary };
 }
@@ -202,11 +233,22 @@ function solveApproxOperatingPoint(loadPct, cosPhi, pfType) {
     const phi0Deg = C.toDegrees(Math.acos(Math.max(-1, Math.min(1, base.oc.cosPhi0))));
     return { epsilonPct: kapp.epsilonPct, U2mag: kapp.U2, I1mag: I0primary, I2mag: 0, I1angDeg: -phi0Deg, I2angDeg: 0 };
   }
+  // Kapp model: constant load FACTOR (I2 = Spct * I2n), not constant impedance.
   const I2mag = (loadPct / 100) * base.rc.I2n;
   const I1mag = I2mag / base.a;
   const phi = Math.acos(Math.max(-1, Math.min(1, cosPhi)));
   const signedPhiDeg = C.toDegrees(phi) * (pfType === 'lead' ? 1 : -1);
   return { epsilonPct: kapp.epsilonPct, U2mag: kapp.U2, I1mag, I2mag, I1angDeg: signedPhiDeg, I2angDeg: signedPhiDeg };
+}
+
+/** Leaves the forced short-circuit state and gives the model selector back to the user. */
+function exitShort() {
+  if (forcedLoadState !== 'short') return;
+  forcedLoadState = null;
+  if (modelBeforeShort) {
+    el('model-type').value = modelBeforeShort;
+    modelBeforeShort = null;
+  }
 }
 
 function renderOperatingPoint() {
@@ -216,7 +258,9 @@ function renderOperatingPoint() {
 
   const isShort = forcedLoadState === 'short';
   if (isShort && modelType !== 'exact') {
-    // Kapp's linear approximation is not valid at Zload=0; force the exact model.
+    // Kapp's linear approximation is not valid at Zload=0; force the exact model
+    // (the user's choice is restored when they leave the short-circuit state).
+    modelBeforeShort = modelType;
     el('model-type').value = 'exact';
     modelType = 'exact';
   }
@@ -232,6 +276,7 @@ function renderOperatingPoint() {
     I1mag = r.I1mag; I2mag = r.I2mag; I1angDeg = r.I1angDeg; I2angDeg = r.I2angDeg;
   }
 
+  // Result cards always show the ACTUAL primary/secondary quantities.
   setText('res-u2', fmt(U2mag, 3));
   setText('res-regulation', fmt(regulationPct, 3));
   setText('res-i1-op', fmt(I1mag, 3));
@@ -266,15 +311,54 @@ function renderOperatingPoint() {
   });
   el('xfm-diagram').innerHTML = diagramSvg;
 
-  // "U2'"/"I2'" (primed) means "referred to the other side"; when refSide is
-  // secondary these are the actual secondary quantities, so drop the prime.
+  // Phasor diagram: every phasor is referred to the SAME side the diagram shows.
+  // Primed names (U2', I2') mean "referred to the primary"; with the secondary as
+  // reference it is U1' and I1' that carry the prime.
+  const a = base.a;
+  const isPri = refSide === 'primary';
+  const U1disp = isPri ? base.U1nPhase : base.U1nPhase / a;
   const phasorSvg = P.buildPhasorSVG({
-    U1: { mag: base.U1nPhase, angleDeg: 0 },
-    U2: { mag: refSide === 'primary' ? U2mag * base.a : U2mag, angleDeg: U2angDeg, label: refSide === 'secondary' ? 'U2' : "U2'" },
-    I1: { mag: I1mag, angleDeg: I1angDeg },
-    I2: { mag: I2mag, angleDeg: I2angDeg, label: refSide === 'secondary' ? 'I2' : "I2'" }
+    U1: { mag: U1disp, angleDeg: 0, label: isPri ? 'U1' : "U1'" },
+    U2: { mag: isPri ? U2mag * a : U2mag, angleDeg: U2angDeg, label: isPri ? "U2'" : 'U2' },
+    I1: { mag: isPri ? I1mag : I1mag * a, angleDeg: I1angDeg, label: isPri ? 'I1' : "I1'" },
+    I2: { mag: isPri ? I2mag / a : I2mag, angleDeg: I2angDeg, label: isPri ? "I2'" : 'I2' },
+    vRef: U1disp,
+    iRef: 1.5 * (isPri ? base.rc.I1n : base.rc.I2n)   // 150 % load = full radius (slider maximum)
   });
   el('xfm-phasor').innerHTML = phasorSvg;
+}
+
+// ---------- fullscreen (Fullscreen API + webkit prefix for Safari) ----------
+// Pattern matches parallel-transformers: CSS :fullscreen handles all sizing;
+// JS only toggles the is-fullscreen class on the button (icon swap + aria).
+
+const fsElement = () => document.fullscreenElement || document.webkitFullscreenElement || null;
+
+function onFsChange() {
+  document.querySelectorAll('.sim-chart-wrap').forEach(wrap => {
+    const isFs = fsElement() === wrap;
+    const btn = wrap.querySelector('.sim-chart-fullscreen-btn');
+    if (btn) {
+      btn.classList.toggle('is-fullscreen', isFs);
+      btn.setAttribute('aria-pressed', String(isFs));
+    }
+  });
+}
+
+function wireFullscreen() {
+  document.querySelectorAll('.sim-chart-wrap .sim-chart-fullscreen-btn').forEach(btn => {
+    const wrap = btn.closest('.sim-chart-wrap');
+    btn.addEventListener('click', () => {
+      if (fsElement() === wrap) {
+        (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      } else {
+        const req = wrap.requestFullscreen || wrap.webkitRequestFullscreen;
+        if (req) req.call(wrap);
+      }
+    });
+  });
+  document.addEventListener('fullscreenchange', onFsChange);
+  document.addEventListener('webkitfullscreenchange', onFsChange);
 }
 
 function fullCompute() {
@@ -316,6 +400,16 @@ function setupExample() {
   el('load-pct-value').textContent = '— ' + EXAMPLE_VALUES.loadPct + '%';
   el('load-cosphi').value = EXAMPLE_VALUES.loadCosPhi;
   el('load-pf-type').value = EXAMPLE_VALUES.loadPfType;
+
+  // min/max of the number inputs come from the same LIMITS used by the validation
+  const lim = {
+    'sn-kva': LIMITS.Sn_kVA, 'u1n': LIMITS.voltage, 'u2n': LIMITS.voltage,
+    'sc-v': LIMITS.testV, 'sc-i': LIMITS.testI, 'sc-p': LIMITS.testP,
+    'oc-v': LIMITS.testV, 'oc-i': LIMITS.testI, 'oc-p': LIMITS.testP,
+    'load-cosphi': LIMITS.cosPhi
+  };
+  Object.entries(lim).forEach(([id, l]) => { el(id).min = l.min; el(id).max = l.max; el(id).step = l.step; });
+
   updateThreePhaseVisibility();
 }
 
@@ -323,15 +417,25 @@ function wireEvents() {
   el('system-type').addEventListener('change', updateThreePhaseVisibility);
   el('btn-calculate').addEventListener('click', fullCompute);
 
-  ['load-pct', 'load-cosphi', 'load-pf-type', 'model-type', 'ref-side'].forEach(id => {
+  ['load-cosphi', 'load-pf-type', 'ref-side'].forEach(id => {
     el(id).addEventListener('input', () => { if (base) renderOperatingPoint(); });
   });
-  el('load-pct').addEventListener('input', () => {
-    forcedLoadState = null;
-    el('load-pct-value').textContent = '— ' + el('load-pct').value + '%';
+
+  // The user took control of the model: forget the one saved before "Short circuit".
+  el('model-type').addEventListener('input', () => {
+    modelBeforeShort = null;
+    if (base) renderOperatingPoint();
   });
+
+  // One handler, in the right order: leave the short-circuit state FIRST, then render.
+  el('load-pct').addEventListener('input', () => {
+    exitShort();
+    el('load-pct-value').textContent = '— ' + el('load-pct').value + '%';
+    if (base) renderOperatingPoint();
+  });
+
   el('btn-load-open').addEventListener('click', () => {
-    forcedLoadState = null;
+    exitShort();
     el('load-pct').value = 0;
     el('load-pct-value').textContent = '— 0%';
     if (base) renderOperatingPoint();
@@ -340,6 +444,8 @@ function wireEvents() {
     forcedLoadState = 'short';
     if (base) renderOperatingPoint();
   });
+
+  wireFullscreen();
 }
 
 document.addEventListener('DOMContentLoaded', () => {

@@ -3,9 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'wait_for_update': 500
+      });
+      gtag('set', 'ads_data_redaction', true);
+    </script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TBVL4LVC');</script>
+    <!-- End Google Tag Manager -->
+    <link rel="stylesheet" href="../../assets/css/cookie-consent.css">
+<!-- Google Search Console verification -->
+<meta name="google-site-verification" content="IsonpLQAguEXEzaXseWH8GDbOLo6xvF0BJBOlMVcE4A">
+
 <title>Transformer Equivalent Circuit Calculator | Short-Circuit &amp; Open-Circuit Test | EngSim</title>
 <meta name="description" content="Calculate a transformer's equivalent circuit parameters (Rcc, Xcc, %Z, Rfe, Xm) from short-circuit and open-circuit test data, and see the single-phase equivalent circuit and voltage regulation at any load.">
 <link rel="canonical" href="https://engsimapp.com/simulators/transformer-equivalent-circuit/">
+
+<!-- Open Graph / Twitter -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EngSim">
+<meta property="og:title" content="Transformer Equivalent Circuit Calculator | EngSim">
+<meta property="og:description" content="Calculate a transformer's equivalent circuit parameters (Rcc, Xcc, %Z, Rfe, Xm) from short-circuit and open-circuit test data, and see the equivalent circuit, phasor diagram and voltage regulation at any load.">
+<meta property="og:url" content="https://engsimapp.com/simulators/transformer-equivalent-circuit/">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Transformer Equivalent Circuit Calculator | EngSim">
+<meta name="twitter:description" content="Equivalent circuit parameters, %Z and voltage regulation from short-circuit and open-circuit test data.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -26,8 +60,68 @@
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Why does the frequency input not change the circuit parameters?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Rcc, Xcc, Rfe and Xm come directly from the test readings (V, I, P), so they do not depend on the frequency. It is only used to express the reactances as equivalent inductances, Lcc = Xcc / (2πf) and Lm = Xm / (2πf), shown next to them. The tests must have been run at the transformer's rated frequency, because reactance changes with frequency."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is %Zcc the same whether I refer the circuit to the primary or the secondary?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "%Zcc expresses Zcc relative to the rated impedance of the side it was measured on. When you refer Zcc to the other side, both the impedance and the rated current/voltage scale by the same turns-ratio factor, so the percentage is unchanged. It's a side-independent number, which is why it's the one most commonly quoted on a nameplate."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is the load defined for the operating point?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The load is a constant impedance sized to draw the selected % of Sn at the given power factor when the secondary is at its rated voltage. The Exact (T) model solves the circuit with that impedance, so as the secondary voltage sags the delivered current drops slightly (in the worked example, 204.3 A at 100 % instead of 208.3 A). The Approximate (Kapp) model instead fixes the load factor: I2 = (% / 100) · I2n exactly, and only the voltage is corrected through ε."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why does the exact (T) model split Rcc/Xcc 50/50 between primary and secondary?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The two tests only give the total series impedance, not how much of it sits in each winding. Splitting it evenly is the standard assumption when no further winding data is available. In the Exact (T) model the split has a very small effect on the result (in the worked example, putting the whole impedance on the primary side changes U2 by only about 0.05 V), because the magnetizing branch sits between the two series blocks. In the Approximate (L) model it has no effect at all, since only the total Rcc and Xcc are used."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is the voltage regulation defined?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Regulation is ε = (U20 − U2) / U20 × 100, where U20 is the secondary voltage at no load. In the Approximate model U20 is the rated secondary voltage and ε comes from Kapp's formula. In the Exact model U20 is the no-load voltage given by the circuit itself, which is a hair below the rated value because the exciting current drops a little voltage across R1 + jX1. That is why the regulation at 0 % load is exactly 0 while U2 can read slightly under the rated voltage."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does this work for a three-phase transformer bank?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes — select \"Three-phase\" and indicate whether each rated voltage was entered as line or phase. The calculator reduces everything to the single-phase (per-phase) equivalent circuit, assuming a wye/star-equivalent connection and that test power readings are given as the total three-phase power. The voltage you enter for each test is read with the same line/phase setting as the rated voltage of the side where that test was performed."
+      }
+    }
+  ]
+}
+</script>
 </head>
-<body>
+<body data-page-type="simulator">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBVL4LVC"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
 <div class="page-wrapper">
   <div id="nav-placeholder"></div>
 
@@ -44,8 +138,15 @@
             <li aria-current="page">Transformer Equivalent Circuit Calculator</li>
           </ol>
         </nav>
-        <h1 id="sim-title">Transformer Equivalent Circuit Calculator</h1>
-        <p class="sim-hero__desc">Get every equivalent-circuit parameter of a single-phase or three-phase transformer straight from the short-circuit and open-circuit test readings — plus the single-phase diagram and voltage regulation from no-load to short-circuit.</p>
+        <span class="sim-hero__category">Electrical Engineering</span>
+        <h1 class="sim-hero__title" id="sim-title">Transformer Equivalent Circuit Calculator</h1>
+        <p class="sim-hero__subtitle">Get every equivalent-circuit parameter of a single-phase or three-phase transformer straight from the short-circuit and open-circuit test readings — plus the single-phase diagram and voltage regulation from no-load to short-circuit.</p>
+        <div class="sim-hero__tags">
+          <span class="sim-hero__tag">Transformers</span>
+          <span class="sim-hero__tag">Equivalent circuit</span>
+          <span class="sim-hero__tag">Short-circuit &amp; open-circuit tests</span>
+          <span class="sim-hero__tag">Voltage regulation</span>
+        </div>
       </div>
     </section>
 
@@ -127,6 +228,7 @@
                   <input type="checkbox" id="power-total" checked>
                   Test power readings (P<sub>cc</sub>, P<sub>0</sub>) are TOTAL three-phase power
                 </label>
+                <p class="sim-hint">Each test voltage (V<sub>cc</sub>, V<sub>0</sub>) is read as line or phase following the setting of the side where that test was performed.</p>
               </div>
 
               <hr>
@@ -142,7 +244,7 @@
                 <div class="sim-field">
                   <label class="sim-label" for="sc-v">V<sub>cc</sub></label>
                   <div class="sim-input-wrap">
-                    <input type="number" id="sc-v" class="sim-input" step="0.01" min="0" aria-invalid="false">
+                    <input type="number" id="sc-v" class="sim-input" step="0.01" min="0.01" aria-invalid="false">
                     <span class="sim-unit">V</span>
                   </div>
                 </div>
@@ -308,6 +410,16 @@
                 <span class="sim-result-value" id="res-xm">–</span>
                 <span class="sim-result-unit">Ω</span>
               </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">Lcc</span>
+                <span class="sim-result-value" id="res-lcc">–</span>
+                <span class="sim-result-unit" id="res-lcc-unit">mH</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">Lm</span>
+                <span class="sim-result-value" id="res-lm">–</span>
+                <span class="sim-result-unit" id="res-lm-unit">mH</span>
+              </div>
             </div>
 
             <p class="sim-section-label">Operating point</p>
@@ -334,11 +446,27 @@
               </div>
             </div>
 
-            <p class="sim-section-label">Equivalent circuit diagram</p>
-            <div class="xfm-diagram-wrap" id="xfm-diagram"></div>
+            <div class="sim-chart-wrap xfm-fs-wrap">
+              <div class="sim-chart-header">
+                <span class="sim-chart-label">Equivalent circuit diagram</span>
+                <button type="button" class="sim-chart-fullscreen-btn" aria-label="Toggle fullscreen: Equivalent circuit diagram" aria-pressed="false">
+                  <svg class="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                  <svg class="icon-collapse" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
+                </button>
+              </div>
+              <div class="xfm-diagram-wrap xfm-svg-host" id="xfm-diagram" style="overflow-x:auto"></div>
+            </div>
 
-            <p class="sim-section-label">Phasor diagram</p>
-            <div class="xfm-phasor-wrap" id="xfm-phasor"></div>
+            <div class="sim-chart-wrap xfm-fs-wrap">
+              <div class="sim-chart-header">
+                <span class="sim-chart-label">Phasor diagram</span>
+                <button type="button" class="sim-chart-fullscreen-btn" aria-label="Toggle fullscreen: Phasor diagram" aria-pressed="false">
+                  <svg class="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                  <svg class="icon-collapse" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
+                </button>
+              </div>
+              <div class="xfm-phasor-wrap xfm-svg-host" id="xfm-phasor" style="overflow-x:auto"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -372,7 +500,7 @@
             </div>
             <div class="edu-grid-item">
               <h4>4. Move the load slider</h4>
-              <p>0% is the open-circuit condition; the "Short circuit" shortcut pushes the load toward the short-circuit extreme.</p>
+              <p>0% is the open-circuit condition; the "Short circuit" shortcut sets Z<sub>load</sub> = 0 (and switches to the Exact model, since Kapp's formula does not hold there).</p>
             </div>
           </div>
 
@@ -385,7 +513,10 @@
             cos φ0 = P0 / (V0·I0) &nbsp;&nbsp; Rfe = V0² / P0 &nbsp;&nbsp; Xm = V0 / (I0·sin φ0)
           </div>
           <div class="edu-formula">
-            %Zcc = (Zcc · In) / Un × 100
+            %Zcc = (Zcc · In) / Un × 100 &nbsp;&nbsp; Lcc = Xcc / (2π·f) &nbsp;&nbsp; Lm = Xm / (2π·f)
+          </div>
+          <div class="edu-formula">
+            ε% = (U20 − U2) / U20 × 100
           </div>
           <div class="edu-formula">
             ε% ≈ (Rcc%·cos φ + Xcc%·sin φ) + (Xcc%·cos φ − Rcc%·sin φ)² / 200
@@ -402,11 +533,20 @@
           </div>
 
           <hr>
+          <h2>Reading the results</h2>
+          <ul>
+            <li><strong>%Zcc</strong> is the nameplate impedance voltage. The lower it is, the smaller the voltage drop under load, but the larger the short-circuit current (roughly 100 / %Zcc times the rated current).</li>
+            <li><strong>Regulation</strong> is positive for lagging loads and can become negative for leading (capacitive) ones, where the secondary voltage rises above its no-load value.</li>
+            <li><strong>Phasor diagram:</strong> it is drawn with the same fixed scales for every load (voltages relative to U1, currents relative to 150 % of the rated current), so the vectors grow as you move the slider. A » after a label means the vector is longer than the scale allows and is clipped.</li>
+            <li><strong>Referred to:</strong> primed quantities (U2', I2') are referred to the primary; when you choose the secondary as reference it is U1' and I1' that carry the prime.</li>
+          </ul>
+
+          <hr>
           <h2>Frequently asked questions</h2>
           <div class="edu-faq-item">
             <details>
               <summary>Why does the frequency input not change the circuit parameters?</summary>
-              <div class="edu-faq-answer">Rcc, Xcc, Rfe and Xm come directly from the test readings (V, I, P), not from the frequency. Frequency is only used to convert the reactances into equivalent inductances (Lcc, Lm) for reference, and to confirm the tests were run at the transformer's rated frequency — reactance changes with frequency, so a test at the wrong frequency would need correcting first.</div>
+              <div class="edu-faq-answer">Rcc, Xcc, Rfe and Xm come directly from the test readings (V, I, P), so they do not depend on the frequency. It is only used to express the reactances as equivalent inductances, Lcc = Xcc / (2πf) and Lm = Xm / (2πf), shown next to them. The tests must have been run at the transformer's rated frequency, because reactance changes with frequency.</div>
             </details>
           </div>
           <div class="edu-faq-item">
@@ -418,19 +558,25 @@
           <div class="edu-faq-item">
             <details>
               <summary>How is the load defined for the operating point?</summary>
-              <div class="edu-faq-answer">The load is modeled as a constant impedance sized to draw the selected % of Sn at the given power factor when the secondary is at its rated voltage. As the secondary voltage sags under load, the actual power delivered changes slightly with it — this is what both the approximate and exact solvers account for.</div>
+              <div class="edu-faq-answer">The load is a constant impedance sized to draw the selected % of Sn at the given power factor when the secondary is at its rated voltage. The Exact (T) model solves the circuit with that impedance, so as the secondary voltage sags the delivered current drops slightly (in the worked example, 204.3 A at 100 % instead of 208.3 A). The Approximate (Kapp) model instead fixes the load factor: I2 = (% / 100) · I2n exactly, and only the voltage is corrected through ε.</div>
             </details>
           </div>
           <div class="edu-faq-item">
             <details>
               <summary>Why does the exact (T) model split Rcc/Xcc 50/50 between primary and secondary?</summary>
-              <div class="edu-faq-answer">The two tests only give the total series impedance, not how much of it sits in each winding. Splitting it evenly is the standard assumption used when no further winding data is available, and it doesn't affect the total voltage drop — it only changes how the diagram's two series blocks are labeled.</div>
+              <div class="edu-faq-answer">The two tests only give the total series impedance, not how much of it sits in each winding. Splitting it evenly is the standard assumption when no further winding data is available. In the Exact (T) model the split has a very small effect on the result (in the worked example, putting the whole impedance on the primary side changes U2 by only about 0.05 V), because the magnetizing branch sits between the two series blocks. In the Approximate (L) model it has no effect at all, since only the total Rcc and Xcc are used.</div>
+            </details>
+          </div>
+          <div class="edu-faq-item">
+            <details>
+              <summary>How is the voltage regulation defined?</summary>
+              <div class="edu-faq-answer">Regulation is ε = (U20 − U2) / U20 × 100, where U20 is the secondary voltage at no load. In the Approximate model U20 is the rated secondary voltage and ε comes from Kapp's formula. In the Exact model U20 is the no-load voltage given by the circuit itself, which is a hair below the rated value because the exciting current drops a little voltage across R1 + jX1. That is why the regulation at 0 % load is exactly 0 while U2 can read slightly under the rated voltage.</div>
             </details>
           </div>
           <div class="edu-faq-item">
             <details>
               <summary>Does this work for a three-phase transformer bank?</summary>
-              <div class="edu-faq-answer">Yes — select "Three-phase" and indicate whether each rated voltage was entered as line or phase. The calculator reduces everything to the single-phase (per-phase) equivalent circuit, assuming a wye/star-equivalent connection and that test power readings are given as the total three-phase power.</div>
+              <div class="edu-faq-answer">Yes — select "Three-phase" and indicate whether each rated voltage was entered as line or phase. The calculator reduces everything to the single-phase (per-phase) equivalent circuit, assuming a wye/star-equivalent connection and that test power readings are given as the total three-phase power. The voltage you enter for each test is read with the same line/phase setting as the rated voltage of the side where that test was performed.</div>
             </details>
           </div>
 
@@ -451,5 +597,6 @@
 <script src="./js/xfm-core.js"></script>
 <script src="./js/xfm-plot.js"></script>
 <script type="module" src="./js/xfm-simulator.js"></script>
+<script src="../../assets/js/cookie-consent.js" defer></script>
 </body>
 </html>

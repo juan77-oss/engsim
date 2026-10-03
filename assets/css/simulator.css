@@ -6348,6 +6348,7 @@ body.dark .edu-example--combined .edu-example__title {
 .xfm-diagram-wrap,
 .xfm-phasor-wrap {
     width: 100%;
+    contain: inline-size;
     overflow-x: auto;
     background: var(--bg-hover);
     border: 1px solid var(--border);
@@ -6366,6 +6367,7 @@ body.dark .edu-example--combined .edu-example__title {
 
 .xfm-phasor-wrap svg {
     max-width: 420px;
+    min-width: 0;
     margin: 0 auto;
 }
 
@@ -6373,4 +6375,47 @@ body.dark .edu-example--combined .edu-example__title {
     .xfm-diagram-wrap svg {
         min-width: 560px;
     }
+}
+
+/* ── xfm-fs-wrap: override the global .sim-chart-wrap overflow:hidden so the
+   inner SVG host can scroll horizontally on small screens. The :fullscreen
+   pseudo-class below restores clipping inside fullscreen where scrolling is
+   not needed. ────────────────────────────────────────────────────────────── */
+.xfm-fs-wrap {
+    overflow: visible;
+}
+
+/* ── Fullscreen sizing for XFM SVG hosts ────────────────────────────────── */
+.xfm-fs-wrap:fullscreen,
+.xfm-fs-wrap:-webkit-full-screen {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg-page);
+    padding: var(--space-lg);
+}
+
+.xfm-fs-wrap:fullscreen .sim-chart-header,
+.xfm-fs-wrap:-webkit-full-screen .sim-chart-header {
+    flex-shrink: 0;
+}
+
+.xfm-fs-wrap:fullscreen .xfm-diagram-wrap,
+.xfm-fs-wrap:-webkit-full-screen .xfm-diagram-wrap,
+.xfm-fs-wrap:fullscreen .xfm-phasor-wrap,
+.xfm-fs-wrap:-webkit-full-screen .xfm-phasor-wrap {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+    margin-bottom: 0;
+}
+
+.xfm-fs-wrap:fullscreen .xfm-diagram-wrap svg,
+.xfm-fs-wrap:-webkit-full-screen .xfm-diagram-wrap svg,
+.xfm-fs-wrap:fullscreen .xfm-phasor-wrap svg,
+.xfm-fs-wrap:-webkit-full-screen .xfm-phasor-wrap svg {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    max-width: none;
 }

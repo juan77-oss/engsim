@@ -212,13 +212,26 @@ function solveApproxKapp(p) {
   const loadFactor = p.Spct / 100;
   const Rl = p.RccPct * loadFactor;
   const Xl = p.XccPct * loadFactor;
-  const cosPhiSigned = p.cosPhi;
-  const epsilonPct = (Rl * cosPhiSigned + Xl * sinPhi) +
-    Math.pow(Xl * cosPhiSigned - Rl * sinPhi, 2) / 200;
+  const epsilonPct = (Rl * p.cosPhi + Xl * sinPhi) +
+    Math.pow(Xl * p.cosPhi - Rl * sinPhi, 2) / 200;
   const U2 = p.U2n * (1 - epsilonPct / 100);
-  const S = (p.Spct / 100); // fraction of Sn, used with Sn2 by caller to get actual current
-  const I2 = null; // caller fills using Sn2 and U2 (kept out of this pure fn to avoid double Sn coupling)
+  // Currents are not computed here: the caller derives them from Sn2 and the load factor.
   return { epsilonPct, U2, phiDeg: toDegrees(phi) * (p.pfType === 'lead' ? -1 : 1) };
+}
+
+// ---------- Regulation & inductance helpers ----------
+
+/**
+ * Voltage regulation relative to the model's own no-load voltage:
+ * eps% = (U20 - U2) / U20 * 100. With U20 = U2 at open circuit this is exactly 0.
+ */
+function regulationPct(U20, U2) {
+  return ((U20 - U2) / U20) * 100;
+}
+
+/** L = X / (2*pi*f). Returns Infinity if X is Infinity. */
+function reactanceToInductance(X, f) {
+  return X / (2 * Math.PI * f);
 }
 
 // ---------- Validation suite ----------
@@ -318,6 +331,47 @@ function runValidationSuite() {
     check('T9 approx: leading PF gives lower (or negative) regulation than lagging', lead.epsilonPct < lag.epsilonPct);
   }
 
+  // T10: three-phase reduction (line voltage -> phase voltage, total power -> per-phase power)
+  {
+    const r = reduceThreePhase({ V: 400, I: 10, P: 900 }, 'three', 'line', true);
+    check('T10 3-phase: V = 400/sqrt(3)', approxEqual(r.V, 400 / Math.sqrt(3), 1e-9));
+    check('T10 3-phase: I unchanged', approxEqual(r.I, 10, 1e-12));
+    check('T10 3-phase: P = 900/3', approxEqual(r.P, 300, 1e-9));
+    const s1 = reduceThreePhase({ V: 230, I: 10, P: 300 }, 'single', 'line', true);
+    check('T10 single-phase passthrough', s1.V === 230 && s1.I === 10 && s1.P === 300);
+  }
+
+  // T11: worked example of the page (50 kVA, 2400/240 V): Kapp and exact agree on ~1.9 %
+  {
+    const a = 10, Sn = 50000, U2n = 240;
+    const sc = shortCircuitTest({ V: 48, I: 20.8, P: 617 });
+    const oc = openCircuitTest({ V: 240, I: 5.41, P: 186 });
+    check('T11 example: Rcc=1.426', approxEqual(sc.R, 1.426, 1e-3));
+    check('T11 example: Xcc=1.814', approxEqual(sc.X, 1.814, 1e-3));
+    check('T11 example: Rfe(sec)=309.7', approxEqual(oc.Rfe, 309.7, 0.05));
+    check('T11 example: Xm(sec)=44.8', approxEqual(oc.Xm, 44.8, 0.05));
+    const pctR = percentZ(sc.R, 2400, Sn / 2400), pctX = percentZ(sc.X, 2400, Sn / 2400);
+    const k = solveApproxKapp({ RccPct: pctR, XccPct: pctX, U2n, Spct: 100, cosPhi: 0.8, pfType: 'lag', a });
+    check('T11 example: Kapp eps ~1.94 %', approxEqual(k.epsilonPct, 1.937, 0.01), `got ${k.epsilonPct.toFixed(4)}`);
+    const split = splitTModel(sc.R, sc.X);
+    const base = { U1: 2400, R1: split.R1, X1: split.X1, R2p: split.R2, X2p: split.X2,
+      Rfe: oc.Rfe * a * a, Xm: oc.Xm * a * a };
+    const Zs = buildLoadImpedance(100, Sn, U2n, 0.8, 'lag');
+    const ex = solveExactTModel({ ...base, ZloadPrimary: { re: Zs.re * a * a, im: Zs.im * a * a } });
+    const U2 = cMag(ex.U2p) / a;
+    const U20 = cMag(solveExactTModel({ ...base, ZloadPrimary: null }).U2p) / a;
+    check('T11 example: exact U2 ~235.39 V', approxEqual(U2, 235.39, 0.05), `got ${U2.toFixed(3)}`);
+    check('T11 example: exact regulation ~1.9 % (vs U20)', approxEqual(regulationPct(U20, U2), 1.9, 0.05),
+      `got ${regulationPct(U20, U2).toFixed(4)}`);
+    check('T11 example: regulation is 0 at no load', approxEqual(regulationPct(U20, U20), 0, 1e-12));
+  }
+
+  // T12: inductance from reactance
+  {
+    check('T12 L = X/(2 pi f)', approxEqual(reactanceToInductance(2 * Math.PI * 60 * 0.1, 60), 0.1, 1e-12));
+    check('T12 L infinite for infinite X', reactanceToInductance(Infinity, 50) === Infinity);
+  }
+
   const pass = results.filter(r => r.pass).length;
   return { pass, total: results.length, results };
 }
@@ -330,6 +384,7 @@ const XfmCore = {
   ratedCurrents, turnsRatio, referImpedance, referScalarImpedanceMag, percentZ,
   splitTModel, buildLoadImpedance,
   solveExactTModel, solveApproxKapp,
+  regulationPct, reactanceToInductance,
   runValidationSuite
 };
 

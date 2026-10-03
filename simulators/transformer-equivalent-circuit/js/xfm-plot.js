@@ -199,42 +199,63 @@ function buildCircuitDiagramSVG(p) {
 // ---------- phasor diagram ----------
 
 /**
+ * Scales are FIXED (they do not depend on the current load point), so moving
+ * the load slider visibly grows/shrinks the vectors instead of re-normalising them:
+ *  - voltages: vRef (U1 on the displayed side) maps to the full radius
+ *  - currents: iRef (1.5 x rated current on the displayed side = 150 % load) maps to the full radius
+ * Vectors longer than MAX_LEN (e.g. short-circuit current) are clipped and marked with a trailing "»".
+ * Zero-length vectors (I2 at no load, U2 at short circuit) are not drawn.
+ *
  * @param {object} p
- * @param {{mag:number,angleDeg:number}} p.U1 @param {{mag:number,angleDeg:number}} p.U2
- * @param {{mag:number,angleDeg:number}} p.I1 @param {{mag:number,angleDeg:number}} p.I2
+ * @param {{mag:number,angleDeg:number,label?:string}} p.U1 @param {{mag:number,angleDeg:number,label?:string}} p.U2
+ * @param {{mag:number,angleDeg:number,label?:string}} p.I1 @param {{mag:number,angleDeg:number,label?:string}} p.I2
+ * @param {number} [p.vRef] @param {number} [p.iRef]
  */
 function buildPhasorSVG(p) {
   const W = 420, H = 420;
   const cx = W / 2, cy = H / 2;
-  const maxV = Math.max(p.U1.mag, p.U2.mag, 1e-9);
-  const maxI = Math.max(p.I1.mag, p.I2.mag, 1e-9);
-  const vScale = (W / 2 - 60) / maxV;
-  const iScale = (W / 2 - 60) / maxI;
+  const R = W / 2 - 60;           // radius that maps to the reference value
+  const MAX_LEN = R * 1.1;        // clip length
+  const vRef = p.vRef > 0 ? p.vRef : Math.max(p.U1.mag, p.U2.mag, 1e-9);
+  const iRef = p.iRef > 0 ? p.iRef : Math.max(p.I1.mag, p.I2.mag, 1e-9);
+  const vScale = R / vRef;
+  const iScale = R / iRef;
+  const font = `style="font:600 13px Inter,sans-serif"`;
 
-  const arrow = (mag, angleDeg, scale, color, label, dash) => {
-    const rad = (angleDeg * Math.PI) / 180;
-    const x2 = cx + mag * scale * Math.cos(rad);
-    const y2 = cy - mag * scale * Math.sin(rad);
-    const headLen = 9;
+  const arrow = (v, scale, color, defaultLabel, dash, side) => {
+    if (!(v.mag > 1e-9)) return '';
+    const rad = (v.angleDeg * Math.PI) / 180;
+    let len = v.mag * scale;
+    let label = v.label || defaultLabel;
+    if (len > MAX_LEN) { len = MAX_LEN; label += ' »'; }
+    const x2 = cx + len * Math.cos(rad);
+    const y2 = cy - len * Math.sin(rad);
+    const headLen = Math.min(9, Math.max(3, len * 0.6)); // tiny vectors (e.g. I0 at no load) get a proportionally small head
     const a1 = rad + Math.PI * 0.85;
     const a2 = rad - Math.PI * 0.85;
     const hx1 = x2 + headLen * Math.cos(a1), hy1 = y2 - headLen * Math.sin(a1);
     const hx2 = x2 + headLen * Math.cos(a2), hy2 = y2 - headLen * Math.sin(a2);
+    // Label sits just past the tip, pushed sideways (perpendicular to the vector) by `side`:
+    // +1 = counter-clockwise side, -1 = clockwise side. Pairs that tend to coincide
+    // (U1/U2', I1/I2') get opposite sides so their labels never overlap.
+    const lx = x2 + 12 * Math.cos(rad) - side * 16 * Math.sin(rad);
+    const ly = y2 - 12 * Math.sin(rad) - side * 16 * Math.cos(rad) + 4;
     const dashAttr = dash ? `stroke-dasharray="5,4"` : '';
     return `<line x1="${cx}" y1="${cy}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${color}" stroke-width="2.4" ${dashAttr}/>` +
-      `<path d="M ${x2.toFixed(1)} ${y2.toFixed(1)} L ${hx1.toFixed(1)} ${hy1.toFixed(1)} M ${x2.toFixed(1)} ${y2.toFixed(1)} L ${hx2.toFixed(1)} ${hy2.toFixed(1)}" stroke="${color}" stroke-width="2.4" stroke-linecap="round"/>` +
-      `<text x="${(x2 + 10 * Math.cos(rad)).toFixed(1)}" y="${(y2 - 10 * Math.sin(rad)).toFixed(1)}" font="600 13px Inter,sans-serif" fill="${color}" text-anchor="middle">${esc(label)}</text>`;
+      `<path d="M ${x2.toFixed(1)} ${y2.toFixed(1)} L ${hx1.toFixed(1)} ${hy1.toFixed(1)} M ${x2.toFixed(1)} ${y2.toFixed(1)} L ${hx2.toFixed(1)} ${hy2.toFixed(1)}" stroke="${color}" stroke-width="2.4" stroke-linecap="round" fill="none"/>` +
+      `<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" ${font} fill="${color}" text-anchor="middle">${esc(label)}</text>`;
   };
 
   let parts = [];
   parts.push(`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Voltage and current phasor diagram">`);
   parts.push(`<line x1="20" y1="${cy}" x2="${W - 20}" y2="${cy}" stroke="currentColor" stroke-width="1" opacity="0.25"/>`);
   parts.push(`<line x1="${cx}" y1="20" x2="${cx}" y2="${H - 20}" stroke="currentColor" stroke-width="1" opacity="0.25"/>`);
-  parts.push(arrow(p.U1.mag, p.U1.angleDeg, vScale, 'currentColor', 'U1'));
-  parts.push(arrow(p.U2.mag, p.U2.angleDeg, vScale, 'var(--brand-accent)', p.U2.label || "U2'"));
-  parts.push(arrow(p.I1.mag, p.I1.angleDeg, iScale, '#e08a2c', 'I1', true));
-  parts.push(arrow(p.I2.mag, p.I2.angleDeg, iScale, '#c0392b', p.I2.label || "I2'", true));
-  parts.push(`<text x="12" y="${H - 8}" font="500 10px Inter,sans-serif" fill="currentColor" opacity="0.55">Solid = voltages · Dashed = currents (not to the same scale)</text>`);
+  parts.push(arrow(p.U1, vScale, 'currentColor', 'U1', false, +1));
+  parts.push(arrow(p.U2, vScale, 'var(--brand-accent)', "U2'", false, -1));
+  parts.push(arrow(p.I1, iScale, '#e08a2c', 'I1', true, +1));
+  parts.push(arrow(p.I2, iScale, '#c0392b', "I2'", true, -1));
+  parts.push(`<text x="12" y="${H - 22}" style="font:500 10px Inter,sans-serif" fill="currentColor" opacity="0.55">Solid = voltages (scale: U1) · Dashed = currents (scale: 150 % of rated)</text>`);
+  parts.push(`<text x="12" y="${H - 9}" style="font:500 10px Inter,sans-serif" fill="currentColor" opacity="0.55">Fixed scales · » = vector clipped (beyond scale)</text>`);
   parts.push('</svg>');
   return parts.join('');
 }
