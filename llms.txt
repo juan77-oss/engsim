@@ -47,6 +47,7 @@ EngSim is a collection of interactive calculators and diagram tools built for en
 - [Voltage Divider](https://engsimapp.com/simulators/voltage-divider/index.html): Interactive resistive voltage divider: adjust values and visualize output voltage and current distribution.
 - [DC Circuit Analyzer](https://engsimapp.com/simulators/dc-circuit-analyzer/index.html): Analyze series and parallel resistive DC networks — currents, voltages, power, and maximum power transfer — with guided Thevenin, Norton, node, and mesh analysis.
 - [Parallel Transformers Calculator](https://engsimapp.com/simulators/parallel-transformers/index.html): Analyze two single-phase transformers connected in parallel: load sharing, circulating current, maximum group power, and which unit reaches its rating first, with an interactive phasor diagram.
+- [Transformer Equivalent Circuit Calculator](https://engsimapp.com/simulators/transformer-equivalent-circuit/index.html): Calculate a transformer's equivalent circuit parameters from short-circuit and open-circuit test data, and estimate voltage regulation under load.
 
 ## Chemistry
 

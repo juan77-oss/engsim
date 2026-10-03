@@ -4439,47 +4439,56 @@ body.dark .co-diagnostic--high {
 }
 
 .atom-h {
-    fill: #f3f4f6;    /* CPK H — white/light gray */
+    fill: #f3f4f6;
+    /* CPK H — white/light gray */
     stroke: #d1d5db;
 }
 
 .atom-c {
-    fill: #4b5563;    /* CPK C — dark gray */
+    fill: #4b5563;
+    /* CPK C — dark gray */
     stroke: #374151;
 }
 
 .atom-n {
-    fill: #3b82f6;    /* CPK N — blue */
+    fill: #3b82f6;
+    /* CPK N — blue */
     stroke: #2563eb;
 }
 
 .atom-o {
-    fill: #ef4444;    /* CPK O — red */
+    fill: #ef4444;
+    /* CPK O — red */
     stroke: #dc2626;
 }
 
 .atom-s {
-    fill: #fde047;    /* CPK S — yellow */
+    fill: #fde047;
+    /* CPK S — yellow */
     stroke: #eab308;
 }
 
 .atom-cl {
-    fill: #22c55e;    /* CPK Cl — green */
+    fill: #22c55e;
+    /* CPK Cl — green */
     stroke: #16a34a;
 }
 
 .atom-fe {
-    fill: #f97316;    /* CPK Fe — orange */
+    fill: #f97316;
+    /* CPK Fe — orange */
     stroke: #ea580c;
 }
 
 .atom-al {
-    fill: #9ca3af;    /* CPK Al — medium gray */
+    fill: #9ca3af;
+    /* CPK Al — medium gray */
     stroke: #6b7280;
 }
 
 .atom-default {
-    fill: #a855f7;    /* CPK generic — purple */
+    fill: #a855f7;
+    /* CPK generic — purple */
     stroke: #9333ea;
 }
 
@@ -5104,13 +5113,28 @@ body.dark .bal-feedback-incorrect {
     border-bottom: 1px solid var(--border);
 }
 
-.mode-label { font-size: .8rem; font-weight: 600; color: var(--text-primary); }
+.mode-label {
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
 
-.mode-toggle-container .switch { position: relative; display: inline-block; width: 38px; height: 20px; }
-.mode-toggle-container .switch input { opacity: 0; width: 0; height: 0; }
+.mode-toggle-container .switch {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 20px;
+}
+
+.mode-toggle-container .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
 
 .mode-toggle-container .slider {
-    position: absolute; inset: 0;
+    position: absolute;
+    inset: 0;
     background: var(--border-strong);
     border-radius: 20px;
     cursor: pointer;
@@ -5120,16 +5144,27 @@ body.dark .bal-feedback-incorrect {
 .mode-toggle-container .slider::before {
     content: '';
     position: absolute;
-    width: 14px; height: 14px;
-    left: 3px; bottom: 3px;
+    width: 14px;
+    height: 14px;
+    left: 3px;
+    bottom: 3px;
     background: #fff;
     border-radius: 50%;
     transition: transform .2s ease;
 }
 
-.mode-toggle-container .switch input:checked + .slider { background: var(--brand-accent); }
-.mode-toggle-container .switch input:checked + .slider::before { transform: translateX(18px); }
-.mode-toggle-container .switch input:disabled + .slider { opacity: .5; cursor: not-allowed; }
+.mode-toggle-container .switch input:checked+.slider {
+    background: var(--brand-accent);
+}
+
+.mode-toggle-container .switch input:checked+.slider::before {
+    transform: translateX(18px);
+}
+
+.mode-toggle-container .switch input:disabled+.slider {
+    opacity: .5;
+    cursor: not-allowed;
+}
 
 /* ── Reactant rows (dynamic, limiting-reagent module) ───────────── */
 .reactant-rows-title {
@@ -5148,7 +5183,11 @@ body.dark .bal-feedback-incorrect {
     padding: var(--space-sm) 0;
 }
 
-.example-btns { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+.example-btns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
 
 .reactant-row {
     display: flex;
@@ -5158,9 +5197,14 @@ body.dark .bal-feedback-incorrect {
     border-bottom: 1px solid var(--border);
 }
 
-.reactant-row:last-child { border-bottom: none; }
+.reactant-row:last-child {
+    border-bottom: none;
+}
 
-.reactant-row__label { flex: 0 0 auto; min-width: 100px; }
+.reactant-row__label {
+    flex: 0 0 auto;
+    min-width: 100px;
+}
 
 .reactant-formula {
     display: block;
@@ -5181,7 +5225,13 @@ body.dark .bal-feedback-incorrect {
    min-width: 0 overrides the flex-item default (min-width: auto),
    which otherwise refuses to shrink below the content's natural
    width and pushes the unit <select> outside the panel. */
-.reactant-row__input { display: flex; gap: var(--space-xs); flex: 1; min-width: 0; }
+.reactant-row__input {
+    display: flex;
+    gap: var(--space-xs);
+    flex: 1;
+    min-width: 0;
+}
+
 .reactant-row__input .sim-input {
     flex: 1;
     min-width: 80px;
@@ -5189,19 +5239,43 @@ body.dark .bal-feedback-incorrect {
     border-radius: var(--radius-md);
     background: var(--bg-input);
 }
-.reactant-row__input .sim-select { flex: 0 0 78px; min-width: 78px; padding-right: 28px; }
+
+.reactant-row__input .sim-select {
+    flex: 0 0 78px;
+    min-width: 78px;
+    padding-right: 28px;
+}
 
 @media (max-width: 420px) {
-    .reactant-row { flex-direction: column; align-items: stretch; gap: var(--space-xs); }
-    .reactant-row__label { min-width: 0; }
+    .reactant-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: var(--space-xs);
+    }
+
+    .reactant-row__label {
+        min-width: 0;
+    }
 }
 
 /* ── Conversion / ratio table cells ────────────────────────────── */
-.ratio-cell { font-family: var(--font-mono); font-weight: 800; }
-.conversion-eq { font-family: var(--font-mono); max-width: 280px; }
+.ratio-cell {
+    font-family: var(--font-mono);
+    font-weight: 800;
+}
 
-.limiting-row td { background: rgba(220, 38, 38, .04); }
-.limiting-row .ratio-cell { color: var(--color-danger); }
+.conversion-eq {
+    font-family: var(--font-mono);
+    max-width: 280px;
+}
+
+.limiting-row td {
+    background: rgba(220, 38, 38, .04);
+}
+
+.limiting-row .ratio-cell {
+    color: var(--color-danger);
+}
 
 .limiting-badge {
     display: inline-block;
@@ -5229,8 +5303,13 @@ body.dark .bal-feedback-incorrect {
     letter-spacing: .05em;
 }
 
-body.dark .limiting-badge { color: #fca5a5; }
-body.dark .excess-badge { color: #86efac; }
+body.dark .limiting-badge {
+    color: #fca5a5;
+}
+
+body.dark .excess-badge {
+    color: #86efac;
+}
 
 .ratio-explanation {
     margin-top: var(--space-md);
@@ -5246,9 +5325,17 @@ body.dark .excess-badge { color: #86efac; }
 /* Result-table (generic table, not in the shared file — used for
    the conversion & ratio tables which need row-level highlighting
    that .edu-table doesn't provide) */
-.chem-table-scroll { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; }
+.chem-table-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
 
-.result-table { width: 100%; border-collapse: collapse; font-size: .875rem; }
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .875rem;
+}
 
 .result-table th {
     text-align: left;
@@ -5270,8 +5357,13 @@ body.dark .excess-badge { color: #86efac; }
     vertical-align: middle;
 }
 
-.result-table tr:last-child td { border-bottom: none; }
-.result-table tr:hover td { background: rgba(37, 99, 235, .03); }
+.result-table tr:last-child td {
+    border-bottom: none;
+}
+
+.result-table tr:hover td {
+    background: rgba(37, 99, 235, .03);
+}
 
 .formula-cell {
     font-family: var(--font-mono);
@@ -5280,8 +5372,13 @@ body.dark .excess-badge { color: #86efac; }
 }
 
 /* Result-section wrapper (groups a numbered step + its content) */
-.result-section { margin-bottom: var(--space-lg); }
-.result-section:last-child { margin-bottom: 0; }
+.result-section {
+    margin-bottom: var(--space-lg);
+}
+
+.result-section:last-child {
+    margin-bottom: 0;
+}
 
 .result-section__title {
     font-size: .85rem;
@@ -5300,7 +5397,8 @@ body.dark .excess-badge { color: #86efac; }
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px; height: 22px;
+    width: 22px;
+    height: 22px;
     background: var(--brand-accent);
     color: #fff;
     border-radius: 50%;
@@ -5331,8 +5429,18 @@ body.dark .excess-badge { color: #86efac; }
     font-weight: 700;
 }
 
-.equation-comparison { display: flex; flex-direction: column; gap: var(--space-xs); }
-.eq-comp-item { display: flex; align-items: baseline; gap: var(--space-xs); flex-wrap: wrap; }
+.equation-comparison {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.eq-comp-item {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+}
 
 .eq-comp-label {
     font-size: .72rem;
@@ -5343,19 +5451,45 @@ body.dark .excess-badge { color: #86efac; }
     flex-shrink: 0;
 }
 
-.eq-comp-str { font-family: var(--font-mono); font-size: 1rem; }
-.eq-comp-str.highlight { color: var(--brand-accent); font-weight: 700; }
+.eq-comp-str {
+    font-family: var(--font-mono);
+    font-size: 1rem;
+}
+
+.eq-comp-str.highlight {
+    color: var(--brand-accent);
+    font-weight: 700;
+}
 
 /* ── Result-card colour variants (extends .sim-result-card) ─────── */
-.sim-result-card--limiting { background: rgba(220, 38, 38, .06); border-color: rgba(220, 38, 38, .25); }
-.sim-result-card--limiting .sim-result-value { color: var(--color-danger); }
-.sim-result-card--product  { background: rgba(22, 163, 74, .06); border-color: rgba(22, 163, 74, .25); }
-.sim-result-card--product  .sim-result-value { color: var(--color-success); }
-.sim-result-card--excess   { background: rgba(37, 99, 235, .06); border-color: rgba(37, 99, 235, .2); }
+.sim-result-card--limiting {
+    background: rgba(220, 38, 38, .06);
+    border-color: rgba(220, 38, 38, .25);
+}
+
+.sim-result-card--limiting .sim-result-value {
+    color: var(--color-danger);
+}
+
+.sim-result-card--product {
+    background: rgba(22, 163, 74, .06);
+    border-color: rgba(22, 163, 74, .25);
+}
+
+.sim-result-card--product .sim-result-value {
+    color: var(--color-success);
+}
+
+.sim-result-card--excess {
+    background: rgba(37, 99, 235, .06);
+    border-color: rgba(37, 99, 235, .2);
+}
 
 /* ── Quiz / training mode reveal ───────────────────────────────── */
 .quiz-hidden .sim-result-value,
-.quiz-hidden .sim-result-unit { display: none !important; }
+.quiz-hidden .sim-result-unit {
+    display: none !important;
+}
 
 .quiz-prompt {
     margin-bottom: var(--space-lg);
@@ -5366,13 +5500,35 @@ body.dark .excess-badge { color: #86efac; }
     text-align: center;
 }
 
-.quiz-question { font-weight: 700; color: var(--text-primary); margin-bottom: var(--space-sm); }
-.quiz-reveal-btn { margin: 0 auto; }
+.quiz-question {
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: var(--space-sm);
+}
+
+.quiz-reveal-btn {
+    margin: 0 auto;
+}
 
 /* ── Bar chart visualisation (inside .sim-chart-wrap) ──────────── */
-.bar-chart { display: flex; flex-direction: column; gap: var(--space-md); }
-.bar-row { display: flex; flex-direction: column; gap: var(--space-xs); }
-.bar-label { display: flex; align-items: center; gap: var(--space-xs); flex-wrap: wrap; }
+.bar-chart {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+}
+
+.bar-row {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+}
+
+.bar-label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+}
 
 .bar-formula {
     font-family: var(--font-mono);
@@ -5390,15 +5546,42 @@ body.dark .excess-badge { color: #86efac; }
     border: 1px solid var(--border);
 }
 
-.bar-segment { height: 100%; transition: width .7s cubic-bezier(.4,0,.2,1); }
-.bar-consumed { background: var(--color-warning); }
-.bar-row--limiting .bar-consumed { background: var(--color-danger); }
-.bar-leftover { background: var(--color-success); }
+.bar-segment {
+    height: 100%;
+    transition: width .7s cubic-bezier(.4, 0, .2, 1);
+}
 
-.bar-legend { display: flex; gap: var(--space-md); flex-wrap: wrap; color: var(--text-muted); font-size: .8rem; }
-.legend-consumed { color: var(--color-warning); }
-.bar-row--limiting .legend-consumed { color: var(--color-danger); }
-.legend-leftover { color: var(--color-success); }
+.bar-consumed {
+    background: var(--color-warning);
+}
+
+.bar-row--limiting .bar-consumed {
+    background: var(--color-danger);
+}
+
+.bar-leftover {
+    background: var(--color-success);
+}
+
+.bar-legend {
+    display: flex;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    color: var(--text-muted);
+    font-size: .8rem;
+}
+
+.legend-consumed {
+    color: var(--color-warning);
+}
+
+.bar-row--limiting .legend-consumed {
+    color: var(--color-danger);
+}
+
+.legend-leftover {
+    color: var(--color-success);
+}
 
 /* ── Redox — header & final equation ───────────────────────────── */
 .redox-header {
@@ -5409,7 +5592,12 @@ body.dark .excess-badge { color: #86efac; }
     margin-bottom: var(--space-md);
 }
 
-.redox-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); margin: 0; }
+.redox-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
 
 /* Extensions for .edu-process-badge */
 .edu-process-badge--acidic {
@@ -5424,8 +5612,13 @@ body.dark .excess-badge { color: #86efac; }
     border: 1px solid rgba(37, 99, 235, .35);
 }
 
-body.dark .edu-process-badge--acidic { color: #fde68a; }
-body.dark .edu-process-badge--basic  { color: #bfdbfe; }
+body.dark .edu-process-badge--acidic {
+    color: #fde68a;
+}
+
+body.dark .edu-process-badge--basic {
+    color: #bfdbfe;
+}
 
 .final-equation-box {
     margin-bottom: var(--space-lg);
@@ -5454,7 +5647,12 @@ body.dark .edu-process-badge--basic  { color: #bfdbfe; }
 }
 
 /* ── Redox — oxidation numbers table ───────────────────────────── */
-.ox-number { font-family: var(--font-mono); font-weight: 800; font-size: 1rem; color: var(--brand-accent); }
+.ox-number {
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 1rem;
+    color: var(--brand-accent);
+}
 
 /* ── Redox — identification cards ──────────────────────────────── */
 .redox-identification {
@@ -5464,13 +5662,26 @@ body.dark .edu-process-badge--basic  { color: #bfdbfe; }
 }
 
 @media (max-width: 500px) {
-    .redox-identification { grid-template-columns: 1fr; }
+    .redox-identification {
+        grid-template-columns: 1fr;
+    }
 }
 
-.redox-id-card { padding: var(--space-lg); border-radius: var(--radius-md); border: 1px solid; }
+.redox-id-card {
+    padding: var(--space-lg);
+    border-radius: var(--radius-md);
+    border: 1px solid;
+}
 
-.id-oxidation { background: rgba(239, 68, 68, .08); border-color: rgba(239, 68, 68, .3); }
-.id-reduction { background: rgba(37, 99, 235, .08); border-color: rgba(37, 99, 235, .3); }
+.id-oxidation {
+    background: rgba(239, 68, 68, .08);
+    border-color: rgba(239, 68, 68, .3);
+}
+
+.id-reduction {
+    background: rgba(37, 99, 235, .08);
+    border-color: rgba(37, 99, 235, .3);
+}
 
 .id-card__label {
     font-size: .72rem;
@@ -5480,8 +5691,13 @@ body.dark .edu-process-badge--basic  { color: #bfdbfe; }
     margin-bottom: var(--space-xs);
 }
 
-.id-oxidation .id-card__label { color: #b91c1c; }
-.id-reduction .id-card__label { color: #1d4ed8; }
+.id-oxidation .id-card__label {
+    color: #b91c1c;
+}
+
+.id-reduction .id-card__label {
+    color: #1d4ed8;
+}
 
 .id-card__species {
     font-family: var(--font-mono);
@@ -5498,8 +5714,17 @@ body.dark .edu-process-badge--basic  { color: #bfdbfe; }
     margin-bottom: var(--space-xs);
 }
 
-.id-card__note { font-size: .875rem; color: var(--text-primary); margin-bottom: var(--space-xs); }
-.id-card__agent { font-size: .75rem; color: var(--text-muted); font-style: italic; }
+.id-card__note {
+    font-size: .875rem;
+    color: var(--text-primary);
+    margin-bottom: var(--space-xs);
+}
+
+.id-card__agent {
+    font-size: .75rem;
+    color: var(--text-muted);
+    font-style: italic;
+}
 
 /* ── Electron flow animation ────────────────────────────────────── */
 .electron-flow {
@@ -5521,8 +5746,17 @@ body.dark .edu-process-badge--basic  { color: #bfdbfe; }
     white-space: nowrap;
 }
 
-.ef-oxidation { background: rgba(239, 68, 68, .08); border: 1px solid rgba(239, 68, 68, .3); color: #b91c1c; }
-.ef-reduction { background: rgba(37, 99, 235, .08); border: 1px solid rgba(37, 99, 235, .3); color: #1d4ed8; }
+.ef-oxidation {
+    background: rgba(239, 68, 68, .08);
+    border: 1px solid rgba(239, 68, 68, .3);
+    color: #b91c1c;
+}
+
+.ef-reduction {
+    background: rgba(37, 99, 235, .08);
+    border: 1px solid rgba(37, 99, 235, .3);
+    color: #1d4ed8;
+}
 
 .ef-arrow-container {
     flex: 1;
@@ -5533,8 +5767,17 @@ body.dark .edu-process-badge--basic  { color: #bfdbfe; }
     gap: var(--space-xs);
 }
 
-.ef-arrow { position: relative; width: 100%; display: flex; align-items: center; }
-.ef-svg { width: 100%; height: 40px; }
+.ef-arrow {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.ef-svg {
+    width: 100%;
+    height: 40px;
+}
 
 .ef-electrons {
     position: absolute;
@@ -5554,13 +5797,30 @@ body.dark .edu-process-badge--basic  { color: #bfdbfe; }
 }
 
 @keyframes slideAlongArrow {
-    0%   { left: 0%;   opacity: 0; }
-    10%  { opacity: 1; }
-    90%  { opacity: 1; }
-    100% { left: 85%;  opacity: 0; }
+    0% {
+        left: 0%;
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    90% {
+        opacity: 1;
+    }
+
+    100% {
+        left: 85%;
+        opacity: 0;
+    }
 }
 
-.ef-label { text-align: center; font-size: .8rem; color: var(--text-muted); }
+.ef-label {
+    text-align: center;
+    font-size: .8rem;
+    color: var(--text-muted);
+}
 
 /* ── Redox step-by-step breakdown ──────────────────────────────── */
 .steps-toggle-btn {
@@ -5577,30 +5837,70 @@ body.dark .edu-process-badge--basic  { color: #bfdbfe; }
     transition: color var(--transition), border-color var(--transition);
 }
 
-.steps-toggle-btn:hover { color: var(--brand-accent); border-color: var(--brand-accent); }
+.steps-toggle-btn:hover {
+    color: var(--brand-accent);
+    border-color: var(--brand-accent);
+}
 
-.steps-container { display: flex; flex-direction: column; margin-top: var(--space-sm); }
+.steps-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--space-sm);
+}
 
 /* Extensions for .edu-example to handle step variants */
-.edu-example--info      { border-left-color: var(--brand-accent); }
-.edu-example--info .edu-example__title { color: var(--brand-accent); }
+.edu-example--info {
+    border-left-color: var(--brand-accent);
+}
+
+.edu-example--info .edu-example__title {
+    color: var(--brand-accent);
+}
 
 /* Note: Redox conventions dictate Oxidation = Red, Reduction = Blue. 
    These hex values are domain-specific pedagogical conventions. */
-.edu-example--oxidation { border-left-color: #dc2626; }
-.edu-example--oxidation .edu-example__title { color: #b91c1c; }
+.edu-example--oxidation {
+    border-left-color: #dc2626;
+}
 
-.edu-example--reduction { border-left-color: #1d4ed8; }
-.edu-example--reduction .edu-example__title { color: #1d4ed8; }
+.edu-example--oxidation .edu-example__title {
+    color: #b91c1c;
+}
 
-.edu-example--combined  { border-left-color: var(--color-success); }
-.edu-example--combined .edu-example__title { color: var(--color-success); }
+.edu-example--reduction {
+    border-left-color: #1d4ed8;
+}
 
-body.dark .edu-example--oxidation .edu-example__title { color: #fca5a5; }
-body.dark .edu-example--reduction .edu-example__title { color: #93c5fd; }
-body.dark .edu-example--combined  .edu-example__title { color: #86efac; }
+.edu-example--reduction .edu-example__title {
+    color: #1d4ed8;
+}
 
-.step-line { font-family: var(--font-mono); font-size: .875rem; color: var(--text-primary); line-height: 1.8; }
+.edu-example--combined {
+    border-left-color: var(--color-success);
+}
+
+.edu-example--combined .edu-example__title {
+    color: var(--color-success);
+}
+
+body.dark .edu-example--oxidation .edu-example__title {
+    color: #fca5a5;
+}
+
+body.dark .edu-example--reduction .edu-example__title {
+    color: #93c5fd;
+}
+
+body.dark .edu-example--combined .edu-example__title {
+    color: #86efac;
+}
+
+.step-line {
+    font-family: var(--font-mono);
+    font-size: .875rem;
+    color: var(--text-primary);
+    line-height: 1.8;
+}
 
 
 
@@ -5622,285 +5922,286 @@ body.dark .edu-example--combined  .edu-example__title { color: #86efac; }
 
 /* ── Mode tabs (Two-Resistor / Series Chain) ─────────────────────── */
 .mode-tabs {
-  display: flex;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-lg);
+    display: flex;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-lg);
 }
 
 .mode-tab {
-  flex: 1;
-  padding: 10px var(--space-md);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  color: var(--text-secondary);
-  font-size: .8rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background var(--transition), color var(--transition), border-color var(--transition);
+    flex: 1;
+    padding: 10px var(--space-md);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition), border-color var(--transition);
 }
 
 .mode-tab:hover {
-  border-color: var(--brand-accent);
+    border-color: var(--brand-accent);
 }
 
 .mode-tab.is-active {
-  background: var(--brand-accent);
-  border-color: var(--brand-accent);
-  color: var(--text-on-accent);
+    background: var(--brand-accent);
+    border-color: var(--brand-accent);
+    color: var(--text-on-accent);
 }
 
 /* ── Design mode toggle row ───────────────────────────────────────── */
 .design-toggle-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-md);
-  padding: var(--space-sm) var(--space-md);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  margin-bottom: var(--space-md);
-  background: var(--bg-hover);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding: var(--space-sm) var(--space-md);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-md);
+    background: var(--bg-hover);
 }
 
 .design-toggle-row label {
-  font-size: .8rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  cursor: pointer;
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
 }
 
 .design-toggle-row p {
-  margin: 2px 0 0;
-  font-size: .73rem;
-  color: var(--text-muted);
+    margin: 2px 0 0;
+    font-size: .73rem;
+    color: var(--text-muted);
 }
 
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 38px;
-  height: 22px;
-  flex-shrink: 0;
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 22px;
+    flex-shrink: 0;
 }
 
 .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+    opacity: 0;
+    width: 0;
+    height: 0;
 }
 
 .switch-track {
-  position: absolute;
-  inset: 0;
-  background: var(--border-strong);
-  border-radius: 99px;
-  cursor: pointer;
-  transition: background var(--transition);
+    position: absolute;
+    inset: 0;
+    background: var(--border-strong);
+    border-radius: 99px;
+    cursor: pointer;
+    transition: background var(--transition);
 }
 
 .switch-track::before {
-  content: '';
-  position: absolute;
-  left: 3px;
-  top: 3px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: var(--bg-card);
-  transition: transform var(--transition);
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--bg-card);
+    transition: transform var(--transition);
 }
 
-.switch input:checked + .switch-track {
-  background: var(--brand-accent);
+.switch input:checked+.switch-track {
+    background: var(--brand-accent);
 }
 
-.switch input:checked + .switch-track::before {
-  transform: translateX(16px);
+.switch input:checked+.switch-track::before {
+    transform: translateX(16px);
 }
 
 /* ── Fixed-resistor radio cards (design mode) ─────────────────────── */
 .radio-card-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-sm);
-  margin-bottom: var(--space-md);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
 }
 
 .radio-card {
-  position: relative;
-  display: block;
-  border: 1px solid var(--border);
-  border-radius: var(--radius-md);
-  padding: var(--space-sm) var(--space-md);
-  cursor: pointer;
-  transition: border-color var(--transition), background var(--transition);
+    position: relative;
+    display: block;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-md);
+    cursor: pointer;
+    transition: border-color var(--transition), background var(--transition);
 }
 
 .radio-card input {
-  position: absolute;
-  opacity: 0;
+    position: absolute;
+    opacity: 0;
 }
 
 .radio-card__title {
-  font-size: .8125rem;
-  font-weight: 600;
-  color: var(--text-primary);
+    font-size: .8125rem;
+    font-weight: 600;
+    color: var(--text-primary);
 }
 
 .radio-card__desc {
-  display: block;
-  font-size: .7rem;
-  color: var(--text-muted);
-  margin-top: 2px;
+    display: block;
+    font-size: .7rem;
+    color: var(--text-muted);
+    margin-top: 2px;
 }
 
 /* Highlight the selected card. :has() is well supported in current
    evergreen browsers; on the rare browser without it the radio still
    works correctly, it just won't get the accent highlight. */
 .radio-card:has(input:checked) {
-  border-color: var(--brand-accent);
-  background: rgba(37, 99, 235, .06);
+    border-color: var(--brand-accent);
+    background: rgba(37, 99, 235, .06);
 }
 
 /* Radio-card equivalent of .sim-input-wrap.sim-input--invalid —
    reuses the @keyframes sim-shake already defined in simulator.css. */
 .radio-card.is-invalid {
-  border-color: var(--color-danger);
-  box-shadow: 0 0 0 3px rgba(220, 38, 38, .15);
-  animation: sim-shake .4s ease-in-out;
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 3px rgba(220, 38, 38, .15);
+    animation: sim-shake .4s ease-in-out;
 }
 
 /* Field that is currently being computed by design mode */
 .sim-field.is-computed .sim-input {
-  background: var(--bg-hover);
-  color: var(--text-muted);
-  cursor: not-allowed;
+    background: var(--bg-hover);
+    color: var(--text-muted);
+    cursor: not-allowed;
 }
 
 /* ── Dynamic resistor list (series chain mode) ─────────────────────
    Mirrors the static-beam load-list pattern: a clear visual separator
    between the "add" control and the list of rows. */
 #resistor-list {
-  border-top: 1px solid var(--border);
-  margin-top: var(--space-md);
-  padding-top: var(--space-md);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-sm);
+    border-top: 1px solid var(--border);
+    margin-top: var(--space-md);
+    padding-top: var(--space-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
 }
 
 .resistor-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
 }
 
 .resistor-row__label {
-  flex-shrink: 0;
-  width: 32px;
-  font-size: .8rem;
-  font-weight: 700;
-  color: var(--text-muted);
-  font-family: var(--font-mono);
+    flex-shrink: 0;
+    width: 32px;
+    font-size: .8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
 }
 
 .resistor-row .sim-input-wrap {
-  flex: 1;
-  margin-bottom: 0;
+    flex: 1;
+    margin-bottom: 0;
 }
 
 .resistor-row__remove {
-  flex-shrink: 0;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  background: var(--bg-card);
-  color: var(--color-danger);
-  cursor: pointer;
-  transition: background var(--transition), border-color var(--transition);
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--color-danger);
+    cursor: pointer;
+    transition: background var(--transition), border-color var(--transition);
 }
 
 .resistor-row__remove:hover {
-  background: rgba(220, 38, 38, .08);
-  border-color: var(--color-danger);
+    background: rgba(220, 38, 38, .08);
+    border-color: var(--color-danger);
 }
 
 .resistor-row__remove:disabled {
-  opacity: .35;
-  cursor: not-allowed;
+    opacity: .35;
+    cursor: not-allowed;
 }
 
 .chain-list-hint {
-  font-size: .73rem;
-  color: var(--text-muted);
-  margin-top: var(--space-sm);
+    font-size: .73rem;
+    color: var(--text-muted);
+    margin-top: var(--space-sm);
 }
 
 /* "+ Add resistor" reuses .btn-secondary but needs to span the panel */
 .btn-add-resistor {
-  width: 100%;
-  justify-content: center;
+    width: 100%;
+    justify-content: center;
 }
 
 /* ── Circuit diagram (SVG injected by diagram.js via simulator.js) ─── */
 #circuit-diagram svg {
-  display: block;
-  width: 100%;
-  height: auto;
-  max-width: 260px;
-  margin: 0 auto;
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 260px;
+    margin: 0 auto;
 }
+
 .breakdown-table-wrap {
-  overflow-x: auto;
-  margin-top: var(--space-md);
+    overflow-x: auto;
+    margin-top: var(--space-md);
 }
 
 .breakdown-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: .8125rem;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .8125rem;
 }
 
 .breakdown-table th,
 .breakdown-table td {
-  text-align: left;
-  padding: var(--space-xs) var(--space-sm);
-  border-bottom: 1px solid var(--border);
-  font-family: var(--font-mono);
+    text-align: left;
+    padding: var(--space-xs) var(--space-sm);
+    border-bottom: 1px solid var(--border);
+    font-family: var(--font-mono);
 }
 
 .breakdown-table th {
-  font-size: .68rem;
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  color: var(--text-muted);
-  font-family: var(--font-sans);
+    font-size: .68rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color: var(--text-muted);
+    font-family: var(--font-sans);
 }
 
 .breakdown-table tr.is-overload td {
-  color: var(--color-danger);
+    color: var(--color-danger);
 }
 
 .breakdown-table tr.is-overload td:last-child {
-  font-weight: 700;
+    font-weight: 700;
 }
 
 /* ── Power overload warning on result cards ─────────────────────────── */
 .sim-result-warning {
-  display: block;
-  margin-top: 4px;
-  font-size: .68rem;
-  font-weight: 700;
-  color: var(--color-danger);
+    display: block;
+    margin-top: 4px;
+    font-size: .68rem;
+    font-weight: 700;
+    color: var(--color-danger);
 }
 
 .sim-result-warning:empty {
-  display: none;
+    display: none;
 }
 
 
@@ -5930,4 +6231,146 @@ body.dark .edu-example--combined  .edu-example__title { color: #86efac; }
     width: 100%;
     height: auto;
     display: block;
+}
+
+/* ==========================================================================
+   Transformer Equivalent Circuit Calculator — namespace "xfm-"
+   Paste at the end of assets/css/simulator.css
+
+   Reuses the real global components directly in the HTML: .sim-field,
+   .sim-label, .sim-label-hint, .sim-input-wrap, .sim-input, .sim-unit,
+   .sim-select, .sim-hint, .sim-grid-2, .sim-section-label,
+   .sim-results-grid, .sim-result-card/-label/-value, .sim-error,
+   .btn-primary/.btn-secondary, .is-hidden. This block only adds what
+   those don't cover: the namespaced range slider (per the required
+   slider pattern), the checkbox label, the load-shortcut button row,
+   and the SVG diagram/phasor containers.
+   ========================================================================== */
+
+/* ── Required namespaced slider pattern (load %) ───────────────────────── */
+.xfm-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    margin-top: var(--space-xs);
+    background: transparent;
+}
+
+.xfm-slider::-webkit-slider-runnable-track {
+    background: var(--border-strong);
+    height: 6px;
+    border-radius: 3px;
+}
+
+.xfm-slider::-moz-range-track {
+    background: var(--border-strong);
+    height: 6px;
+    border-radius: 3px;
+}
+
+.xfm-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin-top: -5px;
+    border-radius: 50%;
+    background: var(--slider-color, var(--brand-accent));
+    box-shadow: none;
+    border: none;
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+
+.xfm-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--slider-color, var(--brand-accent));
+    box-shadow: none;
+    border: none;
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+
+.xfm-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+.xfm-slider::-moz-range-thumb:hover {
+    transform: scale(1.15);
+}
+
+/* ── Result cards: force value/unit to always stack (the global
+   .sim-result-value/.sim-result-unit are plain inline spans, so with very
+   short values like "2" the unit sits on the same line, and with longer
+   ones it wraps — inconsistent from card to card in this simulator because
+   values span dimensionless/%/Ω/A. Scoped to .xfm-results only, so other
+   simulators keep the default inline behavior.) ─────────────────────── */
+.xfm-results .sim-result-value {
+    display: block;
+}
+
+.xfm-results .sim-result-unit {
+    display: block;
+}
+
+/* ── Checkbox label (three-phase "total power" toggle) ─────────────────── */
+.xfm-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-xs);
+    font-size: .8rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    cursor: pointer;
+    line-height: 1.4;
+}
+
+.xfm-checkbox-label input {
+    margin-top: 3px;
+    cursor: pointer;
+}
+
+/* ── Load shortcut buttons (Open circuit / Short circuit) ──────────────── */
+.xfm-load-shortcuts {
+    display: flex;
+    gap: var(--space-sm);
+    margin: var(--space-sm) 0 var(--space-md);
+}
+
+.xfm-load-shortcuts .btn-secondary {
+    flex: 1;
+    justify-content: center;
+}
+
+/* ── Equivalent circuit + phasor SVG containers ─────────────────────────── */
+.xfm-diagram-wrap,
+.xfm-phasor-wrap {
+    width: 100%;
+    overflow-x: auto;
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.xfm-diagram-wrap svg,
+.xfm-phasor-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 420px;
+}
+
+.xfm-phasor-wrap svg {
+    max-width: 420px;
+    margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+    .xfm-diagram-wrap svg {
+        min-width: 560px;
+    }
 }

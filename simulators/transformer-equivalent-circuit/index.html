@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Transformer Equivalent Circuit Calculator | Short-Circuit &amp; Open-Circuit Test | EngSim</title>
+<meta name="description" content="Calculate a transformer's equivalent circuit parameters (Rcc, Xcc, %Z, Rfe, Xm) from short-circuit and open-circuit test data, and see the single-phase equivalent circuit and voltage regulation at any load.">
+<link rel="canonical" href="https://engsimapp.com/simulators/transformer-equivalent-circuit/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="../../assets/css/base.css">
+<link rel="stylesheet" href="../../assets/css/platform.css">
+<link rel="stylesheet" href="../../assets/css/simulator.css">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Transformer Equivalent Circuit Calculator",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (runs in browser)",
+  "description": "Calculates a transformer's equivalent circuit parameters from short-circuit and open-circuit test data, and estimates voltage regulation under load.",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
+</head>
+<body>
+<div class="page-wrapper">
+  <div id="nav-placeholder"></div>
+
+  <main class="page-main" id="main-content">
+
+    <section class="sim-hero">
+      <div class="container">
+        <nav aria-label="Breadcrumb">
+          <ol class="sim-hero__breadcrumb">
+            <li><a href="../../index.html">Home</a></li>
+            <li><span aria-hidden="true">/</span></li>
+            <li><a href="../index.html">Simulators</a></li>
+            <li><span aria-hidden="true">/</span></li>
+            <li aria-current="page">Transformer Equivalent Circuit Calculator</li>
+          </ol>
+        </nav>
+        <h1 id="sim-title">Transformer Equivalent Circuit Calculator</h1>
+        <p class="sim-hero__desc">Get every equivalent-circuit parameter of a single-phase or three-phase transformer straight from the short-circuit and open-circuit test readings — plus the single-phase diagram and voltage regulation from no-load to short-circuit.</p>
+      </div>
+    </section>
+
+    <section class="sim-body">
+      <div class="container">
+        <div class="sim-error" id="sim-error" role="alert"></div>
+
+        <div class="sim-layout" style="--sim-sidebar-width: 360px;">
+          <aside aria-label="Input parameters" class="sim-panel">
+            <div class="sim-panel__header">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="7" height="10" rx="1"></rect><rect x="14" y="7" width="7" height="10" rx="1"></rect><line x1="10" y1="10" x2="14" y2="10"></line><line x1="10" y1="14" x2="14" y2="14"></line></svg>
+              <span class="sim-panel__title">Input parameters</span>
+            </div>
+            <div class="sim-panel__body">
+
+              <p class="sim-section-label">Rating &amp; system</p>
+
+              <div class="sim-field">
+                <label class="sim-label" for="system-type">Transformer type</label>
+                <select id="system-type" class="sim-select">
+                  <option value="single">Single-phase</option>
+                  <option value="three">Three-phase (per-phase equivalent)</option>
+                </select>
+                <p class="sim-hint">Three-phase mode reduces everything to the single-phase equivalent (assumes a wye/star-equivalent connection).</p>
+              </div>
+
+              <div class="sim-field">
+                <label class="sim-label" for="sn-kva">Rated power S<sub>N</sub></label>
+                <div class="sim-input-wrap">
+                  <input type="number" id="sn-kva" class="sim-input" step="0.01" min="0.05" aria-invalid="false">
+                  <span class="sim-unit">kVA</span>
+                </div>
+              </div>
+
+              <div class="sim-grid-2">
+                <div class="sim-field">
+                  <label class="sim-label" for="u1n">Primary voltage U<sub>1N</sub></label>
+                  <div class="sim-input-wrap">
+                    <input type="number" id="u1n" class="sim-input" step="0.1" min="0.1" aria-invalid="false">
+                    <span class="sim-unit">V</span>
+                  </div>
+                </div>
+                <div class="sim-field">
+                  <label class="sim-label" for="u2n">Secondary voltage U<sub>2N</sub></label>
+                  <div class="sim-input-wrap">
+                    <input type="number" id="u2n" class="sim-input" step="0.1" min="0.1" aria-invalid="false">
+                    <span class="sim-unit">V</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="sim-grid-2 xfm-three-only is-hidden">
+                <div class="sim-field">
+                  <label class="sim-label" for="u1n-mode">U<sub>1N</sub> entered as</label>
+                  <select id="u1n-mode" class="sim-select">
+                    <option value="phase">Phase</option>
+                    <option value="line">Line</option>
+                  </select>
+                </div>
+                <div class="sim-field">
+                  <label class="sim-label" for="u2n-mode">U<sub>2N</sub> entered as</label>
+                  <select id="u2n-mode" class="sim-select">
+                    <option value="phase">Phase</option>
+                    <option value="line">Line</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="sim-field">
+                <label class="sim-label" for="frequency">Frequency</label>
+                <select id="frequency" class="sim-select">
+                  <option value="50">50 Hz</option>
+                  <option value="60">60 Hz</option>
+                </select>
+              </div>
+
+              <div class="sim-field xfm-three-only is-hidden">
+                <label class="xfm-checkbox-label">
+                  <input type="checkbox" id="power-total" checked>
+                  Test power readings (P<sub>cc</sub>, P<sub>0</sub>) are TOTAL three-phase power
+                </label>
+              </div>
+
+              <hr>
+              <p class="sim-section-label">Short-circuit test</p>
+              <div class="sim-field">
+                <label class="sim-label" for="sc-side">Test performed on</label>
+                <select id="sc-side" class="sim-select">
+                  <option value="primary">Primary</option>
+                  <option value="secondary">Secondary</option>
+                </select>
+              </div>
+              <div class="sim-grid-2">
+                <div class="sim-field">
+                  <label class="sim-label" for="sc-v">V<sub>cc</sub></label>
+                  <div class="sim-input-wrap">
+                    <input type="number" id="sc-v" class="sim-input" step="0.01" min="0" aria-invalid="false">
+                    <span class="sim-unit">V</span>
+                  </div>
+                </div>
+                <div class="sim-field">
+                  <label class="sim-label" for="sc-i">I<sub>cc</sub></label>
+                  <div class="sim-input-wrap">
+                    <input type="number" id="sc-i" class="sim-input" step="0.001" min="0.001" aria-invalid="false">
+                    <span class="sim-unit">A</span>
+                  </div>
+                </div>
+              </div>
+              <div class="sim-field">
+                <label class="sim-label" for="sc-p">Short-circuit power P<sub>cc</sub></label>
+                <div class="sim-input-wrap">
+                  <input type="number" id="sc-p" class="sim-input" step="0.001" min="0.001" aria-invalid="false">
+                  <span class="sim-unit">W</span>
+                </div>
+              </div>
+
+              <hr>
+              <p class="sim-section-label">Open-circuit test</p>
+              <div class="sim-field">
+                <label class="sim-label" for="oc-side">Test performed on</label>
+                <select id="oc-side" class="sim-select">
+                  <option value="secondary">Secondary</option>
+                  <option value="primary">Primary</option>
+                </select>
+              </div>
+              <div class="sim-grid-2">
+                <div class="sim-field">
+                  <label class="sim-label" for="oc-v">V<sub>0</sub></label>
+                  <div class="sim-input-wrap">
+                    <input type="number" id="oc-v" class="sim-input" step="0.01" min="0.01" aria-invalid="false">
+                    <span class="sim-unit">V</span>
+                  </div>
+                </div>
+                <div class="sim-field">
+                  <label class="sim-label" for="oc-i">I<sub>0</sub></label>
+                  <div class="sim-input-wrap">
+                    <input type="number" id="oc-i" class="sim-input" step="0.001" min="0.001" aria-invalid="false">
+                    <span class="sim-unit">A</span>
+                  </div>
+                </div>
+              </div>
+              <div class="sim-field">
+                <label class="sim-label" for="oc-p">Open-circuit power P<sub>0</sub></label>
+                <div class="sim-input-wrap">
+                  <input type="number" id="oc-p" class="sim-input" step="0.001" min="0.001" aria-invalid="false">
+                  <span class="sim-unit">W</span>
+                </div>
+              </div>
+
+              <hr>
+              <p class="sim-section-label">Model &amp; diagram</p>
+              <div class="sim-field">
+                <label class="sim-label" for="model-type">Equivalent circuit</label>
+                <select id="model-type" class="sim-select">
+                  <option value="approx">Approximate (L, Kapp)</option>
+                  <option value="exact">Exact (T)</option>
+                </select>
+              </div>
+              <div class="sim-field">
+                <label class="sim-label" for="ref-side">Show parameters referred to</label>
+                <select id="ref-side" class="sim-select">
+                  <option value="primary">Primary</option>
+                  <option value="secondary">Secondary</option>
+                </select>
+              </div>
+
+              <hr>
+              <p class="sim-section-label">Load point</p>
+              <div class="sim-field">
+                <label class="sim-label" for="load-pct">Load, % of S<sub>N</sub> <span class="sim-label-hint" id="load-pct-value">— 100%</span></label>
+                <input type="range" id="load-pct" class="xfm-slider" min="0" max="150" step="1" value="100">
+              </div>
+              <div class="sim-grid-2">
+                <div class="sim-field">
+                  <label class="sim-label" for="load-cosphi">Power factor cos φ</label>
+                  <div class="sim-input-wrap">
+                    <input type="number" id="load-cosphi" class="sim-input" min="0.01" max="1" step="0.01" aria-invalid="false">
+                  </div>
+                  <p class="sim-hint">0 = purely reactive · 1 = purely resistive</p>
+                </div>
+                <div class="sim-field">
+                  <label class="sim-label" for="load-pf-type">Type</label>
+                  <select id="load-pf-type" class="sim-select">
+                    <option value="lag">Lagging</option>
+                    <option value="lead">Leading</option>
+                  </select>
+                </div>
+              </div>
+              <div class="xfm-load-shortcuts">
+                <button type="button" class="btn-secondary" id="btn-load-open">Open circuit</button>
+                <button type="button" class="btn-secondary" id="btn-load-short">Short circuit</button>
+              </div>
+
+              <button class="btn-primary" id="btn-calculate" type="button">Calculate</button>
+            </div>
+          </aside>
+
+          <div id="results-wrap" class="xfm-results">
+            <p class="sim-section-label">Equivalent circuit parameters (from the tests)</p>
+            <div class="sim-results-grid">
+              <div class="sim-result-card">
+                <span class="sim-result-label">Turns ratio a</span>
+                <span class="sim-result-value" id="res-a">–</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">Rated I1n</span>
+                <span class="sim-result-value" id="res-i1n">–</span>
+                <span class="sim-result-unit">A</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">Rated I2n</span>
+                <span class="sim-result-value" id="res-i2n">–</span>
+                <span class="sim-result-unit">A</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">Zcc</span>
+                <span class="sim-result-value" id="res-zcc">–</span>
+                <span class="sim-result-unit">Ω</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">%Zcc</span>
+                <span class="sim-result-value" id="res-pctzcc">–</span>
+                <span class="sim-result-unit">%</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">%Rcc</span>
+                <span class="sim-result-value" id="res-pctrcc">–</span>
+                <span class="sim-result-unit">%</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">%Xcc</span>
+                <span class="sim-result-value" id="res-pctxcc">–</span>
+                <span class="sim-result-unit">%</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">cos φ0</span>
+                <span class="sim-result-value" id="res-cosphi0">–</span>
+              </div>
+            </div>
+
+            <p class="sim-section-label">Referred to <span id="res-refside-label">Primary</span></p>
+            <div class="sim-results-grid">
+              <div class="sim-result-card">
+                <span class="sim-result-label">Rcc</span>
+                <span class="sim-result-value" id="res-rcc">–</span>
+                <span class="sim-result-unit">Ω</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">Xcc</span>
+                <span class="sim-result-value" id="res-xcc">–</span>
+                <span class="sim-result-unit">Ω</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">Rfe</span>
+                <span class="sim-result-value" id="res-rfe">–</span>
+                <span class="sim-result-unit">Ω</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">Xm</span>
+                <span class="sim-result-value" id="res-xm">–</span>
+                <span class="sim-result-unit">Ω</span>
+              </div>
+            </div>
+
+            <p class="sim-section-label">Operating point</p>
+            <div class="sim-results-grid">
+              <div class="sim-result-card">
+                <span class="sim-result-label">Secondary U2</span>
+                <span class="sim-result-value" id="res-u2">–</span>
+                <span class="sim-result-unit">V</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">Regulation</span>
+                <span class="sim-result-value" id="res-regulation">–</span>
+                <span class="sim-result-unit">%</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">I1</span>
+                <span class="sim-result-value" id="res-i1-op">–</span>
+                <span class="sim-result-unit" id="res-i1-op-unit">A</span>
+              </div>
+              <div class="sim-result-card">
+                <span class="sim-result-label">I2</span>
+                <span class="sim-result-value" id="res-i2-op">–</span>
+                <span class="sim-result-unit" id="res-i2-op-unit">A</span>
+              </div>
+            </div>
+
+            <p class="sim-section-label">Equivalent circuit diagram</p>
+            <div class="xfm-diagram-wrap" id="xfm-diagram"></div>
+
+            <p class="sim-section-label">Phasor diagram</p>
+            <div class="xfm-phasor-wrap" id="xfm-phasor"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- <div class="container">
+      <div class="ad-slot ad-slot--leaderboard">Advertisement</div>
+    </div> -->
+
+    <section class="sim-body">
+      <div class="container container--narrow">
+        <div class="edu-content">
+
+          <h2>About this calculator</h2>
+          <p>A transformer's behavior can be fully characterized, without ever loading it, using two simple tests: the <strong>open-circuit (no-load) test</strong> and the <strong>short-circuit test</strong>. Together they give every parameter of the equivalent circuit — the series impedance (Rcc, Xcc) that represents the winding resistance and leakage flux, and the shunt branch (Rfe, Xm) that represents core losses and magnetizing reactance. This calculator does that reduction for you, referred to either side, in either the approximate or exact model, and lets you see the resulting single-phase diagram from no-load all the way to short-circuit.</p>
+
+          <hr>
+          <h2>How to use it</h2>
+          <div class="edu-grid">
+            <div class="edu-grid-item">
+              <h4>1. Enter the rating</h4>
+              <p>Rated power and both rated voltages. For a three-phase transformer, say whether each rated voltage is line or phase.</p>
+            </div>
+            <div class="edu-grid-item">
+              <h4>2. Enter both tests</h4>
+              <p>Vcc/Icc/Pcc from the short-circuit test and V0/I0/P0 from the open-circuit test, noting which side each was performed on.</p>
+            </div>
+            <div class="edu-grid-item">
+              <h4>3. Pick a model</h4>
+              <p>Approximate (L) for quick regulation estimates, or Exact (T) to solve the full circuit including the magnetizing branch.</p>
+            </div>
+            <div class="edu-grid-item">
+              <h4>4. Move the load slider</h4>
+              <p>0% is the open-circuit condition; the "Short circuit" shortcut pushes the load toward the short-circuit extreme.</p>
+            </div>
+          </div>
+
+          <hr>
+          <h2>The formulas</h2>
+          <div class="edu-formula">
+            Zcc = Vcc / Icc &nbsp;&nbsp; Rcc = Pcc / Icc² &nbsp;&nbsp; Xcc = √(Zcc² − Rcc²)
+          </div>
+          <div class="edu-formula">
+            cos φ0 = P0 / (V0·I0) &nbsp;&nbsp; Rfe = V0² / P0 &nbsp;&nbsp; Xm = V0 / (I0·sin φ0)
+          </div>
+          <div class="edu-formula">
+            %Zcc = (Zcc · In) / Un × 100
+          </div>
+          <div class="edu-formula">
+            ε% ≈ (Rcc%·cos φ + Xcc%·sin φ) + (Xcc%·cos φ − Rcc%·sin φ)² / 200
+          </div>
+          <p>The last line is Kapp's approximate voltage-regulation formula, used by the Approximate (L) model. The Exact (T) model instead solves the full circuit — including the magnetizing branch — as a linear system of phasor equations, with no small-angle approximation.</p>
+
+          <hr>
+          <h2>Worked example</h2>
+          <div class="edu-example">
+            <p class="edu-example__title">50 kVA, 2400/240 V single-phase transformer</p>
+            <p>Short-circuit test (primary): Vcc = 48 V, Icc = 20.8 A, Pcc = 617 W → Rcc = 1.426 Ω, Xcc = 1.814 Ω (referred to primary).<br>
+            Open-circuit test (secondary): V0 = 240 V, I0 = 5.41 A, P0 = 186 W → Rfe = 309.7 Ω, Xm = 44.8 Ω (referred to secondary).<br>
+            At rated load (100%) and cos φ = 0.8 lagging, both models agree closely: U2 ≈ 235.4 V, a voltage regulation of about 1.9%.</p>
+          </div>
+
+          <hr>
+          <h2>Frequently asked questions</h2>
+          <div class="edu-faq-item">
+            <details>
+              <summary>Why does the frequency input not change the circuit parameters?</summary>
+              <div class="edu-faq-answer">Rcc, Xcc, Rfe and Xm come directly from the test readings (V, I, P), not from the frequency. Frequency is only used to convert the reactances into equivalent inductances (Lcc, Lm) for reference, and to confirm the tests were run at the transformer's rated frequency — reactance changes with frequency, so a test at the wrong frequency would need correcting first.</div>
+            </details>
+          </div>
+          <div class="edu-faq-item">
+            <details>
+              <summary>Why is %Zcc the same whether I refer the circuit to the primary or the secondary?</summary>
+              <div class="edu-faq-answer">%Zcc expresses Zcc relative to the rated impedance of the side it was measured on. When you refer Zcc to the other side, both the impedance and the rated current/voltage scale by the same turns-ratio factor, so the percentage is unchanged. It's a side-independent number, which is why it's the one most commonly quoted on a nameplate.</div>
+            </details>
+          </div>
+          <div class="edu-faq-item">
+            <details>
+              <summary>How is the load defined for the operating point?</summary>
+              <div class="edu-faq-answer">The load is modeled as a constant impedance sized to draw the selected % of Sn at the given power factor when the secondary is at its rated voltage. As the secondary voltage sags under load, the actual power delivered changes slightly with it — this is what both the approximate and exact solvers account for.</div>
+            </details>
+          </div>
+          <div class="edu-faq-item">
+            <details>
+              <summary>Why does the exact (T) model split Rcc/Xcc 50/50 between primary and secondary?</summary>
+              <div class="edu-faq-answer">The two tests only give the total series impedance, not how much of it sits in each winding. Splitting it evenly is the standard assumption used when no further winding data is available, and it doesn't affect the total voltage drop — it only changes how the diagram's two series blocks are labeled.</div>
+            </details>
+          </div>
+          <div class="edu-faq-item">
+            <details>
+              <summary>Does this work for a three-phase transformer bank?</summary>
+              <div class="edu-faq-answer">Yes — select "Three-phase" and indicate whether each rated voltage was entered as line or phase. The calculator reduces everything to the single-phase (per-phase) equivalent circuit, assuming a wye/star-equivalent connection and that test power readings are given as the total three-phase power.</div>
+            </details>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- <div class="container">
+      <div class="ad-slot ad-slot--leaderboard">Advertisement</div>
+    </div> -->
+
+  </main>
+
+  <div id="footer-placeholder"></div>
+</div>
+
+<script src="../../assets/js/platform.js"></script>
+<script src="./js/xfm-core.js"></script>
+<script src="./js/xfm-plot.js"></script>
+<script type="module" src="./js/xfm-simulator.js"></script>
+</body>
+</html>
