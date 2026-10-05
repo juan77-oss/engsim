@@ -8,8 +8,15 @@
   ║  2. Rename the copy to your simulator slug                  ║
   ║     e.g.: simulators/pipe-flow/                             ║
   ║  3. Edit the 8 marked sections below (search for EDIT)      ║
-  ║  4. Write your physics in js/simulator.js                   ║
+  ║  4. Physics → js/core.js; UI/orchestration → js/simulator.js║
   ║  5. Add a card in simulators/index.html                     ║
+  ║                                                             ║
+  ║  RELEASE CHECKLIST:                                         ║
+  ║  [ ] Canonical URL uncommented and set                      ║
+  ║  [ ] Simulator card added to catalog                        ║
+  ║  [ ] sitemap.xml updated                                    ║
+  ║  [ ] llms.txt updated                                       ║
+  ║  [ ] Commit & push                                          ║
   ║                                                             ║
   ║  DO NOT touch: assets/, platform.js, platform.css,         ║
   ║  simulator.css — those update everywhere automatically.     ║
@@ -34,13 +41,19 @@
     <!-- ══════════════════════════════════════════════════════════
        EDIT 2 — OG tags (social sharing)
        Copy title and description from above.
-       og:image: use a screenshot once you have one.
+       Activate og:image and twitter tags when you have a thumbnail.
        ══════════════════════════════════════════════════════════ -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content="EDIT: Tool Name | EngSim" />
     <meta property="og:description" content="EDIT: describe what this tool calculates/does" />
     <meta property="og:url" content="https://engsimapp.com/simulators/EDIT-SLUG/" />
     <meta property="og:site_name" content="EngSim" />
+    <!-- <meta property="og:image" content="https://engsimapp.com/assets/img/og/EDIT-SLUG.jpg" /> -->
+    
+    <!-- <meta name="twitter:card" content="summary_large_image" /> -->
+    <!-- <meta name="twitter:title" content="EDIT: Tool Name | EngSim" /> -->
+    <!-- <meta name="twitter:description" content="EDIT: describe what this tool calculates/does" /> -->
+    <!-- <meta name="twitter:image" content="https://engsimapp.com/assets/img/og/EDIT-SLUG.jpg" /> -->
 
     <!-- Canonical URL — fill in once you have the domain -->
     <!-- <link rel="canonical" href="https://engsimapp.com/simulators/EDIT-SLUG/" /> -->
@@ -56,6 +69,7 @@
     <link rel="stylesheet" href="../../assets/css/base.css" />
     <link rel="stylesheet" href="../../assets/css/platform.css" />
     <link rel="stylesheet" href="../../assets/css/simulator.css" />
+    <link rel="stylesheet" href="../../assets/css/cookie-consent.css" />
 
     <!-- ══════════════════════════════════════════════════════════
        EDIT 3 — Simulator-specific CSS (optional)
@@ -67,6 +81,8 @@
     <!-- ══════════════════════════════════════════════════════════
        EDIT 4 — External libraries (optional)
        Add Chart.js, math libraries, etc. if your simulator needs them.
+       Note: if drawing on a native canvas (no Chart.js), place the
+       rendering logic in a new file `js/plot.js` and import it.
        Only load what you actually use.
        ══════════════════════════════════════════════════════════ -->
     <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
@@ -91,7 +107,6 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-TBVL4LVC');</script>
     <!-- End Google Tag Manager -->
-    <link rel="stylesheet" href="../../assets/css/cookie-consent.css" />
 </head>
 
 <body>
@@ -290,7 +305,13 @@
 
                                     <!-- Optional: chart area -->
                                     <div class="sim-chart-wrap" style="min-height: 200px;">
-                                        <p class="sim-chart-label">Chart Title</p>
+                                        <div class="sim-chart-header">
+                                            <span class="sim-chart-label">Chart Title</span>
+                                            <button type="button" class="sim-chart-fullscreen-btn" aria-label="Toggle fullscreen diagram" aria-pressed="false">
+                                                <svg class="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                                                <svg class="icon-collapse" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
+                                            </button>
+                                        </div>
                                         <canvas id="sim-chart" aria-label="Chart description" role="img"></canvas>
                                     </div>
 
