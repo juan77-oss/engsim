@@ -6,53 +6,53 @@ EngSim is a collection of interactive calculators and diagram tools built for en
 
 ## Unit Converters
 
-- [Power Converter](https://engsimapp.com/simulators/power-converter/index.html): Convert watts, kilowatts, horsepower, BTU/h, kcal/h, tons of refrigeration, dBm and more — all units at once.
-- [Energy Converter](https://engsimapp.com/simulators/energy-converter/index.html): Convert energy between joules, kJ, kWh, calories, BTU, foot-pounds, electronvolts, ergs and more.
-- [Length Converter](https://engsimapp.com/simulators/length-converter/index.html): Convert length between millimeters, centimeters, meters, kilometers, inches, feet, yards, miles, nautical miles and light-years.
-- [Mass & Weight Converter](https://engsimapp.com/simulators/mass-converter/index.html): Convert mass between milligrams, grams, kilograms, tonnes, ounces, pounds, stones, US/UK tons and atomic mass units.
-- [Temperature Converter](https://engsimapp.com/simulators/temperature-converter/index.html): Convert temperature between Celsius, Fahrenheit, Kelvin, Rankine and Réaumur, with absolute zero validation.
-- [Volume Converter](https://engsimapp.com/simulators/volume-converter/index.html): Convert volume between liters, milliliters, cubic meters, cubic feet, US/UK gallons, cups, tablespoons and more.
-- [Data Storage Converter](https://engsimapp.com/simulators/data-storage-converter/index.html): Convert data storage between bits, bytes, KB, MB, GB, TB, PB and their binary equivalents (KiB, MiB, GiB, TiB, PiB).
-- [Area Converter](https://engsimapp.com/simulators/area-converter/index.html): Convert area between square meters, square feet, square miles, acres and hectares.
-- [Speed Converter](https://engsimapp.com/simulators/speed-converter/index.html): Convert speed between m/s, km/h, mph, knots, Mach and the speed of light.
-- [Pressure Converter](https://engsimapp.com/simulators/pressure-converter/index.html): Convert pressure between pascals, bar, psi, atmospheres, mmHg, inHg and kgf/cm².
-- [Force Converter](https://engsimapp.com/simulators/force-converter/index.html): Convert force between newtons, dynes, kilogram-force, pound-force and poundals.
-- [Torque Converter](https://engsimapp.com/simulators/torque-converter/index.html): Convert torque between N·m, lbf·ft, lbf·in, kgf·m and dyn·cm.
-- [Flow Rate Converter](https://engsimapp.com/simulators/flow-rate-converter/index.html): Convert flow rate between m³/s, L/min, US GPM and CFM.
-- [Fuel Consumption Converter](https://engsimapp.com/simulators/fuel-consumption-converter/index.html): Convert fuel economy between mpg (US), mpg (UK), km/L and L/100km.
+- [Power Converter](https://engsimapp.com/simulators/power-converter/): Convert watts, kilowatts, horsepower, BTU/h, kcal/h, tons of refrigeration, dBm and more — all units at once.
+- [Energy Converter](https://engsimapp.com/simulators/energy-converter/): Convert energy between joules, kJ, kWh, calories, BTU, foot-pounds, electronvolts, ergs and more.
+- [Length Converter](https://engsimapp.com/simulators/length-converter/): Convert length between millimeters, centimeters, meters, kilometers, inches, feet, yards, miles, nautical miles and light-years.
+- [Mass & Weight Converter](https://engsimapp.com/simulators/mass-converter/): Convert mass between milligrams, grams, kilograms, tonnes, ounces, pounds, stones, US/UK tons and atomic mass units.
+- [Temperature Converter](https://engsimapp.com/simulators/temperature-converter/): Convert temperature between Celsius, Fahrenheit, Kelvin, Rankine and Réaumur, with absolute zero validation.
+- [Volume Converter](https://engsimapp.com/simulators/volume-converter/): Convert volume between liters, milliliters, cubic meters, cubic feet, US/UK gallons, cups, tablespoons and more.
+- [Data Storage Converter](https://engsimapp.com/simulators/data-storage-converter/): Convert data storage between bits, bytes, KB, MB, GB, TB, PB and their binary equivalents (KiB, MiB, GiB, TiB, PiB).
+- [Area Converter](https://engsimapp.com/simulators/area-converter/): Convert area between square meters, square feet, square miles, acres and hectares.
+- [Speed Converter](https://engsimapp.com/simulators/speed-converter/): Convert speed between m/s, km/h, mph, knots, Mach and the speed of light.
+- [Pressure Converter](https://engsimapp.com/simulators/pressure-converter/): Convert pressure between pascals, bar, psi, atmospheres, mmHg, inHg and kgf/cm².
+- [Force Converter](https://engsimapp.com/simulators/force-converter/): Convert force between newtons, dynes, kilogram-force, pound-force and poundals.
+- [Torque Converter](https://engsimapp.com/simulators/torque-converter/): Convert torque between N·m, lbf·ft, lbf·in, kgf·m and dyn·cm.
+- [Flow Rate Converter](https://engsimapp.com/simulators/flow-rate-converter/): Convert flow rate between m³/s, L/min, US GPM and CFM.
+- [Fuel Consumption Converter](https://engsimapp.com/simulators/fuel-consumption-converter/): Convert fuel economy between mpg (US), mpg (UK), km/L and L/100km.
 
 ## Thermodynamics
 
-- [Entropy T-s Diagram](https://engsimapp.com/simulators/entropy-diagram/index.html): Model isothermal, adiabatic, polytropic, isobaric and isochoric ideal-gas processes and visualize entropy generation.
+- [Entropy T-s Diagram](https://engsimapp.com/simulators/entropy-diagram/): Model isothermal, adiabatic, polytropic, isobaric and isochoric ideal-gas processes and visualize entropy generation.
 
 ## Combustion & Heat
 
-- [Gaseous Combustion](https://engsimapp.com/simulators/gas-combustion/index.html): Stoichiometric simulator for pure gaseous fuels and hydrocarbon mixtures.
-- [Combustion Analysis](https://engsimapp.com/simulators/combustion-chimenea/index.html): Calculate dilution and thermal efficiency using Siegert's formula and Orsat analysis.
-- [Natural Draft & Chimneys](https://engsimapp.com/simulators/natural-draft/index.html): Calculate natural draft, friction head loss, and pressure balances in industrial chimneys.
-- [Fuel Construction](https://engsimapp.com/simulators/fuel-construction/index.html): Define the elemental composition of a solid fuel on a dry basis (C·H·O·N·S·Z) and see how moisture transforms the calculation basis.
+- [Gaseous Combustion](https://engsimapp.com/simulators/gas-combustion/): Stoichiometric simulator for pure gaseous fuels and hydrocarbon mixtures.
+- [Combustion Analysis](https://engsimapp.com/simulators/combustion-chimenea/): Calculate dilution and thermal efficiency using Siegert's formula and Orsat analysis.
+- [Natural Draft & Chimneys](https://engsimapp.com/simulators/natural-draft/): Calculate natural draft, friction head loss, and pressure balances in industrial chimneys.
+- [Fuel Construction](https://engsimapp.com/simulators/fuel-construction/): Define the elemental composition of a solid fuel on a dry basis (C·H·O·N·S·Z) and see how moisture transforms the calculation basis.
 
 ## Fluid Mechanics
 
-- [Pipe Head Loss](https://engsimapp.com/simulators/pipe-head-loss/index.html): Compute head loss using Darcy-Weisbach and Swamee-Jain, with Reynolds number, friction factor, pressure drop, and recommended commercial pipe diameter.
+- [Pipe Head Loss](https://engsimapp.com/simulators/pipe-head-loss/): Compute head loss using Darcy-Weisbach and Swamee-Jain, with Reynolds number, friction factor, pressure drop, and recommended commercial pipe diameter.
 
 ## Mechanics & Structures
 
-- [Mohr's Circle Calculator](https://engsimapp.com/simulators/mohr-circle/index.html): Compute principal stresses, maximum shear stress, and stress at any rotated plane from a plane stress state, with an interactive diagram.
-- [Static Beam](https://engsimapp.com/simulators/static-beam/index.html): Analyze simply supported beams: shear force diagrams, bending moment diagrams, and support reactions.
+- [Mohr's Circle Calculator](https://engsimapp.com/simulators/mohr-circle/): Compute principal stresses, maximum shear stress, and stress at any rotated plane from a plane stress state, with an interactive diagram.
+- [Static Beam](https://engsimapp.com/simulators/static-beam/): Analyze simply supported beams: shear force diagrams, bending moment diagrams, and support reactions.
 
 ## Electrical Engineering
 
-- [Kapp Diagram Calculator](https://engsimapp.com/simulators/kapp-diagram/index.html): Compute voltage regulation, secondary voltage drop, and phasor diagram for single-phase transformers using the infinite bus model.
-- [Voltage Divider](https://engsimapp.com/simulators/voltage-divider/index.html): Interactive resistive voltage divider: adjust values and visualize output voltage and current distribution.
-- [DC Circuit Analyzer](https://engsimapp.com/simulators/dc-circuit-analyzer/index.html): Analyze series and parallel resistive DC networks — currents, voltages, power, and maximum power transfer — with guided Thevenin, Norton, node, and mesh analysis.
-- [Parallel Transformers Calculator](https://engsimapp.com/simulators/parallel-transformers/index.html): Analyze two single-phase transformers connected in parallel: load sharing, circulating current, maximum group power, and which unit reaches its rating first, with an interactive phasor diagram.
-- [Transformer Equivalent Circuit Calculator](https://engsimapp.com/simulators/transformer-equivalent-circuit/index.html): Calculate a transformer's equivalent circuit parameters from short-circuit and open-circuit test data, and estimate voltage regulation under load.
+- [Kapp Diagram Calculator](https://engsimapp.com/simulators/kapp-diagram/): Compute voltage regulation, secondary voltage drop, and phasor diagram for single-phase transformers using the infinite bus model.
+- [Voltage Divider](https://engsimapp.com/simulators/voltage-divider/): Interactive resistive voltage divider: adjust values and visualize output voltage and current distribution.
+- [DC Circuit Analyzer](https://engsimapp.com/simulators/dc-circuit-analyzer/): Analyze series and parallel resistive DC networks — currents, voltages, power, and maximum power transfer — with guided Thevenin, Norton, node, and mesh analysis.
+- [Parallel Transformers Calculator](https://engsimapp.com/simulators/parallel-transformers/): Analyze two single-phase transformers connected in parallel: load sharing, circulating current, maximum group power, and which unit reaches its rating first, with an interactive phasor diagram.
+- [Transformer Equivalent Circuit Calculator](https://engsimapp.com/simulators/transformer-equivalent-circuit/): Calculate a transformer's equivalent circuit parameters from short-circuit and open-circuit test data, and estimate voltage regulation under load.
 
 ## Chemistry
 
-- [Chemical Reactions](https://engsimapp.com/simulators/chemical-reactions/index.html): Balance chemical equations, identify limiting reactants, and analyze redox reactions step by step.
-- [Chemical Equation Balancer](https://engsimapp.com/simulators/balanceador-ecuaciones/index.html): Step-by-step stoichiometry tutor to learn the balancing method or practice with real-time coefficient feedback.
+- [Chemical Reactions](https://engsimapp.com/simulators/chemical-reactions/): Balance chemical equations, identify limiting reactants, and analyze redox reactions step by step.
+- [Chemical Equation Balancer](https://engsimapp.com/simulators/balanceador-ecuaciones/): Step-by-step stoichiometry tutor to learn the balancing method or practice with real-time coefficient feedback.
 
 ## Coming Soon
 
