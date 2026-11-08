@@ -1,0 +1,638 @@
+/* ============================================================
+   welded-joints.css - Welded Joints Analyzer
+   Only what the shared simulator.css does not cover. Every selector
+   is prefixed with .wj- (or scoped under .sim-welded-joints).
+   Reuses the global tokens from base.css (--brand-accent, --bg-card, ...).
+   ============================================================ */
+
+/* -- Namespaced slider (required pattern from simulator.css) -------- */
+.sim-welded-joints input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background: transparent;
+    width: 100%;
+    height: 22px;
+    margin: 0;
+    cursor: pointer;
+}
+
+.sim-welded-joints input[type="range"]::-webkit-slider-runnable-track {
+    background: var(--border-strong);
+    height: 4px;
+    border-radius: 99px;
+}
+
+.sim-welded-joints input[type="range"]::-moz-range-track {
+    background: var(--border-strong);
+    height: 4px;
+    border-radius: 99px;
+}
+
+.sim-welded-joints input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin-top: -6px;
+    border-radius: 50%;
+    background: var(--slider-color, var(--brand-accent));
+    box-shadow: none;
+    border: none;
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+
+.sim-welded-joints input[type="range"]::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--slider-color, var(--brand-accent));
+    box-shadow: none;
+    border: none;
+    transform: scale(1);
+    transition: transform 0.2s;
+}
+
+.sim-welded-joints input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.15);
+}
+
+.sim-welded-joints input[type="range"]::-moz-range-thumb:hover {
+    transform: scale(1.15);
+}
+
+.wj-slider-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.wj-slider-value {
+    min-width: 52px;
+    text-align: right;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: var(--brand-accent);
+    font-size: .9rem;
+}
+
+/* -- Segmented control (analysis mode) ------------------------------ */
+.wj-seg {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding: 4px;
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+}
+
+.wj-seg__btn {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font: inherit;
+    font-size: .8rem;
+    font-weight: 600;
+    padding: 8px 6px;
+    border-radius: calc(var(--radius-md) - 2px);
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition);
+}
+
+.wj-seg__btn:hover {
+    color: var(--text-primary);
+}
+
+.wj-seg__btn.is-active {
+    background: var(--brand-accent);
+    color: #fff;
+}
+
+/* -- Pattern picker --------------------------------------------------- */
+.wj-pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+}
+
+.wj-pattern {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 6px 2px 5px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: var(--bg-input);
+    color: var(--text-muted);
+    font: inherit;
+    font-size: .62rem;
+    font-weight: 600;
+    line-height: 1.15;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color var(--transition), color var(--transition), background var(--transition), transform .15s;
+}
+
+.wj-pattern svg {
+    width: 38px;
+    height: 38px;
+}
+
+.wj-pattern:hover {
+    color: var(--text-primary);
+    border-color: var(--border-strong);
+    transform: translateY(-1px);
+}
+
+.wj-pattern.is-active {
+    color: var(--brand-accent);
+    border-color: var(--brand-accent);
+    background: rgba(37, 99, 235, .08);
+}
+
+/* -- Small form helpers ----------------------------------------------- */
+.wj-check {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: .8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    margin-bottom: var(--space-sm);
+}
+
+.wj-check input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--brand-accent);
+    cursor: pointer;
+}
+
+.wj-note {
+    font-size: .78rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-top: var(--space-xs);
+}
+
+.wj-toggles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-lg);
+    margin-top: var(--space-md);
+}
+
+.wj-toggles .wj-check {
+    margin-bottom: 0;
+}
+
+/* Greek letters look like Latin capitals in uppercase (tau -> T): keep them as typed */
+.sim-welded-joints .wj-nocaps,
+.sim-welded-joints .wj-table-scroll th {
+    text-transform: none;
+}
+
+/* -- Result cards: status colouring ------------------------------------ */
+.wj-status--ok .sim-result-value {
+    color: var(--color-success);
+}
+
+.wj-status--warn .sim-result-value {
+    color: var(--color-warning);
+}
+
+.wj-status--fail .sim-result-value {
+    color: var(--color-danger);
+}
+
+.wj-status--ok {
+    border-color: rgba(22, 163, 74, .35);
+}
+
+.wj-status--warn {
+    border-color: rgba(217, 119, 6, .4);
+}
+
+.wj-status--fail {
+    border-color: rgba(220, 38, 38, .4);
+}
+
+.wj-results-sub {
+    margin-top: var(--space-xs);
+}
+
+.wj-card-note {
+    font-size: .68rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+/* Let both grid columns shrink below their content (wide SVG scrolls inside) */
+.sim-welded-joints .sim-layout>* {
+    min-width: 0;
+}
+
+/* -- Diagram wrapper (SVG host + fullscreen) ----------------------------- */
+.wj-fs-wrap {
+    overflow: visible;
+}
+
+.wj-diagram-wrap {
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+}
+
+.wj-diagram-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 560px;
+    margin: 0 auto;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.wj-fatigue-wrap svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 340px;
+    margin: 0 auto;
+}
+
+@media (max-width: 640px) {
+    .wj-diagram-wrap svg {
+        min-width: 560px;
+    }
+}
+
+.wj-fs-wrap:fullscreen,
+.wj-fs-wrap:-webkit-full-screen {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: var(--bg-page);
+    padding: var(--space-lg);
+}
+
+.wj-fs-wrap:fullscreen .sim-chart-header,
+.wj-fs-wrap:-webkit-full-screen .sim-chart-header,
+.wj-fs-wrap:fullscreen .wj-toggles,
+.wj-fs-wrap:-webkit-full-screen .wj-toggles {
+    flex-shrink: 0;
+}
+
+.wj-fs-wrap:fullscreen .wj-diagram-wrap,
+.wj-fs-wrap:-webkit-full-screen .wj-diagram-wrap {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.wj-fs-wrap:fullscreen .wj-diagram-wrap svg,
+.wj-fs-wrap:-webkit-full-screen .wj-diagram-wrap svg {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    min-width: 0;
+}
+
+/* -- SVG elements (theme-aware through CSS variables) --------------------- */
+.wj-text {
+    fill: var(--text-secondary);
+    font-family: var(--font-mono);
+    font-size: 13px;
+}
+
+.wj-text--strong {
+    fill: var(--text-primary);
+    font-weight: 700;
+    font-size: 14px;
+}
+
+.wj-text--sm {
+    font-size: 12px;
+}
+
+.wj-text--xs {
+    font-size: 10.5px;
+}
+
+.wj-welds line {
+    stroke-linecap: butt;
+}
+
+.wj-weld-under {
+    stroke: var(--border-strong);
+    stroke-linecap: round;
+    opacity: .75;
+}
+
+.wj-weld,
+.wj-weld-under {
+    transition: opacity .15s;
+}
+
+.sim-welded-joints .is-run-focus .wj-weld:not(.is-focus),
+.sim-welded-joints .is-run-focus .wj-weld-under:not(.is-focus) {
+    opacity: .18;
+}
+
+.sim-welded-joints .is-run-focus .wj-weld.is-focus {
+    filter: drop-shadow(0 0 5px rgba(37, 99, 235, .9));
+}
+
+.wj-arm {
+    stroke: var(--text-muted);
+    stroke-width: 1.5;
+    stroke-dasharray: 5 4;
+}
+
+.wj-load-arrow {
+    stroke: var(--text-primary);
+    stroke-linecap: round;
+}
+
+.wj-ah-load {
+    fill: var(--text-primary);
+}
+
+.wj-moment {
+    fill: none;
+    stroke: var(--text-primary);
+    stroke-width: 3;
+    stroke-linecap: round;
+}
+
+.wj-g line {
+    stroke: var(--text-primary);
+    stroke-width: 1.6;
+}
+
+.wj-g circle {
+    fill: var(--bg-card);
+    stroke: var(--text-primary);
+    stroke-width: 1.6;
+}
+
+.wj-vec {
+    fill: none;
+    stroke-linecap: round;
+}
+
+.wj-vec--p {
+    stroke: #3b82f6;
+}
+
+.wj-vec--s {
+    stroke: #f59e0b;
+}
+
+.wj-vec--r {
+    stroke: #ef4444;
+}
+
+.wj-badge circle {
+    fill: var(--bg-card);
+    stroke: var(--text-secondary);
+    stroke-width: 1.4;
+}
+
+.wj-badge text {
+    fill: var(--text-primary);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+}
+
+.wj-crit circle {
+    fill: none;
+    stroke: #ef4444;
+    stroke-width: 2.2;
+    stroke-dasharray: 5 4;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: wj-pulse 1.8s ease-in-out infinite;
+}
+
+@keyframes wj-pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: .95;
+    }
+
+    50% {
+        transform: scale(1.22);
+        opacity: .5;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .wj-crit circle {
+        animation: none;
+    }
+}
+
+.wj-dim line {
+    stroke: var(--text-muted);
+    stroke-width: 1.2;
+}
+
+.wj-legend__tick {
+    stroke: var(--text-primary);
+    stroke-width: 1.5;
+}
+
+/* Draggable load handle */
+.wj-handle {
+    cursor: grab;
+    touch-action: none;
+    outline: none;
+}
+
+.sim-welded-joints .is-dragging .wj-handle {
+    cursor: grabbing;
+}
+
+.wj-handle__hit {
+    fill: transparent;
+}
+
+.wj-handle__ring {
+    fill: rgba(37, 99, 235, .15);
+    stroke: var(--brand-accent);
+    stroke-width: 2.2;
+    transition: fill .15s;
+}
+
+.wj-handle:hover .wj-handle__ring,
+.sim-welded-joints .is-dragging .wj-handle__ring {
+    fill: rgba(37, 99, 235, .35);
+}
+
+.wj-handle__dot {
+    fill: var(--brand-accent);
+}
+
+/* Fatigue diagram */
+.wj-grid {
+    stroke: var(--border);
+    stroke-width: 1;
+}
+
+.wj-axis {
+    stroke: var(--text-muted);
+    stroke-width: 1.5;
+}
+
+.wj-safe {
+    fill: rgba(22, 163, 74, .10);
+}
+
+.wj-curve {
+    fill: none;
+    stroke: var(--brand-accent);
+    stroke-width: 2.4;
+}
+
+.wj-loadline {
+    stroke: var(--text-muted);
+    stroke-width: 1.4;
+    stroke-dasharray: 5 4;
+}
+
+.wj-hit {
+    fill: var(--brand-accent);
+}
+
+.wj-op {
+    stroke: var(--bg-card);
+    stroke-width: 2;
+}
+
+.wj-op--ok {
+    fill: var(--color-success);
+}
+
+.wj-op--fail {
+    fill: var(--color-danger);
+}
+
+/* -- Points table --------------------------------------------------------- */
+.wj-table-scroll {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.wj-badge-inline {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    border: 1.4px solid var(--text-secondary);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: .72rem;
+    color: var(--text-primary);
+}
+
+/* -- AWS symbol cards ----------------------------------------------------- */
+.wj-symbol-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-md);
+}
+
+.wj-symbol-card {
+    background: var(--bg-hover);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    transition: border-color var(--transition), box-shadow var(--transition);
+    outline: none;
+}
+
+.wj-symbol-card:hover,
+.wj-symbol-card:focus-visible {
+    border-color: var(--brand-accent);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, .12);
+}
+
+.wj-symbol-card__title {
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    color: var(--text-muted);
+    margin-bottom: var(--space-xs);
+}
+
+.wj-symbol-card__desc {
+    font-size: .78rem;
+    color: var(--text-secondary);
+    margin-top: var(--space-xs);
+    line-height: 1.45;
+}
+
+.wj-sym {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 150px;
+}
+
+.wj-sym__line {
+    stroke: var(--text-primary);
+    stroke-width: 2.2;
+    fill: none;
+    stroke-linecap: round;
+}
+
+.wj-sym__line--thin {
+    stroke-width: 1.6;
+}
+
+.wj-sym__fill {
+    fill: var(--text-primary);
+}
+
+.wj-sym__fill--tri {
+    fill: rgba(37, 99, 235, .25);
+    stroke: var(--brand-accent);
+    stroke-width: 2;
+}
+
+.wj-sym__text {
+    fill: var(--text-primary);
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.wj-sym__text--small {
+    font-size: 11px;
+    font-weight: 600;
+    fill: var(--text-secondary);
+}
+
+/* -- Mobile ---------------------------------------------------------------- */
+@media (max-width: 480px) {
+    .wj-pattern-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 4px;
+    }
+
+    .wj-pattern {
+        font-size: .58rem;
+    }
+}

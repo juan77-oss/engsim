@@ -40,6 +40,7 @@ EngSim is a collection of interactive calculators and diagram tools built for en
 
 - [Mohr's Circle Calculator](https://engsimapp.com/simulators/mohr-circle/): Compute principal stresses, maximum shear stress, and stress at any rotated plane from a plane stress state, with an interactive diagram.
 - [Static Beam](https://engsimapp.com/simulators/static-beam/): Analyze simply supported beams: shear force diagrams, bending moment diagrams, and support reactions.
+- [Welded Joints Analyzer](https://engsimapp.com/simulators/welded-joints/): Analyze fillet weld groups under torsion and bending: stress map, AISC electrode and base-metal checks, fatigue check (Gerber/Goodman), and automatic AWS weld symbol.
 
 ## Electrical Engineering
 
