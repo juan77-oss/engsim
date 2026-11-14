@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta name="google-site-verification" content="IsonpLQAguEXEzaXseWH8GDbOLo6xvF0BJBOlMVcE4A" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" sizes="48x48">
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+    <!-- EDIT 1 &#x2014; SEO -->
+    <title>Pressure Vessel Calculator: Wall, Flange &amp; Bolts | EngSim</title>
+    <meta name="description"
+        content="Free pressure vessel calculator: thin and thick wall thickness, Lam&eacute; stress map, gasket and bolt loads and ring flange stress. Drag the pressure and see it." />
+
+    <!-- EDIT 2 &#x2014; OG tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pressure Vessel Calculator | EngSim" />
+    <meta property="og:description"
+        content="Interactive pressure vessel analyzer: thin and thick wall, heads, gaskets, bolt loads and flange stress with live diagrams." />
+    <meta property="og:url" content="https://engsimapp.com/simulators/pressure-vessel/" />
+    <meta property="og:site_name" content="EngSim" />
+    <!-- <meta property="og:image" content="https://engsimapp.com/assets/img/og/pressure-vessel.jpg" /> -->
+
+    <!-- <meta name="twitter:card" content="summary_large_image" /> -->
+    <!-- <meta name="twitter:title" content="Pressure Vessel Calculator | EngSim" /> -->
+    <!-- <meta name="twitter:description" content="Interactive pressure vessel analyzer: thin and thick wall, heads, gaskets, bolt loads and flange stress with live diagrams." /> -->
+    <!-- <meta name="twitter:image" content="https://engsimapp.com/assets/img/og/pressure-vessel.jpg" /> -->
+
+    <link rel="canonical" href="https://engsimapp.com/simulators/pressure-vessel/" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Shared platform styles (DO NOT EDIT paths) -->
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/platform.css" />
+    <link rel="stylesheet" href="../../assets/css/simulator.css" />
+    <link rel="stylesheet" href="../../assets/css/cookie-consent.css" />
+
+    <!-- EDIT 3 &#x2014; simulator-specific CSS -->
+    <link rel="stylesheet" href="./css/pressure-vessel.css" />
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){ dataLayer.push(arguments); }
+      gtag('consent', 'default', {
+        'ad_storage': 'denied',
+        'analytics_storage': 'denied',
+        'ad_user_data': 'denied',
+        'ad_personalization': 'denied',
+        'wait_for_update': 500
+      });
+      gtag('set', 'ads_data_redaction', true);
+    </script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TBVL4LVC');</script>
+    <!-- End Google Tag Manager -->
+</head>
+
+<body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TBVL4LVC"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div class="page-wrapper">
+
+        <!-- Nav injected by platform.js -->
+        <div id="nav-placeholder"></div>
+
+        <main class="page-main" id="main-content">
+
+            <!-- EDIT 5 &#x2014; Hero -->
+            <section class="sim-hero" aria-labelledby="sim-title">
+                <div class="container">
+                    <nav aria-label="Breadcrumb">
+                        <ol class="sim-hero__breadcrumb">
+                            <li><a href="../../">Home</a></li>
+                            <li><span aria-hidden="true">/</span></li>
+                            <li><a href="../">Simulators</a></li>
+                            <li><span aria-hidden="true">/</span></li>
+                            <li>Pressure Vessels</li>
+                        </ol>
+                    </nav>
+
+                    <span class="sim-hero__category">Mechanics &amp; Structures</span>
+
+                    <h1 class="sim-hero__title" id="sim-title">Pressure Vessel Calculator</h1>
+
+                    <p class="sim-hero__subtitle">
+                        Size thin-wall and thick-wall vessels, compare head shapes, see the Lam&eacute; stress
+                        distribution across the wall, and design the gasket, bolts and ring flange of a bolted
+                        joint. Move the pressure and watch every result and diagram respond.
+                    </p>
+
+                    <div class="sim-hero__tags">
+                        <span class="sim-hero__tag">Thin Wall</span>
+                        <span class="sim-hero__tag">Thick Wall (Lam&eacute;)</span>
+                        <span class="sim-hero__tag">Heads</span>
+                        <span class="sim-hero__tag">Flanges &amp; Gaskets</span>
+                        <span class="sim-hero__tag">Bolt Loads</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- EDIT 6 &#x2014; two-panel layout -->
+            <section class="sim-body sim-pressure-vessel">
+                <div class="container">
+
+                    <div class="sim-error" id="sim-error" role="alert" aria-live="polite"></div>
+
+                    <div class="sim-layout" style="--sim-sidebar-width: 360px;">
+
+                        <!-- ════ LEFT PANEL — INPUTS ════ -->
+                        <aside aria-label="Input parameters">
+
+                            <div class="sim-panel">
+                                <div class="sim-panel__header">
+                                    <span class="sim-panel__title">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                            <path d="M12 20h9" />
+                                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                                        </svg>
+                                        Parameters
+                                    </span>
+                                </div>
+                                <div class="sim-panel__body">
+
+                                    <div class="sim-field">
+                                        <label for="select-system" class="sim-label">Units</label>
+                                        <select id="select-system" class="sim-select" aria-label="Unit system">
+                                            <option value="US">US &mdash; in, psi, lbf</option>
+                                            <option value="SI">SI &mdash; mm, MPa, kN</option>
+                                        </select>
+                                    </div>
+
+                                    <p class="sim-section-label">What do you want to design?</p>
+                                    <div class="sim-field">
+                                        <div class="pv-seg" role="group" aria-label="Module">
+                                            <button type="button" class="pv-seg__btn is-active" data-module="thin"
+                                                aria-pressed="true">Thin<br />wall</button>
+                                            <button type="button" class="pv-seg__btn" data-module="thick"
+                                                aria-pressed="false">Thick<br />wall</button>
+                                            <button type="button" class="pv-seg__btn" data-module="flange"
+                                                aria-pressed="false">Flange<br />&amp; bolts</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- ═══════ THIN WALL INPUTS ═══════ -->
+                                    <div id="group-thin">
+                                        <p class="sim-section-label">Shell</p>
+                                        <div class="sim-field">
+                                            <label for="th-shape" class="sim-label">Shell shape</label>
+                                            <select id="th-shape" class="sim-select pv-live" aria-label="Shell shape">
+                                                <option value="cylinder">Cylinder</option>
+                                                <option value="sphere">Sphere</option>
+                                            </select>
+                                        </div>
+                                        <div class="sim-field">
+                                            <label for="th-P" class="sim-label">Design pressure P</label>
+                                            <div class="sim-input-wrap">
+                                                <input type="number" id="th-P" class="sim-input pv-live" data-q="stress" min="0" step="any" value="150" />
+                                                <span class="sim-unit pv-u" data-uq="stress">psi</span>
+                                            </div>
+                                            <div class="pv-slider-row"><input type="range" id="th-P-range" class="pv-range" data-for="th-P" aria-label="Pressure slider" /></div>
+                                        </div>
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field">
+                                                <label for="th-Ri" class="sim-label">Inside radius R<sub>i</sub></label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="th-Ri" class="sim-input pv-live" data-q="length" min="0" step="any" value="36" />
+                                                    <span class="sim-unit pv-u" data-uq="length">in</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field">
+                                                <label for="th-t" class="sim-label">Thickness provided</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="th-t" class="sim-input pv-live" data-q="length" min="0" step="any" value="0.5" />
+                                                    <span class="sim-unit pv-u" data-uq="length">in</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="sim-section-label">Material and joint</p>
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field">
+                                                <label for="th-S" class="sim-label">Allowable stress S</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="th-S" class="sim-input pv-live" data-q="stress" min="0" step="any" value="20000" />
+                                                    <span class="sim-unit pv-u" data-uq="stress">psi</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field">
+                                                <label for="th-E" class="sim-label">Joint efficiency E</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="th-E" class="sim-input pv-live" data-q="none" min="0.1" max="1" step="0.05" value="0.85" />
+                                                    <span class="sim-unit">&times;</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sim-field">
+                                            <label for="th-CA" class="sim-label">Corrosion allowance</label>
+                                            <div class="sim-input-wrap">
+                                                <input type="number" id="th-CA" class="sim-input pv-live" data-q="length" min="0" step="any" value="0.0625" />
+                                                <span class="sim-unit pv-u" data-uq="length">in</span>
+                                            </div>
+                                            <p class="sim-hint">Take S from the material data of your own reference for the design temperature.</p>
+                                        </div>
+                                        <p class="sim-section-label">Flat plate (optional)</p>
+                                        <div class="sim-field">
+                                            <label for="th-C" class="sim-label">Edge coefficient C</label>
+                                            <div class="sim-input-wrap">
+                                                <input type="number" id="th-C" class="sim-input pv-live" data-q="none" min="0.05" step="0.01" value="0.33" />
+                                                <span class="sim-unit">&times;</span>
+                                            </div>
+                                            <p class="sim-hint">Depends on how the plate is attached to the shell (fixed edge, simply supported, corner radius). Use the value from your reference.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- ═══════ THICK WALL INPUTS ═══════ -->
+                                    <div id="group-thick" class="is-hidden">
+                                        <p class="sim-section-label">Cylinder</p>
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field">
+                                                <label for="tk-Pi" class="sim-label">Internal pressure P<sub>i</sub></label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="tk-Pi" class="sim-input pv-live" data-q="stress" min="0" step="any" value="15000" />
+                                                    <span class="sim-unit pv-u" data-uq="stress">psi</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field">
+                                                <label for="tk-Po" class="sim-label">External pressure P<sub>o</sub></label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="tk-Po" class="sim-input pv-live" data-q="stress" min="0" step="any" value="0" />
+                                                    <span class="sim-unit pv-u" data-uq="stress">psi</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="pv-slider-row"><input type="range" id="tk-Pi-range" class="pv-range" data-for="tk-Pi" aria-label="Internal pressure slider" /></div>
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field">
+                                                <label for="tk-Ri" class="sim-label">Inside radius R<sub>i</sub></label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="tk-Ri" class="sim-input pv-live" data-q="length" min="0" step="any" value="2" />
+                                                    <span class="sim-unit pv-u" data-uq="length">in</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field">
+                                                <label for="tk-t" class="sim-label">Wall thickness t</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="tk-t" class="sim-input pv-live" data-q="length" min="0" step="any" value="1.6" />
+                                                    <span class="sim-unit pv-u" data-uq="length">in</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="sim-section-label">Material and joint</p>
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field">
+                                                <label for="tk-S" class="sim-label">Allowable stress S</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="tk-S" class="sim-input pv-live" data-q="stress" min="0" step="any" value="30000" />
+                                                    <span class="sim-unit pv-u" data-uq="stress">psi</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field">
+                                                <label for="tk-E" class="sim-label">Joint efficiency E</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="tk-E" class="sim-input pv-live" data-q="none" min="0.1" max="1" step="0.05" value="1" />
+                                                    <span class="sim-unit">&times;</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sim-field">
+                                            <label for="tk-CA" class="sim-label">Corrosion allowance</label>
+                                            <div class="sim-input-wrap">
+                                                <input type="number" id="tk-CA" class="sim-input pv-live" data-q="length" min="0" step="any" value="0" />
+                                                <span class="sim-unit pv-u" data-uq="length">in</span>
+                                            </div>
+                                            <p class="sim-hint">Closed ends are assumed, so the axial stress is P<sub>i</sub>R<sub>i</sub>&sup2;/(R<sub>o</sub>&sup2;&minus;R<sub>i</sub>&sup2;).</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- ═══════ FLANGE INPUTS ═══════ -->
+                                    <div id="group-flange" class="is-hidden">
+                                        <p class="sim-section-label">Design pressure</p>
+                                        <div class="sim-field">
+                                            <label for="fl-P" class="sim-label">Design pressure P</label>
+                                            <div class="sim-input-wrap">
+                                                <input type="number" id="fl-P" class="sim-input pv-live" data-q="stress" min="0" step="any" value="600" />
+                                                <span class="sim-unit pv-u" data-uq="stress">psi</span>
+                                            </div>
+                                            <div class="pv-slider-row"><input type="range" id="fl-P-range" class="pv-range" data-for="fl-P" aria-label="Pressure slider" /></div>
+                                        </div>
+
+                                        <p class="sim-section-label">Gasket</p>
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field">
+                                                <label for="fl-gid" class="sim-label">Gasket inside dia.</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-gid" class="sim-input pv-live" data-q="length" min="0" step="any" value="10.75" />
+                                                    <span class="sim-unit pv-u" data-uq="length">in</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field">
+                                                <label for="fl-gN" class="sim-label">Contact width N</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-gN" class="sim-input pv-live" data-q="length" min="0" step="any" value="0.75" />
+                                                    <span class="sim-unit pv-u" data-uq="length">in</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sim-field">
+                                            <label for="fl-b0rule" class="sim-label">Basic seating width b<sub>0</sub></label>
+                                            <select id="fl-b0rule" class="sim-select pv-live" aria-label="Basic seating width rule">
+                                                <option value="half">N / 2 (flat contact face)</option>
+                                                <option value="threeEighths">3N / 8</option>
+                                                <option value="quarter">N / 4</option>
+                                                <option value="manual">Enter b0 manually</option>
+                                            </select>
+                                            <p class="sim-hint">The rule depends on how the gasket sits between the faces. Pick the one that matches your joint sketch.</p>
+                                        </div>
+                                        <div class="sim-field is-hidden" id="field-b0">
+                                            <label for="fl-b0" class="sim-label">b<sub>0</sub></label>
+                                            <div class="sim-input-wrap">
+                                                <input type="number" id="fl-b0" class="sim-input pv-live" data-q="length" min="0" step="any" value="0.375" />
+                                                <span class="sim-unit pv-u" data-uq="length">in</span>
+                                            </div>
+                                        </div>
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field">
+                                                <label for="fl-m" class="sim-label">Gasket factor m</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-m" class="sim-input pv-live" data-q="none" min="0" step="0.05" value="3" />
+                                                    <span class="sim-unit">&times;</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field">
+                                                <label for="fl-y" class="sim-label">Seating stress y</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-y" class="sim-input pv-live" data-q="stress" min="0" step="any" value="10000" />
+                                                    <span class="sim-unit pv-u" data-uq="stress">psi</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p class="sim-hint">m and y depend on the gasket material and type. Enter the values from your gasket data.</p>
+
+                                        <p class="sim-section-label">Allowable stresses</p>
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field">
+                                                <label for="fl-Sb" class="sim-label">Bolt, design temp. S<sub>b</sub></label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-Sb" class="sim-input pv-live" data-q="stress" min="0" step="any" value="20000" />
+                                                    <span class="sim-unit pv-u" data-uq="stress">psi</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field">
+                                                <label for="fl-Sa" class="sim-label">Bolt, ambient S<sub>a</sub></label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-Sa" class="sim-input pv-live" data-q="stress" min="0" step="any" value="20000" />
+                                                    <span class="sim-unit pv-u" data-uq="stress">psi</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field">
+                                                <label for="fl-Sfo" class="sim-label">Flange, design S<sub>fo</sub></label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-Sfo" class="sim-input pv-live" data-q="stress" min="0" step="any" value="20000" />
+                                                    <span class="sim-unit pv-u" data-uq="stress">psi</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field">
+                                                <label for="fl-Sfa" class="sim-label">Flange, ambient S<sub>fa</sub></label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-Sfa" class="sim-input pv-live" data-q="stress" min="0" step="any" value="20000" />
+                                                    <span class="sim-unit pv-u" data-uq="stress">psi</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p class="sim-section-label">Ring flange geometry</p>
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field">
+                                                <label for="fl-A" class="sim-label">Outside dia. A</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-A" class="sim-input pv-live" data-q="length" min="0" step="any" value="19" />
+                                                    <span class="sim-unit pv-u" data-uq="length">in</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field">
+                                                <label for="fl-B" class="sim-label">Bore B</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-B" class="sim-input pv-live" data-q="length" min="0" step="any" value="10" />
+                                                    <span class="sim-unit pv-u" data-uq="length">in</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field">
+                                                <label for="fl-C" class="sim-label">Bolt circle C</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-C" class="sim-input pv-live" data-q="length" min="0" step="any" value="16" />
+                                                    <span class="sim-unit pv-u" data-uq="length">in</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field">
+                                                <label for="fl-t" class="sim-label">Flange thickness t</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-t" class="sim-input pv-live" data-q="length" min="0" step="any" value="2.5" />
+                                                    <span class="sim-unit pv-u" data-uq="length">in</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p class="sim-section-label">Bolting</p>
+                                        <div class="sim-grid-2">
+                                            <div class="sim-field">
+                                                <label for="fl-nb" class="sim-label">Number of bolts</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-nb" class="sim-input pv-live" data-q="none" min="1" step="1" value="12" />
+                                                    <span class="sim-unit">pcs</span>
+                                                </div>
+                                            </div>
+                                            <div class="sim-field">
+                                                <label for="fl-d" class="sim-label">Bolt diameter</label>
+                                                <div class="sim-input-wrap">
+                                                    <input type="number" id="fl-d" class="sim-input pv-live" data-q="length" min="0" step="any" value="1" />
+                                                    <span class="sim-unit pv-u" data-uq="length">in</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sim-field">
+                                            <label for="fl-area" class="sim-label">Root area per bolt (optional)</label>
+                                            <div class="sim-input-wrap">
+                                                <input type="number" id="fl-area" class="sim-input pv-live" data-q="area" min="0" step="any" value="0" />
+                                                <span class="sim-unit pv-u" data-uq="area">in&sup2;</span>
+                                            </div>
+                                            <p class="sim-hint">Leave at 0 to estimate it from the bolt diameter. Type your bolt data for an exact value.</p>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div><!-- /sim-panel -->
+
+                        </aside>
+                        <!-- /Left panel -->
+
+                        <!-- ════ RIGHT PANEL — RESULTS ════ -->
+                        <div>
+
+                            <!-- ═══════ VIEW: THIN WALL ═══════ -->
+                            <div id="view-thin">
+
+                                <div class="sim-panel">
+                                    <div class="sim-panel__header">
+                                        <span class="sim-panel__title">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                                            </svg>
+                                            Thin-wall results
+                                        </span>
+                                        <span class="sim-panel__badge">Real-time</span>
+                                    </div>
+                                    <div class="sim-panel__body">
+                                        <div class="status-banner status-banner--success" id="th-banner">
+                                            <span class="status-banner__title" id="th-banner-title">&mdash;</span>
+                                            <span class="status-banner__message" id="th-banner-msg"></span>
+                                        </div>
+                                        <div class="sim-results-grid">
+                                            <div class="sim-result-card sim-result-card--accent">
+                                                <div class="sim-result-label">Required thickness</div>
+                                                <div class="sim-result-value" id="th-out-treq">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="length">in</div>
+                                                <div class="pv-card-note">includes corrosion allowance</div>
+                                            </div>
+                                            <div class="sim-result-card" id="th-card-util">
+                                                <div class="sim-result-label">Utilization</div>
+                                                <div class="sim-result-value" id="th-out-util">&mdash;</div>
+                                                <div class="sim-result-unit">required / provided</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label">Max. allowable pressure</div>
+                                                <div class="sim-result-value" id="th-out-mawp">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="stress">psi</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">Governing stress</div>
+                                                <div class="sim-result-value" id="th-out-gov">&mdash;</div>
+                                                <div class="sim-result-unit">in the shell</div>
+                                            </div>
+                                        </div>
+                                        <div class="sim-results-grid pv-results-sub">
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">&sigma;<sub>hoop</sub> (membrane)</div>
+                                                <div class="sim-result-value" id="th-out-hoop">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="stress">psi</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">&sigma;<sub>axial</sub> (membrane)</div>
+                                                <div class="sim-result-value" id="th-out-long">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="stress">psi</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">t from hoop stress</div>
+                                                <div class="sim-result-value" id="th-out-tcirc">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="length">in</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">t from axial stress</div>
+                                                <div class="sim-result-value" id="th-out-tlong">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="length">in</div>
+                                            </div>
+                                        </div>
+                                        <p class="pv-note" id="th-validity"></p>
+                                    </div>
+                                </div><!-- /thin results -->
+
+                                <div class="sim-panel">
+                                    <div class="sim-panel__header">
+                                        <span class="sim-panel__title">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                <circle cx="12" cy="12" r="9" />
+                                                <circle cx="12" cy="12" r="5" />
+                                            </svg>
+                                            Vessel diagram
+                                        </span>
+                                        <span class="sim-panel__badge">Interactive</span>
+                                    </div>
+                                    <div class="sim-panel__body">
+                                        <div class="sim-chart-wrap pv-fs-wrap" id="wrap-thin">
+                                            <div class="sim-chart-header">
+                                                <span class="sim-chart-label">Pressure and wall stresses (wall colour = utilization)</span>
+                                                <button type="button" class="sim-chart-fullscreen-btn" aria-label="Toggle fullscreen diagram" aria-pressed="false">
+                                                    <svg class="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                                                    <svg class="icon-collapse" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
+                                                </button>
+                                            </div>
+                                            <div class="pv-diagram-wrap" id="th-svg-host"></div>
+                                        </div>
+                                    </div>
+                                </div><!-- /thin diagram -->
+
+                                <div class="sim-panel">
+                                    <div class="sim-panel__header">
+                                        <span class="sim-panel__title">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                <path d="M3 20h18M6 20v-8M12 20V6M18 20v-5" />
+                                            </svg>
+                                            Heads and flat plate
+                                        </span>
+                                        <span class="sim-panel__badge">Compare</span>
+                                    </div>
+                                    <div class="sim-panel__body">
+                                        <div class="pv-bars" id="th-heads"></div>
+                                        <p class="sim-hint">Same pressure, radius, S, E and corrosion allowance for every head. Ellipsoidal is 2:1; torispherical uses crown radius = diameter and knuckle radius = 6% of the diameter. Thicknesses include the corrosion allowance.</p>
+                                        <div class="sim-results-grid pv-results-sub">
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label">Flat plate t</div>
+                                                <div class="sim-result-value" id="th-out-flat">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="length">in</div>
+                                                <div class="pv-card-note">t = d&middot;&radic;(C&middot;P / S&middot;E) + corrosion</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- /heads -->
+
+                            </div><!-- /view-thin -->
+
+                            <!-- ═══════ VIEW: THICK WALL ═══════ -->
+                            <div id="view-thick" class="is-hidden">
+
+                                <div class="sim-panel">
+                                    <div class="sim-panel__header">
+                                        <span class="sim-panel__title">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                                            </svg>
+                                            Thick-wall results
+                                        </span>
+                                        <span class="sim-panel__badge">Real-time</span>
+                                    </div>
+                                    <div class="sim-panel__body">
+                                        <div class="status-banner status-banner--success" id="tk-banner">
+                                            <span class="status-banner__title" id="tk-banner-title">&mdash;</span>
+                                            <span class="status-banner__message" id="tk-banner-msg"></span>
+                                        </div>
+                                        <div class="sim-results-grid">
+                                            <div class="sim-result-card sim-result-card--accent">
+                                                <div class="sim-result-label">Required thickness</div>
+                                                <div class="sim-result-value" id="tk-out-treq">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="length">in</div>
+                                                <div class="pv-card-note">thick-wall formula</div>
+                                            </div>
+                                            <div class="sim-result-card" id="tk-card-util">
+                                                <div class="sim-result-label">Utilization</div>
+                                                <div class="sim-result-value" id="tk-out-util">&mdash;</div>
+                                                <div class="sim-result-unit">&sigma;<sub>&theta;</sub> / (S&middot;E) at the bore</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">&sigma;<sub>&theta;</sub> at the bore</div>
+                                                <div class="sim-result-value" id="tk-out-hoop">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="stress">psi</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">Max. shear stress intensity</div>
+                                                <div class="sim-result-value" id="tk-out-tresca">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="stress">psi</div>
+                                                <div class="pv-card-note">&sigma;<sub>&theta;</sub> &minus; &sigma;<sub>r</sub>, for information</div>
+                                            </div>
+                                        </div>
+                                        <div class="sim-results-grid pv-results-sub">
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">Thin-wall formula gives</div>
+                                                <div class="sim-result-value" id="tk-out-thin">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="length">in</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">Thin-wall error</div>
+                                                <div class="sim-result-value" id="tk-out-err">&mdash;</div>
+                                                <div class="sim-result-unit">vs thick-wall</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">R<sub>o</sub> / R<sub>i</sub></div>
+                                                <div class="sim-result-value" id="tk-out-ratio">&mdash;</div>
+                                                <div class="sim-result-unit">radius ratio</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">&sigma;<sub>axial</sub> (closed ends)</div>
+                                                <div class="sim-result-value" id="tk-out-axial">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="stress">psi</div>
+                                            </div>
+                                        </div>
+                                        <p class="pv-note" id="tk-validity"></p>
+                                    </div>
+                                </div><!-- /thick results -->
+
+                                <div class="sim-panel">
+                                    <div class="sim-panel__header">
+                                        <span class="sim-panel__title">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                <circle cx="12" cy="12" r="9" />
+                                                <circle cx="12" cy="12" r="4" />
+                                            </svg>
+                                            Stress across the wall
+                                        </span>
+                                        <span class="sim-panel__badge">Interactive</span>
+                                    </div>
+                                    <div class="sim-panel__body">
+                                        <div class="sim-chart-wrap pv-fs-wrap" id="wrap-thick">
+                                            <div class="sim-chart-header">
+                                                <span class="sim-chart-label">Lam&eacute; profile &mdash; slide the probe through the wall</span>
+                                                <button type="button" class="sim-chart-fullscreen-btn" aria-label="Toggle fullscreen diagram" aria-pressed="false">
+                                                    <svg class="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                                                    <svg class="icon-collapse" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
+                                                </button>
+                                            </div>
+                                            <div class="pv-diagram-wrap">
+                                                <div class="pv-two">
+                                                    <div id="tk-ring-host"></div>
+                                                    <div id="tk-chart-host"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="sim-field pv-slider-row">
+                                            <label for="tk-probe" class="sim-label">Probe radius</label>
+                                            <input type="range" id="tk-probe" min="0" max="100" step="1" value="0" aria-label="Probe radius across the wall" />
+                                            <p class="pv-note" id="tk-probe-read"></p>
+                                        </div>
+                                    </div>
+                                </div><!-- /thick diagram -->
+
+                            </div><!-- /view-thick -->
+
+                            <!-- ═══════ VIEW: FLANGE ═══════ -->
+                            <div id="view-flange" class="is-hidden">
+
+                                <div class="sim-panel">
+                                    <div class="sim-panel__header">
+                                        <span class="sim-panel__title">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                                            </svg>
+                                            Bolt and flange results
+                                        </span>
+                                        <span class="sim-panel__badge">Real-time</span>
+                                    </div>
+                                    <div class="sim-panel__body">
+                                        <div class="status-banner status-banner--success" id="fl-banner">
+                                            <span class="status-banner__title" id="fl-banner-title">&mdash;</span>
+                                            <span class="status-banner__message" id="fl-banner-msg"></span>
+                                        </div>
+                                        <div class="sim-results-grid">
+                                            <div class="sim-result-card sim-result-card--accent">
+                                                <div class="sim-result-label">Bolt area required A<sub>m</sub></div>
+                                                <div class="sim-result-value" id="fl-out-Am">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="area">in&sup2;</div>
+                                                <div class="pv-card-note" id="fl-out-Am-note"></div>
+                                            </div>
+                                            <div class="sim-result-card" id="fl-card-Ab">
+                                                <div class="sim-result-label">Bolt area provided A<sub>b</sub></div>
+                                                <div class="sim-result-value" id="fl-out-Ab">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="area">in&sup2;</div>
+                                                <div class="pv-card-note" id="fl-out-Ab-note"></div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label">Total bolt load</div>
+                                                <div class="sim-result-value" id="fl-out-Wgov">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="force">lbf</div>
+                                                <div class="pv-card-note">greater of W<sub>m1</sub> and W</div>
+                                            </div>
+                                            <div class="sim-result-card" id="fl-card-ST">
+                                                <div class="sim-result-label pv-nocaps">Flange stress S<sub>T</sub></div>
+                                                <div class="sim-result-value" id="fl-out-ST">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="stress">psi</div>
+                                                <div class="pv-card-note" id="fl-out-ST-note"></div>
+                                            </div>
+                                        </div>
+
+                                        <p class="pv-mini-title">Gasket and loads</p>
+                                        <div class="sim-results-grid">
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">b<sub>0</sub> / b</div>
+                                                <div class="sim-result-value" id="fl-out-b">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="length">in</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">Reaction diameter G</div>
+                                                <div class="sim-result-value" id="fl-out-G">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="length">in</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">H (end force)</div>
+                                                <div class="sim-result-value" id="fl-out-H">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="force">lbf</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">H<sub>p</sub> (gasket in service)</div>
+                                                <div class="sim-result-value" id="fl-out-Hp">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="force">lbf</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">W<sub>m1</sub> (operating)</div>
+                                                <div class="sim-result-value" id="fl-out-Wm1">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="force">lbf</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">W<sub>m2</sub> (gasket seating)</div>
+                                                <div class="sim-result-value" id="fl-out-Wm2">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="force">lbf</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- /flange results -->
+
+                                <div class="sim-panel">
+                                    <div class="sim-panel__header">
+                                        <span class="sim-panel__title">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                <rect x="3" y="6" width="18" height="6" rx="1" />
+                                                <path d="M12 2v4M12 12v8" />
+                                            </svg>
+                                            Flange diagram
+                                        </span>
+                                        <span class="sim-panel__badge">Interactive</span>
+                                    </div>
+                                    <div class="sim-panel__body">
+                                        <div class="sim-chart-wrap pv-fs-wrap" id="wrap-flange">
+                                            <div class="sim-chart-header">
+                                                <span class="sim-chart-label">Loads on the ring flange (colour = flange stress utilization)</span>
+                                                <button type="button" class="sim-chart-fullscreen-btn" aria-label="Toggle fullscreen diagram" aria-pressed="false">
+                                                    <svg class="icon-expand" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                                                    <svg class="icon-collapse" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3"></path></svg>
+                                                </button>
+                                            </div>
+                                            <div class="pv-diagram-wrap" id="fl-svg-host"></div>
+                                        </div>
+                                        <p class="sim-hint">Drawn to scale in the radial direction. H<sub>D</sub> is the pressure force on the bore, H<sub>G</sub> the gasket reaction and H<sub>T</sub> the rest of the end force; the bolt load W pulls the other way and the moment is the sum of each load times its lever arm about the bolt circle.</p>
+                                    </div>
+                                </div><!-- /flange diagram -->
+
+                                <div class="sim-panel">
+                                    <div class="sim-panel__header">
+                                        <span class="sim-panel__title">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                <path d="M3 20h18M6 20v-8M12 20V6M18 20v-5" />
+                                            </svg>
+                                            Bolt area check
+                                        </span>
+                                        <span class="sim-panel__badge">Compare</span>
+                                    </div>
+                                    <div class="sim-panel__body">
+                                        <div class="pv-bars" id="fl-bars"></div>
+                                        <div class="sim-results-grid pv-results-sub">
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">Moment, operating</div>
+                                                <div class="sim-result-value" id="fl-out-MoOp">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="moment">lbf&middot;in</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">Moment, seating</div>
+                                                <div class="sim-result-value" id="fl-out-MoSeat">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="moment">lbf&middot;in</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">S<sub>T</sub> operating</div>
+                                                <div class="sim-result-value" id="fl-out-STop">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="stress">psi</div>
+                                            </div>
+                                            <div class="sim-result-card">
+                                                <div class="sim-result-label pv-nocaps">S<sub>T</sub> seating</div>
+                                                <div class="sim-result-value" id="fl-out-STseat">&mdash;</div>
+                                                <div class="sim-result-unit pv-u" data-uq="stress">psi</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- /bars -->
+
+                            </div><!-- /view-flange -->
+
+                        </div>
+                        <!-- /Right panel -->
+
+                    </div><!-- /sim-layout -->
+                </div><!-- /container -->
+            </section>
+
+            <!-- AD SLOT 1 -->
+            <!-- AD-SLOT HIDDEN
+            <div class="container">
+                <div class="ad-slot ad-slot--leaderboard" aria-label="Advertisement">
+                    Advertisement
+                </div>
+            </div>
+            -->
+
+            <!-- EDIT 8 &#x2014; Educational content -->
+            <div class="container container--narrow">
+                <div class="edu-content">
+
+                    <section class="edu-section" id="about" aria-labelledby="h-about">
+                        <h2 id="h-about">About This Simulator</h2>
+                        <p>
+                            A pressure vessel is a closed container that holds a fluid at a pressure very different from
+                            the air around it: a boiler drum, an air receiver, a chemical reactor, a hydraulic cylinder.
+                            Because the wall must resist that pressure with membrane stress, the thickness is set almost
+                            entirely by three things: the pressure, the radius and the strength of the material. This
+                            simulator turns those three into a design you can see.
+                        </p>
+                        <p>
+                            It has three modules. The <strong>thin-wall</strong> module finds the thickness of a
+                            cylindrical or spherical shell and compares different head shapes. The
+                            <strong>thick-wall</strong> module uses the Lam&eacute; solution to show how the hoop,
+                            radial and axial stresses change from the inside surface to the outside surface, which is
+                            necessary when the pressure is high compared with the allowable stress. The
+                            <strong>flange and bolts</strong> module sizes the bolting of a gasketed joint and checks the
+                            stress in a ring flange.
+                        </p>
+                        <p>
+                            Instead of only returning numbers, the tool animates the pressure on the cross-section,
+                            colours the wall by how close it is to its limit, lets you slide a probe through a thick wall
+                            and draws every load acting on a flange. The methods are the classic ones taught in machine
+                            design and pressure vessel courses, and every material and gasket property is an input you
+                            type, so you stay in control of the data.
+                        </p>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="how-to-use" aria-labelledby="h-howto">
+                        <h2 id="h-howto">How to Use</h2>
+                        <ol>
+                            <li><strong>Step 1.</strong> Choose US or SI units. Switching converts the values you already typed.</li>
+                            <li><strong>Step 2.</strong> Pick a module: thin wall, thick wall, or flange and bolts.</li>
+                            <li><strong>Step 3.</strong> Enter the pressure, the radius, the allowable stress of your material at the design temperature, the joint efficiency and the corrosion allowance. Drag the pressure slider to see the wall colour and the stresses change live.</li>
+                            <li><strong>Step 4.</strong> In the thin-wall module, compare the head shapes in the bar chart. In the thick-wall module, slide the probe to read the three stresses at any radius.</li>
+                            <li><strong>Step 5.</strong> In the flange module, enter the gasket data (width, m and y), the allowable stresses and the flange and bolt geometry. Read the required bolt area, the loads, and the flange stress, and use the fullscreen button to inspect the load diagram.</li>
+                        </ol>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="method" aria-labelledby="h-method">
+                        <h2 id="h-method">The Method Behind the Numbers</h2>
+                        <p>For a thin cylindrical shell with inside radius R, allowable stress S and joint efficiency E, the thickness required by the hoop and by the axial stress is:</p>
+                        <span class="edu-formula">t = P&middot;R / (S&middot;E &minus; 0.6&middot;P) &nbsp;&nbsp; (hoop) &nbsp;&nbsp;&nbsp; t = P&middot;R / (2&middot;S&middot;E + 0.4&middot;P) &nbsp;&nbsp; (axial)</span>
+                        <p>For a sphere, and therefore for a hemispherical head, the membrane stress is the same in every direction and the thickness is:</p>
+                        <span class="edu-formula">t = P&middot;R / (2&middot;S&middot;E &minus; 0.2&middot;P)</span>
+                        <p>The corrosion allowance is added to the result, and R is the corroded radius. When the pressure is high compared with S, the thin-wall idea of a uniform stress breaks down. The thick-wall thickness comes from the Lam&eacute; solution:</p>
+                        <span class="edu-formula">Z = (S&middot;E + P) / (S&middot;E &minus; P), &nbsp;&nbsp; t = R&middot;(&radic;Z &minus; 1)</span>
+                        <p>Across the wall the hoop and radial stresses are:</p>
+                        <span class="edu-formula">&sigma;<sub>&theta;</sub>, &sigma;<sub>r</sub> = A &plusmn; B / r&sup2;, &nbsp;&nbsp; A = (P<sub>i</sub>a&sup2; &minus; P<sub>o</sub>b&sup2;)/(b&sup2; &minus; a&sup2;), &nbsp;&nbsp; B = (P<sub>i</sub> &minus; P<sub>o</sub>)a&sup2;b&sup2;/(b&sup2; &minus; a&sup2;)</span>
+                        <p>where a and b are the inside and outside radii. The largest hoop stress is always at the inside surface. For a bolted joint, the bolts must carry the end force and compress the gasket in service, and they must also seat the gasket at assembly:</p>
+                        <span class="edu-formula">H = 0.785&middot;G&sup2;&middot;P, &nbsp; H<sub>p</sub> = 2&middot;b&middot;&pi;&middot;G&middot;m&middot;P, &nbsp; W<sub>m1</sub> = H + H<sub>p</sub>, &nbsp; W<sub>m2</sub> = &pi;&middot;b&middot;G&middot;y</span>
+                        <span class="edu-formula">A<sub>m1</sub> = W<sub>m1</sub>/S<sub>b</sub>, &nbsp; A<sub>m2</sub> = W<sub>m2</sub>/S<sub>a</sub>, &nbsp; A<sub>m</sub> = max(A<sub>m1</sub>, A<sub>m2</sub>), &nbsp; W = 0.5&middot;(A<sub>m</sub> + A<sub>b</sub>)&middot;S<sub>a</sub></span>
+                        <p>The ring flange is then loaded by the bolt load, the gasket reaction and the hydrostatic end forces. Each one multiplies its lever arm about the bolt circle to give a moment, and the tangential stress in the ring is proportional to that moment divided by the square of the thickness.</p>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="results" aria-labelledby="h-results">
+                        <h2 id="h-results">Understanding the Results</h2>
+
+                        <h3>Required thickness and utilization</h3>
+                        <p>The required thickness is the minimum wall, including corrosion allowance, for the pressure you entered. Utilization is required divided by provided, so green is below 85%, amber is between 85% and 100%, and red means the wall is too thin.</p>
+
+                        <h3>Maximum allowable pressure</h3>
+                        <p>This is the pressure the thickness you provided can carry. It is useful for checking an existing vessel or for seeing how much margin a thicker wall buys.</p>
+
+                        <h3>Thin-wall error</h3>
+                        <p>In the thick-wall module, this is how much the thin-wall formula under-predicts the thickness for the same data. It grows quickly as the pressure approaches the allowable stress, which is why the simulator tells you when the thick-wall method is needed.</p>
+
+                        <h3>A<sub>m</sub>, A<sub>b</sub> and the bolt load</h3>
+                        <p>A<sub>m</sub> is the bolt area the joint needs, and it is set by whichever is larger: the operating condition or the gasket seating condition. A<sub>b</sub> is the area you provide. The joint passes when A<sub>b</sub> is at least A<sub>m</sub>.</p>
+
+                        <h3>Flange stress S<sub>T</sub></h3>
+                        <p>S<sub>T</sub> is the tangential stress in the flange ring in operation and at seating. It is compared with the flange allowable stress at the design and at ambient temperature.</p>
+                    </section>
+
+                    <hr />
+
+                    <section class="edu-section" id="faq" aria-labelledby="h-faq">
+                        <h2 id="h-faq">Frequently Asked Questions</h2>
+                        <div class="edu-faq">
+
+                            <details class="edu-faq-item">
+                                <summary>When can I treat a vessel as thin-walled?</summary>
+                                <div class="edu-faq-answer">As a rule of thumb, the thin-wall formulas are valid when the thickness is no more than half the inside radius and the pressure is below about 0.385 times S times E for a cylinder. Beyond that, the stress is no longer uniform through the wall and the Lam&eacute; thick-wall solution should be used. The simulator shows a note when you leave the thin-wall range.</div>
+                            </details>
+
+                            <details class="edu-faq-item">
+                                <summary>Why is the hoop stress twice the axial stress in a cylinder?</summary>
+                                <div class="edu-faq-answer">Pressure pushes on the whole inside surface, but the hoop stress is carried by only two thin strips of wall along the length, while the axial stress is carried by the whole ring of wall at the end. The hoop stress is therefore PR/t and the axial stress is PR/2t, which is why a cylinder usually splits along its length first.</div>
+                            </details>
+
+                            <details class="edu-faq-item">
+                                <summary>Why is a hemispherical head thinner than the cylinder?</summary>
+                                <div class="edu-faq-answer">A sphere has the same membrane stress in every direction, and it is half the hoop stress of a cylinder of the same radius, so it needs about half the wall. Flatter heads such as ellipsoidal and torispherical need more thickness because of bending near the knuckle, and a flat plate needs the most because it resists pressure in bending.</div>
+                            </details>
+
+                            <details class="edu-faq-item">
+                                <summary>What do m and y mean for a gasket?</summary>
+                                <div class="edu-faq-answer">The factor m describes how much compressive load the gasket needs to keep sealing once the vessel is pressurized, as a multiple of the pressure. The seating stress y is the minimum stress needed to squeeze the gasket into the flange faces during assembly. Both depend on the gasket material and type, so enter the values given by your gasket data.</div>
+                            </details>
+
+                            <details class="edu-faq-item">
+                                <summary>Why do I need two bolt checks?</summary>
+                                <div class="edu-faq-answer">The bolts have two jobs. In operation they carry the pressure end force and keep compression on the gasket, which gives W<sub>m1</sub>. At assembly they must crush the gasket to seat it, which gives W<sub>m2</sub>. The larger area governs, and with a soft gasket the seating condition often controls even when the operating load looks bigger.</div>
+                            </details>
+
+                            <details class="edu-faq-item">
+                                <summary>What are the limitations of this simulator?</summary>
+                                <div class="edu-faq-answer">It covers internal pressure on shells and heads with the classic formulas, a Lam&eacute; model for thick cylinders with closed ends, and a constant-thickness ring flange. It does not model external pressure buckling, openings and nozzles, fatigue, temperature gradients, hubbed flanges, or the newer detailed flange methods. It is a learning and preliminary sizing tool, and a real vessel must be designed and certified under the code that applies to it.</div>
+                            </details>
+
+                        </div>
+                    </section>
+
+                    <!-- AD SLOT 2 -->
+                    <!-- AD-SLOT HIDDEN
+                    <div class="ad-slot ad-slot--leaderboard" style="margin-top: 40px;" aria-label="Advertisement">
+                        Advertisement
+                    </div>
+                    -->
+
+                </div><!-- /edu-content -->
+            </div><!-- /container -->
+
+        </main>
+
+        <!-- Footer injected by platform.js -->
+        <div id="footer-placeholder"></div>
+
+    </div><!-- /page-wrapper -->
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Pressure Vessel Calculator",
+  "description": "Interactive pressure vessel calculator: thin-wall and thick-wall thickness, head comparison, Lame stress profile, gasket and bolt loads and ring flange stress with live diagrams.",
+  "url": "https://engsimapp.com/simulators/pressure-vessel/",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Any (Web Browser)",
+  "isAccessibleForFree": true,
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "EngSim",
+    "url": "https://engsimapp.com/"
+  }
+}
+</script>
+
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "When can I treat a vessel as thin-walled?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "As a rule of thumb, the thin-wall formulas are valid when the thickness is no more than half the inside radius and the pressure is below about 0.385 times S times E for a cylinder. Beyond that the stress is not uniform through the wall and the Lame thick-wall solution should be used."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is the hoop stress twice the axial stress in a cylinder?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The hoop stress is carried by two thin strips of wall along the length, while the axial stress is carried by the whole ring of wall at the end. The hoop stress is therefore PR/t and the axial stress is PR/2t."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why is a hemispherical head thinner than the cylinder?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A sphere has the same membrane stress in every direction, equal to half the hoop stress of a cylinder with the same radius, so it needs about half the wall thickness. Flatter heads need more thickness because of bending near the knuckle."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do m and y mean for a gasket?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The factor m is the compressive load the gasket needs to keep sealing in service, as a multiple of the pressure. The seating stress y is the minimum stress needed to squeeze the gasket into the flange faces during assembly. Both depend on the gasket material and type."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why do I need two bolt checks?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In operation the bolts carry the pressure end force and keep compression on the gasket. At assembly they must crush the gasket to seat it. The larger of the two required bolt areas governs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the limitations of this simulator?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It covers internal pressure on shells and heads with classic formulas, a Lame model for thick cylinders with closed ends and a constant-thickness ring flange. It does not model external pressure buckling, nozzles, fatigue, hubbed flanges or newer detailed flange methods, and is meant for learning and preliminary sizing."
+      }
+    }
+  ]
+}
+</script>
+    <script src="../../assets/js/platform.js"></script>
+    <script type="module" src="./js/pressure-vessel-simulator.js"></script>
+
+    <script src="../../assets/js/cookie-consent.js" defer></script>
+</body>
+
+</html>
